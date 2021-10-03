@@ -263,6 +263,48 @@ def retroactive_predictions(timestamp, k, n_samples, tournament, train_elo):
             "fixed", n_samples, tournament, k, timestamp, static_ratings=True,
             tabs=tabs, title=title)
 
+def validate_ti10_files():
+    """Some simple checks for the ti10 data files to help users catch
+    errors before they become python exceptions
+    """
+    data = {}
+    for file in ["elo_ratings", "groups", "matches"]:
+        try:
+            with open(f"data/ti10/{file}.json") as json_f:
+                data[file] = json.load(json_f)
+        except json.decoder.JSONDecodeError:
+            print(f"ERROR: Failed to load {file}.json: invalid JSON")
+            return False
+    teams = set()
+    for team, rating in data["elo_ratings"].items():
+        teams.add(team)
+        if not (type(rating) == int or type(rating) == float):
+            print("ERROR: team ratings in elo_ratings.json must be numbers")
+            return False
+    for group, group_teams in data["groups"].items():
+        for team in group_teams:
+            if team not in teams:
+                print(f"ERROR: {team} (groups.json) is "
+                      "not in elo_ratings.json")
+                return False
+    for group in ["a", "b"]:
+        if len(data["matches"][group]) != 4:
+            print("ERROR: matches must be split into 4 lists "
+                  "(one for each match day)")
+            return False
+        for match_list in data["matches"][group]:
+            for match in match_list:
+                for team in [match[0], match[1]]:
+                    if team not in data["groups"][group]:
+                        print(f"ERROR: match {match} in group {group} contains"
+                              f" team '{team}' which is not in group {group} "
+                              "in groups.json")
+                        return False
+                if match[2] not in [0, 1, 2, -1]:
+                    print("ERROR: match results must be one of [0, 1, 2, -1]")
+                    return False
+    return True
+
 def main():
     parser = argparse.ArgumentParser(
         description="Generate probability report for TI10 group stage.",
@@ -310,9 +352,10 @@ def main():
     else:
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
-        generate_html("data/ti10/elo_ratings.json", matches, "output.html",
-                      n_samples, "ti10", args.k, timestamp)
-        print("Output saved to ti10/output.html")
+        if validate_ti10_files():
+            generate_html("data/ti10/elo_ratings.json", matches, "output.html",
+                          n_samples, "ti10", args.k, timestamp)
+            print("Output saved to ti10/output.html")
 
 if __name__ == "__main__":
     main()
