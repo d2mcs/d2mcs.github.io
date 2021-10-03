@@ -1,0 +1,94 @@
+{
+  "a": [
+    [
+      ["Evil Geniuses", "TNC Pro Team", 1],
+      ["Team Liquid", "iG Vitality", 2],
+      ["LGD", "Fnatic", 2],
+      ["Team Secret", "Team Empire", 1],
+      ["Team Secret", "Infamous", 1],
+      ["Team Liquid", "Fnatic", 2],
+      ["LGD", "Team Empire", 2],
+      ["Evil Geniuses", "iG Vitality", 1],
+      ["Evil Geniuses", "Team Liquid", 1],
+      ["LGD", "Team Secret", 2],
+      ["TNC Pro Team", "Fnatic", 2],
+      ["Team Empire", "Infamous", 1]
+    ],
+    [
+      ["Team Secret", "TNC Pro Team", 1],
+      ["LGD", "iG Vitality", 0],
+      ["Evil Geniuses", "Team Empire", 2],
+      ["Team Liquid", "Infamous", 2],
+      ["Team Liquid", "LGD", 1],
+      ["Team Secret", "iG Vitality", 1],
+      ["TNC Pro Team", "Team Empire", 1],
+      ["Fnatic", "Infamous", 1]
+    ],
+    [
+      ["Evil Geniuses", "Team Secret", 1],
+      ["TNC Pro Team", "iG Vitality", 1],
+      ["Fnatic", "Team Empire", 0],
+      ["LGD", "Infamous", 2],
+      ["Team Secret", "Fnatic", 2],
+      ["Team Liquid", "TNC Pro Team", 1],
+      ["iG Vitality", "Team Empire", 1],
+      ["Evil Geniuses", "Infamous", 2],
+      ["Evil Geniuses", "LGD", 1],
+      ["Team Liquid", "Team Empire", 2],
+      ["iG Vitality", "Fnatic", 1],
+      ["TNC Pro Team", "Infamous", 2]
+    ],
+    [
+      ["Team Liquid", "Team Secret", 2],
+      ["Evil Geniuses", "Fnatic", 2],
+      ["LGD", "TNC Pro Team", 2],
+      ["iG Vitality", "Infamous", 0]
+    ]
+  ],
+  "b": [
+    [
+      ["OG", "Cloud9", 2],
+      ["Newbee", "Invictus Gaming", 1],
+      ["Virtus.pro", "Digital Chaos", 2],
+      ["LGD.Forever Young", "Execration", 2],
+      ["Newbee", "Cloud9", 2],
+      ["OG", "Digital Chaos", 1],
+      ["Virtus.pro", "Execration", 1],
+      ["LGD.Forever Young", "HellRaisers", 2]
+    ],
+    [
+      ["Newbee", "OG", 1],
+      ["Virtus.pro", "LGD.Forever Young", 0],
+      ["Invictus Gaming", "Digital Chaos", 2],
+      ["Execration", "HellRaisers", 1],
+      ["Virtus.pro", "Cloud9", 1],
+      ["LGD.Forever Young", "Invictus Gaming", 2],
+      ["Newbee", "Execration", 2],
+      ["OG", "HellRaisers", 2],
+      ["OG", "Virtus.pro", 0],
+      ["LGD.Forever Young", "Cloud9", 2],
+      ["Invictus Gaming", "Execration", 1],
+      ["Digital Chaos", "HellRaisers", 2]
+    ],
+    [
+      ["Newbee", "LGD.Forever Young", 0],
+      ["Invictus Gaming", "Cloud9", 2],
+      ["Digital Chaos", "Execration", 2],
+      ["Virtus.pro", "HellRaisers", 2],
+      ["OG", "Invictus Gaming", 1],
+      ["LGD.Forever Young", "Digital Chaos", 1],
+      ["Cloud9", "Execration", 1],
+      ["Newbee", "HellRaisers", 2]
+    ],
+    [
+      ["Newbee", "Virtus.pro", 1],
+      ["OG", "Execration", 1],
+      ["Cloud9", "Digital Chaos", 2],
+      ["Invictus Gaming", "HellRaisers", 2],
+      ["OG", "LGD.Forever Young", 1],
+      ["Newbee", "Digital Chaos", 2],
+      ["Virtus.pro", "Invictus Gaming", 1],
+      ["Cloud9", "HellRaisers", 2]
+    ]
+  ]
+}

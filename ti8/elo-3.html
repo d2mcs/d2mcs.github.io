@@ -1,0 +1,2200 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TI Predictions</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Prediction Model:</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="elo-3.html">Elo Ratings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"  href="fixed-3.html">Fixed Ratings</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dayDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Day
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dayDropdown">
+              
+              <li><a class="dropdown-item" href="elo-pre.html">Pre-tournament</a></li>
+              
+              <li><a class="dropdown-item" href="elo-1.html">Day 1</a></li>
+              
+              <li><a class="dropdown-item" href="elo-2.html">Day 2</a></li>
+              
+              <li><a class="dropdown-item" href="elo-3.html">Day 3</a></li>
+              
+              <li><a class="dropdown-item" href="elo.html">Current</a></li>
+              
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="eventDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Event
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="eventDropdown">
+              <li><a class="dropdown-item" href="../ti10/elo.html">TI 10</a></li>
+              <li><a class="dropdown-item" href="../ti9/elo.html">TI 9</a></li>
+              <li><a class="dropdown-item" href="../ti8/elo.html">TI 8</a></li>
+              <li><a class="dropdown-item" href="../ti7/elo.html">TI 7</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../ti10/elo_history.html">Rating Histories</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+<div class="container mt-3 mb-3" style="max-width: 1500px">
+  <h1 class="text-center">The International 2018 Predictions</h1>
+  <h6 class="text-center">1000000 samples <small><sup><a style="color: black; text-decoration: none" href="#footnote">*</a></sup></small></h6>
+  <h6 class="text-center">Updated 2021-10-03 02:14 UTC</h6>
+  <hr>
+  <div class="d-flex justify-content-around flex-wrap">
+    
+    <div class="container" style="max-width: 725px;">
+      <h2>GROUP A</h2>
+      <h3 class="pt-2">Bracket Probabilities</h3>
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Team</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Record</th>
+            <th scope="col">Upper Bracket</th>
+            <th scope="col">Lower Bracket</th>
+            <th scope="col">Eliminated</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td><img src="image/Team Liquid.png" height=20px> Team Liquid</td>
+          <td class="text-center">2123</td>
+          <td class="text-center">4-3-0</td>
+          <td class="text-center" style="background-color: #22a440">✓</td>
+          <td class="text-center" style="background-color: #ffe6cd">-</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Evil Geniuses.png" height=20px> Evil Geniuses</td>
+          <td class="text-center">2032</td>
+          <td class="text-center">5-1-1</td>
+          <td class="text-center" style="background-color: #22a440">✓</td>
+          <td class="text-center" style="background-color: #ffe6cd">-</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/PSG.LGD.png" height=20px> PSG.LGD</td>
+          <td class="text-center">2048</td>
+          <td class="text-center">3-3-1</td>
+          <td class="text-center" style="background-color: #23a541">99.6%</td>
+          <td class="text-center" style="background-color: #fee5cc">0.4%</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/OG.png" height=20px> OG</td>
+          <td class="text-center">1954</td>
+          <td class="text-center">3-2-2</td>
+          <td class="text-center" style="background-color: #34ac4f">91.4%</td>
+          <td class="text-center" style="background-color: #fbd9bb">8.6%</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Fnatic.png" height=20px> Fnatic</td>
+          <td class="text-center">1928</td>
+          <td class="text-center">1-5-1</td>
+          <td class="text-center" style="background-color: #d9f7db">8.8%</td>
+          <td class="text-center" style="background-color: #da6116">91.2%</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/VGJ.Thunder.png" height=20px> VGJ.Thunder</td>
+          <td class="text-center">1856</td>
+          <td class="text-center">2-2-3</td>
+          <td class="text-center" style="background-color: #eafeea">0.2%</td>
+          <td class="text-center" style="background-color: #d75505">99.8%</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Mineski.png" height=20px> Mineski</td>
+          <td class="text-center">1905</td>
+          <td class="text-center">1-3-3</td>
+          <td class="text-center" style="background-color: #ebffeb">-</td>
+          <td class="text-center" style="background-color: #d65404">✓</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Invictus Gaming.png" height=20px> Invictus Gaming</td>
+          <td class="text-center">1766</td>
+          <td class="text-center">0-4-4</td>
+          <td class="text-center" style="background-color: #ebffeb">-</td>
+          <td class="text-center" style="background-color: #e8945d">55.9%</td>
+          <td class="text-center" style="background-color: #f19496">44.1%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Winstrike Team.png" height=20px> Winstrike Team</td>
+          <td class="text-center">1855</td>
+          <td class="text-center">1-1-5</td>
+          <td class="text-center" style="background-color: #ebffeb">-</td>
+          <td class="text-center" style="background-color: #eda674">44.1%</td>
+          <td class="text-center" style="background-color: #ee7e81">55.9%</td>
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+      <h3 class="pt-2">Match Probabilities</h3>
+      <div class="accordion pb-4" id="matches-a-accordion">
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-0-head-a">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#day-0-col-a" aria-expanded="true" aria-controls="day-0-col-a">
+              Day 1
+            </button>
+          </h2>
+          <div id="day-0-col-a" class="accordion-collapse collapse show" aria-labelledby="day-0-head-a">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #b2adcc">51%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">41%</td>
+                  <td class="text-center" style="background-color: #e6e5ea">8%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #b4b0cd">49%</td>
+                  <td class="text-center" style="background-color: #bdb9d2">42%</td>
+                  <td class="text-center" style="background-color: #e5e4e9">9%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #bcb8d2">43%</td>
+                  <td class="text-center" style="background-color: #e4e3e9">9%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #e7e6ea">7%</td>
+                  <td class="text-center" style="background-color: #c0bcd4">39%</td>
+                  <td class="text-center" style="background-color: #b0aaca">53%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #a59fc4">62%</td>
+                  <td class="text-center" style="background-color: #c7c4d8">33%</td>
+                  <td class="text-center" style="background-color: #eaeaec">4%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #cecbdc">28%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d5d3e0">22%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #e8e7eb">7%</td>
+                  <td class="text-center" style="background-color: #c2bed5">38%</td>
+                  <td class="text-center" style="background-color: #ada7c9">55%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #afa9ca">54%</td>
+                  <td class="text-center" style="background-color: #c1bdd4">39%</td>
+                  <td class="text-center" style="background-color: #e7e6eb">7%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #dddbe5">16%</td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #c3c0d6">37%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #d1cede">26%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d2d0de">24%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #bab5d0">45%</td>
+                  <td class="text-center" style="background-color: #bab6d0">44%</td>
+                  <td class="text-center" style="background-color: #e2e1e8">11%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #dfdee6">14%</td>
+                  <td class="text-center" style="background-color: #b7b3cf">47%</td>
+                  <td class="text-center" style="background-color: #c0bcd4">39%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(2)<b></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-1-head-a">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-1-col-a" aria-expanded="false" aria-controls="day-1-col-a">
+              Day 2
+            </button>
+          </h2>
+          <div id="day-1-col-a" class="accordion-collapse collapse" aria-labelledby="day-1-head-a">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #cecbdc">28%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d5d2e0">22%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #bfbbd3">41%</td>
+                  <td class="text-center" style="background-color: #b8b3cf">46%</td>
+                  <td class="text-center" style="background-color: #e0dee6">13%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #ededee">2%</td>
+                  <td class="text-center" style="background-color: #d2cfde">25%</td>
+                  <td class="text-center" style="background-color: #9891bc">73%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #bdb9d2">42%</td>
+                  <td class="text-center" style="background-color: #b9b4d0">46%</td>
+                  <td class="text-center" style="background-color: #e1e0e7">12%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #ccc9db">30%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d7d5e1">21%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #e5e4e9">9%</td>
+                  <td class="text-center" style="background-color: #bebad2">41%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #dfdee6">13%</td>
+                  <td class="text-center" style="background-color: #b8b3cf">46%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">40%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #c4c1d6">36%</td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #dcdbe4">16%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(2)<b></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-2-head-a">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-2-col-a" aria-expanded="false" aria-controls="day-2-col-a">
+              Day 3
+            </button>
+          </h2>
+          <div id="day-2-col-a" class="accordion-collapse collapse" aria-labelledby="day-2-head-a">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #b2adcc">51%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">41%</td>
+                  <td class="text-center" style="background-color: #e6e5ea">8%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #c9c6d9">32%</td>
+                  <td class="text-center" style="background-color: #b4b0cd">49%</td>
+                  <td class="text-center" style="background-color: #d9d7e2">19%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #d5d3e0">22%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #cdcadc">28%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #b1accb">52%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">40%</td>
+                  <td class="text-center" style="background-color: #e6e5ea">8%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #cbc8da">30%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d7d5e1">20%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #c5c1d6">36%</td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #dcdae4">16%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #e2e1e8">11%</td>
+                  <td class="text-center" style="background-color: #bab6d0">45%</td>
+                  <td class="text-center" style="background-color: #bab6d1">44%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #a39dc3">64%</td>
+                  <td class="text-center" style="background-color: #c9c5d9">32%</td>
+                  <td class="text-center" style="background-color: #ebeaed">4%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #dad8e3">18%</td>
+                  <td class="text-center" style="background-color: #b5b0cd">49%</td>
+                  <td class="text-center" style="background-color: #c7c4d8">33%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #ecebed">3%</td>
+                  <td class="text-center" style="background-color: #ccc9db">30%</td>
+                  <td class="text-center" style="background-color: #9f98c0">67%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #c7c4d8">34%</td>
+                  <td class="text-center" style="background-color: #b5b0cd">49%</td>
+                  <td class="text-center" style="background-color: #dad8e3">18%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #c1bdd4">39%</td>
+                  <td class="text-center" style="background-color: #b7b3cf">47%</td>
+                  <td class="text-center" style="background-color: #dfdde6">14%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span> <b>(1)<b></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-3-head-a">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-3-col-a" aria-expanded="false" aria-controls="day-3-col-a">
+              Day 4
+            </button>
+          </h2>
+          <div id="day-3-col-a" class="accordion-collapse collapse" aria-labelledby="day-3-head-a">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td ><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span></td>
+                  <td class="text-center" style="background-color: #b5b1ce">48%</td>
+                  <td class="text-center" style="background-color: #bdb8d2">42%</td>
+                  <td class="text-center" style="background-color: #e4e3e9">9%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span></td>
+                  <td class="text-center" style="background-color: #9e97c0">68%</td>
+                  <td class="text-center" style="background-color: #cdcadb">29%</td>
+                  <td class="text-center" style="background-color: #ecebed">3%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span></td>
+                  <td class="text-center" style="background-color: #beb9d2">42%</td>
+                  <td class="text-center" style="background-color: #b9b4cf">46%</td>
+                  <td class="text-center" style="background-color: #e0dfe7">13%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span></td>
+                  <td class="text-center" style="background-color: #bebad3">41%</td>
+                  <td class="text-center" style="background-color: #b8b4cf">46%</td>
+                  <td class="text-center" style="background-color: #e0dfe6">13%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <h3 class="pt-2">Group Stage Rank Probabilities</h3>
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Team</th>
+            <th class="text-center" scope="col">1st</th>
+            <th class="text-center" scope="col">2nd</th>
+            <th class="text-center" scope="col">3rd</th>
+            <th class="text-center" scope="col">4th</th>
+            <th class="text-center" scope="col">5th</th>
+            <th class="text-center" scope="col">6th</th>
+            <th class="text-center" scope="col">7th</th>
+            <th class="text-center" scope="col">8th</th>
+            <th class="text-center" scope="col">9th</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td><img src="image/Team Liquid.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Liquid</span></td>
+          
+          <td style="background-color: #8a81b4" class="text-center">84.8%</td>
+          
+          <td style="background-color: #dddce5" class="text-center">15.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.1%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-sm-block d-md-inline"> Evil Geniuses</span></td>
+          
+          <td style="background-color: #dddce5" class="text-center">15.2%</td>
+          
+          <td style="background-color: #8a81b4" class="text-center">84.8%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/PSG.LGD.png" height=20px><span class="d-none d-sm-block d-md-inline"> PSG.LGD</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.1%</td>
+          
+          <td style="background-color: #7e74ad" class="text-center">94.7%</td>
+          
+          <td style="background-color: #eae9ec" class="text-center">4.8%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.4%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/OG.png" height=20px><span class="d-none d-sm-block d-md-inline"> OG</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #eae9ec" class="text-center">5.0%</td>
+          
+          <td style="background-color: #887fb3" class="text-center">86.4%</td>
+          
+          <td style="background-color: #e5e4ea" class="text-center">8.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Fnatic.png" height=20px><span class="d-none d-sm-block d-md-inline"> Fnatic</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+          <td style="background-color: #e5e4e9" class="text-center">8.7%</td>
+          
+          <td style="background-color: #847bb1" class="text-center">89.5%</td>
+          
+          <td style="background-color: #eeedee" class="text-center">1.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Thunder</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+          <td style="background-color: #eeedee" class="text-center">1.6%</td>
+          
+          <td style="background-color: #847bb1" class="text-center">89.7%</td>
+          
+          <td style="background-color: #e5e4ea" class="text-center">8.5%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Mineski.png" height=20px><span class="d-none d-sm-block d-md-inline"> Mineski</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #e5e4e9" class="text-center">8.7%</td>
+          
+          <td style="background-color: #8279b0" class="text-center">91.3%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Invictus Gaming</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #aca7c8" class="text-center">55.9%</td>
+          
+          <td style="background-color: #bbb6d1" class="text-center">44.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Winstrike Team.png" height=20px><span class="d-none d-sm-block d-md-inline"> Winstrike Team</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #bbb6d1" class="text-center">44.1%</td>
+          
+          <td style="background-color: #aca7c8" class="text-center">55.9%</td>
+          
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+      <h3 class="pt-2">Tiebreak Probabilities</h3>
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Boundary</th>
+            <th class="text-center" scope="col">2-way</th>
+            <th class="text-center" scope="col">3-way</th>
+            <th class="text-center" scope="col">4-way</th>
+            <th class="text-center" scope="col">5-way</th>
+            <th style="border-left: 1px solid black;" class="text-center" scope="col">Overall</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td>Upper Bracket</td>
+          
+          <td style="background-color: #e1dfe7" class="text-center">12.4%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">0.9%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="border-left: 1px solid black; background-color: #e0dee6" class="text-center">13.3%</td>
+        </tr>
+        
+        <tr>
+          <td>Elimination</td>
+          
+          <td style="background-color: #bcb8d2" class="text-center">42.8%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="border-left: 1px solid black; background-color: #bcb8d2" class="text-center">42.8%</td>
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="container" style="max-width: 725px;">
+      <h2>GROUP B</h2>
+      <h3 class="pt-2">Bracket Probabilities</h3>
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Team</th>
+            <th scope="col">Rating</th>
+            <th scope="col">Record</th>
+            <th scope="col">Upper Bracket</th>
+            <th scope="col">Lower Bracket</th>
+            <th scope="col">Eliminated</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td><img src="image/VGJ.Storm.png" height=20px> VGJ.Storm</td>
+          <td class="text-center">2036</td>
+          <td class="text-center">4-2-0</td>
+          <td class="text-center" style="background-color: #22a440">✓</td>
+          <td class="text-center" style="background-color: #ffe6cd">-</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Virtus.pro.png" height=20px> Virtus.pro</td>
+          <td class="text-center">2079</td>
+          <td class="text-center">2-4-0</td>
+          <td class="text-center" style="background-color: #24a541">99.4%</td>
+          <td class="text-center" style="background-color: #fee5cb">0.6%</td>
+          <td class="text-center" style="background-color: #ffe6e1">-</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Team Secret.png" height=20px> Team Secret</td>
+          <td class="text-center">1985</td>
+          <td class="text-center">1-4-1</td>
+          <td class="text-center" style="background-color: #5cbf72">71.0%</td>
+          <td class="text-center" style="background-color: #f3bc93">28.6%</td>
+          <td class="text-center" style="background-color: #fee5e0">0.4%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/TNC Predator.png" height=20px> TNC Predator</td>
+          <td class="text-center">1949</td>
+          <td class="text-center">2-3-2</td>
+          <td class="text-center" style="background-color: #78cb89">57.3%</td>
+          <td class="text-center" style="background-color: #eda877">42.7%</td>
+          <td class="text-center" style="background-color: #fee5e0"><0.1%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/paiN Gaming.png" height=20px> paiN Gaming</td>
+          <td class="text-center">1878</td>
+          <td class="text-center">0-5-1</td>
+          <td class="text-center" style="background-color: #b5e6bd">26.7%</td>
+          <td class="text-center" style="background-color: #e79057">58.8%</td>
+          <td class="text-center" style="background-color: #facbc8">14.6%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Newbee.png" height=20px> Newbee</td>
+          <td class="text-center">1909</td>
+          <td class="text-center">2-2-3</td>
+          <td class="text-center" style="background-color: #cef2d2">14.3%</td>
+          <td class="text-center" style="background-color: #de6f29">81.5%</td>
+          <td class="text-center" style="background-color: #fdded9">4.2%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Vici Gaming.png" height=20px> Vici Gaming</td>
+          <td class="text-center">1928</td>
+          <td class="text-center">1-3-2</td>
+          <td class="text-center" style="background-color: #caf0cf">16.1%</td>
+          <td class="text-center" style="background-color: #e38243">68.5%</td>
+          <td class="text-center" style="background-color: #fac9c6">15.4%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/Team Serenity.png" height=20px> Team Serenity</td>
+          <td class="text-center">1829</td>
+          <td class="text-center">0-5-1</td>
+          <td class="text-center" style="background-color: #daf7dd">8.1%</td>
+          <td class="text-center" style="background-color: #e5874b">64.8%</td>
+          <td class="text-center" style="background-color: #f6b3b2">27.1%</td>
+        </tr>
+        
+        <tr>
+          <td><img src="image/OpTic Gaming.png" height=20px> OpTic Gaming</td>
+          <td class="text-center">1897</td>
+          <td class="text-center">1-2-3</td>
+          <td class="text-center" style="background-color: #dcf8de">7.1%</td>
+          <td class="text-center" style="background-color: #e9965f">54.5%</td>
+          <td class="text-center" style="background-color: #f39f9f">38.4%</td>
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+      <h3 class="pt-2">Match Probabilities</h3>
+      <div class="accordion pb-4" id="matches-b-accordion">
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-0-head-b">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#day-0-col-b" aria-expanded="true" aria-controls="day-0-col-b">
+              Day 1
+            </button>
+          </h2>
+          <div id="day-0-col-b" class="accordion-collapse collapse show" aria-labelledby="day-0-head-b">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #a69fc4">62%</td>
+                  <td class="text-center" style="background-color: #c7c4d8">34%</td>
+                  <td class="text-center" style="background-color: #eae9ec">5%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #b1accb">52%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">40%</td>
+                  <td class="text-center" style="background-color: #e6e5ea">8%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #d4d2df">23%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #cfccdd">27%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #d6d4e1">21%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #cdcadb">29%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #968fbb">74%</td>
+                  <td class="text-center" style="background-color: #d3d1df">24%</td>
+                  <td class="text-center" style="background-color: #ededee">2%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #cfccdd">27%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d4d1df">23%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #dfdee6">13%</td>
+                  <td class="text-center" style="background-color: #b8b3cf">46%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">40%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #d3d1df">24%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d0cddd">26%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span> <b>(2)<b></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-1-head-b">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-1-col-b" aria-expanded="false" aria-controls="day-1-col-b">
+              Day 2
+            </button>
+          </h2>
+          <div id="day-1-col-b" class="accordion-collapse collapse" aria-labelledby="day-1-head-b">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #e3e2e8">10%</td>
+                  <td class="text-center" style="background-color: #bbb7d1">44%</td>
+                  <td class="text-center" style="background-color: #b8b3cf">46%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #d7d5e1">21%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #ccc9db">30%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #dfdee6">13%</td>
+                  <td class="text-center" style="background-color: #b8b3cf">46%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">40%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #dfdde6">14%</td>
+                  <td class="text-center" style="background-color: #b7b3cf">47%</td>
+                  <td class="text-center" style="background-color: #c1bdd4">39%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #bab5d0">45%</td>
+                  <td class="text-center" style="background-color: #bab6d0">44%</td>
+                  <td class="text-center" style="background-color: #e2e1e8">11%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #b5b1ce">48%</td>
+                  <td class="text-center" style="background-color: #bdb8d2">42%</td>
+                  <td class="text-center" style="background-color: #e4e3e9">9%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #d3d1df">24%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d0cddd">27%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #e1dfe7">12%</td>
+                  <td class="text-center" style="background-color: #b9b4d0">46%</td>
+                  <td class="text-center" style="background-color: #bdb9d2">42%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #d7d5e1">20%</td>
+                  <td class="text-center" style="background-color: #b4afcd">49%</td>
+                  <td class="text-center" style="background-color: #cbc8da">30%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #c6c2d7">35%</td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #dbdae4">17%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #e4e3e9">10%</td>
+                  <td class="text-center" style="background-color: #bcb8d1">43%</td>
+                  <td class="text-center" style="background-color: #b7b2ce">47%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #d1cede">26%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d2d0de">24%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span> <b>(0)<b></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-2-head-b">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-2-col-b" aria-expanded="false" aria-controls="day-2-col-b">
+              Day 3
+            </button>
+          </h2>
+          <div id="day-2-col-b" class="accordion-collapse collapse" aria-labelledby="day-2-head-b">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #e6e5ea">8%</td>
+                  <td class="text-center" style="background-color: #bfbbd3">40%</td>
+                  <td class="text-center" style="background-color: #b1accb">52%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #bab5d0">45%</td>
+                  <td class="text-center" style="background-color: #bab6d1">44%</td>
+                  <td class="text-center" style="background-color: #e2e1e8">11%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ffcccc"
+                    ><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(0)<b></td>
+                  <td class="text-center" style="background-color: #d9d7e2">19%</td>
+                  <td class="text-center" style="background-color: #b5b0cd">49%</td>
+                  <td class="text-center" style="background-color: #c9c6d9">32%</td>
+                  <td style="background-color: #ccffcc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span> <b>(2)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #dddbe5">15%</td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #c3c0d6">37%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #e5e4e9">9%</td>
+                  <td class="text-center" style="background-color: #bdb9d2">42%</td>
+                  <td class="text-center" style="background-color: #b5b0cd">49%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #b6b1ce">48%</td>
+                  <td class="text-center" style="background-color: #bdb8d2">42%</td>
+                  <td class="text-center" style="background-color: #e4e3e9">9%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span> <b>(1)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #ccffcc"
+                    ><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span> <b>(2)<b></td>
+                  <td class="text-center" style="background-color: #c9c6d9">32%</td>
+                  <td class="text-center" style="background-color: #b5b0cd">49%</td>
+                  <td class="text-center" style="background-color: #d9d7e2">19%</td>
+                  <td style="background-color: #ffcccc"
+                     style="text-overflow: ellipsis;"><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span> <b>(0)<b></td>
+                </tr>
+                
+                <tr>
+                  <td style="background-color: #fafacc"
+                    ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span> <b>(1)<b></td>
+                  <td class="text-center" style="background-color: #eaeaec">4%</td>
+                  <td class="text-center" style="background-color: #c8c4d8">33%</td>
+                  <td class="text-center" style="background-color: #a59fc4">62%</td>
+                  <td style="background-color: #fafacc"
+                     style="text-overflow: ellipsis;"><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span> <b>(1)<b></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="day-3-head-b">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#day-3-col-b" aria-expanded="false" aria-controls="day-3-col-b">
+              Day 4
+            </button>
+          </h2>
+          <div id="day-3-col-b" class="accordion-collapse collapse" aria-labelledby="day-3-head-b">
+            <div class="accordion-body">
+              <div class="table-responsive">
+              <table class="table table-sm" style="max-width: 600px;">
+              <thead>
+                <tr>
+                  <th scope="col"></th>
+                  <th class="text-center" scope="col">2-0</th>
+                  <th class="text-center" scope="col">1-1</th>
+                  <th class="text-center" scope="col">0-2</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody class="table-light">
+                
+                <tr>
+                  <td ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span></td>
+                  <td class="text-center" style="background-color: #e5e4e9">9%</td>
+                  <td class="text-center" style="background-color: #beb9d2">42%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span></td>
+                  <td class="text-center" style="background-color: #d5d2e0">22%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #cecbdc">28%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span></td>
+                  <td class="text-center" style="background-color: #e9e8ec">5%</td>
+                  <td class="text-center" style="background-color: #c5c1d7">36%</td>
+                  <td class="text-center" style="background-color: #a9a3c6">59%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span></td>
+                  <td class="text-center" style="background-color: #cbc8da">30%</td>
+                  <td class="text-center" style="background-color: #b4afcd">49%</td>
+                  <td class="text-center" style="background-color: #d7d5e1">20%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span></td>
+                  <td class="text-center" style="background-color: #dddbe5">15%</td>
+                  <td class="text-center" style="background-color: #b6b2ce">48%</td>
+                  <td class="text-center" style="background-color: #c3c0d6">37%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span></td>
+                  <td class="text-center" style="background-color: #cac7d9">31%</td>
+                  <td class="text-center" style="background-color: #b4afcd">49%</td>
+                  <td class="text-center" style="background-color: #d8d6e2">19%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span></td>
+                  <td class="text-center" style="background-color: #ccc9db">30%</td>
+                  <td class="text-center" style="background-color: #b4afcd">50%</td>
+                  <td class="text-center" style="background-color: #d7d5e1">21%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span></td>
+                </tr>
+                
+                <tr>
+                  <td ><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span></td>
+                  <td class="text-center" style="background-color: #c9c5d9">32%</td>
+                  <td class="text-center" style="background-color: #b5b0cd">49%</td>
+                  <td class="text-center" style="background-color: #d9d7e3">18%</td>
+                  <td  style="text-overflow: ellipsis;"><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span></td>
+                </tr>
+                
+              </tbody>
+              </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <h3 class="pt-2">Group Stage Rank Probabilities</h3>
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Team</th>
+            <th class="text-center" scope="col">1st</th>
+            <th class="text-center" scope="col">2nd</th>
+            <th class="text-center" scope="col">3rd</th>
+            <th class="text-center" scope="col">4th</th>
+            <th class="text-center" scope="col">5th</th>
+            <th class="text-center" scope="col">6th</th>
+            <th class="text-center" scope="col">7th</th>
+            <th class="text-center" scope="col">8th</th>
+            <th class="text-center" scope="col">9th</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-sm-block d-md-inline"> VGJ.Storm</span></td>
+          
+          <td style="background-color: #948cba" class="text-center">76.5%</td>
+          
+          <td style="background-color: #d3d1df" class="text-center">23.5%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Virtus.pro.png" height=20px><span class="d-none d-sm-block d-md-inline"> Virtus.pro</span></td>
+          
+          <td style="background-color: #d3d1df" class="text-center">23.5%</td>
+          
+          <td style="background-color: #a49ec4" class="text-center">62.5%</td>
+          
+          <td style="background-color: #e3e1e8" class="text-center">10.8%</td>
+          
+          <td style="background-color: #ececee" class="text-center">2.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Team Secret.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Secret</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #e5e4e9" class="text-center">8.8%</td>
+          
+          <td style="background-color: #bab5d0" class="text-center">44.7%</td>
+          
+          <td style="background-color: #dad9e3" class="text-center">17.5%</td>
+          
+          <td style="background-color: #e1dfe7" class="text-center">12.4%</td>
+          
+          <td style="background-color: #e4e3e9" class="text-center">9.5%</td>
+          
+          <td style="background-color: #e9e9ec" class="text-center">5.3%</td>
+          
+          <td style="background-color: #eeeeee" class="text-center">1.4%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/TNC Predator.png" height=20px><span class="d-none d-sm-block d-md-inline"> TNC Predator</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #ecebed" class="text-center">3.2%</td>
+          
+          <td style="background-color: #cfcddd" class="text-center">26.8%</td>
+          
+          <td style="background-color: #cfccdc" class="text-center">27.3%</td>
+          
+          <td style="background-color: #d2d0de" class="text-center">24.5%</td>
+          
+          <td style="background-color: #e0dfe6" class="text-center">13.0%</td>
+          
+          <td style="background-color: #eae9ec" class="text-center">4.8%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.4%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/paiN Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> paiN Gaming</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+          <td style="background-color: #e9e8ec" class="text-center">5.7%</td>
+          
+          <td style="background-color: #d7d4e1" class="text-center">20.8%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.5%</td>
+          
+          <td style="background-color: #d9d7e3" class="text-center">18.5%</td>
+          
+          <td style="background-color: #dedce5" class="text-center">14.9%</td>
+          
+          <td style="background-color: #e2e1e8" class="text-center">10.9%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.6%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Newbee.png" height=20px><span class="d-none d-sm-block d-md-inline"> Newbee</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #e8e7eb" class="text-center">6.6%</td>
+          
+          <td style="background-color: #e6e6ea" class="text-center">7.6%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.4%</td>
+          
+          <td style="background-color: #dcdae4" class="text-center">16.2%</td>
+          
+          <td style="background-color: #cbc8da" class="text-center">30.3%</td>
+          
+          <td style="background-color: #d7d5e1" class="text-center">20.6%</td>
+          
+          <td style="background-color: #eaeaed" class="text-center">4.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Vici Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> Vici Gaming</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.7%</td>
+          
+          <td style="background-color: #ecebed" class="text-center">3.3%</td>
+          
+          <td style="background-color: #e2e1e8" class="text-center">11.1%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.5%</td>
+          
+          <td style="background-color: #d6d4e1" class="text-center">21.0%</td>
+          
+          <td style="background-color: #dbdae4" class="text-center">16.9%</td>
+          
+          <td style="background-color: #dcdbe4" class="text-center">16.1%</td>
+          
+          <td style="background-color: #dddce5" class="text-center">15.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Team Serenity.png" height=20px><span class="d-none d-sm-block d-md-inline"> Team Serenity</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">1.3%</td>
+          
+          <td style="background-color: #e7e7eb" class="text-center">6.7%</td>
+          
+          <td style="background-color: #e6e6ea" class="text-center">7.5%</td>
+          
+          <td style="background-color: #e3e2e8" class="text-center">10.1%</td>
+          
+          <td style="background-color: #dedce5" class="text-center">14.8%</td>
+          
+          <td style="background-color: #c9c5d9" class="text-center">32.4%</td>
+          
+          <td style="background-color: #cfccdd" class="text-center">27.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-sm-block d-md-inline"> OpTic Gaming</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #efeeef" class="text-center">0.8%</td>
+          
+          <td style="background-color: #e8e7eb" class="text-center">6.3%</td>
+          
+          <td style="background-color: #e2e0e7" class="text-center">11.6%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">11.7%</td>
+          
+          <td style="background-color: #e0dfe6" class="text-center">13.0%</td>
+          
+          <td style="background-color: #dad8e3" class="text-center">18.2%</td>
+          
+          <td style="background-color: #c1bed5" class="text-center">38.4%</td>
+          
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+      <h3 class="pt-2">Tiebreak Probabilities</h3>
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Boundary</th>
+            <th class="text-center" scope="col">2-way</th>
+            <th class="text-center" scope="col">3-way</th>
+            <th class="text-center" scope="col">4-way</th>
+            <th class="text-center" scope="col">5-way</th>
+            <th style="border-left: 1px solid black;" class="text-center" scope="col">Overall</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td>Upper Bracket</td>
+          
+          <td style="background-color: #d8d6e2" class="text-center">19.6%</td>
+          
+          <td style="background-color: #d5d2e0" class="text-center">22.3%</td>
+          
+          <td style="background-color: #e5e4e9" class="text-center">9.0%</td>
+          
+          <td style="background-color: #ededee" class="text-center">2.2%</td>
+          
+          <td style="border-left: 1px solid black; background-color: #b0aaca" class="text-center">53.1%</td>
+        </tr>
+        
+        <tr>
+          <td>Elimination</td>
+          
+          <td style="background-color: #d5d2e0" class="text-center">22.5%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.5%</td>
+          
+          <td style="background-color: #e9e9ec" class="text-center">5.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="border-left: 1px solid black; background-color: #bdb9d2" class="text-center">42.1%</td>
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+    </div>
+    
+  </div>
+  <h2 class="mt-4 text-center">Final Rank Probabilities</h2>
+  <div class="container d-flex flex-column align-items-center">
+    <div class="container d-flex justify-content-center">
+      <div class="table-responsive">
+        <table class="table table-sm" style="max-width: 900px;">
+        <thead>
+          <tr>
+            <th scope="col">Team</th>
+            <th style="width: 65px" class="text-center" scope="col">17 - 18</th>
+            <th style="width: 65px" class="text-center" scope="col">13 - 16</th>
+            <th style="width: 65px" class="text-center" scope="col">9 - 12</th>
+            <th style="width: 65px" class="text-center" scope="col">7 - 8</th>
+            <th style="width: 65px" class="text-center" scope="col">5 - 6</th>
+            <th style="width: 65px" class="text-center" scope="col">4</th>
+            <th style="width: 65px" class="text-center" scope="col">3</th>
+            <th style="width: 65px" class="text-center" scope="col">2</th>
+            <th style="width: 65px" class="text-center" scope="col">1</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        
+        <tr>
+          <td><img src="image/Team Liquid.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Team Liquid</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #eaeaec" class="text-center">4.6%</td>
+          
+          <td style="background-color: #e9e9ec" class="text-center">5.4%</td>
+          
+          <td style="background-color: #e0dfe7" class="text-center">12.6%</td>
+          
+          <td style="background-color: #e4e4e9" class="text-center">9.2%</td>
+          
+          <td style="background-color: #e0dee6" class="text-center">13.1%</td>
+          
+          <td style="background-color: #d8d6e2" class="text-center">19.8%</td>
+          
+          <td style="background-color: #c5c2d7" class="text-center">35.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Virtus.pro.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Virtus.pro</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.1%</td>
+          
+          <td style="background-color: #e4e3e9" class="text-center">9.5%</td>
+          
+          <td style="background-color: #e4e3e9" class="text-center">9.8%</td>
+          
+          <td style="background-color: #dad8e3" class="text-center">17.9%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">12.0%</td>
+          
+          <td style="background-color: #dfdde6" class="text-center">14.0%</td>
+          
+          <td style="background-color: #dbd9e4" class="text-center">16.9%</td>
+          
+          <td style="background-color: #d8d6e2" class="text-center">19.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/PSG.LGD.png" height=20px><span class="d-none d-lg-block d-xl-inline"> PSG.LGD</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.1%</td>
+          
+          <td style="background-color: #dedce5" class="text-center">15.0%</td>
+          
+          <td style="background-color: #dfdde6" class="text-center">13.9%</td>
+          
+          <td style="background-color: #d8d6e2" class="text-center">19.9%</td>
+          
+          <td style="background-color: #e0dfe7" class="text-center">12.8%</td>
+          
+          <td style="background-color: #e0dfe7" class="text-center">12.8%</td>
+          
+          <td style="background-color: #dfdee6" class="text-center">13.4%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">12.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/VGJ.Storm.png" height=20px><span class="d-none d-lg-block d-xl-inline"> VGJ.Storm</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #dfdde6" class="text-center">13.9%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">11.8%</td>
+          
+          <td style="background-color: #d5d2e0" class="text-center">22.4%</td>
+          
+          <td style="background-color: #e2e1e7" class="text-center">11.5%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.5%</td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.5%</td>
+          
+          <td style="background-color: #e2e1e8" class="text-center">11.3%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Evil Geniuses.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Evil Geniuses</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #e2e1e8" class="text-center">11.2%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">12.2%</td>
+          
+          <td style="background-color: #d3d1df" class="text-center">23.5%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">12.0%</td>
+          
+          <td style="background-color: #dddbe5" class="text-center">15.6%</td>
+          
+          <td style="background-color: #dedce5" class="text-center">14.9%</td>
+          
+          <td style="background-color: #e3e2e8" class="text-center">10.6%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Team Secret.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Team Secret</span></td>
+          
+          <td style="background-color: #efefef" class="text-center">0.4%</td>
+          
+          <td style="background-color: #e4e3e9" class="text-center">9.8%</td>
+          
+          <td style="background-color: #cfcddd" class="text-center">26.9%</td>
+          
+          <td style="background-color: #dad8e3" class="text-center">18.2%</td>
+          
+          <td style="background-color: #dad8e3" class="text-center">17.9%</td>
+          
+          <td style="background-color: #e5e4e9" class="text-center">9.1%</td>
+          
+          <td style="background-color: #e6e6ea" class="text-center">7.7%</td>
+          
+          <td style="background-color: #e8e7eb" class="text-center">6.2%</td>
+          
+          <td style="background-color: #ebeaed" class="text-center">4.0%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/OG.png" height=20px><span class="d-none d-lg-block d-xl-inline"> OG</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #ebebed" class="text-center">3.8%</td>
+          
+          <td style="background-color: #cac7da" class="text-center">30.9%</td>
+          
+          <td style="background-color: #d8d6e2" class="text-center">19.5%</td>
+          
+          <td style="background-color: #d5d3e0" class="text-center">21.9%</td>
+          
+          <td style="background-color: #e5e4e9" class="text-center">8.7%</td>
+          
+          <td style="background-color: #e6e6ea" class="text-center">7.6%</td>
+          
+          <td style="background-color: #e9e9ec" class="text-center">5.2%</td>
+          
+          <td style="background-color: #edecee" class="text-center">2.5%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/TNC Predator.png" height=20px><span class="d-none d-lg-block d-xl-inline"> TNC Predator</span></td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #dcdae4" class="text-center">16.2%</td>
+          
+          <td style="background-color: #c8c4d8" class="text-center">33.3%</td>
+          
+          <td style="background-color: #dad8e3" class="text-center">18.1%</td>
+          
+          <td style="background-color: #dddce5" class="text-center">15.3%</td>
+          
+          <td style="background-color: #e8e7eb" class="text-center">6.6%</td>
+          
+          <td style="background-color: #e9e9ec" class="text-center">5.1%</td>
+          
+          <td style="background-color: #ebebed" class="text-center">3.5%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Vici Gaming.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Vici Gaming</span></td>
+          
+          <td style="background-color: #dddce5" class="text-center">15.4%</td>
+          
+          <td style="background-color: #ceccdc" class="text-center">27.6%</td>
+          
+          <td style="background-color: #cdcadb" class="text-center">28.6%</td>
+          
+          <td style="background-color: #e0dfe7" class="text-center">12.6%</td>
+          
+          <td style="background-color: #e6e5ea" class="text-center">8.2%</td>
+          
+          <td style="background-color: #ebebed" class="text-center">3.4%</td>
+          
+          <td style="background-color: #ededee" class="text-center">2.1%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">1.4%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.8%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Fnatic.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Fnatic</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #c1bdd4" class="text-center">38.7%</td>
+          
+          <td style="background-color: #c7c4d8" class="text-center">33.5%</td>
+          
+          <td style="background-color: #dfdee6" class="text-center">13.7%</td>
+          
+          <td style="background-color: #e6e6ea" class="text-center">7.6%</td>
+          
+          <td style="background-color: #ecebed" class="text-center">3.3%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.7%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">1.0%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.5%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Newbee.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Newbee</span></td>
+          
+          <td style="background-color: #eaeaed" class="text-center">4.2%</td>
+          
+          <td style="background-color: #c3bfd6" class="text-center">37.0%</td>
+          
+          <td style="background-color: #c8c5d9" class="text-center">32.8%</td>
+          
+          <td style="background-color: #e0dfe6" class="text-center">12.9%</td>
+          
+          <td style="background-color: #e7e6ea" class="text-center">7.3%</td>
+          
+          <td style="background-color: #ececee" class="text-center">2.8%</td>
+          
+          <td style="background-color: #eeedee" class="text-center">1.6%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">0.9%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/paiN Gaming.png" height=20px><span class="d-none d-lg-block d-xl-inline"> paiN Gaming</span></td>
+          
+          <td style="background-color: #dedde5" class="text-center">14.6%</td>
+          
+          <td style="background-color: #ccc9db" class="text-center">29.6%</td>
+          
+          <td style="background-color: #cbc8da" class="text-center">30.7%</td>
+          
+          <td style="background-color: #e1e0e7" class="text-center">12.1%</td>
+          
+          <td style="background-color: #e7e6ea" class="text-center">7.5%</td>
+          
+          <td style="background-color: #ececee" class="text-center">2.5%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.7%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">0.9%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.4%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/OpTic Gaming.png" height=20px><span class="d-none d-lg-block d-xl-inline"> OpTic Gaming</span></td>
+          
+          <td style="background-color: #c1bed5" class="text-center">38.4%</td>
+          
+          <td style="background-color: #d3d0df" class="text-center">24.0%</td>
+          
+          <td style="background-color: #d6d4e1" class="text-center">21.1%</td>
+          
+          <td style="background-color: #e5e5ea" class="text-center">8.3%</td>
+          
+          <td style="background-color: #eae9ec" class="text-center">4.6%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.8%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">0.9%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.3%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Mineski.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Mineski</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #b2accb" class="text-center">51.6%</td>
+          
+          <td style="background-color: #cac7da" class="text-center">30.9%</td>
+          
+          <td style="background-color: #e4e3e9" class="text-center">9.7%</td>
+          
+          <td style="background-color: #eae9ec" class="text-center">4.8%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.8%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.7%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.3%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Team Serenity.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Team Serenity</span></td>
+          
+          <td style="background-color: #cfccdd" class="text-center">27.1%</td>
+          
+          <td style="background-color: #c2bed5" class="text-center">38.3%</td>
+          
+          <td style="background-color: #d4d2df" class="text-center">23.1%</td>
+          
+          <td style="background-color: #e7e7eb" class="text-center">6.8%</td>
+          
+          <td style="background-color: #ececed" class="text-center">3.1%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">0.9%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/VGJ.Thunder.png" height=20px><span class="d-none d-lg-block d-xl-inline"> VGJ.Thunder</span></td>
+          
+          <td style="background-color: #f0f0f0" class="text-center">-</td>
+          
+          <td style="background-color: #aca7c8" class="text-center">56.1%</td>
+          
+          <td style="background-color: #ccc9db" class="text-center">29.8%</td>
+          
+          <td style="background-color: #e4e3e9" class="text-center">9.3%</td>
+          
+          <td style="background-color: #ecebed" class="text-center">3.3%</td>
+          
+          <td style="background-color: #eeeeef" class="text-center">0.9%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.3%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Winstrike Team.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Winstrike Team</span></td>
+          
+          <td style="background-color: #aca7c8" class="text-center">55.9%</td>
+          
+          <td style="background-color: #d2cfde" class="text-center">24.9%</td>
+          
+          <td style="background-color: #e0dfe6" class="text-center">12.9%</td>
+          
+          <td style="background-color: #ebebed" class="text-center">3.7%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.7%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.6%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.2%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+        </tr>
+        
+        <tr>
+          <td><img src="image/Invictus Gaming.png" height=20px><span class="d-none d-lg-block d-xl-inline"> Invictus Gaming</span></td>
+          
+          <td style="background-color: #bbb6d1" class="text-center">44.1%</td>
+          
+          <td style="background-color: #bdb9d2" class="text-center">42.2%</td>
+          
+          <td style="background-color: #e2e1e8" class="text-center">11.3%</td>
+          
+          <td style="background-color: #ededee" class="text-center">1.8%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.5%</td>
+          
+          <td style="background-color: #efefef" class="text-center">0.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+          <td style="background-color: #efefef" class="text-center"><0.1%</td>
+          
+        </tr>
+        
+        </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="footnote" class="pt-4">
+      <p><small><sup>*</sup> Due to the nature of sampling it is impossible to completely guarantee an outcome. Outcomes are marked with <b>✓</b> or <b>-</b> if they always or never occur across all simulations. For this report (1000000 samples), outcomes that occur at least 0.0001% of the time will be detected with at least 63% probability and outcomes that occur at least 0.001% of the time will be correctly detected with at least 99.99% probability.</small></p>
+    </div>
+  </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>

@@ -1,0 +1,94 @@
+{
+  "a": [
+    [
+      ["Team Secret", "Alliance", 2],
+      ["Team Liquid", "Newbee", 0],
+      ["PSG.LGD", "Chaos Esports Club", 2],
+      ["TNC Predator", "Keen Gaming", 2],
+      ["Team Liquid", "Chaos Esports Club", 2],
+      ["TNC Predator", "Mineski", 0],
+      ["PSG.LGD", "Keen Gaming", 2],
+      ["Team Secret", "Newbee", 2],
+      ["Team Secret", "Team Liquid", 2],
+      ["PSG.LGD", "TNC Predator", 1],
+      ["Alliance", "Chaos Esports Club", 1],
+      ["Keen Gaming", "Mineski", 2]
+    ],
+    [
+      ["TNC Predator", "Alliance", 1],
+      ["PSG.LGD", "Newbee", 1],
+      ["Team Secret", "Keen Gaming", 2],
+      ["Team Liquid", "Mineski", 1],
+      ["Team Liquid", "PSG.LGD", 0],
+      ["Alliance", "Keen Gaming", 2],
+      ["Chaos Esports Club", "Mineski", 0],
+      ["TNC Predator", "Newbee", 1]
+    ],
+    [
+      ["Team Secret", "TNC Predator", 1],
+      ["Alliance", "Newbee", 1],
+      ["Chaos Esports Club", "Keen Gaming", 0],
+      ["PSG.LGD", "Mineski", 2],
+      ["TNC Predator", "Chaos Esports Club", 1],
+      ["Team Liquid", "Alliance", 1],
+      ["Newbee", "Keen Gaming", 1],
+      ["Team Secret", "Mineski", 1],
+      ["Team Secret", "PSG.LGD", 0],
+      ["Team Liquid", "Keen Gaming", 2],
+      ["Newbee", "Chaos Esports Club", 2],
+      ["Alliance", "Mineski", 1]
+    ],
+    [
+      ["Team Liquid", "TNC Predator", 0],
+      ["Team Secret", "Chaos Esports Club", 1],
+      ["PSG.LGD", "Alliance", 1],
+      ["Newbee", "Mineski", 1]
+    ]
+  ],
+  "b": [
+    [
+      ["Vici Gaming", "Royal Never Give Up", 2],
+      ["Virtus.pro", "Ninjas in Pyjamas", 2],
+      ["Evil Geniuses", "Fnatic", 0],
+      ["OG", "Natus Vincere", 1],
+      ["Virtus.pro", "Royal Never Give Up", 1],
+      ["Evil Geniuses", "Natus Vincere", 1],
+      ["OG", "Infamous", 2],
+      ["Vici Gaming", "Fnatic", 2]
+    ],
+    [
+      ["Virtus.pro", "Vici Gaming", 0],
+      ["Evil Geniuses", "OG", 0],
+      ["Ninjas in Pyjamas", "Fnatic", 1],
+      ["Natus Vincere", "Infamous", 1],
+      ["Evil Geniuses", "Royal Never Give Up", 2],
+      ["Virtus.pro", "Natus Vincere", 0],
+      ["OG", "Ninjas in Pyjamas", 2],
+      ["Vici Gaming", "Infamous", 1],
+      ["Vici Gaming", "Evil Geniuses", 0],
+      ["OG", "Royal Never Give Up", 2],
+      ["Fnatic", "Infamous", 0],
+      ["Ninjas in Pyjamas", "Natus Vincere", 0]
+    ],
+    [
+      ["Virtus.pro", "OG", 0],
+      ["Ninjas in Pyjamas", "Royal Never Give Up", 0],
+      ["Fnatic", "Natus Vincere", 2],
+      ["Evil Geniuses", "Infamous", 1],
+      ["OG", "Fnatic", 2],
+      ["Royal Never Give Up", "Natus Vincere", 2],
+      ["Vici Gaming", "Ninjas in Pyjamas", 1],
+      ["Virtus.pro", "Infamous", 2]
+    ],
+    [
+      ["Virtus.pro", "Evil Geniuses", 1],
+      ["Royal Never Give Up", "Fnatic", 0],
+      ["Ninjas in Pyjamas", "Infamous", 1],
+      ["Vici Gaming", "Natus Vincere", 2],
+      ["Vici Gaming", "OG", 1],
+      ["Virtus.pro", "Fnatic", 2],
+      ["Evil Geniuses", "Ninjas in Pyjamas", 2],
+      ["Royal Never Give Up", "Infamous", 1]
+    ]
+  ]
+}

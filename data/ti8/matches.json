@@ -1,0 +1,94 @@
+{
+  "a": [
+    [
+      ["Team Liquid", "Fnatic", 1],
+      ["PSG.LGD", "OG", 1],
+      ["Evil Geniuses", "VGJ.Thunder", 2],
+      ["Invictus Gaming", "Mineski", 1],
+      ["PSG.LGD", "VGJ.Thunder", 1],
+      ["Mineski", "Winstrike Team", 2],
+      ["Invictus Gaming", "Evil Geniuses", 1],
+      ["Team Liquid", "OG", 2],
+      ["PSG.LGD", "Team Liquid", 1],
+      ["Evil Geniuses", "Mineski", 2],
+      ["Fnatic", "VGJ.Thunder", 2],
+      ["Invictus Gaming", "Winstrike Team", 0]
+    ],
+    [
+      ["Fnatic", "Mineski", 1],
+      ["Evil Geniuses", "OG", 2],
+      ["Invictus Gaming", "Team Liquid", 1],
+      ["PSG.LGD", "Winstrike Team", 2],
+      ["PSG.LGD", "Evil Geniuses", 0],
+      ["Invictus Gaming", "Fnatic", 1],
+      ["VGJ.Thunder", "Winstrike Team", 2],
+      ["Mineski", "OG", 0]
+    ],
+    [
+      ["Team Liquid", "Mineski", 2],
+      ["Fnatic", "OG", 1],
+      ["Invictus Gaming", "VGJ.Thunder", 0],
+      ["Evil Geniuses", "Winstrike Team", 2],
+      ["Mineski", "VGJ.Thunder", 1],
+      ["PSG.LGD", "Fnatic", 2],
+      ["Invictus Gaming", "OG", 0],
+      ["Team Liquid", "Winstrike Team", 2],
+      ["Evil Geniuses", "Team Liquid", 0],
+      ["Invictus Gaming", "PSG.LGD", 0],
+      ["OG", "VGJ.Thunder", 2],
+      ["Fnatic", "Winstrike Team", 1]
+    ],
+    [
+      ["PSG.LGD", "Mineski", 2],
+      ["Team Liquid", "VGJ.Thunder", 2],
+      ["Evil Geniuses", "Fnatic", 2],
+      ["OG", "Winstrike Team", 1]
+    ]
+  ],
+  "b": [
+    [
+      ["Team Secret", "Team Serenity", 1],
+      ["Virtus.pro", "OpTic Gaming", 2],
+      ["Vici Gaming", "VGJ.Storm", 0],
+      ["Newbee", "TNC Predator", 2],
+      ["Virtus.pro", "Team Serenity", 1],
+      ["Vici Gaming", "TNC Predator", 0],
+      ["paiN Gaming", "Newbee", 1],
+      ["Team Secret", "VGJ.Storm", 0]
+    ],
+    [
+      ["Team Secret", "Virtus.pro", 1],
+      ["Vici Gaming", "Newbee", 2],
+      ["OpTic Gaming", "VGJ.Storm", 1],
+      ["paiN Gaming", "TNC Predator", 1],
+      ["Vici Gaming", "Team Serenity", 1],
+      ["Virtus.pro", "TNC Predator", 1],
+      ["Newbee", "OpTic Gaming", 0],
+      ["paiN Gaming", "Team Secret", 1],
+      ["Vici Gaming", "Team Secret", 1],
+      ["Newbee", "Team Serenity", 2],
+      ["paiN Gaming", "VGJ.Storm", 0],
+      ["TNC Predator", "OpTic Gaming", 2]
+    ],
+    [
+      ["Newbee", "Virtus.pro", 0],
+      ["OpTic Gaming", "Team Serenity", 1],
+      ["TNC Predator", "VGJ.Storm", 0],
+      ["paiN Gaming", "Vici Gaming", 1],
+      ["Newbee", "VGJ.Storm", 1],
+      ["TNC Predator", "Team Serenity", 1],
+      ["Team Secret", "OpTic Gaming", 2],
+      ["paiN Gaming", "Virtus.pro", 1]
+    ],
+    [
+      ["Vici Gaming", "Virtus.pro", 2],
+      ["paiN Gaming", "OpTic Gaming", 0],
+      ["Team Serenity", "VGJ.Storm", 0],
+      ["Team Secret", "TNC Predator", 2],
+      ["Newbee", "Team Secret", 2],
+      ["Virtus.pro", "VGJ.Storm", 2],
+      ["Vici Gaming", "OpTic Gaming", 0],
+      ["paiN Gaming", "Team Serenity", 0]
+    ]
+  ]
+}
