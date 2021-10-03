@@ -1,6 +1,6 @@
 # d2mcs.github.io
 
-This repository contains code for estimating the probability of various outcomes at The International Dota 2 Championships using Monte Carlo sampling. To the best of my knowledge the simulator is entirely consistent with official TI rules, including details such as:
+This repository contains code for estimating the probability of various outcomes at The International Dota 2 Championships using Monte Carlo sampling. Current predictions can be found [here](ti10/elo.html) To the best of my knowledge the simulator is entirely consistent with official TI rules, including details such as:
 
 - Ties along upper bracket/lower bracket and lower bracket/elimination boundaries are broken with additional matches (bo3 for a 2 way tie, bo1 round-robin for a 3+ way tie).
 - Other ties are broken using head to head results, followed by results against lower seeded teams, followed by a coin flip.
@@ -11,7 +11,7 @@ Predictions are made both with generic team ratings (i.e., 50% win probability f
 
 ## Running the Code
 
-Python version 3.6+ is required. There are two package dependencies (jinja2 and tqdm) which can be installed using the requirements file (`pip install -r requirements.txt`). Output HTML reports can then be generated with `generate_predictions.py`. Probabilities depend on groups (specified in data/ti10/groups.json), matches (specified in data/ti10/matches.json), and team ratings (specified in data/ti10/elo_ratings.json). The command-line interface requires a single parameter specifying the number of samples to simulate. For example, to run the simulator 10000 times:
+Python version 3.6+ is required. There are two package dependencies (jinja2 and tqdm) which can be installed using the requirements file (`pip install -r requirements.txt`). Output HTML reports can then be generated with `generate_predictions.py`. Probabilities depend on groups (specified in [data/ti10/groups.json](data/ti10/groups.json), matches (specified in [data/ti10/matches.json](data/ti10/matches.json)), and team ratings (specified in [data/ti10/elo_ratings.json](data/ti10/elo_ratings.json)). The command-line interface requires a single parameter specifying the number of samples to simulate. For example, to run the simulator 10000 times:
 
 ```
 python generate_predictions.py 10000
