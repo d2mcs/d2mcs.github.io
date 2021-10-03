@@ -11,6 +11,10 @@ Predictions are made both with generic team ratings (i.e., 50% win probability f
 
 ## Running the Code
 
+#### Basic Use
+
+For those unfamiliar with git/python a step-by-step guide for Windows is provided [here](https://d2mcs.github.io/guide-windows.pdf)
+
 Python version 3.6+ is required. There are two package dependencies (jinja2 and tqdm) which can be installed using the requirements file (`pip install -r requirements.txt`). Output HTML reports can then be generated with `generate_predictions.py`. Probabilities depend on groups (specified in [data/ti10/groups.json](data/ti10/groups.json), matches (specified in [data/ti10/matches.json](data/ti10/matches.json)), and team ratings (specified in [data/ti10/elo_ratings.json](data/ti10/elo_ratings.json)). The command-line interface requires a single parameter specifying the number of samples to simulate. For example, to run the simulator 10000 times:
 
 ```
@@ -24,6 +28,14 @@ You can get reasonable estimates with as few as 10,000 samples, but accurate pro
 If you wanted to change this match to a 2-0 in favor of Team A you would change it to
 
 ["Team A", "Team B", 2]
+
+If you want team ratings to be updated based on match results rather than just staying at whatever rating is in the file you can use the `-s` option:
+
+```
+python generate_predictions.py -s 10000
+```
+
+#### Advanced Use
 
 If you want the tabs linking to other predictions to show up like they do on the website you can generate predictions using the `-f` option
 

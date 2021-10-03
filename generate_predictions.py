@@ -311,6 +311,9 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("n_samples", default=100000, type=int,
         help="Number of Monte Carlo samples to simulate")
+    parser.add_argument("-s","--static_ratings", action='store_false',
+        default=True, help="Disables static ratings, meaning team ratings will"
+        " be updated based on match results.")
     parser.add_argument("-e","--train-elo", action='store_true', default=False,
         help="Retrain Elo model before generating probabilities. Will only "
         "work if matches.db and ti_rosters.json exist in the data folder")
@@ -354,7 +357,8 @@ def main():
             matches = json.load(match_f)
         if validate_ti10_files():
             generate_html("data/ti10/elo_ratings.json", matches, "output.html",
-                          n_samples, "ti10", args.k, timestamp)
+                          n_samples, "ti10", args.k, timestamp,
+                          static_ratings=args.static_ratings)
             print("Output saved to ti10/output.html")
 
 if __name__ == "__main__":
