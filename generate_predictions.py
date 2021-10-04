@@ -1,7 +1,12 @@
-from jinja2 import Template
+"""This module contains code for generating HTML probability reports
+using the TI simulator.
+"""
+
 from datetime import datetime
 import argparse
 import json
+
+from jinja2 import Template
 
 from simulator import TISimulator
 
@@ -278,7 +283,7 @@ def validate_ti10_files():
     teams = set()
     for team, rating in data["elo_ratings"].items():
         teams.add(team)
-        if not (type(rating) == int or type(rating) == float):
+        if not isinstance(rating, (float, int)):
             print("ERROR: team ratings in elo_ratings.json must be numbers")
             return False
     for group, group_teams in data["groups"].items():
@@ -306,6 +311,7 @@ def validate_ti10_files():
     return True
 
 def main():
+    """Command-line interface for probability report generation"""
     parser = argparse.ArgumentParser(
         description="Generate probability report for TI10 group stage.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
@@ -335,11 +341,11 @@ def main():
 
     if args.retroactive_predict:
         for event in ["ti7", "ti8", "ti9"]:
-            retroactive_predictions(timestamp, args.k, n_samples,
+            retroactive_predictions(timestamp, k, n_samples,
                                     event, args.train_elo)
     elif args.full_report:
         if args.train_elo:
-            generate_team_ratings(3, args.k, 1.5, "ti10")
+            generate_team_ratings(3, k, 1.5, "ti10")
 
         tabs = {
             "active": ["Current", ".html"],
@@ -348,16 +354,16 @@ def main():
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
         generate_html("data/ti10/elo_ratings.json", matches, "elo", n_samples,
-                      "ti10", args.k, timestamp, tabs=tabs)
+                      "ti10", k, timestamp, tabs=tabs)
         generate_html("data/ti10/fixed_ratings.json", matches, "fixed",
-                      n_samples, "ti10", args.k, timestamp,
+                      n_samples, "ti10", k, timestamp,
                       static_ratings=True, tabs=tabs)
     else:
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
         if validate_ti10_files():
             generate_html("data/ti10/elo_ratings.json", matches, "output.html",
-                          n_samples, "ti10", args.k, timestamp,
+                          n_samples, "ti10", k, timestamp,
                           static_ratings=args.static_ratings)
             print("Output saved to ti10/output.html")
 

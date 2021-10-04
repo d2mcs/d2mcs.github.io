@@ -120,7 +120,7 @@ class PlayerModel:
             raise ValueError("Teams must have 5 players")
         return sum([self.ratings[id] for id in player_ids])/5
 
-    def get_win_prob(self, team1, team2, divisor=400):
+    def get_win_prob(self, team1, team2):
         """Computes the win probability for a single match.
 
         Parameters
@@ -137,7 +137,7 @@ class PlayerModel:
         """
         rating_t1 = self.get_team_rating(team1)
         rating_t2 = self.get_team_rating(team2)
-        win_p_t1 = 1/(1 + pow(10, (rating_t2 - rating_t1)/divisor))
+        win_p_t1 = 1/(1 + pow(10, (rating_t2 - rating_t1)/400))
         return win_p_t1
 
     def get_bo2_probs(self, team1, team2):
@@ -194,8 +194,7 @@ class PlayerModel:
             self.ratings[team1[i]]+=adjustment_t1*quality_mod1*player_dist1[i]
             self.ratings[team2[i]]-=adjustment_t1*quality_mod2*player_dist2[i]
 
-    def compute_ratings(self, matches, track_history=False, stop_after=None,
-                        get_rating_bins=None):
+    def compute_ratings(self, matches, track_history=False, stop_after=None):
         """Updates model ratings given an iterable containing match
         date (teams, winner/loser)
 

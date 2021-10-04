@@ -7,6 +7,7 @@ from multiprocessing import Pool
 import random
 import copy
 import json
+
 from tqdm import tqdm
 
 from forecaster import PlayerModel, TeamModel
