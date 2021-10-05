@@ -121,10 +121,8 @@ def predict_matches(sim, matches, static_ratings):
                     team1 = sim._get_team(match[0])
                     team2 = sim._get_team(match[1])
                     if not static_ratings:
-                        for _ in range(match[2]): # team 1 wins
-                            sim.model.update_ratings(team1, team2, True)
-                        for _ in range(2 - match[2]): # team 2 wins
-                            sim.model.update_ratings(team1, team2, False)
+                        result = (match[2], 2 - match[2])
+                        sim.model.update_ratings(team1, team2, result)
 
                     records[match[0]][2 - match[2]] += 1
                     records[match[1]][match[2]] += 1
@@ -331,7 +329,7 @@ def main():
         default=False, help="Generates a full report for use on the website. "
         "Will only work if matches.db and ti_rosters.json exist in the data "
         "folder")
-    parser.add_argument("-k", default=45, type=int, help="k parameter for the "
+    parser.add_argument("-k", default=55, type=int, help="k parameter for the "
         "Elo model.")
     args = parser.parse_args()
 

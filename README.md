@@ -43,12 +43,12 @@ If you want the tabs linking to other predictions to show up like they do on the
 python generate_predictions.py -f 10000
 ```
 
-This will generate predictions with both the elo_ratings.json file and fixed ratings which force every match to use a 50% win probability. If you really want to get into the weeds, you can also adjust how win probabilities are calculated and how rating updates are calculated by editing the `get_win_prob()` and `update_ratings()` methods for the TeamModel object in forecaster.py (lines 372 and 413, respectively -- ignore the versions of these functions in PlayerModel).
+This will generate predictions with both the elo_ratings.json file and fixed ratings which force every match to use a 50% win probability. If you really want to get into the weeds, you can also adjust how win probabilities are calculated and how rating updates are calculated by editing the `get_win_prob()` and `update_ratings()` methods for the TeamModel object in forecaster.py (lines 443 and 484, respectively -- ignore the versions of these functions in PlayerModel).
 
 **Warning:** the other command line options (e.g., for computing new Elo ratings and generating retroactive results) require the match dataset and cannot be used. You can safely ignore these options.
 
 ## Model
-The prediction model uses a standard Elo rating system with the following two modifications:
+The prediction model uses a standard Elo rating system with the following adjustments:
 
 #### Player-based ratings
 Ratings are player-based rather than team-based. Win probabilities and rating adjustments are still calculated using team ratings, where a team's rating is equal to the average of that team's player ratings. This helps deal with some of the issues traditional Elo models run into with Dota 2 (frequent substitutes, organization/team ID changes, roster instability, etc.). The team rating adjustment after each match is distributed unequally among players such that each player's rating drifts towards the team rating -- thus, if a team maintains a consistent roster for a long period of time its players will eventually end up with identical ratings. This is accomplished by calculating each player's share of a rating adjustment as
@@ -57,6 +57,13 @@ Ratings are player-based rather than team-based. Win probabilities and rating ad
 <img src="https://render.githubusercontent.com/render/math?math=f(p_i) = \frac{1/r_i}{\sum_j1/r_j}">&nbsp;&nbsp;if the team wins,
 
 where r<sub>i</sub> is player i's rating and f(p<sub>i</sub>) is player i's share of the team's rating adjustment. Note that player ratings shouldn't be interpreted as individual player skill, because the model can't measure skill gap within a team. The main advantage is that this system is able to handle roster signings and major roster changes much better than a model which only assigns ratings to team IDs. It is also able to make a decent estimate of a newly-formed team's initial rating.
+
+### Series-based rating updates
+Ratings are updated based on series results rather than individual game results. As with a typical Elo system the rating update formula is r<sub>new</sub> = r<sub>old</sub> + k(score<sub>actual</sub> - score<sub>expected</sub>). The number of matches a team is expected to win in a series is simply match count × win probability<sup>*</sup>, so score<sub>actual</sub> is the percentage of matches the team won (e.g. 66.67% for a 2-1) and score<sub>expected</sub> is their win probability.
+
+I suspect that these numbers should probably be adjusted based on the type of match (bo1, bo2, bo3, etc.), but as far as I can tell the Steam Web API doesn't differentiate between a bo2 and a bo3. This means that it is impossible to tell whether a 2-0 series is a bo2 or a bo3. Heuristics could probably be used to make a reasonable guess (most tournaments will not have bo2s and bo3s on the same match day), but for now the model does not use this information.
+
+<sup>*</sup>As with a typical Elo system the win probability of team 1 is calculated as <img src="https://render.githubusercontent.com/render/math?math=f(p_i) = \frac{1}{1%2B10^{(r_2 - r_1)/400}}">, where r<sub>1</sub> is team 1's rating and r<sub>2</sub> is team 2's rating.
 
 #### K adjustments
 Because online matches are far more common than offline matches, the model tends to have a lot of difficulty accounting for regional strength. In general, the more competitive a region is the lower the average rating of its teams will be. This also means that teams which perform well in their region but struggle internationally (e.g. Team Aster) are very difficult to accurately predict. I'm planning on eventually properly accounting for this using region/league quality but for now I'm just using heuristics. The current model uses a dynamic k-factor based on team quality and Liquipedia tier:
@@ -68,13 +75,20 @@ Intuitively these two adjustments mean that the model is least sensitive to resu
 
 #### Evaluation
 
-All Elo predictions use a base k parameter of 45 (TI is a tier 1 tournament and a typical TI-quality team has a rating around 1900, so a typical TI match will result in an adjusted k of ~25). I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), and computed metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
+Elo predictions use a base k parameter of 55. A typical tier 1 team has a rating of around 1850, so a typical tier 1 match will result in an adjusted k of ~32. I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), then computed evaluation metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
 
 ![Plot comparing estimated win probability to actual win probability for tier 1 matches](image/model_calibration.png)
 
-The vertical lines on the actual probability plot represent 95% standard error bars for the sampled win percentage. The largest error is for the 419 matches which the model predicted the radiant team would win 30% of the time; in actuality, the radiant team won 35.8% of these matches with a standard error of 2.3%. Over all tier 1 matches in the evaluation time frame the model achieved a Brier Skill Score of 0.108. For additional reference, the same plot for all matches in tier 3 or better tournaments is shown below.
+The vertical lines on the actual probability plot represent 95% standard error bars for the sampled win percentage. The largest error is for the 387 series for which the model predicted the favored team would win 58% of games; in actuality, the favored team won 64.7% of these games with a standard error of 2.4%. Over all tier 1 matches in the evaluation time frame the model achieved a Brier Skill Score of 0.186. For additional reference, the same plot for all matches in tier 3 or better tournaments is shown below.
 
 ![Plot comparing estimated win probability to actual win probability for tier 1 -3 matches](image/model_calibration_tier3.png)
+
+## Monte Carlo Sampler
+As mentioned above, the simulator used for Monte Carlo sampling should be entirely in-line with TI rules. It first simulates the group stage, then simulates the main event using seeding from the group stage. I'm mostly interested in group stage probabilities so I haven't yet written code for handling elimination bracket results (this is why the retroactive predictions only go up to the end of the group stage) but might get around to it some time before the TI 10 main event.
+
+For Elo model predictions on the website, the simulator updates model ratings over the course of the simulation based on the simulated results (if you want to enable this for an output report you're generating use the `-s` command-line flag). For example, if Team A has a 10% chance to win their first match, then in the 10% of simulations in which they do so their rating will be improved accordingly and they will be more likely to win subsequent matches as a result. This widens the distribution of the simulated results a little, resulting in slightly lower high probabilities and slightly higher low probabilities.
+
+Because TI is in a sort of class of its own and many teams perform very differently at TI than they do in year leading up to it, I exaggerate this effect by starting the simulator's k parameter at double its base value on the first day of the group stage. It then decays by a linear factor each day until returning to its normal value on day 4. This means that all predictions will be reasonably conservative to start with, but the model will become increasingly confident in its team ratings as the group stage progresses. The modifier only applies to simulated results, not actual results, so match probabilities are not affected -- team ratings will increase or decrease as normal regardless of what day it is.
 
 ## Data Attribution
 Liquipedia data is used for determining league quality and was also used to collect team and player names for debugging during model development. Match data is collected from the Steam Web API.

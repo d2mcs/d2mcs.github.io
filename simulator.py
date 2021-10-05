@@ -163,7 +163,7 @@ class Simulator:
         win_p_t1 = self.model.get_win_prob(_team1, _team2)
         team1_win = random.random() < win_p_t1
         if not self.static_ratings:
-            self.model.update_ratings(_team1, _team2, team1_win)
+            self.model.update_ratings(_team1, _team2, (team1_win, 1-team1_win))
         return team1_win
 
     def sim_bo2(self, team1, team2):
@@ -186,13 +186,13 @@ class Simulator:
 
         team1_wins = 0
         team2_wins = 0
+        win_p_t1 = self.model.get_win_prob(_team1, team2)
         for _ in range(2):
-            win_p_t1 = self.model.get_win_prob(_team1, team2)
             team1_win = random.random() < win_p_t1
-            if not self.static_ratings:
-                self.model.update_ratings(_team1, team2, team1_win)
             team1_wins += int(team1_win)
             team2_wins += 1 - int(team1_win)
+        if not self.static_ratings:
+            self.model.update_ratings(_team1, team2, (team1_wins, team2_wins))
         return (team1_wins, team2_wins)
 
     def sim_bo_n(self, n, team1, team2):
@@ -220,13 +220,13 @@ class Simulator:
 
         team1_wins = 0
         team2_wins = 0
+        win_p_t1 = self.model.get_win_prob(_team1, _team2)
         while team1_wins < n/2 and team2_wins < n/2:
-            win_p_t1 = self.model.get_win_prob(_team1, _team2)
             team1_win = random.random() < win_p_t1
-            if not self.static_ratings:
-                self.model.update_ratings(_team1, _team2, team1_win)
             team1_wins += int(team1_win)
             team2_wins += 1 - int(team1_win)
+        if not self.static_ratings:
+            self.model.update_ratings(_team1, _team2, (team1_wins, team2_wins))
         return (team1_wins, team2_wins)
 
     def save_ratings(self, output_file):
@@ -628,24 +628,24 @@ class GroupStage(Simulator):
         points = []
 
         all_matches = []
-        for match_list in matches:
-            all_matches.extend(match_list)
-        for match in all_matches:
-            if match[2] == -1:
-                result = self.sim_bo2(match[0], match[1])
-            else:
-                result = (match[2], 2 - match[2])
-                if not self.static_ratings:
-                    for _ in range(result[0]):
+        base_k = self.model.k
+        for match_day, match_day_list in enumerate(matches):
+            self.model.k = base_k + base_k*(3 - match_day)/3
+            for match in match_day_list:
+                if match[2] == -1:
+                    result = self.sim_bo2(match[0], match[1])
+                else:
+                    result = (match[2], 2 - match[2])
+                    if not self.static_ratings:
+                        # use normal k parameter for actual results
+                        self.model.k = base_k
                         self.model.update_ratings(self._get_team(match[0]),
-                            self._get_team(match[1]), True)
-                    for _ in range(result[1]):
-                        self.model.update_ratings(self._get_team(match[0]),
-                            self._get_team(match[1]), False)
-            records[match[0]][2 - result[0]] += 1
-            records[match[1]][2 - result[1]] += 1
-            h2h_results[match[0]][match[1]] = result[0]
-            h2h_results[match[1]][match[0]] = result[1]
+                            self._get_team(match[1]), result)
+                        self.model.k = base_k + base_k*(3 - match_day)/3
+                records[match[0]][2 - result[0]] += 1
+                records[match[1]][2 - result[1]] += 1
+                h2h_results[match[0]][match[1]] = result[0]
+                h2h_results[match[1]][match[0]] = result[1]
 
         point_map = {}
         for team, record in records.items():

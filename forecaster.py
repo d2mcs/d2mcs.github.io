@@ -2,6 +2,8 @@
 and win probabilities.
 """
 
+import random
+
 class PlayerModel:
     """Modified Elo model. Unlike typical Elo models, ratings are
     tracked by player rather than by team to account for roster
@@ -89,7 +91,6 @@ class PlayerModel:
             5-element list containing each player's proportion of the
             rating update. Should always sum to 1.
         """
-        team_rating = self.get_team_rating(team)
         if win:
             inverse_sum = sum([pow(1/self.ratings[pid], self.p)
                                for pid in team])
@@ -153,16 +154,17 @@ class PlayerModel:
         Returns
         -------
         tuple of float
-            Probability of 2-0, 1-1, and 0-2 results (int that order).
+            Probability of 2-0, 1-1, and 0-2 results (in that order).
             Should always sum to 1
         """
         win_p_t1 = self.get_win_prob(team1, team2)
-        p2_0 = win_p_t1*win_p_t1
-        p0_2 = (1 - win_p_t1)*(1 - win_p_t1)
+        p2_0 = pow(win_p_t1, 2)
+        p0_2 = pow(1 - win_p_t1, 2)
         return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
 
-    def update_ratings(self, team1, team2, team1_win, league_tier=None):
-        """Updates model ratings given two teams and a match winner
+    def update_ratings(self, team1, team2, score, league_tier=None):
+        """Updates model ratings given two teams and a the results of s
+        series between those teams.
 
         Parameters
         ----------
@@ -170,8 +172,8 @@ class PlayerModel:
             list of player IDs for team 1.
         team2 : list of int
             list of player IDs for team 2.
-        team1_win : bool
-            True if team 1 won, False if team 1 lost
+        score : tuple of (int, int)
+            tuple containing number of team 1 wins and team 2 wins
         league_tier : int [1 - 7]
             Tier of tournament match is from. If provided, will reduce
             the adjustment size for lower-tier tournaments
@@ -185,14 +187,60 @@ class PlayerModel:
         else:
             league_mod = 1
 
-        win_p_t1 = self.get_win_prob(team1, team2)
-        adjustment_t1 = 5*league_mod*self.k*(int(team1_win) - win_p_t1)
+        expected_score = self.get_win_prob(team1, team2)
+        actual_score = score[0]/sum(score)
+        adjustment_t1 = 5*league_mod*self.k*(actual_score - expected_score)
 
-        player_dist1 = self._get_modifier_distribution(team1, team1_win)
-        player_dist2 = self._get_modifier_distribution(team2, not team1_win)
+        player_dist1 = self._get_modifier_distribution(team1,
+            actual_score > expected_score)
+        player_dist2 = self._get_modifier_distribution(team2,
+            actual_score < expected_score)
         for i in range(5):
             self.ratings[team1[i]]+=adjustment_t1*quality_mod1*player_dist1[i]
             self.ratings[team2[i]]-=adjustment_t1*quality_mod2*player_dist2[i]
+
+    def _get_series(self, matches, stop_after=None):
+        """Private helper method for compute_ratings which collects all
+        series in the order they occured.
+        """
+        series = {}
+        for match in matches:
+            if stop_after is not None and match.timestamp > stop_after:
+                break
+            series_id = match.series_id
+            if series_id in series:
+                # series IDs are occasionally reused for reasons I
+                # don't entirely understand.
+                while (series_id in series and (
+                        match.radiant_id not in series[series_id]
+                        or match.dire_id not in series[series_id])):
+                    series_id += .1
+
+            if series_id in series:
+                radiant_win = match.radiant_win
+                series[series_id][match.radiant_id]["score"] += radiant_win
+                series[series_id][match.dire_id]["score"] += 1 - radiant_win
+            else:
+                if series_id == 0:
+                    series_id = random.random()
+                if match.radiant_id == match.dire_id:
+                    continue
+                series[series_id] = {
+                    match.radiant_id: {
+                        "score": match.radiant_win, "players": match.radiant},
+                    match.dire_id: {
+                        "score": 1 - match.radiant_win, "players": match.dire},
+                    "timestamp": match.timestamp,
+                    "league_tier": match.league_tier
+                }
+        ordered_series = []
+        for series in sorted(series.values(), key=lambda x: x['timestamp']):
+            teams = [k for k in series.keys() if isinstance(k, (int, float))]
+            players = [series[t]["players"] for t in teams]
+            score = (series[teams[0]]["score"], series[teams[1]]["score"])
+            ordered_series.append((teams, players, score,
+                series["league_tier"], series["timestamp"]))
+        return ordered_series
 
     def compute_ratings(self, matches, track_history=False, stop_after=None):
         """Updates model ratings given an iterable containing match
@@ -221,29 +269,35 @@ class PlayerModel:
         """
         if track_history:
             team_ratings = {}
-        for match in matches:
-            if stop_after is not None and match.timestamp > stop_after:
-                break
-            self.update_ratings(match.radiant, match.dire,
-                                match.radiant_win, match.league_tier)
+
+        series_list = self._get_series(matches, stop_after)
+        for series in series_list:
+            team1_id, team2_id = series[0]
+            team1_players, team2_players = series[1]
+            score = series[2]
+            league_tier = series[3]
+            timestamp = series[4]
+
+            self.update_ratings(team1_players, team2_players,
+                                score, league_tier)
 
             if track_history:
-                if match.radiant_id not in team_ratings:
-                    team_ratings[match.radiant_id] = []
-                if match.dire_id not in team_ratings:
-                    team_ratings[match.dire_id] = []
-                team_ratings[match.radiant_id].append(
-                    (self.get_team_rating(match.radiant), match.timestamp))
-                team_ratings[match.dire_id].append(
-                    (self.get_team_rating(match.dire), match.timestamp))
+                if team1_id not in team_ratings:
+                    team_ratings[team1_id] = []
+                if team2_id not in team_ratings:
+                    team_ratings[team2_id] = []
+                team_ratings[team1_id].append(
+                    (self.get_team_rating(team1_players), timestamp))
+                team_ratings[team2_id].append(
+                    (self.get_team_rating(team2_players), timestamp))
 
         if track_history:
             return team_ratings
         else:
             return {}
 
-    def compute_ratings_evaluation_mode(self, matches, bins=20, start_time=0,
-            end_time=2147483647, max_tier=3):
+    def compute_ratings_evaluation_mode(self, matches, bins=20, start_at=0,
+            stop_after=2147483647, max_tier=3):
         """Function for calculating how well model estimations line up
         with actual outcomes. Matches are binned by estimated
         probability thresholds (e.g., win probability between 10% and
@@ -256,10 +310,10 @@ class PlayerModel:
             Iterable containing Match objects (from match_data.py)
         bins : int, default=20
             The number of probability thresholds to bin matches into
-        start_time : int, default=0
+        start_at : int, default=0
             Unix timestamp representing time of earliest match to use
             for metric calculation.
-        end_time : int, default=2147483647
+        stop_after : int, default=2147483647
             Unix timestamp representing time of latest match to use for
             metric calculation.
         max_tier : int, default=3
@@ -277,22 +331,31 @@ class PlayerModel:
             Mean squared error over all matches
         """
         count_bins = [[0, 0] for _ in range(bins)]
-        sum_squared_err = 0
+        model_sse = 0
+        baseline_sse = 0
         match_count = 0
-        for match in matches:
-            if match.timestamp < start_time:
-                continue
-            elif match.timestamp > end_time:
+        series_list = self._get_series(matches, stop_after)
+        for series in series_list:
+            team1_players, team2_players = series[1]
+            score = series[2]
+            league_tier = series[3]
+            timestamp = series[4]
+
+            if timestamp > stop_after:
                 break
-            if match.league_tier <= max_tier:
-                win_p_r = self.get_win_prob(match.radiant, match.dire)
-                count_bins[int(win_p_r*bins)][0] += int(match.radiant_win)
-                count_bins[int(win_p_r*bins)][1] += 1
-                sum_squared_err += pow(match.radiant_win - win_p_r, 2)
+            if timestamp > start_at and league_tier <= max_tier:
+                win_p_t1 = self.get_win_prob(team1_players, team2_players)
+                actual_score = score[0]/sum(score)
+
+                count_bins[int(win_p_t1*bins)][0] += actual_score
+                count_bins[int(win_p_t1*bins)][1] += 1
+
+                model_sse += pow(actual_score - win_p_t1, 2)
+                baseline_sse += pow(actual_score - 0.5, 2)
                 match_count += 1
 
-            self.update_ratings(match.radiant, match.dire,
-                                match.radiant_win, match.league_tier)
+            self.update_ratings(team1_players, team2_players,
+                                score, league_tier)
 
         prob_bins = []
         for event_count, total_count in count_bins:
@@ -301,7 +364,8 @@ class PlayerModel:
             else:
                 prob_bins.append((0, 0))
 
-        return prob_bins, sum_squared_err/match_count
+        skill_score = 1 - (model_sse/match_count)/(baseline_sse/match_count)
+        return prob_bins, skill_score
 
 class TeamModel:
     """Team-based Elo model. There is not currently any code for
@@ -405,14 +469,13 @@ class TeamModel:
             Should always sum to 1
         """
         win_p_t1 = self.get_win_prob(team1, team2)
-        p2_0 = win_p_t1*win_p_t1
-        p0_2 = (1 - win_p_t1)*(1 - win_p_t1)
+        p2_0 = pow(win_p_t1, 2)
+        p0_2 = pow(1 - win_p_t1, 2)
         return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
 
-    def update_ratings(self, team1, team2, team1_win):
-        """Updates model ratings given two teams and a match winner.
-        TeamModel is currently only used for TI predictions so league
-        quality is not used.
+    def update_ratings(self, team1, team2, score):
+        """Updates model ratings given two teams and a the results of s
+        series between those teams.
 
         Parameters
         ----------
@@ -420,16 +483,17 @@ class TeamModel:
             Team 1 name
         team2 : str
             Team 2 name
-        team1_win : bool
-            True if team 1 won, False if team 1 lost
+        score : tuple of (int, int)
+            tuple containing number of team 1 wins and team 2 wins
         """
         team1_rating = self.get_team_rating(team1)
         team2_rating = self.get_team_rating(team2)
         quality_mod1 = 1.5 - min(1, max(0, (team1_rating - 1000)/1000))
         quality_mod2 = 1.5 - min(1, max(0, (team2_rating - 1000)/1000))
 
-        win_p_t1 = self.get_win_prob(team1, team2)
-        adjustment_t1 = self.k*(int(team1_win) - win_p_t1)
+        expected_score = self.get_win_prob(team1, team2)
+        actual_score = score[0]/sum(score)
+        adjustment_t1 = self.k*(actual_score - expected_score)
 
-        self.ratings[team1] += quality_mod1*adjustment_t1
-        self.ratings[team2] -= quality_mod2*adjustment_t1
+        self.ratings[team1] += adjustment_t1*quality_mod1
+        self.ratings[team2] -= adjustment_t1*quality_mod2

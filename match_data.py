@@ -35,8 +35,9 @@ class Match:
         self.dire_id = result_tuple[12]
         self.timestamp = result_tuple[13]
         self.match_id = result_tuple[14]
-        self.league_id = result_tuple[15]
-        self.league_tier = result_tuple[16]
+        self.series_id = result_tuple[15]
+        self.league_id = result_tuple[16]
+        self.league_tier = result_tuple[17]
 
 class MatchDatabase:
     """Class for obtaining useful information (match info, players,
@@ -70,7 +71,8 @@ class MatchDatabase:
         match_query = f"""SELECT radiant_acc1, radiant_acc2, radiant_acc3,
                 radiant_acc4, radiant_acc5, dire_acc1, dire_acc2, dire_acc3,
                 dire_acc4, dire_acc5, radiant_win, radiant_teamid, dire_teamid,
-                timestamp, match_id, matches.league_id, liquipediatier.tier
+                timestamp, match_id, series_id, matches.league_id,
+                liquipediatier.tier
             FROM matches JOIN liquipediatier
                          ON matches.league_id = liquipediatier.league_id
             WHERE liquipediatier.tier <= {max_tier}
