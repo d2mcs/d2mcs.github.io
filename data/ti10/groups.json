@@ -1,24 +1,24 @@
 {
   "a": [
-    "SG esports",
-    "Fnatic",
-    "Quincy Crew",
     "Alliance",
-    "T1",
-    "Elephant",
-    "OG",
-    "Team Spirit",
-    "PSG.LGD"
-  ],
-  "b" : [
-    "Thunder Predator",
-    "beastcoast",
-    "Team Secret",
-    "Invictus Gaming",
-    "Team Undying",
-    "Vici Gaming",
     "Team Aster",
     "Evil Geniuses",
+    "Invictus Gaming",
+    "OG",
+    "T1",
+    "Thunder Predator",
+    "Team Undying",
     "Virtus.pro"
+  ],
+  "b" : [
+    "beastcoast",
+    "Elephant",
+    "Fnatic",
+    "PSG.LGD",
+    "Quincy Crew",
+    "SG esports",
+    "Team Secret",
+    "Team Spirit",
+    "Vici Gaming"
   ]
 }

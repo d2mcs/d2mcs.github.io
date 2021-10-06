@@ -1,94 +1,94 @@
 {
   "a": [
     [
-      ["T1", "OG", -1],
-      ["Alliance", "OG", -1],
-      ["SG esports", "PSG.LGD", -1],
-      ["Alliance", "T1", -1],
-      ["SG esports", "T1", -1],
-      ["Elephant", "OG", -1],
-      ["SG esports", "Quincy Crew", -1],
-      ["T1", "PSG.LGD", -1],
-      ["Alliance", "Team Spirit", -1],
-      ["SG esports", "Elephant", -1],
-      ["Elephant", "Team Spirit", -1],
-      ["Quincy Crew", "Elephant", -1]
+      ["Evil Geniuses", "Team Aster", -1],
+      ["Invictus Gaming", "T1", -1],
+      ["Virtus.pro", "Team Undying", -1],
+      ["OG", "Alliance", -1],
+      ["Invictus Gaming", "Team Undying", -1],
+      ["OG", "Thunder Predator", -1],
+      ["Virtus.pro", "Alliance", -1],
+      ["Evil Geniuses", "T1", -1],
+      ["Evil Geniuses", "Invictus Gaming", -1],
+      ["Virtus.pro", "OG", -1],
+      ["Team Aster", "Team Undying", -1],
+      ["Alliance", "Thunder Predator", -1]
     ],
     [
-      ["SG esports", "OG", -1],
-      ["Fnatic", "Team Spirit", -1],
-      ["OG", "Team Spirit", -1],
-      ["Fnatic", "PSG.LGD", -1],
-      ["Fnatic", "T1", -1],
-      ["T1", "Team Spirit", -1],
-      ["Quincy Crew", "Team Spirit", -1],
-      ["Fnatic", "Alliance", -1]
+      ["OG", "Team Aster", -1],
+      ["Virtus.pro", "T1", -1],
+      ["Evil Geniuses", "Alliance", -1],
+      ["Invictus Gaming", "Thunder Predator", -1],
+      ["Invictus Gaming", "Virtus.pro", -1],
+      ["Team Aster", "Alliance", -1],
+      ["Team Undying", "Thunder Predator", -1],
+      ["OG", "T1", -1]
     ],
     [
-      ["SG esports", "Alliance", -1],
-      ["Quincy Crew", "OG", -1],
-      ["SG esports", "Fnatic", -1],
-      ["Elephant", "PSG.LGD", -1],
-      ["Quincy Crew", "T1", -1],
-      ["SG esports", "Team Spirit", -1],
-      ["Fnatic", "Elephant", -1],
-      ["Quincy Crew", "Alliance", -1],
-      ["OG", "PSG.LGD", -1],
-      ["Quincy Crew", "PSG.LGD", -1],
-      ["Fnatic", "OG", -1],
-      ["Alliance", "PSG.LGD", -1]
+      ["Evil Geniuses", "OG", -1],
+      ["Team Aster", "T1", -1],
+      ["Team Undying", "Alliance", -1],
+      ["Virtus.pro", "Thunder Predator", -1],
+      ["OG", "Team Undying", -1],
+      ["Invictus Gaming", "Team Aster", -1],
+      ["T1", "Alliance", -1],
+      ["Evil Geniuses", "Thunder Predator", -1],
+      ["Evil Geniuses", "Virtus.pro", -1],
+      ["Invictus Gaming", "Alliance", -1],
+      ["T1", "Team Undying", -1],
+      ["Team Aster", "Thunder Predator", -1]
     ],
     [
-      ["Alliance", "Elephant", -1],
-      ["Team Spirit", "PSG.LGD", -1],
-      ["Fnatic", "Quincy Crew", -1],
-      ["T1", "Elephant", -1]
+      ["Invictus Gaming", "OG", -1],
+      ["Evil Geniuses", "Team Undying", -1],
+      ["Virtus.pro", "Team Aster", -1],
+      ["T1", "Thunder Predator", -1]
     ]
   ],
   "b": [
     [
-      ["Team Secret", "Invictus Gaming", -1],
-      ["Thunder Predator", "beastcoast", -1],
-      ["Team Aster", "Evil Geniuses", -1],
-      ["beastcoast", "Evil Geniuses", -1],
-      ["Thunder Predator", "Team Aster", -1],
-      ["Thunder Predator", "Team Undying", -1],
+      ["Team Secret", "Team Spirit", -1],
+      ["PSG.LGD", "Quincy Crew", -1],
+      ["Elephant", "beastcoast", -1],
+      ["Vici Gaming", "Fnatic", -1],
+      ["PSG.LGD", "Team Spirit", -1],
+      ["Elephant", "Fnatic", -1],
+      ["Vici Gaming", "SG esports", -1],
+      ["Team Secret", "beastcoast", -1]
+    ],
+    [
+      ["PSG.LGD", "Team Secret", -1],
+      ["Elephant", "Vici Gaming", -1],
+      ["Quincy Crew", "beastcoast", -1],
+      ["Fnatic", "SG esports", -1],
+      ["Elephant", "Team Spirit", -1],
+      ["PSG.LGD", "Fnatic", -1],
+      ["Vici Gaming", "Quincy Crew", -1],
+      ["Team Secret", "SG esports", -1],
+      ["Team Secret", "Elephant", -1],
+      ["Vici Gaming", "Team Spirit", -1],
+      ["beastcoast", "SG esports", -1],
+      ["Quincy Crew", "Fnatic", -1]
+    ],
+    [
+      ["PSG.LGD", "Vici Gaming", -1],
+      ["Quincy Crew", "Team Spirit", -1],
+      ["beastcoast", "Fnatic", -1],
+      ["Elephant", "SG esports", -1],
+      ["Vici Gaming", "beastcoast", -1],
+      ["Team Spirit", "Fnatic", -1],
+      ["Team Secret", "Quincy Crew", -1],
+      ["PSG.LGD", "SG esports", -1]
+    ],
+    [
+      ["PSG.LGD", "Elephant", -1],
+      ["Quincy Crew", "SG esports", -1],
+      ["Team Spirit", "beastcoast", -1],
+      ["Team Secret", "Fnatic", -1],
       ["Team Secret", "Vici Gaming", -1],
-      ["Team Secret", "Evil Geniuses", -1]
-    ],
-    [
-      ["Team Undying", "Evil Geniuses", -1],
-      ["Evil Geniuses", "Virtus.pro", -1],
-      ["Invictus Gaming", "Evil Geniuses", -1],
-      ["Team Undying", "Virtus.pro", -1],
-      ["Thunder Predator", "Invictus Gaming", -1],
-      ["Team Undying", "Vici Gaming", -1],
-      ["beastcoast", "Team Undying", -1],
-      ["Vici Gaming", "Team Aster", -1],
-      ["Invictus Gaming", "Vici Gaming", -1],
-      ["Team Secret", "Team Undying", -1],
-      ["Thunder Predator", "Vici Gaming", -1],
-      ["beastcoast", "Virtus.pro", -1]
-    ],
-    [
-      ["beastcoast", "Team Secret", -1],
-      ["Team Secret", "Virtus.pro", -1],
-      ["Vici Gaming", "Evil Geniuses", -1],
-      ["beastcoast", "Invictus Gaming", -1],
-      ["Invictus Gaming", "Team Aster", -1],
-      ["Team Secret", "Team Aster", -1],
-      ["Invictus Gaming", "Virtus.pro", -1],
-      ["Vici Gaming", "Virtus.pro", -1]
-    ],
-    [
-      ["Team Undying", "Team Aster", -1],
-      ["beastcoast", "Vici Gaming", -1],
-      ["Thunder Predator", "Virtus.pro", -1],
-      ["Thunder Predator", "Evil Geniuses", -1],
-      ["Team Aster", "Virtus.pro", -1],
-      ["Invictus Gaming", "Team Undying", -1],
-      ["beastcoast", "Team Aster", -1],
-      ["Thunder Predator", "Team Secret", -1]
+      ["PSG.LGD", "beastcoast", -1],
+      ["Elephant", "Quincy Crew", -1],
+      ["Team Spirit", "SG esports", -1]
     ]
   ]
 }
