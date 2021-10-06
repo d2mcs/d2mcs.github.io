@@ -417,11 +417,30 @@ class GroupStage(Simulator):
         """
         tiebreak_points = {team: 0 for team in teams}
         matches = list(combinations(teams, 2))
+
+        random.shuffle(matches)
         for match in matches:
-            if self.sim_bo1(match[0], match[1]):
-                tiebreak_points[match[0]] += 1
-            else:
-                tiebreak_points[match[1]] += 1
+            team1_win = self.sim_bo1(match[0], match[1])
+            tiebreak_points[match[1 - int(team1_win)]] += 1
+            tiebreak_points[match[int(team1_win)]] -= 1
+
+            # a 3-way tiebreaker may be cut off early if a team goes
+            # 2-0 or 0-2 in the first two matches and such a result
+            # resolves the tie without needing the third match
+            # (see TI8 for an example)
+            # in theory something similar could happen with a 4+ way
+            # tie but matches might be played simultaneously and there
+            # isn't any precedence to determine whether the matches
+            # would end early anyway so I explicitly only stop early
+            # for 3-way ties
+            if len(teams) == 3:
+                if (tiebreak_points[match[1-int(team1_win)]] == len(teams) - 1
+                      and boundary[0] == 0):
+                    break
+                if (tiebreak_points[match[int(team1_win)]] == 1 - len(teams)
+                      and boundary[1] == len(teams) - 1):
+                    break
+
         team_order = self._order_teams(teams, tiebreak_points)
 
         rank_start = 0
