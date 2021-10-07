@@ -10,8 +10,8 @@
       ["Virtus.pro", "Alliance", 2],
       ["Evil Geniuses", "T1", 2],
       ["Evil Geniuses", "Invictus Gaming", 0],
-      ["Virtus.pro", "OG", -1],
-      ["Team Aster", "Team Undying", -1],
+      ["Virtus.pro", "OG", 1],
+      ["Team Aster", "Team Undying", 0],
       ["Alliance", "Thunder Predator", -1]
     ],
     [
