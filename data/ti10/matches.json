@@ -54,7 +54,7 @@
       ["PSG.LGD", "Team Spirit", 2],
       ["Elephant", "Fnatic", 1],
       ["Vici Gaming", "SG esports", 2],
-      ["Team Secret", "beastcoast", -1]
+      ["Team Secret", "beastcoast", 0]
     ],
     [
       ["PSG.LGD", "Team Secret", -1],
