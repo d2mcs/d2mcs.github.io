@@ -779,6 +779,17 @@ class TISimulator(Simulator):
             "17-18": 0, "13-16": 0, "9-12": 0, "7-8": 0, "5-6": 0,
             "4": 0, "3": 0, "2": 0, "1": 0} for team in self.rosters.keys()
         }
+        point_rank_probs = {
+            group: {
+                team: {
+                    points: {
+                        rank: 0 for rank in range(len(groups[group]))
+                    } for points in range(len(groups[group])*2 - 1)
+                } for team in groups[group]
+            } for group in ["a", "b"] }
+        record_probs = {group: {team: [0 for _ in range(len(groups["a"])*2-1)]
+                        for team in groups[group]} for group in ["a", "b"]}
+
         # all results are stored in memory until the pool completes,
         # so pool size is limited to 1,000 to reduce memory usage
         remaining_trials = n_trials
@@ -797,6 +808,8 @@ class TISimulator(Simulator):
                             group_rank_probs[group][team][i] += 1/n_trials
                             if i == 8:
                                 final_rank_probs[team]["17-18"] += 1/n_trials
+                            point_rank_probs[group][team][record][i] += 1
+                            record_probs[group][team][record] += 1/n_trials
                         for boundary, sizes in tiebreak_sizes[group].items():
                             for size in sizes:
                                 tiebreak_probs[group][boundary][
@@ -806,4 +819,12 @@ class TISimulator(Simulator):
                             final_rank_probs[team][rank] += 1/n_trials
                 pbar.update(pool_size)
 
-        return group_rank_probs, tiebreak_probs, final_rank_probs
+        for group in ["a", "b"]:
+            for team, record_map in point_rank_probs[group].items():
+                for record, point_counts in record_map.items():
+                    points_sum = sum(point_counts.values())
+                    for points, amount in point_counts.items():
+                        if amount > 0:
+                            point_counts[points] = amount / points_sum
+        return (group_rank_probs, tiebreak_probs,
+                final_rank_probs, record_probs, point_rank_probs)

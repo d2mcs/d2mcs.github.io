@@ -30,12 +30,19 @@ def format_percentage(prob, n_samples):
     else:
         return f"{prob*100:.1f}%"
 
-def color_prob(p):
+def color_prob(p, color="purple"):
     """Calculates a shade of purple for a probability"""
-    # generic purple color scaling
-    return (hex(int(240 - 120*p))[2:].zfill(2)
-          + hex(int(240 - 130*p))[2:].zfill(2)
-          + hex(int(240 - 70*p))[2:].zfill(2))
+    if color == "purple":
+        hexcode = (hex(int(240 - 120*p))[2:].zfill(2)
+              + hex(int(240 - 130*p))[2:].zfill(2)
+              + hex(int(240 - 70*p))[2:].zfill(2))
+    elif color == "green":
+        hexcode = (hex(int(240 - 140*p))[2:].zfill(2)
+              + hex(int(240 - 70*p))[2:].zfill(2)
+              + hex(int(240 - 140*p))[2:].zfill(2))
+    else:
+        raise ValueError("Invalid color")
+    return hexcode
 
 def format_gs_rank_probabilities(rank_probs, n_samples):
     """Formats rank/bracket probabilities"""
@@ -100,6 +107,29 @@ def format_final_rank_probabilities(rank_probs, n_samples):
                     "color": color_prob(prob)})
 
     return formatted_probs
+
+def format_point_rank_probabilities(point_rank_probs, record_probs, n_samples):
+    formatted_pr_probs = {"a": {}, "b": {}}
+    for group in ["a", "b"]:
+        for team, record_map in point_rank_probs[group].items():
+            formatted_pr_probs[group][team] = {}
+            for record, point_counts in record_map.items():
+                formatted_pr_probs[group][team][record] = {}
+                record_dict = formatted_pr_probs[group][team][record]
+                probs = [format_percentage(p, n_samples)
+                         for p in point_counts.values()]
+                colors = [color_prob(p) for p in point_counts.values()]
+                for i in range(9):
+                    record_dict[i+1] = {"prob": probs[i], "color": colors[i]}
+    formatted_record_probs = {"a": {}, "b": {}}
+    for group in ["a", "b"]:
+        for team, records in record_probs[group].items():
+            formatted_record_probs[group][team] = []
+            for record_prob in records:
+                formatted_record_probs[group][team].append({
+                        "prob": format_percentage(record_prob, n_samples),
+                        "color": color_prob(record_prob, color="green")})
+    return formatted_pr_probs, formatted_record_probs
 
 def predict_matches(sim, matches, static_ratings):
     """Code for computing each team's record and the probabilities of
@@ -185,8 +215,8 @@ def generate_html(ratings_file, matches, output_file, n_samples, folder, k,
     with open(f"data/{folder}/groups.json") as group_f:
         groups = json.load(group_f)
 
-    group_rank_probs, tiebreak_probs, final_rank_probs = sim.sim_group_stage(
-        groups, matches, n_samples)
+    (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
+        point_rank_probs) = sim.sim_group_stage(groups, matches, n_samples)
 
     records, formatted_matches = predict_matches(sim, matches, static_ratings)
     ratings = {team: f"{sim.model.get_team_rating(sim._get_team(team)):.0f}"
@@ -197,6 +227,8 @@ def generate_html(ratings_file, matches, output_file, n_samples, folder, k,
         tiebreak_probs, n_samples)
     formatted_final_probs = format_final_rank_probabilities(
         final_rank_probs, n_samples)
+    formatted_point_ranks, record_probs = format_point_rank_probabilities(
+        point_rank_probs, record_probs, n_samples)
 
     with open("data/template.html") as input_f:
         template_str = input_f.read()
@@ -204,6 +236,7 @@ def generate_html(ratings_file, matches, output_file, n_samples, folder, k,
 
     output = template.render(gs_prob_strs=formatted_gs_probs,
         final_prob_strs=formatted_final_probs,
+        point_ranks_strs=formatted_point_ranks, record_probs=record_probs,
         tiebreak_prob_strs=formatted_tie_probs, records=records,
         ratings=ratings, matches=formatted_matches, timestamp=timestamp,
         n_samples=n_samples, output_file=output_file, tabs=tabs, title=title)
@@ -347,7 +380,8 @@ def main():
 
         tabs = {
             "active": ["Current", ".html"],
-            "all": [["Current", ".html"]]
+            "all": [["Pre-tournament", "-pre.html"], ["Day 1", "-1.html"],
+                    ["Current", ".html"]]
         }
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
