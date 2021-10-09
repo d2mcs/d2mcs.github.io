@@ -166,7 +166,7 @@ class Simulator:
             self.model.update_ratings(_team1, _team2, (team1_win, 1-team1_win))
         return team1_win
 
-    def sim_bo2(self, team1, team2):
+    def sim_bo2(self, team1, team2, momentum=0.0):
         """Simulates a best-of-2 match.
 
         Parameters
@@ -175,7 +175,11 @@ class Simulator:
             Team name (TeamModel) or list of player IDs (PlayerModel).
         team2 : str or list of int
             Team name (TeamModel) or list of player IDs (PlayerModel).
-
+        momentum : float, default=0.0
+            Using game probabilities alone results in consistent over-
+            estimation of draw probabilities in bo2s. Momentum adds a
+            given percentage to the win probability of the team that
+            won game one to reduce draw probability.
         Returns
         -------
         tuple of (int, int)
@@ -191,6 +195,11 @@ class Simulator:
             team1_win = random.random() < win_p_t1
             team1_wins += int(team1_win)
             team2_wins += 1 - int(team1_win)
+            if momentum > 0:
+                if team1_win:
+                    win_p_t1 = min(max(0.95, win_p_t1), win_p_t1 + momentum)
+                else:
+                    win_p_t1 = max(min(0.05, win_p_t1), win_p_t1 - momentum)
         if not self.static_ratings:
             self.model.update_ratings(_team1, team2, (team1_wins, team2_wins))
         return (team1_wins, team2_wins)
@@ -652,7 +661,10 @@ class GroupStage(Simulator):
             self.model.k = base_k + base_k*(3 - match_day)/3
             for match in match_day_list:
                 if match[2] == -1:
-                    result = self.sim_bo2(match[0], match[1])
+                    if self.static_ratings:
+                        result = self.sim_bo2(match[0], match[1])
+                    else:
+                        result = self.sim_bo2(match[0], match[1], momentum=0.1)
                 else:
                     result = (match[2], 2 - match[2])
                     if not self.static_ratings:

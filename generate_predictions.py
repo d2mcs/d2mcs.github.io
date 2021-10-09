@@ -144,7 +144,8 @@ def predict_matches(sim, matches, static_ratings):
             formatted_matches[group].append([])
             for match in match_list:
                 match_probs = sim.model.get_bo2_probs(
-                    sim._get_team(match[0]), sim._get_team(match[1]))
+                    sim._get_team(match[0]), sim._get_team(match[1]),
+                    draw_adjustment=not static_ratings)
                 if match[2] != -1:
                     # match has already been played, so update team
                     # ratings and current records
@@ -381,7 +382,7 @@ def main():
         tabs = {
             "active": ["Current", ".html"],
             "all": [["Pre-tournament", "-pre.html"], ["Day 1", "-1.html"],
-                    ["Current", ".html"]]
+                    ["Day 2", "-2.html"], ["Current", ".html"]]
         }
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)

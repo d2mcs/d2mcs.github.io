@@ -141,7 +141,7 @@ class PlayerModel:
         win_p_t1 = 1/(1 + pow(10, (rating_t2 - rating_t1)/400))
         return win_p_t1
 
-    def get_bo2_probs(self, team1, team2):
+    def get_bo2_probs(self, team1, team2, draw_adjustment=False):
         """Computes win/draw/loss probabilities for a bo2 match.
 
         Parameters
@@ -150,6 +150,10 @@ class PlayerModel:
             list of player IDs for team 1.
         team2 : list of int
             list of player IDs for team 2.
+        draw_adjustment : bool, default=False
+            Using game probabilities alone results in consistent over-
+            estimation of draw probabilities in bo2s. This counteracts
+            that error by reducing draw change by 10% for most matches.
 
         Returns
         -------
@@ -158,8 +162,13 @@ class PlayerModel:
             Should always sum to 1
         """
         win_p_t1 = self.get_win_prob(team1, team2)
-        p2_0 = pow(win_p_t1, 2)
-        p0_2 = pow(1 - win_p_t1, 2)
+        if not draw_adjustment:
+            p2_0 = pow(win_p_t1, 2)
+            p0_2 = pow(1 - win_p_t1, 2)
+        else:
+            # winner probability adjustment shouldn't exceed 95%
+            p2_0 = win_p_t1*min(max(0.95, win_p_t1), win_p_t1 + 0.1)
+            p0_2 = (1-win_p_t1)*min(max(0.95, 1-win_p_t1), (1-win_p_t1) + 0.1)
         return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
 
     def update_ratings(self, team1, team2, score, league_tier=None):
@@ -452,7 +461,7 @@ class TeamModel:
         win_p_t1 = 1/(1 + pow(10, (rating_t2 - rating_t1)/400))
         return win_p_t1
 
-    def get_bo2_probs(self, team1, team2):
+    def get_bo2_probs(self, team1, team2, draw_adjustment=False):
         """Computes win/draw/loss probabilities for a bo2 match.
 
         Parameters
@@ -461,6 +470,10 @@ class TeamModel:
             Team 1 name
         team2 : str
             Team 2 name
+        draw_adjustment : bool, default=False
+            Using game probabilities alone results in consistent over-
+            estimation of draw probabilities in bo2s. This counteracts
+            that error by reducing draw change by 10% for most matches.
 
         Returns
         -------
@@ -469,8 +482,13 @@ class TeamModel:
             Should always sum to 1
         """
         win_p_t1 = self.get_win_prob(team1, team2)
-        p2_0 = pow(win_p_t1, 2)
-        p0_2 = pow(1 - win_p_t1, 2)
+        if not draw_adjustment:
+            p2_0 = pow(win_p_t1, 2)
+            p0_2 = pow(1 - win_p_t1, 2)
+        else:
+            # winner probability adjustment shouldn't exceed 95%
+            p2_0 = win_p_t1*min(max(0.95, win_p_t1), win_p_t1 + 0.1)
+            p0_2 = (1-win_p_t1)*min(max(0.95, 1-win_p_t1), (1-win_p_t1) + 0.1)
         return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
 
     def update_ratings(self, team1, team2, score):

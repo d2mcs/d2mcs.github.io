@@ -59,7 +59,7 @@
 <div class="container mt-3 mb-3" style="max-width: 1500px">
   <h1 class="text-center">{{title}} Predictions</h1>
   <h6 class="text-center">{{n_samples}} samples <small><sup><a style="color: black; text-decoration: none" href="#footnote">*</a></sup></small></h6>
-  <h6 class="text-center">Updated {{timestamp}} UTC</h6>
+  <h6 class="text-center">Updated {{timestamp}} UTC{% if output_file == 'elo' %} <small><sup><a style="color: black; text-decoration: none" href="#footnote">**</a></sup></small>{% endif %}</h6>
   <hr>
   <div class="d-flex justify-content-around flex-wrap">
     {% for group in ['a', 'b'] %}
@@ -276,8 +276,9 @@
       </div>
     </div>
     <div id="footnote" class="pt-4">
-      <p><small><sup>*</sup> Due to the nature of sampling it is impossible to completely guarantee an outcome. Outcomes are marked with <b>✓</b> or <b>-</b> if they always or never occur across all simulations. For this report ({{n_samples}} samples), outcomes that occur at least {{100/n_samples}}% of the time will be detected with at least 63% probability and outcomes that occur at least {{100/(n_samples/10)}}% of the time will be correctly detected with at least 99.99% probability.</small></p>
-      <p>Source code and model details can be found <a href="https://github.com/d2mcs/d2mcs.github.io">here</a>.</p>
+      <p><small><sup>*</sup> Due to the nature of sampling it is impossible to completely guarantee an outcome. Outcomes are marked with <b>✓</b> or <b>-</b> if they always or never occur across all simulations. For this report ({{n_samples}} samples), outcomes that occur at least {{100/n_samples}}% of the time will be detected with at least 63% probability and outcomes that occur at least {{100/(n_samples/10)}}% of the time will be correctly detected with at least 99.99% probability.{% if output_file == 'elo' %}<br><br>
+      <sup>**</sup>Day 3 Model Update: draw probabilities for the Elo Ratings simulation no longer rely entirely on game win probabilities. The winner of game 1 has a ~10% additional chance to win game 2, reducing draw probabilities across the board. Note that Fixed Ratings probabilities remain unchanged (50/50 for each game).{% endif %}</small></p>
+      <p>Source code and model details can be found <a href="https://github.com/d2mcs/d2mcs.github.io">here</a></p>
     </div>
   </div>
   </div>
