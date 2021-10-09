@@ -84,9 +84,9 @@
           <td><img src="image/{{team}}.png" height=20px> {{team}}</td>
           <td class="text-center">{{ratings[team]}}</td>
           <td class="text-center">{{records[team][0]}}-{{records[team][1]}}-{{records[team][2]}}</td>
-          <td class="text-center" style="background-color: #{{prob_dict['upper-color']}}">{{prob_dict["upper"]}}</td>
-          <td class="text-center" style="background-color: #{{prob_dict['lower-color']}}">{{prob_dict["lower"]}}</td>
-          <td class="text-center" style="background-color: #{{prob_dict['elim-color']}}">{{prob_dict["elim"]}}</td>
+          <td class="text-center" style="background-color: #{{prob_dict['upper-color']}}">{{prob_dict["upper"]|e}}</td>
+          <td class="text-center" style="background-color: #{{prob_dict['lower-color']}}">{{prob_dict["lower"]|e}}</td>
+          <td class="text-center" style="background-color: #{{prob_dict['elim-color']}}">{{prob_dict["elim"]|e}}</td>
         </tr>
         {% endfor %}
         </tbody>
@@ -118,16 +118,16 @@
                 {% for match in matches[group][day] %}
                 <tr>
                   <td {% if match['result'] == 2 %}style="background-color: #ccffcc"
-                    {% elif match['result'] == 1 %}style="background-color: #fafacc"
-                    {% elif match['result'] == 0 %}style="background-color: #ffcccc"
-                    {% endif %}><img src="image/{{match['teams'][0]}}.png" height=20px><span class="d-none d-sm-block d-md-inline"> {{match['teams'][0]}}</span>{% if match['result'] != -1 %} <b>({{match['result']}})<b>{% endif %}</td>
-                  <td class="text-center" style="background-color: #{{match['colors'][0]}}">{{match['probs'][0]}}</td>
-                  <td class="text-center" style="background-color: #{{match['colors'][1]}}">{{match['probs'][1]}}</td>
-                  <td class="text-center" style="background-color: #{{match['colors'][2]}}">{{match['probs'][2]}}</td>
+                    {%- elif match['result'] == 1 %}style="background-color: #fafacc"
+                    {%- elif match['result'] == 0 %}style="background-color: #ffcccc"
+                    {%- endif %}><img src="image/{{match['teams'][0]}}.png" height=20px><span class="d-none d-sm-block d-md-inline"> {{match['teams'][0]}}</span>{% if match['result'] != -1 %} <b>({{match['result']}})</b>{% endif %}</td>
+                  <td class="text-center" style="background-color: #{{match['colors'][0]}}">{{match['probs'][0]|e}}</td>
+                  <td class="text-center" style="background-color: #{{match['colors'][1]}}">{{match['probs'][1]|e}}</td>
+                  <td class="text-center" style="background-color: #{{match['colors'][2]}}">{{match['probs'][2]|e}}</td>
                   <td {% if match['result'] == 0 %}style="background-color: #ccffcc"
-                    {% elif match['result'] == 1 %}style="background-color: #fafacc"
-                    {% elif match['result'] == 2 %}style="background-color: #ffcccc"
-                    {% endif %} style="text-overflow: ellipsis;"><img src="image/{{match['teams'][1]}}.png" height=20px><span class="d-none d-sm-block d-md-inline"> {{match['teams'][1]}}</span>{% if match['result'] != -1 %} <b>({{2 - match['result']}})<b>{% endif %}</td>
+                    {%- elif match['result'] == 1 %}style="background-color: #fafacc"
+                    {%- elif match['result'] == 2 %}style="background-color: #ffcccc"
+                    {%- endif %}><img src="image/{{match['teams'][1]}}.png" height=20px><span class="d-none d-sm-block d-md-inline"> {{match['teams'][1]}}</span>{% if match['result'] != -1 %} <b>({{2 - match['result']}})</b>{% endif %}</td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -160,7 +160,7 @@
         <tr>
           <td><img src="image/{{team}}.png" height=20px><span class="d-none d-sm-block d-md-inline"> {{team}}</span></td>
           {% for i in range(9) %}
-          <td style="background-color: #{{prob_dict['%d-color' % i]}}" class="text-center">{{prob_dict[i]}}</td>
+          <td style="background-color: #{{prob_dict['%d-color' % i]}}" class="text-center">{{prob_dict[i]|e}}</td>
           {% endfor %}
         </tr>
         {% endfor %}
@@ -198,8 +198,9 @@
       <ul class="nav nav-pills nav-fill">
         {% for team in point_ranks_strs[group].keys() %}
         <li class="nav-item">
-          <a href="#{{team|replace(' ','')|replace('.','')}}-point-rank" id="{{team|replace(' ','')|replace('.','')}}-point-rank-pill" class="nav-link{% if loop.index == 1 %} active{% endif %}" data-bs-toggle="tab" aria-controls="{{team|replace(' ','')|replace('.','')}}-point-rank"{% if loop.index == 1 %} aria-current="page"{% endif %}>
-          <img src="image/{{team}}.png" height=20px>
+          <a href="#{{team|replace(' ','')|replace('.','')}}-point-rank" id="{{team|replace(' ','')|replace('.','')}}-point-rank-pill" class="text-dark nav-link{% if loop.index == 1 %} active{% endif %}" data-bs-toggle="tab" aria-controls="{{team|replace(' ','')|replace('.','')}}-point-rank"{% if loop.index == 1 %} aria-current="page"{% endif %}>
+          <img src="image/{{team}}.png" height=20px><br>
+          ({{records[team][0]*2 + records[team][1]}}-{{records[team][2]*2 + records[team][1]}})
         </a></li>
         {% endfor %}
       </ul>
@@ -226,9 +227,9 @@
           {% for points, rank_dict in point_ranks_strs[group][team].items() %}
           <tr>
             <td class="text-center">{{points}} - {{16 - points}}</td>
-            <td class="text-center" style="background-color: #{{record_probs[group][team][points]['color']}}; border-right: 1px solid black">{{record_probs[group][team][points]['prob']}}</td>
+            <td class="text-center" style="background-color: #{{record_probs[group][team][points]['color']}}; border-right: 1px solid black">{{record_probs[group][team][points]['prob']|e}}</td>
             {% for rank, prob_dict in rank_dict.items() %}
-            <td style="background-color: #{{prob_dict['color']}}" class="text-center">{{prob_dict['prob']}}</td>
+            <td style="background-color: #{{prob_dict['color']}}" class="text-center">{{prob_dict['prob']|e}}</td>
             {% endfor %}
           </tr>
           {% endfor %}
@@ -266,7 +267,7 @@
         <tr>
           <td><img src="image/{{team}}.png" height=20px><span class="d-none d-lg-block d-xl-inline"> {{team}}</span></td>
           {% for i in range(9) %}
-          <td style="background-color: #{{prob_dict[i]['color']}}" class="text-center">{{prob_dict[i]['prob']}}</td>
+          <td style="background-color: #{{prob_dict[i]['color']}}" class="text-center">{{prob_dict[i]['prob']|e}}</td>
           {% endfor %}
         </tr>
         {% endfor %}
