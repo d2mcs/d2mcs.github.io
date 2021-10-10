@@ -1,0 +1,36 @@
+{
+  "UB-R1": [
+    ["Invictus Gaming", "Team Spirit", -1],
+    ["Team Secret", "OG", -1],
+    ["PSG.LGD", "T1", -1],
+    ["Virtus.pro", "Vici Gaming", -1]
+  ],
+  "UB-R2": [
+    ["", "", -1],
+    ["", "", -1]
+  ],
+  "UB-F": ["", "", -1],
+  "LB-R1": [
+    ["Team Undying", "Fnatic", -1],
+    ["Quincy Crew", "Team Aster", -1],
+    ["beastcoast", "Alliance", -1],
+    ["Evil Geniuses", "Elephant", -1]
+  ],
+  "LB-R2": [
+      ["", "", -1],
+      ["", "", -1],
+      ["", "", -1],
+      ["", "", -1]
+  ],
+  "LB-R3": [
+    ["", "", -1],
+    ["", "", -1]
+  ],
+  "LB-R4": [
+    ["", "", -1],
+    ["", "", -1]
+  ],
+  "LB-R5": ["", "", -1],
+  "LB-F": ["", "", -1],
+  "GF": ["", "", -1]
+}

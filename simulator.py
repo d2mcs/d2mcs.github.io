@@ -305,6 +305,9 @@ class EliminationBracket(Simulator):
             "GF": [None, None]
         }
 
+    def load_bracket(self, bracket):
+        self.bracket = bracket
+
     def simulate(self):
         """Simulates every game in the bracket and returns the
         resulting placement of each team.
@@ -744,9 +747,40 @@ class TISimulator(Simulator):
                 {"a": tiebreak_sizes_a, "b": tiebreak_sizes_b},
                 ranks)
 
+    def get_sample_main_event(self, groups, matches, bracket):
+        """Gets a single sample of final ranks from a single
+        EliminationBracket simulation.
+
+        Parameters
+        ----------
+        groups : dict
+            (See: sim_group_stage documentation below)
+        matches : dict
+            (See: sim_group_stage documentation below)
+        bracket : dict
+            Bracket with team seeds and match results (results
+            currently are not used)
+
+        Returns
+        -------
+            dict
+                Mapping from ranks to the teams placed at that rank
+        """
+        if not self.static_ratings:
+            working_model = copy.deepcopy(self.model)
+        else:
+            working_model = self.model
+
+        bracket_sim = EliminationBracket(working_model, "team",
+                                         self.rosters, self.static_ratings)
+        bracket_sim.load_bracket(bracket)
+        ranks = bracket_sim.simulate()
+
+        return ranks
+
     def sim_group_stage(self, groups, matches, n_trials):
-        """Wrapper for running sample_group_stage many many times.
-        uses multiprocessing to speed up results, which it combines
+        """Wrapper for running get_sample many many times. Uses
+        multiprocessing to speed up results, which it combines
         afterwards to construct the output distribution.
 
         Parameters
@@ -838,5 +872,82 @@ class TISimulator(Simulator):
                     for points, amount in point_counts.items():
                         if amount > 0:
                             point_counts[points] = amount / points_sum
+        return (group_rank_probs, tiebreak_probs,
+                final_rank_probs, record_probs, point_rank_probs)
+
+    def sim_main_event(self, groups, matches, bracket, n_trials):
+        """Wrapper for running get_sample_main_event many times.
+        Arguments and return values are identical to sim_group_stage
+        with the exception of bracket, which should contain bracket
+        seeding and results (see main_event_matches.json in ti10/data
+        for an example)
+        """
+        group_rank_probs = {
+            "a": {team: [0 for _ in range(len(groups["a"]))]
+                  for team in groups["a"]},
+            "b": {team: [0 for _ in range(len(groups["b"]))]
+                  for team in groups["b"]}}
+        tiebreak_probs = {
+            "a": {boundary: [0 for _ in range(len(groups["a"]) - 1)]
+                  for boundary in [3,7]},
+            "b": {boundary: [0 for _ in range(len(groups["b"]) - 1)]
+                  for boundary in [3,7]}}
+        final_rank_probs = {team: {
+            "17-18": 0, "13-16": 0, "9-12": 0, "7-8": 0, "5-6": 0,
+            "4": 0, "3": 0, "2": 0, "1": 0} for team in self.rosters.keys()
+        }
+        point_rank_probs = {
+            group: {
+                team: {
+                    points: {
+                        rank: 0 for rank in range(len(groups[group]))
+                    } for points in range(len(groups[group])*2 - 1)
+                } for team in groups[group]
+            } for group in ["a", "b"] }
+        record_probs = {group: {team: [0 for _ in range(len(groups["a"])*2-1)]
+                        for team in groups[group]} for group in ["a", "b"]}
+
+        # easiest way to get correct group stage data is just to use
+        # the simulator code with a single sample
+        points, tiebreak_sizes, ranks = self.get_sample(groups, matches)
+        for group in ["a", "b"]:
+            for i, (team, record) in enumerate(points[group]):
+                group_rank_probs[group][team][i] += 1
+                if i == 8:
+                    final_rank_probs[team]["17-18"] += 1
+                point_rank_probs[group][team][record][i] += 1
+                record_probs[group][team][record] += 1
+            for boundary, sizes in tiebreak_sizes[group].items():
+                for size in sizes:
+                    tiebreak_probs[group][boundary][size - 2] += 1
+
+        # get_sample doesn't update team ratings, so that has to
+        # happen seperately. sim_group_stage and sim_main_event aren't
+        # supposed to update the model so a copy has to be saved so it
+        # can be restored afterwards
+        model = copy.deepcopy(self.model)
+        for group in ["a", "b"]:
+            for match_list in matches[group]:
+                for match in match_list:
+                    result = (match[2], 2 - match[2])
+                    self.model.update_ratings(match[0], match[1], result)
+
+        remaining_trials = n_trials
+        with tqdm(total=n_trials) as pbar:
+            while remaining_trials > 0:
+                pool_size = min(1000, remaining_trials)
+                remaining_trials -= pool_size
+
+                pool = Pool()
+                sim_results = [pool.apply_async(self.get_sample_main_event, (
+                    groups, matches, bracket)) for _ in range(pool_size)]
+                for sim_result in sim_results:
+                    ranks = sim_result.get()
+                    for rank, teams in ranks.items():
+                        for team in teams:
+                            final_rank_probs[team][rank] += 1/n_trials
+                pbar.update(pool_size)
+
+        self.model = model
         return (group_rank_probs, tiebreak_probs,
                 final_rank_probs, record_probs, point_rank_probs)

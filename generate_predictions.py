@@ -166,7 +166,7 @@ def predict_matches(sim, matches, static_ratings):
 
 def generate_html(ratings_file, matches, output_file, n_samples, folder, k,
                   timestamp="", static_ratings=False, tabs=None,
-                  title="The International 10"):
+                  title="The International 10", bracket_file=None):
     """Generates an output report with group stage probabilities.
 
     Parameters
@@ -210,14 +210,26 @@ def generate_html(ratings_file, matches, output_file, n_samples, folder, k,
         report.
     title : str, default="The International 10"
         Name to put at the top of the report.
+    bracket_file : str, default=None
+        Used for simulating just the elimination bracket. Group stage
+        matches must be complete for group stage data to be correct. If
+        provided, should be a path to a JSON file containing bracket
+        results.
     """
     sim = TISimulator.from_ratings_file(ratings_file, k,
         static_ratings=static_ratings)
     with open(f"data/{folder}/groups.json") as group_f:
         groups = json.load(group_f)
 
-    (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
-        point_rank_probs) = sim.sim_group_stage(groups, matches, n_samples)
+    if bracket_file is None:
+        (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
+            point_rank_probs) = sim.sim_group_stage(groups, matches, n_samples)
+    else:
+        with open(bracket_file) as bracket_f:
+            bracket = json.load(bracket_f)
+        (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
+            point_rank_probs) = sim.sim_main_event(groups, matches,
+                                                   bracket, n_samples)
 
     records, formatted_matches = predict_matches(sim, matches, static_ratings)
     ratings = {team: f"{sim.model.get_team_rating(sim._get_team(team)):.0f}"
@@ -382,15 +394,18 @@ def main():
         tabs = {
             "active": ["Current", ".html"],
             "all": [["Pre-tournament", "-pre.html"], ["Day 1", "-1.html"],
-                    ["Day 2", "-2.html"], ["Current", ".html"]]
+                    ["Day 2", "-2.html"], ["Day 3", "-3.html"],
+                    ["Current", ".html"]]
         }
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
         generate_html("data/ti10/elo_ratings.json", matches, "elo", n_samples,
-                      "ti10", k, timestamp, tabs=tabs)
+                      "ti10", k, timestamp, tabs=tabs,
+                      bracket_file="data/ti10/main_event_matches.json")
         generate_html("data/ti10/fixed_ratings.json", matches, "fixed",
                       n_samples, "ti10", k, timestamp,
-                      static_ratings=True, tabs=tabs)
+                      static_ratings=True, tabs=tabs,
+                      bracket_file="data/ti10/main_event_matches.json")
     else:
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
