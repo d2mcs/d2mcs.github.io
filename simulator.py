@@ -324,7 +324,7 @@ class EliminationBracket(Simulator):
             self.bracket["UB-R2"][i//2][i % 2] = match[winner]
             self.bracket["LB-R2"][i][0] = match[1 - winner]
         for i, match in enumerate(self.bracket["LB-R1"]):
-            winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
+            winner = 1 - int(self.sim_bo1(match[0], match[1]))
             self.bracket["LB-R2"][i][1] = match[winner]
             ranks["13-16"].add(match[1 - winner])
         for i, match in enumerate(self.bracket["LB-R2"]):
