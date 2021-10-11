@@ -389,7 +389,8 @@ def main():
                                     event, args.train_elo)
     elif args.full_report:
         if args.train_elo:
-            generate_team_ratings(3, k, 1.5, "ti10")
+            generate_team_ratings(3, k, 1.5, "ti10",
+                stop_after=datetime.fromisoformat("2021-10-05").timestamp())
 
         tabs = {
             "active": ["Current", ".html"],
