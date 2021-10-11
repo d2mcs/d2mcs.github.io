@@ -925,12 +925,13 @@ class TISimulator(Simulator):
         # happen seperately. sim_group_stage and sim_main_event aren't
         # supposed to update the model so a copy has to be saved so it
         # can be restored afterwards
-        model = copy.deepcopy(self.model)
-        for group in ["a", "b"]:
-            for match_list in matches[group]:
-                for match in match_list:
-                    result = (match[2], 2 - match[2])
-                    self.model.update_ratings(match[0], match[1], result)
+        if not self.static_ratings:
+            model = copy.deepcopy(self.model)
+            for group in ["a", "b"]:
+                for match_list in matches[group]:
+                    for match in match_list:
+                        result = (match[2], 2 - match[2])
+                        self.model.update_ratings(match[0], match[1], result)
 
         remaining_trials = n_trials
         with tqdm(total=n_trials) as pbar:
@@ -948,6 +949,7 @@ class TISimulator(Simulator):
                             final_rank_probs[team][rank] += 1/n_trials
                 pbar.update(pool_size)
 
-        self.model = model
+        if not self.static_ratings:
+            self.model = model
         return (group_rank_probs, tiebreak_probs,
                 final_rank_probs, record_probs, point_rank_probs)
