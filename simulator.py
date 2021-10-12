@@ -284,29 +284,43 @@ class EliminationBracket(Simulator):
         picks = random.choices([0,1], k=4)
         self.bracket = {
             "UB-R1": [
-                [seeds["a"][0], seeds["b"][2 + picks[0]]],
-                [seeds["b"][1], seeds["a"][2 + (1 - picks[1])]],
-                [seeds["b"][0], seeds["a"][2 + picks[1]]],
-                [seeds["a"][1], seeds["b"][2 + (1 - picks[0])]],
+                [seeds["a"][0], seeds["b"][2 + picks[0]], (0, 0)],
+                [seeds["b"][1], seeds["a"][2 + (1 - picks[1])], (0, 0)],
+                [seeds["b"][0], seeds["a"][2 + picks[1]], (0, 0)],
+                [seeds["a"][1], seeds["b"][2 + (1 - picks[0])], (0, 0)],
             ],
-            "UB-R2": [[None, None], [None, None]],
-            "UB-F": [None, None],
+            "UB-R2": [[None, None, (0, 0)], [None, None, (0, 0)]],
+            "UB-F": [[None, None, (0, 0)]],
             "LB-R1": [
-                [seeds["a"][4], seeds["b"][6 + picks[2]]],
-                [seeds["b"][5], seeds["a"][6 + (1 - picks[3])]],
-                [seeds["b"][4], seeds["a"][6 + picks[3]]],
-                [seeds["a"][5], seeds["b"][6 + (1 - picks[2])]],
+                [seeds["a"][4], seeds["b"][6 + picks[2]], (0, 0)],
+                [seeds["b"][5], seeds["a"][6 + (1 - picks[3])], (0, 0)],
+                [seeds["b"][4], seeds["a"][6 + picks[3]], (0, 0)],
+                [seeds["a"][5], seeds["b"][6 + (1 - picks[2])], (0, 0)],
             ],
-            "LB-R2": [[None, None], [None, None], [None, None], [None, None]],
-            "LB-R3": [[None, None], [None, None]],
-            "LB-R4": [[None, None], [None, None]],
-            "LB-R5": [None, None],
-            "LB-F": [None, None],
-            "GF": [None, None]
+            "LB-R2": [[None, None, (0, 0)], [None, None, (0, 0)],
+                      [None, None, (0, 0)], [None, None, (0, 0)]],
+            "LB-R3": [[None, None, (0, 0)], [None, None, (0, 0)]],
+            "LB-R4": [[None, None, (0, 0)], [None, None, (0, 0)]],
+            "LB-R5": [[None, None, (0, 0)]],
+            "LB-F": [[None, None, (0, 0)]],
+            "GF": [[None, None, (0, 0)]]
         }
 
     def load_bracket(self, bracket):
         self.bracket = bracket
+
+    def _get_winner(self, round, n, i):
+        """Private helper function which gets the winner of a match
+        from the bracket if the match has happens and simulates it
+        otherwise.
+        """
+        match = self.bracket[round][i]
+        if max(match[2]) < n//2 + 1:
+            result = self.sim_bo_n(n, match[0], match[1])
+            match[2] = result
+        elif not self.static_ratings:
+            self.model.update_ratings(*match)
+        return 1 - int(match[2][0] == n//2 + 1)
 
     def simulate(self):
         """Simulates every game in the bracket and returns the
@@ -323,46 +337,46 @@ class EliminationBracket(Simulator):
         ranks = {"13-16": set(), "9-12": set(), "7-8": set(), "5-6": set(),
                  "4": set(), "3": set(), "2": set(), "1": set()}
         for i, match in enumerate(self.bracket["UB-R1"]):
-            winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
+            winner = self._get_winner("UB-R1", 3, i)
             self.bracket["UB-R2"][i//2][i % 2] = match[winner]
             self.bracket["LB-R2"][i][0] = match[1 - winner]
         for i, match in enumerate(self.bracket["LB-R1"]):
-            winner = 1 - int(self.sim_bo1(match[0], match[1]))
+            winner = self._get_winner("LB-R1", 1, i)
             self.bracket["LB-R2"][i][1] = match[winner]
             ranks["13-16"].add(match[1 - winner])
         for i, match in enumerate(self.bracket["LB-R2"]):
-            winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
+            winner = self._get_winner("LB-R2", 3, i)
             self.bracket["LB-R3"][i//2][i % 2] = match[winner]
             ranks["9-12"].add(match[1 - winner])
         for i, match in enumerate(self.bracket["UB-R2"]):
-            winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
-            self.bracket["UB-F"][i] = match[winner]
+            winner = self._get_winner("UB-R2", 3, i)
+            self.bracket["UB-F"][0][i] = match[winner]
             self.bracket["LB-R4"][1 - i][0] = match[1 - winner]
         for i, match in enumerate(self.bracket["LB-R3"]):
-            winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
+            winner = self._get_winner("LB-R3", 3, i)
             self.bracket["LB-R4"][i][1] = match[winner]
             ranks["7-8"].add(match[1 - winner])
         for i, match in enumerate(self.bracket["LB-R4"]):
-            winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
-            self.bracket["LB-R5"][i] = match[winner]
+            winner = self._get_winner("LB-R4", 3, i)
+            self.bracket["LB-R5"][0][i] = match[winner]
             ranks["5-6"].add(match[1 - winner])
-        match = self.bracket["UB-F"]
-        winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
-        self.bracket["GF"][0] = match[winner]
-        self.bracket["LB-F"][0] = match[1 - winner]
+        match = self.bracket["UB-F"][0]
+        winner = self._get_winner("UB-F", 3, 0)
+        self.bracket["GF"][0][0] = match[winner]
+        self.bracket["LB-F"][0][0] = match[1 - winner]
 
-        match = self.bracket["LB-R5"]
-        winner = int(self.sim_bo_n(3, match[0],match[1])[0] != 2)
-        self.bracket["LB-F"][1] = match[winner]
+        match = self.bracket["LB-R5"][0]
+        winner = self._get_winner("LB-R5", 3, 0)
+        self.bracket["LB-F"][0][1] = match[winner]
         ranks["4"].add(match[1 - winner])
 
-        match = self.bracket["LB-F"]
-        winner = int(self.sim_bo_n(3, match[0], match[1])[0] != 2)
-        self.bracket["GF"][1] = match[winner]
+        match = self.bracket["LB-F"][0]
+        winner = self._get_winner("LB-F", 3, 0)
+        self.bracket["GF"][0][1] = match[winner]
         ranks["3"].add(match[1 - winner])
 
-        match = self.bracket["GF"]
-        winner = int(self.sim_bo_n(5, match[0], match[1])[0] != 3)
+        match = self.bracket["GF"][0]
+        winner = self._get_winner("GF", 5, 0)
         ranks["2"].add(match[1 - winner])
         ranks["1"].add(match[winner])
         return ranks

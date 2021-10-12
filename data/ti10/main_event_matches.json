@@ -1,36 +1,36 @@
 {
   "UB-R1": [
-    ["Invictus Gaming", "Team Spirit", -1],
-    ["Team Secret", "OG", -1],
-    ["PSG.LGD", "T1", -1],
-    ["Virtus.pro", "Vici Gaming", -1]
+    ["Invictus Gaming", "Team Spirit", [0, 0]],
+    ["Team Secret", "OG", [0, 0]],
+    ["PSG.LGD", "T1", [0, 0]],
+    ["Virtus.pro", "Vici Gaming", [0, 0]]
   ],
   "UB-R2": [
-    ["", "", -1],
-    ["", "", -1]
+    ["", "", [0, 0]],
+    ["", "", [0, 0]]
   ],
-  "UB-F": ["", "", -1],
+  "UB-F": [["", "", [0, 0]]],
   "LB-R1": [
-    ["Team Undying", "Fnatic", -1],
-    ["Quincy Crew", "Team Aster", -1],
-    ["beastcoast", "Alliance", -1],
-    ["Evil Geniuses", "Elephant", -1]
+    ["Team Undying", "Fnatic", [0, 0]],
+    ["Quincy Crew", "Team Aster", [0, 0]],
+    ["beastcoast", "Alliance", [0, 0]],
+    ["Evil Geniuses", "Elephant", [0, 0]]
   ],
   "LB-R2": [
-      ["", "", -1],
-      ["", "", -1],
-      ["", "", -1],
-      ["", "", -1]
+      ["", "", [0, 0]],
+      ["", "", [0, 0]],
+      ["", "", [0, 0]],
+      ["", "", [0, 0]]
   ],
   "LB-R3": [
-    ["", "", -1],
-    ["", "", -1]
+    ["", "", [0, 0]],
+    ["", "", [0, 0]]
   ],
   "LB-R4": [
-    ["", "", -1],
-    ["", "", -1]
+    ["", "", [0, 0]],
+    ["", "", [0, 0]]
   ],
-  "LB-R5": ["", "", -1],
-  "LB-F": ["", "", -1],
-  "GF": ["", "", -1]
+  "LB-R5": [["", "", [0, 0]]],
+  "LB-F": [["", "", [0, 0]]],
+  "GF": [["", "", [0, 0]]]
 }
