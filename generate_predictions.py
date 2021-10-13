@@ -99,7 +99,8 @@ def format_match_probabilities(match_probs):
 def format_final_rank_probabilities(rank_probs, n_samples):
     """Formats final rank probabilities"""
     formatted_probs = {}
-    for team, prob_dict in sorted(rank_probs.items(), key=lambda x: x[1]["1"]):
+    for team, prob_dict in sorted(rank_probs.items(),
+          key=lambda x: sum([i*p for i,p in enumerate(x[1].values())])):
         formatted_probs[team] = []
         for rank, prob in prob_dict.items():
             formatted_probs[team].append({
