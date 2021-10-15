@@ -6,10 +6,10 @@
     ["Virtus.pro", "Vici Gaming", [2, 1]]
   ],
   "UB-R2": [
-    ["Invictus Gaming", "Team Secret", [0, 0]],
-    ["PSG.LGD", "Virtus.pro", [0, 0]]
+    ["Invictus Gaming", "Team Secret", [0, 2]],
+    ["PSG.LGD", "Virtus.pro", [2, 0]]
   ],
-  "UB-F": [["", "", [0, 0]]],
+  "UB-F": [["Team Secret", "PSG.LGD", [0, 0]]],
   "LB-R1": [
     ["Team Undying", "Fnatic", [0, 1]],
     ["Quincy Crew", "Team Aster", [1, 0]],
@@ -19,16 +19,16 @@
   "LB-R2": [
       ["Team Spirit", "Fnatic", [2, 0]],
       ["OG", "Quincy Crew", [2, 0]],
-      ["T1", "Alliance", [0, 0]],
-      ["Vici Gaming", "Evil Geniuses", [0, 0]]
+      ["T1", "Alliance", [2, 0]],
+      ["Vici Gaming", "Evil Geniuses", [2, 1]]
   ],
   "LB-R3": [
     ["Team Spirit", "OG", [0, 0]],
-    ["", "", [0, 0]]
+    ["T1", "Vici Gaming", [0, 0]]
   ],
   "LB-R4": [
-    ["", "", [0, 0]],
-    ["", "", [0, 0]]
+    ["Virtus.pro", "", [0, 0]],
+    ["Invictus Gaming", "", [0, 0]]
   ],
   "LB-R5": [["", "", [0, 0]]],
   "LB-F": [["", "", [0, 0]]],
