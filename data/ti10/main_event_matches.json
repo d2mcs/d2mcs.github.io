@@ -23,14 +23,14 @@
       ["Vici Gaming", "Evil Geniuses", [2, 1]]
   ],
   "LB-R3": [
-    ["Team Spirit", "OG", [0, 0]],
-    ["T1", "Vici Gaming", [0, 0]]
+    ["Team Spirit", "OG", [2, 0]],
+    ["T1", "Vici Gaming", [1, 2]]
   ],
   "LB-R4": [
-    ["Virtus.pro", "", [0, 0]],
-    ["Invictus Gaming", "", [0, 0]]
+    ["Virtus.pro", "Team Spirit", [1, 2]],
+    ["Invictus Gaming", "Vici Gaming", [0, 0]]
   ],
-  "LB-R5": [["", "", [0, 0]]],
+  "LB-R5": [["Team Spirit", "", [0, 0]]],
   "LB-F": [["", "", [0, 0]]],
   "GF": [["", "", [0, 0]]]
 }
