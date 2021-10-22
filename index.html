@@ -6,7 +6,7 @@
   <title>d2mcs</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">d2mcs</a>
@@ -24,29 +24,30 @@
       </div>
     </div>
   </nav>
-  <div class="container mt-3 mb-3" style="max-width: 1200px">
-    <h1 class="text-center">d2mcs</h1>
-    <img class="mx-auto d-block mb-2" src="image/d2mcs.png" style="max-width: 275px">
-    <h6 class="text-center">Dota 2 DPC/TI Forecasts</h6>
-    <hr>
-    <h2>Upcoming Events</h2>
-    DPC forecasts are currently in progress. This section will be updated once DPC details are confirmed.<br><br>
-    <ul>
-      <li>Fall 2021 DPC: North America</li>
-      <li>Fall 2021 DPC: South America</li>
-      <li>Fall 2021 DPC: Western Europe</li>
-      <li>Fall 2021 DPC: Eastern Europe</li>
-      <li>Fall 2021 DPC: China</li>
-      <li>Fall 2021 DPC: Southeast Asia</li>
-    </ul>
-    <h2>Past Events</h2>
-    <ul>
-      <li><a href="ti10/elo-pre.html">The International 10</a></li>
-      <li><a href="ti9/elo-pre.html">The International 2019</a></li>
-      <li><a href="ti8/elo-pre.html">The International 2018</a></li>
-      <li><a href="ti7/elo-pre.html">The International 2017</a></li>
-    </ul>
-    <div class="fixed-bottom">
+    <div class="container mt-3 mb-3 flex-grow-1" style="max-width: 1200px">
+      <h1 class="text-center">d2mcs</h1>
+      <img class="mx-auto d-block mb-2" src="image/d2mcs.png" style="max-width: 275px">
+      <h6 class="text-center">Dota 2 DPC/TI Forecasts</h6>
+      <hr>
+      <h2>Upcoming Events</h2>
+      DPC forecasts are currently in progress. This section will be updated once DPC details are confirmed.<br><br>
+      <ul>
+        <li>Fall 2021 DPC: North America</li>
+        <li>Fall 2021 DPC: South America</li>
+        <li>Fall 2021 DPC: Western Europe</li>
+        <li>Fall 2021 DPC: Eastern Europe</li>
+        <li>Fall 2021 DPC: China</li>
+        <li>Fall 2021 DPC: Southeast Asia</li>
+      </ul>
+      <h2>Past Events</h2>
+      <ul>
+        <li><a href="ti10/elo-pre.html">The International 10</a></li>
+        <li><a href="ti9/elo-pre.html">The International 2019</a></li>
+        <li><a href="ti8/elo-pre.html">The International 2018</a></li>
+        <li><a href="ti7/elo-pre.html">The International 2017</a></li>
+      </ul>
+    </div>
+    <footer>
       <hr>
       <div class="container" style="max-width: 1500px">
         <p><small>
@@ -54,6 +55,5 @@
           d2mcs uses league data collected from Liquipedia and match data collected from the Steam WebAPI. This site is not endorsed by or affiliated with Valve or Steam.
         </small></p>
       </div>
-    </div>
-  </div>
+    </footer>
 </body>
