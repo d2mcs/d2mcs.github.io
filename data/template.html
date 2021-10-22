@@ -24,6 +24,9 @@
             <a class="nav-link{% if output_file == 'elo' %} active" aria-current="page" {% else %}" {% endif %}href="elo{{tabs['active'][1]}}">Elo Ratings</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link{% if output_file == 'glicko' %} active" aria-current="page" {% else %}" {% endif %} href="glicko{{tabs['active'][1]}}">Glicko-2 Ratings</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link{% if output_file == 'fixed' %} active" aria-current="page" {% else %}" {% endif %} href="fixed{{tabs['active'][1]}}">Fixed Ratings</a>
           </li>
           <li class="nav-item dropdown">
@@ -36,7 +39,7 @@
               {% endfor %}
             </ul>
           </li>
- 
+
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">

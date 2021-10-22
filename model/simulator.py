@@ -10,8 +10,8 @@ import json
 
 from tqdm import tqdm
 
-from forecaster import PlayerModel, TeamModel
-from match_data import MatchDatabase
+from model.forecaster import PlayerModel, TeamModel
+from model.forecaster_glicko import Glicko2Model
 
 class Simulator:
     """Generic simulator class to be subclassed by more specific
@@ -51,58 +51,6 @@ class Simulator:
         self.static_ratings = static_ratings
 
     @classmethod
-    def from_match_data(cls, roster_file, match_db_file, max_tier,
-            k, p=1.5, static_ratings=False, stop_after=None):
-        """Constructs and returns a Simulator object by generating a
-        player model using match history.
-
-        Parameters
-        ----------
-        roster_file : str
-            Path to JSON file mapping team names to player IDs. The
-            file should look something like this:
-            {
-              "Team A": [1, 2, 3, 4, 5],
-              "Team B": [6, 7, 8, 9, 10]
-            }
-        match_db_file : str, default=None
-            Path to sqlite database containing match data. This will be
-            used to calculate initial team ratings. If not provided,
-            the Elo model will be initialized by adding all players in
-            the team rosters using the default rating of 1500.
-        max_tier : int, default=2
-            If match database is provided: maximum tier of matches to
-            grab from match database
-        k : int, default=20
-            k parameter for player model. See model documentation for
-            details
-        p : float, default=1.5
-            p parameter for player model. See model documentation for
-            details
-        static_ratings : bool
-            (See: constructor documentation above)
-        stop_after : int, default=None
-            If provided, the model will ignore matches played after
-            this date (provided as a unix timestamp)
-
-        Returns
-        -------
-        Simulator
-            Constructed simulator object
-        """
-        match_db = MatchDatabase(match_db_file)
-        player_ids = match_db.get_player_ids()
-        p_model = PlayerModel(player_ids, k, p)
-        p_model.compute_ratings(match_db.get_matches(max_tier),
-            stop_after=stop_after)
-
-        with open(roster_file) as roster_f:
-            rosters = json.load(roster_f)
-        model = TeamModel.from_player_model(p_model, rosters)
-
-        return cls(model, "team", rosters, static_ratings=static_ratings)
-
-    @classmethod
     def from_ratings_file(cls, ratings_file, k, static_ratings=False):
         """Constructs and returns a Simulator object from a file
         containing precomputed / manually determined team ratings.
@@ -116,7 +64,7 @@ class Simulator:
               "Team A": 1500,
               "Team B": 1600
             }
-        k : int, default=20
+        k : int
             k parameter for player model. See model documentation for
             details
         static_ratings : bool
@@ -130,6 +78,43 @@ class Simulator:
         with open(ratings_file) as rating_f:
             ratings = json.load(rating_f)
         model = TeamModel(ratings, k)
+        rosters = {team: [] for team in ratings}
+        return cls(model, "team", rosters, static_ratings=static_ratings)
+
+    @classmethod
+    def from_ratings_file_glicko2(cls, ratings_file, tau,static_ratings=False):
+        """Constructs and returns a Simulator object from a file
+        containing precomputed / manually determined team ratings.
+
+        Parameters
+        ----------
+        ratings_file : str
+            Path to JSON file mapping team names to ratings in the form
+            of a 3 tuple containing (rating, RD, volatility). The file
+            should look something like this:
+            {
+              "Team A": [1500, 350, 0.6],
+              "Team B": [1600, 300, 0.59]
+            }
+            Ratings/RDs should use the Glicko-1 scale rather than the
+            Glicko-2 scale (e.g., default ratings should be 1500).
+        tau : int
+            tau parameter for player model. See model documentation for
+            details
+        static_ratings : bool
+            (See: constructor documentation above)
+
+        Returns
+        -------
+        Simulator
+            Constructed simulator object
+        """
+        with open(ratings_file) as rating_f:
+            ratings = json.load(rating_f)
+        model = Glicko2Model(tau)
+        for team, rating_tuple in ratings.items():
+            model.team_ratings[team] = ((rating_tuple[0] - 1500)/173.7178,
+                rating_tuple[1]/173.7178, rating_tuple[2])
         rosters = {team: [] for team in ratings}
         return cls(model, "team", rosters, static_ratings=static_ratings)
 
@@ -238,6 +223,37 @@ class Simulator:
             self.model.update_ratings(_team1, _team2, (team1_wins, team2_wins))
         return (team1_wins, team2_wins)
 
+    def get_bo2_probs(self, team1, team2, draw_adjustment=False):
+        """Computes win/draw/loss probabilities for a bo2 match.
+
+        Parameters
+        ----------
+        team1 : list of int
+            list of player IDs for team 1.
+        team2 : list of int
+            list of player IDs for team 2.
+        draw_adjustment : bool, default=False
+            Using game probabilities alone results in consistent over-
+            estimation of draw probabilities in bo2s. This counteracts
+            that error by reducing draw change by 10% for most matches.
+
+        Returns
+        -------
+        tuple of float
+            Probability of 2-0, 1-1, and 0-2 results (in that order).
+            Should always sum to 1
+        """
+        win_p_t1 = self.model.get_win_prob(self._get_team(team1),
+                                           self._get_team(team2))
+        if not draw_adjustment:
+            p2_0 = pow(win_p_t1, 2)
+            p0_2 = pow(1 - win_p_t1, 2)
+        else:
+            # winner probability adjustment shouldn't exceed 95%
+            p2_0 = win_p_t1*min(max(0.95, win_p_t1), win_p_t1 + 0.1)
+            p0_2 = (1-win_p_t1)*min(max(0.95, 1-win_p_t1), (1-win_p_t1) + 0.1)
+        return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
+
     def save_ratings(self, output_file):
         """Saves model ratings to a JSON file (nicely formatted for
         readability). Can be loaded by from_ratings_file.
@@ -255,7 +271,7 @@ class Simulator:
                     output_f.write(f'  "{team}": {rating:.2f},\n')
                 else:
                     output_f.write(f'  "{team}": {rating:.2f}\n')
-            output_f.write("}")
+            output_f.write("}\n")
 
 class EliminationBracket(Simulator):
     """16-team double elimination bracket Simulator. Like GroupStage,
