@@ -107,11 +107,11 @@ def retroactive_predictions(timestamp, k, n_samples, tournament, train_elo):
                 for match in matches[group][day]:
                     match[2] = -1
 
-        #generate_html_ti(f"data/{tournament}/elo_ratings.json", matches, "elo",
-        #    n_samples, tournament, k, timestamp, tabs=tabs, title=title)
-        #generate_html_ti(f"data/{tournament}/fixed_ratings.json", matches,
-        #    "fixed", n_samples, tournament, k, timestamp, static_ratings=True,
-        #    tabs=tabs, title=title)
+        generate_html_ti(f"data/{tournament}/elo_ratings.json", matches, "elo",
+            n_samples, tournament, k, timestamp, tabs=tabs, title=title)
+        generate_html_ti(f"data/{tournament}/fixed_ratings.json", matches,
+            "fixed", n_samples, tournament, k, timestamp, static_ratings=True,
+            tabs=tabs, title=title)
         generate_html_ti(f"data/{tournament}/glicko_ratings.json", matches,
             "glicko", n_samples, tournament, k, timestamp,
             tabs=tabs, title=title)
