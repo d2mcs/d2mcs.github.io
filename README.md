@@ -7,15 +7,17 @@ This repository contains code for estimating the probability of various outcomes
 - The top seeded teams from the group stage select their opponent from the bottom two seeds in their bracket from the other group (team selection can't really be predicted so the model just decides between the two randomly).
 - The elimination bracket correctly orders teams and crosses over for the losers of upper bracket round 2.
 
-Predictions are made both with generic team ratings (i.e., 50% win probability for each match) and ratings based on a modified Elo model (mathematical details below). Unfortunately I can't share match data pulled from the Steam Web API so it is not currently possible to replicate the Elo model's team ratings using the provided code. However, the model's ratings are saved as a plaintext JSON file (in [data/ti10/elo_ratings.json](data/ti10/elo_ratings.json) for TI10) and can be manually modified or replaced with the output of a different model to see how this would affect the output distribution.
+Predictions are made both with generic team ratings (i.e., 50% win probability for each match) and ratings based on a modified Elo model (mathematical details below). Unfortunately I can't share match data pulled from the Steam Web API so it is not currently possible to replicate the Elo model's team ratings using the provided code. However, the model's ratings are saved as a plaintext JSON file (in [src/data/ti10/elo_ratings.json](src/data/ti10/elo_ratings.json) for TI10) and can be manually modified or replaced with the output of a different model to see how this would affect the output distribution.
 
 ## Running the Code
+
+Source code is contained in the `src/` folder. Code must be run from that folder. The command line interface currently only generates TI10 predictions (the cli will be updated once DPC forecasts go up), so output is saved to the `ti10/` folder.
 
 #### Basic Use
 
 For those unfamiliar with git/python a step-by-step guide for Windows is provided [here](https://d2mcs.github.io/guide-windows.pdf)
 
-Python version 3.6+ is required. There are two package dependencies (jinja2 and tqdm) which can be installed using the requirements file (`pip install -r requirements.txt`). Output HTML reports can then be generated with `generate_predictions.py`. Probabilities depend on groups (specified in [data/ti10/groups.json](data/ti10/groups.json), matches (specified in [data/ti10/matches.json](data/ti10/matches.json)), and team ratings (specified in [data/ti10/elo_ratings.json](data/ti10/elo_ratings.json)). The command-line interface requires a single parameter specifying the number of samples to simulate. For example, to run the simulator 10000 times:
+Python version 3.6+ is required. There are two package dependencies (jinja2 and tqdm) which can be installed using the requirements file (`pip install -r requirements.txt`). Output HTML reports can then be generated with `generate_predictions.py`. Probabilities depend on groups (specified in [src/data/ti10/groups.json](src/data/ti10/groups.json), matches (specified in [src/data/ti10/matches.json](src/data/ti10/matches.json)), and team ratings (specified in [src/data/ti10/elo_ratings.json](src/data/ti10/elo_ratings.json)). The command-line interface requires a single parameter specifying the number of samples to simulate. For example, to run the simulator 10000 times:
 
 ```
 python generate_predictions.py 10000

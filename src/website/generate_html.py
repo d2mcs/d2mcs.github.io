@@ -263,9 +263,9 @@ def generate_html_ti(ratings_file, matches, output_file, n_samples, folder, k,
         n_samples=n_samples, output_file=output_file, tabs=tabs, title=title)
 
     if tabs is not None:
-        with open(f"{folder}/{output_file}{tabs['active'][1]}",
+        with open(f"../{folder}/{output_file}{tabs['active'][1]}",
               "w") as output_f:
             output_f.write(output)
     else:
-        with open(f"{folder}/{output_file}", "w") as output_f:
+        with open(f"../{folder}/{output_file}", "w") as output_f:
             output_f.write(output)
