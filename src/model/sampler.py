@@ -310,8 +310,13 @@ class TISampler(Sampler):
                     for points, amount in point_counts.items():
                         if amount > 0:
                             point_counts[points] = amount / points_sum
-        return (group_rank_probs, tiebreak_probs,
-                final_rank_probs, record_probs, point_rank_probs)
+        return {
+            "group_rank": group_rank_probs,
+            "tiebreak": tiebreak_probs,
+            "final_rank": final_rank_probs,
+            "record": record_probs,
+            "point_rank": point_rank_probs
+        }
 
     def sample_main_event(self, groups, matches, bracket, n_trials):
         """Wrapper for running get_sample_main_event many times.
@@ -391,5 +396,10 @@ class TISampler(Sampler):
 
         if not self.static_ratings:
             self.model = model
-        return (group_rank_probs, tiebreak_probs,
-                final_rank_probs, record_probs, point_rank_probs)
+        return {
+            "group_rank": group_rank_probs,
+            "tiebreak": tiebreak_probs,
+            "final_rank": final_rank_probs,
+            "record": record_probs,
+            "point_rank": point_rank_probs
+        }

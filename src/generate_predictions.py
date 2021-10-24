@@ -5,6 +5,7 @@ probability reports using the TI simulator.
 from datetime import datetime
 import argparse
 import json
+import sys
 
 from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
@@ -58,7 +59,8 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
                 output_f.write(f'  "{team}": {rating}\n')
         output_f.write("}\n")
 
-def retroactive_predictions(timestamp, k, n_samples, tournament, train_elo):
+def retroactive_predictions(timestamp, k, n_samples, tournament,
+                            train_elo, use_cached):
     """Code for generating retroactive TI predictions. Will only work
     if matches.db exists in the data folder.
     """
@@ -96,13 +98,14 @@ def retroactive_predictions(timestamp, k, n_samples, tournament, train_elo):
                     match[2] = -1
 
         generate_html_ti(f"data/{tournament}/elo_ratings.json", matches, "elo",
-            n_samples, tournament, k, timestamp, tabs=tabs, title=title)
+            n_samples, tournament, k, timestamp, tabs=tabs, title=title,
+            use_cached=use_cached)
         generate_html_ti(f"data/{tournament}/fixed_ratings.json", matches,
             "fixed", n_samples, tournament, k, timestamp, static_ratings=True,
-            tabs=tabs, title=title)
+            tabs=tabs, title=title, use_cached=use_cached)
         generate_html_ti(f"data/{tournament}/glicko_ratings.json", matches,
             "glicko", n_samples, tournament, k, timestamp,
-            tabs=tabs, title=title)
+            tabs=tabs, title=title, use_cached=use_cached)
 
 def validate_ti10_files():
     """Some simple checks for the ti10 data files to help users catch
@@ -153,32 +156,42 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("n_samples", default=100000, type=int,
         help="Number of Monte Carlo samples to simulate")
+    parser.add_argument("-H", action='store_true', default=False,
+        help="Detailed help: shows options that are only useful if you have "
+        "the non-public matches.db database. These are used for updating pages"
+        " on d2mcs.github.io.")
     parser.add_argument("-s","--static_ratings", action='store_false',
         default=True, help="Disables static ratings, meaning team ratings will"
         " be updated based on match results.")
     parser.add_argument("-e","--train-elo", action='store_true', default=False,
-        help="Retrain Elo model before generating probabilities. Will only "
-        "work if matches.db and ti_rosters.json exist in the data folder")
+        help=argparse.SUPPRESS if "-H" not in sys.argv else "Retrain Elo model"
+        " before generating probabilities.")
     parser.add_argument("-r","--retroactive-predict", action='store_true',
-        default=False, help="Generates retroactive predictions for past TIs. "
-        "Will only work if matches.db and ti_rosters.json exist in the data "
-        "folder")
+        default=False,
+        help=argparse.SUPPRESS if "-H" not in sys.argv else "Generates "
+        "retroactive predictions for past TIs.")
+    parser.add_argument("-c","--use-cached", action='store_true',
+        default=False,
+        help=argparse.SUPPRESS if "-H" not in sys.argv else "Use cached "
+        "probability estimates if they exist.")
     parser.add_argument("-f","--full-report", action='store_true',
-        default=False, help="Generates a full report for use on the website. "
-        "Will only work if matches.db and ti_rosters.json exist in the data "
-        "folder")
+        default=False, help="Generates a full report for use on the website.")
     parser.add_argument("-k", default=55, type=int, help="k parameter for the "
         "Elo model.")
+    if "-H" in sys.argv:
+        parser.print_help()
+        exit()
     args = parser.parse_args()
 
     k = args.k
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M")
     n_samples = args.n_samples
+    use_cached = args.use_cached
 
     if args.retroactive_predict:
         for event in ["ti7", "ti8", "ti9", "ti10"]:
             retroactive_predictions(timestamp, k, n_samples,
-                                    event, args.train_elo)
+                                    event, args.train_elo, use_cached)
     elif args.full_report:
         if args.train_elo:
             generate_team_ratings_elo(3, k, 1.5, "ti10",
@@ -196,21 +209,25 @@ def main():
             matches = json.load(match_f)
         generate_html_ti("data/ti10/elo_ratings.json", matches, "elo",
                          n_samples, "ti10", k, timestamp, tabs=tabs,
-                         bracket_file="data/ti10/main_event_matches.json")
+                         bracket_file="data/ti10/main_event_matches.json",
+                         use_cached=use_cached)
         generate_html_ti("data/ti10/fixed_ratings.json", matches, "fixed",
                          n_samples, "ti10", k, timestamp,
                          static_ratings=True, tabs=tabs,
-                         bracket_file="data/ti10/main_event_matches.json")
+                         bracket_file="data/ti10/main_event_matches.json",
+                         use_cached=use_cached)
         generate_html_ti("data/ti10/glicko_ratings.json", matches, "glicko",
                          n_samples, "ti10", k, timestamp, tabs=tabs,
-                         bracket_file="data/ti10/main_event_matches.json")
+                         bracket_file="data/ti10/main_event_matches.json",
+                         use_cached=use_cached)
     else:
         with open("data/ti10/matches.json") as match_f:
             matches = json.load(match_f)
         if validate_ti10_files():
             generate_html_ti("data/ti10/elo_ratings.json", matches,
                              "output.html", n_samples, "ti10", k, timestamp,
-                             static_ratings=args.static_ratings)
+                             static_ratings=args.static_ratings,
+                             use_cached=use_cached)
             print("Output saved to ti10/output.html")
 
 if __name__ == "__main__":

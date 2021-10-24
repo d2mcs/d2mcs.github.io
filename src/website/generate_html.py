@@ -3,6 +3,8 @@ simulator predictions.
 """
 
 import json
+import pickle
+from pathlib import Path
 
 from jinja2 import Template
 
@@ -165,7 +167,8 @@ def predict_matches_ti(sampler, matches, static_ratings):
 
 def generate_html_ti(ratings_file, matches, output_file, n_samples, folder, k,
                      timestamp="", static_ratings=False, tabs=None,
-                     title="The International 10", bracket_file=None):
+                     title="The International 10", bracket_file=None,
+                     use_cached=False):
     """Generates an output report with group stage probabilities.
 
     Parameters
@@ -214,6 +217,9 @@ def generate_html_ti(ratings_file, matches, output_file, n_samples, folder, k,
         matches must be complete for group stage data to be correct. If
         provided, should be a path to a JSON file containing bracket
         results.
+    use_cached, bool, default=False
+        If true, the most recently cached probabilities will be used
+        instead of generating new estimates.
     """
     if output_file == "glicko":
         # static ratings are always used for the Glicko simulator
@@ -225,32 +231,41 @@ def generate_html_ti(ratings_file, matches, output_file, n_samples, folder, k,
         sampler = TISampler.from_ratings_file(ratings_file, k,
             static_ratings=static_ratings)
 
-    with open(f"data/{folder}/groups.json") as group_f:
-        groups = json.load(group_f)
-
-    if bracket_file is None:
-        (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
-            point_rank_probs) = sampler.sample_group_stage(
-                groups, matches, n_samples)
+    if tabs is not None:
+        cache_path = f"cache/{folder}-{output_file}{tabs['active'][1]}.pkl"
     else:
-        with open(bracket_file) as bracket_f:
-            bracket = json.load(bracket_f)
-        (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
-            point_rank_probs) = sampler.sample_main_event(
-                groups, matches, bracket, n_samples)
+        cache_path = f"cache/{folder}-{output_file}.pkl"
+    if use_cached and Path(cache_path).exists():
+        with open(cache_path, "rb") as cache_f:
+            probs = pickle.load(cache_f)
+    else:
+        with open(f"data/{folder}/groups.json") as group_f:
+            groups = json.load(group_f)
+
+        if bracket_file is None:
+            probs = sampler.sample_group_stage(groups, matches, n_samples)
+        else:
+            with open(bracket_file) as bracket_f:
+                bracket = json.load(bracket_f)
+            probs = sampler.sample_main_event(groups, matches,
+                                              bracket, n_samples)
+        if not Path("cache").exists():
+            Path("cache").mkdir()
+        with open(cache_path, "wb") as cache_f:
+            pickle.dump(probs, cache_f)
 
     records, formatted_matches = predict_matches_ti(sampler, matches,
                                                     static_ratings)
     ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
               for team in sampler.model.ratings.keys()}
-    formatted_gs_probs = format_gs_rank_probabilities(group_rank_probs,
+    formatted_gs_probs = format_gs_rank_probabilities(probs["group_rank"],
         n_samples)
     formatted_tie_probs = format_tiebreak_probabilities(
-        tiebreak_probs, n_samples)
+        probs["tiebreak"], n_samples)
     formatted_final_probs = format_final_rank_probabilities(
-        final_rank_probs, n_samples)
+        probs["final_rank"], n_samples)
     formatted_point_ranks, record_probs = format_point_rank_probabilities(
-        point_rank_probs, record_probs, n_samples)
+        probs["point_rank"], probs["record"], n_samples)
 
     with open("data/template.html") as input_f:
         template_str = input_f.read()
