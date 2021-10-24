@@ -6,22 +6,10 @@ from datetime import datetime
 import argparse
 import json
 
-from model.simulator import TISimulator
 from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
 from model.match_data import MatchDatabase
 from website.generate_html import generate_html_ti
-
-def save_ratings(output_file, teams, model):
-    with open(output_file, "w") as output_f:
-        output_f.write("{\n")
-        for i, team in enumerate(teams):
-            rating = model.get_team_rating(team)
-            if i != len(teams) - 1:
-                output_f.write(f'  "{team}": {rating:.2f},\n')
-            else:
-                output_f.write(f'  "{team}": {rating:.2f}\n')
-        output_f.write("}\n")
 
 def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
     """Code for generating rating estimates for each provided team

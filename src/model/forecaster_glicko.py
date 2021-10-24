@@ -2,9 +2,7 @@
 ratings and win probabilities.
 """
 
-import random
 from math import pi, exp, log
-import copy
 
 class Glicko2Model:
     """Glicko-2 ratings model implemented following
@@ -17,7 +15,7 @@ class Glicko2Model:
     """
     def __init__(self, tau):
         self.player_ratings = {}
-        self.team_ratings = {}
+        self.ratings = {}
 
         self._tau = tau
         self.k = 0 # not used but needed for compatibility
@@ -36,7 +34,7 @@ class Glicko2Model:
         """
         player_ratings = [self._get_player_rating(pid) for pid in player_ids]
         team_rating = sum(player_ratings)/len(player_ratings)
-        self.team_ratings[team] = (team_rating, 2, 0.06)
+        self.ratings[team] = (team_rating, 2, 0.06)
 
     def get_team_rating(self, team):
         """Obtain's a team's rating on the Glicko-1 scale.
@@ -52,7 +50,7 @@ class Glicko2Model:
         float
             Team rating on the Glicko-1 scale.
         """
-        return self.team_ratings[team][0]*173.7178 + 1500
+        return self.ratings[team][0]*173.7178 + 1500
 
     def get_team_rating_tuple(self, team):
         """Obtain's a team's rating, rating deviation, and rating
@@ -73,9 +71,9 @@ class Glicko2Model:
         float
             Team rating volatility on the Glicko-1 scale.
         """
-        return (self.team_ratings[team][0]*173.7178 + 1500,
-                self.team_ratings[team][1]*173.7178,
-                self.team_ratings[team][2])
+        return (self.ratings[team][0]*173.7178 + 1500,
+                self.ratings[team][1]*173.7178,
+                self.ratings[team][2])
 
     def get_win_prob(self, team1, team2, use_rd=True):
         """Computes the win probability for a single match.
@@ -116,15 +114,15 @@ class Glicko2Model:
 
     def _mu(self, team):
         """Team rating, mu"""
-        return self.team_ratings[team][0]
+        return self.ratings[team][0]
 
     def _phi(self, team):
         """Team rating deviation, phi"""
-        return self.team_ratings[team][1]
+        return self.ratings[team][1]
 
     def _sigma(self, team):
         """Team volatility, sigma"""
-        return self.team_ratings[team][2]
+        return self.ratings[team][2]
 
     def _vol_f(self, x, a, delta, phi, v):
         """f(x) function used for volatility calculation"""
@@ -231,7 +229,7 @@ class Glicko2Model:
             new_ratings[team] = (mu_new, phi_new, sigma_new)
 
         for team, rating in new_ratings.items():
-            self.team_ratings[team] = rating
+            self.ratings[team] = rating
 
     def compute_ratings(self, matches, stop_after=None):
         """Updates model ratings given an iterable containing match
@@ -273,9 +271,9 @@ class Glicko2Model:
             if stop_after is not None and match.timestamp > stop_after:
                 break
 
-            if match.radiant_id not in self.team_ratings:
+            if match.radiant_id not in self.ratings:
                 self._initialize_team(match.radiant_id, match.radiant)
-            if match.dire_id not in self.team_ratings:
+            if match.dire_id not in self.ratings:
                 self._initialize_team(match.dire_id, match.dire)
 
             radiant = match.radiant_id
@@ -361,9 +359,9 @@ class Glicko2Model:
             if stop_after is not None and match.timestamp > stop_after:
                 break
 
-            if match.radiant_id not in self.team_ratings:
+            if match.radiant_id not in self.ratings:
                 self._initialize_team(match.radiant_id, match.radiant)
-            if match.dire_id not in self.team_ratings:
+            if match.dire_id not in self.ratings:
                 self._initialize_team(match.dire_id, match.dire)
 
             radiant = match.radiant_id
@@ -386,7 +384,7 @@ class Glicko2Model:
 
             if match.league_tier <= max_tier:
                 # temporarily end ratings period to make predictions
-                prev_ratings = {team: self.team_ratings[team]
+                prev_ratings = {team: self.ratings[team]
                     for team in league_matches[match.league_id]["matches"]}
                 self.update_ratings_batch(
                     league_matches[match.league_id]["matches"])
@@ -398,7 +396,7 @@ class Glicko2Model:
                 baseline_sse += pow(match.radiant_win - 0.5, 2)
                 match_count += 1
                 for team, rating in prev_ratings.items():
-                    self.team_ratings[team] = rating
+                    self.ratings[team] = rating
 
             for league in list(league_matches.keys()):
                 if (match.timestamp - league_matches[league]["last"]

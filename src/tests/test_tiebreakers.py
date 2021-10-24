@@ -1,13 +1,16 @@
 import pytest
+import json
 from pathlib import Path
 
+from model.forecaster import TeamModel
 from model.simulator import Simulator
 from model.tiebreakers import Tiebreaker
 
 @pytest.fixture(scope='session')
 def tiebreaker():
-    sim = Simulator.from_ratings_file(
-        "tests/test_ratings.json", k=55, static_ratings=True)
+    with open("tests/test_ratings.json") as ratings_f:
+        model = TeamModel(json.load(ratings_f), 0)
+    sim = Simulator(model, static_ratings=True)
     tiebreaker = Tiebreaker(sim)
     return tiebreaker
 
@@ -85,9 +88,11 @@ class TestBoundaryTiebreak:
         point_map = {"Team A": 3, "Team B": 2, "Team C": 1, "Team D": 1}
 
         # tie isn't along the boundary, so nothing should change
-        reordered, _ = tiebreaker.boundary_tiebreak([(0, 1)], team_order, point_map)
+        reordered, _ = tiebreaker.boundary_tiebreak([(0, 1)], team_order,
+                                                    point_map)
         assert reordered == team_order
-        reordered, _ = tiebreaker.boundary_tiebreak([(1, 2)], team_order, point_map)
+        reordered, _ = tiebreaker.boundary_tiebreak([(1, 2)], team_order,
+                                                    point_map)
         assert reordered == team_order
 
     def test_2x2_tiebreak(self, tiebreaker):
@@ -95,7 +100,8 @@ class TestBoundaryTiebreak:
         for _ in range(100):
             team_order = ["Team A", "Team B", {"Team C", "Team D"}]
             point_map = {"Team A": 3, "Team B": 2, "Team C": 1, "Team D": 1}
-            reordered,_ = tiebreaker.boundary_tiebreak([(2,3)], team_order, point_map)
+            reordered,_ = tiebreaker.boundary_tiebreak([(2,3)], team_order,
+                                                       point_map)
             assert isinstance(reordered[2], str) # ensure tie was broken
             probs[reordered[2]] += 1/100
         # both teams should win ~50 times
@@ -107,7 +113,8 @@ class TestBoundaryTiebreak:
         for _ in range(100):
             team_order = ["Team A", {"Team B", "Team C", "Team D"}]
             point_map = {"Team A": 3, "Team B": 1, "Team C": 1, "Team D": 1}
-            reordered,_ = tiebreaker.boundary_tiebreak([(2,3)], team_order, point_map)
+            reordered,_ = tiebreaker.boundary_tiebreak([(2,3)], team_order,
+                                                       point_map)
             assert isinstance(reordered[-1], str)
             probs[reordered[-1]] += 1/100
 
@@ -120,7 +127,8 @@ class TestBoundaryTiebreak:
         for _ in range(1000):
             team_order = [{"Team A", "Team B", "Team C", "Team D"}]
             point_map = {"Team A": 1, "Team B": 1, "Team C": 1, "Team D": 1}
-            reordered,_ = tiebreaker.boundary_tiebreak([(2,3)], team_order, point_map)
+            reordered,_ = tiebreaker.boundary_tiebreak([(2,3)], team_order,
+                                                       point_map)
             assert isinstance(reordered[-1], str) # ensure tie was broken
             lengths[len(reordered) - 3] += 1/1000
             probs[reordered[-1]] += 1/1000

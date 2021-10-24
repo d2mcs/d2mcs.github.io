@@ -9,7 +9,7 @@ class TestGlickoExample:
     """
     def test_glicko2_ex(self):
         model = Glicko2Model(0.5)
-        model.team_ratings = {
+        model.ratings = {
             "A": ((1500 - 1500)/173.7178, 200/173.7178, 0.06),
             "B": ((1400 - 1500)/173.7178,  30/173.7178, 0.06),
             "C": ((1550 - 1500)/173.7178, 100/173.7178, 0.06),

@@ -1,9 +1,20 @@
+"""This module contains implementations for various tiebreaker methods.
+"""
+
 import random
 from itertools import combinations
 
-import model.simulator
-
 class Tiebreaker:
+    """Implementations for tiebreaker methods. A simulator is required
+    for methods which result in additional matches being played
+    (because those matches must be simulated). If additional matches
+    will never be required, None can be passed as the simulator object.
+
+    Parameters
+    ----------
+    simulator : Simulator
+        Simulator used for simulating bo1/bo-n matches.
+    """
     def __init__(self, simulator):
         self.sim = simulator
 

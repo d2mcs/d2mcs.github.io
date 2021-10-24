@@ -6,7 +6,7 @@ import json
 
 from jinja2 import Template
 
-from model.simulator import TISimulator
+from model.sampler import TISampler
 
 def format_percentage(prob, n_samples):
     """Formats a float probability into something a little more
@@ -108,6 +108,7 @@ def format_final_rank_probabilities(rank_probs, n_samples):
     return formatted_probs
 
 def format_point_rank_probabilities(point_rank_probs, record_probs, n_samples):
+    """formats final point value probabilities"""
     formatted_pr_probs = {"a": {}, "b": {}}
     for group in ["a", "b"]:
         for team, record_map in point_rank_probs[group].items():
@@ -130,29 +131,28 @@ def format_point_rank_probabilities(point_rank_probs, record_probs, n_samples):
                         "color": color_prob(record_prob, color="green")})
     return formatted_pr_probs, formatted_record_probs
 
-def predict_matches_ti(sim, matches, static_ratings):
+def predict_matches_ti(sampler, matches, static_ratings):
     """Code for computing each team's record and the probabilities of
     them wining each match. Match probabilities are computed only with
     present information (e.g., a team's Day 4 rating is not used to
     compute Day 2 probabilities even on the Day 4 report).
     """
-    records = {team: [0,0,0] for team in sim.rosters.keys()}
+    records = {team: [0,0,0] for team in sampler.model.ratings.keys()}
     formatted_matches = {"a": [], "b": []}
     for group in ["a", "b"]:
         for match_list in matches[group]:
             formatted_matches[group].append([])
             for match in match_list:
-                match_probs = sim.get_bo2_probs(
-                    sim._get_team(match[0]), sim._get_team(match[1]),
+                match_probs = sampler.get_bo2_probs(match[0], match[1],
                     draw_adjustment=not static_ratings)
                 if match[2] != -1:
                     # match has already been played, so update team
                     # ratings and current records
-                    team1 = sim._get_team(match[0])
-                    team2 = sim._get_team(match[1])
+                    team1 = match[0]
+                    team2 = match[1]
                     if not static_ratings:
                         result = (match[2], 2 - match[2])
-                        sim.model.update_ratings(team1, team2, result)
+                        sampler.model.update_ratings(team1, team2, result)
 
                     records[match[0]][2 - match[2]] += 1
                     records[match[1]][match[2]] += 1
@@ -219,10 +219,10 @@ def generate_html_ti(ratings_file, matches, output_file, n_samples, folder, k,
         # static ratings are always used for the Glicko simulator
         # because Glicko explicitly accounts for uncertainty using
         # ratinng deviation.
-        sim = TISimulator.from_ratings_file_glicko2(ratings_file,
+        sampler = TISampler.from_ratings_file_glicko2(ratings_file,
             0.5, static_ratings=True)
     else:
-        sim = TISimulator.from_ratings_file(ratings_file, k,
+        sampler = TISampler.from_ratings_file(ratings_file, k,
             static_ratings=static_ratings)
 
     with open(f"data/{folder}/groups.json") as group_f:
@@ -230,18 +230,19 @@ def generate_html_ti(ratings_file, matches, output_file, n_samples, folder, k,
 
     if bracket_file is None:
         (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
-            point_rank_probs) = sim.sim_group_stage(groups, matches, n_samples)
+            point_rank_probs) = sampler.sample_group_stage(
+                groups, matches, n_samples)
     else:
         with open(bracket_file) as bracket_f:
             bracket = json.load(bracket_f)
         (group_rank_probs, tiebreak_probs, final_rank_probs, record_probs,
-            point_rank_probs) = sim.sim_main_event(groups, matches,
-                                                   bracket, n_samples)
+            point_rank_probs) = sampler.sample_main_event(
+                groups, matches, bracket, n_samples)
 
-    records, formatted_matches = predict_matches_ti(sim, matches,
+    records, formatted_matches = predict_matches_ti(sampler, matches,
                                                     static_ratings)
-    ratings = {team: f"{sim.model.get_team_rating(sim._get_team(team)):.0f}"
-              for team in sim.rosters.keys()}
+    ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
+              for team in sampler.model.ratings.keys()}
     formatted_gs_probs = format_gs_rank_probabilities(group_rank_probs,
         n_samples)
     formatted_tie_probs = format_tiebreak_probabilities(
