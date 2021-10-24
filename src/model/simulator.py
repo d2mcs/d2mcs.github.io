@@ -301,7 +301,7 @@ class TIGroupStage(Simulator):
                     if self.static_ratings:
                         result = self.sim_bo2(match[0], match[1])
                     else:
-                        result = self.sim_bo2(match[0], match[1], momentum=0.1)
+                        result = self.sim_bo2(match[0], match[1],momentum=0.05)
                 else:
                     result = (match[2], 2 - match[2])
                     if not self.static_ratings:

@@ -1,0 +1,36 @@
+{
+  "UB-R1": [
+    ["Team Liquid", "Invictus Gaming", [1, 2]],
+    ["Newbee", "Evil Geniuses", [2, 0]],
+    ["LGD.Forever Young", "TNC Pro Team", [2, 0]],
+    ["LGD", "Virtus.pro", [0, 2]]
+  ],
+  "UB-R2": [
+    ["Invictus Gaming", "Newbee", [1, 2]],
+    ["LGD.Forever Young", "Virtus.pro", [2, 0]]
+  ],
+  "UB-F": [["Newbee", "LGD.Forever Young", [2, 1]]],
+  "LB-R1": [
+    ["Team Secret", "Execration", [1, 0]],
+    ["Cloud9", "Team Empire", [0, 1]],
+    ["OG", "Infamous", [1, 0]],
+    ["iG Vitality", "Digital Chaos", [0, 1]]
+  ],
+  "LB-R2": [
+      ["Team Liquid", "Team Secret", [2, 1]],
+      ["Evil Geniuses", "Team Empire", [0, 2]],
+      ["TNC Pro Team", "OG", [0, 2]],
+      ["LGD", "Digital Chaos", [2, 0]]
+  ],
+  "LB-R3": [
+    ["Team Liquid", "Team Empire", [2, 0]],
+    ["OG", "LGD", [0, 2]]
+  ],
+  "LB-R4": [
+    ["Virtus.pro", "Team Liquid", [1, 2]],
+    ["Invictus Gaming", "LGD", [0, 2]]
+  ],
+  "LB-R5": [["Team Liquid", "LGD", [2, 0]]],
+  "LB-F": [["LGD.Forever Young", "Team Liquid", [1, 2]]],
+  "GF": [["Newbee", "Team Liquid", [0, 3]]]
+}

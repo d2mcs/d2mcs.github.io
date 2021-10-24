@@ -67,7 +67,7 @@ def retroactive_predictions(timestamp, k, n_samples, tournament,
     tabs = {
         "all": [["Pre-tournament", "-pre.html"], ["Day 1", "-1.html"],
                 ["Day 2", "-2.html"], ["Day 3", "-3.html"],
-                ["Current", ".html"]]
+                ["Day 4", "-4.html"], ["Current", ".html"]]
     }
     if tournament == "ti10":
         stop_after = datetime.fromisoformat("2021-10-05").timestamp()
@@ -99,13 +99,14 @@ def retroactive_predictions(timestamp, k, n_samples, tournament,
 
         generate_html_ti(f"data/{tournament}/elo_ratings.json", matches, "elo",
             n_samples, tournament, k, timestamp, tabs=tabs, title=title,
-            use_cached=use_cached)
+            use_cached=use_cached,
+            bracket_file=f"data/{tournament}/main_event_matches.json"
+                         if tab[0] == "Current" else None)
         generate_html_ti(f"data/{tournament}/fixed_ratings.json", matches,
             "fixed", n_samples, tournament, k, timestamp, static_ratings=True,
-            tabs=tabs, title=title, use_cached=use_cached)
-        generate_html_ti(f"data/{tournament}/glicko_ratings.json", matches,
-            "glicko", n_samples, tournament, k, timestamp,
-            tabs=tabs, title=title, use_cached=use_cached)
+            tabs=tabs, title=title, use_cached=use_cached,
+            bracket_file=f"data/{tournament}/main_event_matches.json"
+                         if tab[0] == "Current" else None)
 
 def validate_ti10_files():
     """Some simple checks for the ti10 data files to help users catch
@@ -196,8 +197,6 @@ def main():
         if args.train_elo:
             generate_team_ratings_elo(3, k, 1.5, "ti10",
                 stop_after=datetime.fromisoformat("2021-10-05").timestamp())
-            generate_team_ratings_glicko(3, 0.5, "ti10",
-                stop_after=datetime.fromisoformat("2021-10-05").timestamp())
 
         tabs = {
             "active": ["Current", ".html"],
@@ -214,10 +213,6 @@ def main():
         generate_html_ti("data/ti10/fixed_ratings.json", matches, "fixed",
                          n_samples, "ti10", k, timestamp,
                          static_ratings=True, tabs=tabs,
-                         bracket_file="data/ti10/main_event_matches.json",
-                         use_cached=use_cached)
-        generate_html_ti("data/ti10/glicko_ratings.json", matches, "glicko",
-                         n_samples, "ti10", k, timestamp, tabs=tabs,
                          bracket_file="data/ti10/main_event_matches.json",
                          use_cached=use_cached)
     else:

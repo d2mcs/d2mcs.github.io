@@ -146,7 +146,7 @@ def predict_matches_ti(sampler, matches, static_ratings):
             formatted_matches[group].append([])
             for match in match_list:
                 match_probs = sampler.get_bo2_probs(match[0], match[1],
-                    draw_adjustment=not static_ratings)
+                    draw_adjustment=0.05 if not static_ratings else 0.0)
                 if match[2] != -1:
                     # match has already been played, so update team
                     # ratings and current records

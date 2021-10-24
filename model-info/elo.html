@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>d2mcs</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body class="d-flex flex-column min-vh-100">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">d2mcs</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="../ti10/elo_history.html">Rating Histories</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <div class="container mt-3 mb-3 flex-grow-1" style="max-width: 1000px">
+    <h1 class="text-center">d2mcs</h1>
+    <h5 class="text-center">Elo Forecaster Version 0.1</h5>
+    <hr>
+    <h2>Forecasting Model</h2>
+    <p>
+    The prediction model uses a standard Elo rating system with the following adjustments:
+    </p>
+
+    <h4>Player-based ratings</h4>
+    <p>
+    Ratings are player-based rather than team-based. Win probabilities and rating adjustments are still calculated using team ratings, where a team's rating is equal to the average of that team's player ratings. This helps deal with some of the issues traditional Elo models run into with Dota 2 (frequent substitutes, organization/team ID changes, roster instability, etc.). The team rating adjustment after each match is distributed unequally among players such that each player's rating drifts towards the team rating -- thus, if a team maintains a consistent roster for a long period of time its players will eventually end up with identical ratings. This is accomplished by calculating each player's share of a rating adjustment as
+
+    <math xmlns="http://www.w3.org/1998/Math/MathML" alttext="f(p_{i})=\frac{r_{i}}{\sum_{j}r_{j}}" display="block">
+    <mrow>
+      <mrow>
+        <mi>f</mi>
+        <mo></mo>
+        <mrow>
+          <mo stretchy="false">(</mo>
+          <msub>
+            <mi>p</mi>
+            <mi>i</mi>
+          </msub>
+          <mo stretchy="false">)</mo>
+        </mrow>
+      </mrow>
+      <mo>=</mo>
+      <mfrac>
+        <msub>
+          <mi>r</mi>
+          <mi>i</mi>
+        </msub>
+        <mrow>
+          <msub>
+            <mo largeop="true" symmetric="true">∑</mo>
+            <mi>j</mi>
+          </msub>
+          <msub>
+            <mi>r</mi>
+            <mi>j</mi>
+          </msub>
+        </mrow>
+      </mfrac>
+    </mrow>
+    </math> if the team loses and
+    <math xmlns="http://www.w3.org/1998/Math/MathML" alttext="f(p_{i})=\frac{1/r_{i}}{\sum_{j}1/r_{j}}" display="block">
+    <mrow>
+    <mrow>
+      <mi>f</mi>
+      <mo></mo>
+      <mrow>
+        <mo stretchy="false">(</mo>
+        <msub>
+          <mi>p</mi>
+          <mi>i</mi>
+        </msub>
+        <mo stretchy="false">)</mo>
+      </mrow>
+    </mrow>
+    <mo>=</mo>
+    <mfrac>
+      <mrow>
+        <mn>1</mn>
+        <mo>/</mo>
+        <msub>
+          <mi>r</mi>
+          <mi>i</mi>
+        </msub>
+      </mrow>
+      <mrow>
+        <msub>
+          <mo largeop="true" symmetric="true">∑</mo>
+          <mi>j</mi>
+        </msub>
+        <mrow>
+          <mn>1</mn>
+          <mo>/</mo>
+          <msub>
+            <mi>r</mi>
+            <mi>j</mi>
+          </msub>
+        </mrow>
+      </mrow>
+    </mfrac>
+    </mrow>
+    </math>
+     if the team wins,
+
+    where r<sub>i</sub> is player i's rating and f(p<sub>i</sub>) is player i's share of the team's rating adjustment. Note that player ratings shouldn't be interpreted as individual player skill, because the model can't measure skill gap within a team. The main advantage is that this system is able to handle roster signings and major roster changes much better than a model which only assigns ratings to team IDs. It is also able to make a decent estimate of a newly-formed team's initial rating.
+    </p>
+
+    <h4>Series-based rating updates</h4>
+    <p>
+    Ratings are updated based on series results rather than individual game results. As with a typical Elo system the rating update formula is r<sub>new</sub> = r<sub>old</sub> + k(score<sub>actual</sub> - score<sub>expected</sub>). The number of matches a team is expected to win in a series is simply match count × win probability*, so score<sub>actual</sub> is the percentage of matches the team won (e.g. 66.67% for a 2-1) and score<sub>expected</sub> is their win probability.<br><br>
+
+    I suspect that these numbers should probably be adjusted based on the type of match (bo1, bo2, bo3, etc.), but as far as I can tell the Steam Web API doesn't differentiate between a bo2 and a bo3. This means that it is impossible to tell whether a 2-0 series is a bo2 or a bo3. Heuristics could probably be used to make a reasonable guess (most tournaments will not have bo2s and bo3s on the same match day), but for now the model does not use this information.<br><br>
+
+    *As with a typical Elo system the win probability of team 1 is calculated as <math xmlns="http://www.w3.org/1998/Math/MathML" alttext="\frac{1}{1+10^{(r_{2}-r_{1})/400}}" display="block">
+      <mfrac>
+        <mn>1</mn>
+        <mrow>
+          <mn>1</mn>
+          <mo>+</mo>
+          <msup>
+            <mn>10</mn>
+            <mrow>
+              <mrow>
+                <mo stretchy="false">(</mo>
+                <mrow>
+                  <msub>
+                    <mi>r</mi>
+                    <mn>2</mn>
+                  </msub>
+                  <mo>-</mo>
+                  <msub>
+                    <mi>r</mi>
+                    <mn>1</mn>
+                  </msub>
+                </mrow>
+                <mo stretchy="false">)</mo>
+              </mrow>
+              <mo>/</mo>
+              <mn>400</mn>
+            </mrow>
+          </msup>
+        </mrow>
+      </mfrac>
+    </math> where r<sub>1</sub> is team 1's rating and r<sub>2</sub> is team 2's rating.
+    </p>
+
+    <h4>K adjustments</h4>
+    <p>
+    Because online matches are far more common than offline matches, the model tends to have a lot of difficulty accounting for regional strength. In general, the more competitive a region is the lower the average rating of its teams will be. This also means that teams which perform well in their region but struggle internationally (e.g. Team Aster) are very difficult to accurately predict. I'm planning on eventually properly accounting for this using region/league quality but for now I'm just using heuristics. The current model uses a dynamic k-factor based on team quality and Liquipedia tier:
+
+    <ul>
+      <li>Team quality: similar to chess, the k factor is decreased for higher rated teams. Specifically, the actual k factor scales linearly from 150% of the base k factor for teams with a rating less than or equal to 1000 to 50% of the base k factor for teams with a rating greater than or equal to 2000.</li>
+      <li>League quality: because the model was designed to make predictions for high-profile tournaments, it places greater weight on results at high-profile tournaments. Specifically, the k factor decays relative to the tier of the tournament by a factor of t<sup>-.75</sup>, where t is the Liquipedia tier of the tournament.</li>
+    </ul>
+
+    Intuitively these two adjustments mean that the model is least sensitive to results from high-rated teams in low-quality tournaments and most sensitive to results from low-rated teams in high-quality tournaments.
+    </p>
+
+    <h4>Evaluation</h4>
+    <p>
+    Elo predictions use a base k parameter of 55. A typical tier 1 team has a rating of around 1850, so a typical tier 1 match will result in an adjusted k of ~32. I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), then computed evaluation metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
+
+    <img class="mx-auto d-block pt-2" src="../image/model_calibration.png" style="max-width: 700px" alt="Plot comparing estimated win probability to actual win probability for tier 1 matches">
+
+    The vertical lines on the actual probability plot represent 95% standard error bars for the sampled win percentage. The largest error is for the 344 series for which the model predicted the favored team would win 58% of games; in actuality, the favored team won 63.9% of these games with a standard error of 2.6%. Over all tier 1 matches in the evaluation time frame the model achieved a Brier Skill Score of 0.186. For additional reference, the same plot for all matches in tier 3 or better tournaments is shown below.
+
+    <img class="mx-auto d-block pt-2" src="../image/model_calibration_tier3.png" style="max-width: 700px" alt="Plot comparing estimated win probability to actual win probability for tier 1 -3 matches">
+    </p>
+
+    <h2>Monte Carlo Sampler</h2>
+    <p>
+    For Elo model predictions on the website, the simulator updates model ratings over the course of the simulation based on the simulated results. For example, if Team A has a 10% chance to win their first match, then in the 10% of simulations in which they do so their rating will be improved accordingly and they will be more likely to win subsequent matches as a result. This widens the distribution of the simulated results a little, resulting in slightly lower high probabilities and slightly higher low probabilities.<br><br>
+
+    Note that the calibration plots shown above are for individual games, not series. When using game probabilities for expected wins in series, the probability of draws in bo2s and 1-2/2-1 results in bo3s is slightly overestimated. The Elo model estimates based solely on game probabilities that 45% of bo2s (calculated from TI7 to TI9) should draw, but only 40% of the 216 bo2s played at a TI from 2017 to 2019 and drew -- when including all TIs up to 2019, this number drops to 37%. To deal with this gap, the sampler applies a momentum factor when estimating bo2 probabilities. When a team wins the first game, their likelihood to win game two is increased by the momentum factor (up to a maximum of 95%). Based on TI statistics, the momentum factor is set at 5%.<br><br>
+
+    Because TI is in a sort of class of its own and many teams perform very differently at TI than they do in year leading up to it, I exaggerate this effect by starting the simulator's k parameter at double its base value on the first day of the group stage. It then decays by a linear factor each day until returning to its normal value on day 4. This means that all predictions will be reasonably conservative to start with, but the model will become increasingly confident in its team ratings as the group stage progresses. The modifier only applies to simulated results, not actual results, so match probabilities are not affected -- team ratings will increase or decrease as normal regardless of what day it is.
+    </p>
+
+    <h2>Changelog</h2>
+    <ul>
+      <li><b>0.1</b> (2021-10-24): models are now versioned.
+    </ul>
+  </div>
+  <footer>
+    <hr>
+    <div class="container" style="max-width: 1500px">
+      <p><small>
+        Source code can be found <a href="https://github.com/d2mcs/d2mcs.github.io">here</a>.<br>
+        d2mcs uses league data collected from Liquipedia and match data collected from the Steam WebAPI. This site is not endorsed by or affiliated with Valve or Steam.
+      </small></p>
+    </div>
+  </footer>
+</body>

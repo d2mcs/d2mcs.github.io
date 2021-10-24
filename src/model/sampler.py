@@ -36,7 +36,7 @@ class Sampler:
         self.model = model
         self.static_ratings = static_ratings
 
-    def get_bo2_probs(self, team1, team2, draw_adjustment=False):
+    def get_bo2_probs(self, team1, team2, draw_adjustment=0.0):
         """Computes win/draw/loss probabilities for a bo2 match.
 
         Parameters
@@ -45,10 +45,10 @@ class Sampler:
             Team 1 identifier (string team name or integer team ID)
         team2 : hashable
             Team 2 identifier (string team name or integer team ID)
-        draw_adjustment : bool, default=False
+        draw_adjustment : float, default=0.0
             Using game probabilities alone results in consistent over-
             estimation of draw probabilities in bo2s. This counteracts
-            that error by reducing draw change by 10% for most matches.
+            that error by reducing draw change by the given amount.
 
         Returns
         -------
@@ -62,8 +62,9 @@ class Sampler:
             p0_2 = pow(1 - win_p_t1, 2)
         else:
             # winner probability adjustment shouldn't exceed 95%
-            p2_0 = win_p_t1*min(max(0.95, win_p_t1), win_p_t1 + 0.1)
-            p0_2 = (1-win_p_t1)*min(max(0.95, 1-win_p_t1), (1-win_p_t1) + 0.1)
+            p2_0 = win_p_t1*min(max(0.95, win_p_t1), win_p_t1+draw_adjustment)
+            p0_2 = (1 - win_p_t1)*min(max(0.95, 1 - win_p_t1),
+                                      (1 - win_p_t1) + draw_adjustment)
         return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
 
     @classmethod

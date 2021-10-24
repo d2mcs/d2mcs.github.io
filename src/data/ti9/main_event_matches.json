@@ -1,0 +1,36 @@
+{
+  "UB-R1": [
+    ["PSG.LGD", "Virtus.pro", [2, 0]],
+    ["Vici Gaming", "TNC Predator", [2, 1]],
+    ["OG", "Newbee", [2, 0]],
+    ["Team Secret", "Evil Geniuses", [1, 2]]
+  ],
+  "UB-R2": [
+    ["PSG.LGD", "Vici Gaming", [2, 0]],
+    ["OG", "Evil Geniuses", [2, 1]]
+  ],
+  "UB-F": [["PSG.LGD", "OG", [1, 2]]],
+  "LB-R1": [
+    ["Alliance", "Royal Never Give Up", [0, 1]],
+    ["Fnatic", "Team Liquid", [0, 1]],
+    ["Infamous", "Keen Gaming", [1, 0]],
+    ["Mineski", "Natus Vincere", [1, 0]]
+  ],
+  "LB-R2": [
+      ["Virtus.pro", "Royal Never Give Up", [0, 2]],
+      ["TNC Predator", "Team Liquid", [0, 2]],
+      ["Newbee", "Infamous", [1, 2]],
+      ["Team Secret", "Mineski", [2, 1]]
+  ],
+  "LB-R3": [
+    ["Royal Never Give Up", "Team Liquid", [0, 2]],
+    ["Infamous", "Team Secret", [0, 2]]
+  ],
+  "LB-R4": [
+    ["Evil Geniuses", "Team Liquid", [0, 2]],
+    ["Vici Gaming", "Team Secret", [0, 2]]
+  ],
+  "LB-R5": [["Team Liquid", "Team Secret", [2, 0]]],
+  "LB-F": [["PSG.LGD", "Team Liquid", [1, 2]]],
+  "GF": [["OG", "Team Liquid", [3, 1]]]
+}
