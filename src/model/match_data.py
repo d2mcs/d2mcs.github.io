@@ -17,7 +17,7 @@ League, Player and Team ID tables use the following schema:
 
 CREATE TABLE liquipediatier(league_id INT PRIMARY KEY, tier INT);
 CREATE TABLE players(name TEXT, id INT PRIMARY KEY);
-CREATE TABLE teams(name TEXT, id INT PRIMARY KEY);
+CREATE TABLE teams(name TEXT, id INT PRIMARY KEY, region TEXT);
 """
 
 import sqlite3
@@ -144,5 +144,19 @@ class MatchDatabase:
         """
         id_to_team = {}
         for row in self.cur.execute("SELECT id, name FROM teams"):
+            id_to_team[row[0]] = row[1]
+        return id_to_team
+
+    def get_id_region_map(self):
+        """Creates a dictionary mapping team IDs to DPC regions using
+        data pulled from Liquipedia.
+
+        Returns
+        -------
+        dict of int to str
+            Mapping from team ID to team name
+        """
+        id_to_team = {}
+        for row in self.cur.execute("SELECT id, region FROM teams"):
             id_to_team[row[0]] = row[1]
         return id_to_team

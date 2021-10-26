@@ -19,13 +19,18 @@ def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
     """
     match_db = MatchDatabase("data/matches.db")
     player_ids = match_db.get_player_ids()
-    p_model = PlayerModel(player_ids, k, p)
+    id_to_region = match_db.get_id_region_map()
+    p_model = PlayerModel(player_ids, k, p, tid_region_map=id_to_region)
     p_model.compute_ratings(match_db.get_matches(max_tier),
         stop_after=stop_after)
 
+    with open(f"data/{folder}/team_data.json") as tid_f:
+        regions = {team: data["region"]
+                   for team, data in json.load(tid_f).items()}
+
     with open(f"data/{folder}/rosters.json") as roster_f:
         rosters = json.load(roster_f)
-    model = TeamModel.from_player_model(p_model, rosters)
+    model = TeamModel.from_player_model(p_model, rosters, regions)
 
     with open(f"data/{folder}/elo_ratings.json", "w") as output_f:
         output_f.write("{\n")
@@ -45,8 +50,8 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
     model = Glicko2Model(tau)
     model.compute_ratings(match_db.get_matches(max_tier),stop_after=stop_after)
 
-    with open(f"data/{folder}/team_ids.json") as tid_f:
-        team_ids = json.load(tid_f)
+    with open(f"data/{folder}/team_data.json") as tid_f:
+        team_ids = {team: data["id"] for team,data in json.load(tid_f).items()}
 
     with open(f"data/{folder}/glicko_ratings.json", "w") as output_f:
         output_f.write("{\n")
