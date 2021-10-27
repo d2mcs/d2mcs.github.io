@@ -3,8 +3,6 @@ simulator predictions.
 """
 
 import json
-import pickle
-from pathlib import Path
 
 from jinja2 import Template
 

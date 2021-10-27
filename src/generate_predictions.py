@@ -73,7 +73,6 @@ def retroactive_predictions(timestamp, k, n_samples, tournament, train_elo):
                 ["Current", ""]]
     }
     suffixes = ["-pre", "-1", "-2", "-3", "-4", ""]
-    timestamp = "2021-10-24 23:00"
     if tournament == "ti10":
         stop_after = datetime.fromisoformat("2021-10-05").timestamp()
         title = "The International 10"
