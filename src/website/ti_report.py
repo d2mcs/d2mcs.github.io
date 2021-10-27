@@ -77,7 +77,7 @@ def predict_matches(sampler, matches, static_ratings):
                     "probs": [float(f"{p:.4f}") for p in match_probs]})
     return records, match_predictions
 
-def generate_html(output_file, tabs, title, default_data_file="elo.json"):
+def generate_html(output_file, tabs, title):
     """Generates the output forecast report with the provided tabs and
     title. generate_data is used for generating the JSON data files
     used by this report.
@@ -91,15 +91,12 @@ def generate_html(output_file, tabs, title, default_data_file="elo.json"):
         main() or retroactive_predictions() for an example.
     title : str
         Name to put at the top of the report.
-    default_data_file : str, default="elo.json"
-        Path to the data file the output report will load by default.
     """
     with open("data/template.html") as input_f:
         template_str = input_f.read()
     template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
 
-    output = template.render(default_data_file=default_data_file,
-                             tabs=tabs, title=title,
+    output = template.render(tabs=tabs, title=title,
         match_counts={"a": [12, 8, 12, 4], "b": [8, 12, 8, 8]})
     with open(f"../{output_file}", "w") as output_f:
         output_f.write(output)
