@@ -170,13 +170,17 @@ function render_match_probs(sim_data) {
           document.getElementById("match-" + group + "-" + day + "-" + match_i + "-1").style.backgroundColor = "#ccffcc";
           document.getElementById("match-" + group + "-" + day + "-" + match_i + "-2").style.backgroundColor = "#ffcccc";
         }
-        if (match["result"] == 1) {
+        else if (match["result"] == 1) {
           document.getElementById("match-" + group + "-" + day + "-" + match_i + "-1").style.backgroundColor = "#fafacc";
           document.getElementById("match-" + group + "-" + day + "-" + match_i + "-2").style.backgroundColor = "#fafacc";
         }
-        if (match["result"] == 0) {
+        else if (match["result"] == 0) {
           document.getElementById("match-" + group + "-" + day + "-" + match_i + "-1").style.backgroundColor = "#ffcccc";
           document.getElementById("match-" + group + "-" + day + "-" + match_i + "-2").style.backgroundColor = "#ccffcc";
+        }
+        else {
+          document.getElementById("match-" + group + "-" + day + "-" + match_i + "-1").style.backgroundColor = "#f8f9fa";
+          document.getElementById("match-" + group + "-" + day + "-" + match_i + "-2").style.backgroundColor = "#f8f9fa";
         }
 
         for (let prob_i = 0; prob_i < 3; prob_i++) {
