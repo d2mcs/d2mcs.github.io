@@ -4,7 +4,7 @@ d2mcs started as a forecasting model specifically for TI10 but is currently bein
 
 ## Overview
 
-This repository contains code for estimating the probability of various outcomes at The International Dota 2 Championships using Monte Carlo sampling. Current predictions can be found [here](https://d2mcs.github.io/ti10/elo.html). To the best of my knowledge the simulator is entirely consistent with official TI rules, including details such as:
+This repository contains code for estimating the probability of various outcomes at The International Dota 2 Championships using Monte Carlo sampling. Current predictions can be found [here](https://d2mcs.github.io/ti10/forecast.html). To the best of my knowledge the simulator is entirely consistent with official TI rules, including details such as:
 
 - Ties along upper bracket/lower bracket and lower bracket/elimination boundaries are broken with additional matches (bo3 for a 2 way tie, bo1 round-robin for a 3+ way tie).
 - Other ties are broken using head to head results, followed by results against lower seeded teams, followed by a coin flip.

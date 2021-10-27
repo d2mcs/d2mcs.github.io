@@ -297,8 +297,9 @@ class TISampler(Sampler):
                             point_rank_probs[group][team][record][i] += 1
                             record_probs[group][team][record] += 1/n_trials
                         for boundary, size in tiebreak_sizes[group].items():
-                            tiebreak_probs[group][boundary][
-                                size - 2] += 1/n_trials
+                            if size != 0:
+                                tiebreak_probs[group][boundary][
+                                    size - 2] += 1/n_trials
                     for rank, teams in ranks.items():
                         for team in teams:
                             final_rank_probs[team][rank] += 1/n_trials
