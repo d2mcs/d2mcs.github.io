@@ -1,0 +1,87 @@
+{
+  "upper": [
+    [
+      ["4 Zoomers", "sadboys", [2, 0]],
+      ["Team Undying", "The Cut", [2, 0]],
+      ["Black N Yellow", "simply TOOBASED", [1, 2]],
+      ["Evil Geniuses", "The Cut", [2, 0]],
+      ["Quincy Crew", "simply TOOBASED", [2, 0]]
+    ],
+    [
+      ["4 Zoomers", "The Cut", [2, 0]],
+      ["Quincy Crew", "Black N Yellow", [2, 0]],
+      ["Team Undying", "simply TOOBASED", [2, 0]],
+      ["sadboys", "Black N Yellow", [0, 2]],
+      ["Evil Geniuses", "4 Zoomers", [2, 0]]
+    ],
+    [
+      ["Team Undying", "4 Zoomers", [2, 0]],
+      ["Team Undying", "Black N Yellow", [2, 1]],
+      ["sadboys", "simply TOOBASED", [0, 2]],
+      ["Quincy Crew", "The Cut", [2, 0]],
+      ["Evil Geniuses", "sadboys", [2, 0]]
+    ],
+    [
+      ["simply TOOBASED", "The Cut", [2, 0]],
+      ["Quincy Crew", "4 Zoomers", [2, 0]],
+      ["Black N Yellow", "The Cut", [2, 0]],
+      ["Evil Geniuses", "simply TOOBASED", [2, 0]],
+      ["Team Undying", "sadboys", [2, 0]]
+    ],
+    [
+      ["sadboys", "The Cut", [2, 0]],
+      ["Evil Geniuses", "Team Undying", [2, 0]],
+      ["sadboys", "Quincy Crew", [0, 2]],
+      ["simply TOOBASED", "4 Zoomers", [0, 2]],
+      ["Evil Geniuses", "Quincy Crew", [1, 2]]
+    ],
+    [
+      ["Black N Yellow", "4 Zoomers", [1, 2]],
+      ["Evil Geniuses", "Black N Yellow", ["W", "-"]],
+      ["Quincy Crew", "Team Undying", [2, 1]]
+    ]
+  ],
+  "lower": [
+    [
+      ["Team DogChamp", "felt", [2, 0]],
+      ["5ManMidas", "Pecado Squad Gaming", ["W", "-"]],
+      ["Wind and Rain", "D2 Hustlers", ["-", "W"]],
+      ["Arkosh Gaming", "Electronic Boys", [2, 0]],
+      ["felt", "D2 Hustlers", [0, 2]]
+    ],
+    [
+      ["Electronic Boys", "Pecado Squad Gaming", ["W", "-"]],
+      ["Arkosh Gaming", "D2 Hustlers", [1, 2]],
+      ["5ManMidas", "felt", [2, 1]],
+      ["Team DogChamp", "Pecado Squad Gaming", ["W", "-"]],
+      ["Wind and Rain", "Electronic Boys", ["-", "W"]]
+    ],
+    [
+      ["felt", "Pecado Squad Gaming", ["W", "-"]],
+      ["Electronic Boys", "D2 Hustlers", [0, 2]],
+      ["Wind and Rain", "Arkosh Gaming", ["-", "W"]],
+      ["5ManMidas", "Team DogChamp", [0, 2]],
+      ["D2 Hustlers", "Pecado Squad Gaming", ["W", "-"]]
+    ],
+    [
+      ["Team DogChamp", "Electronic Boys", [2, 0]],
+      ["Arkosh Gaming", "felt", [2, 0]],
+      ["Wind and Rain", "Team DogChamp", ["-", "W"]],
+      ["5ManMidas", "D2 Hustlers", [0, 2]],
+      ["Wind and Rain", "Pecado Squad Gaming", ["-", "-"]]
+    ],
+    [
+      ["5ManMidas", "Electronic Boys", [0, 2]],
+      ["Arkosh Gaming", "Pecado Squad Gaming", ["W", "-"]],
+      ["Wind and Rain", "5ManMidas", ["-", "W"]],
+      ["felt", "Electronic Boys", [2, 0]],
+      ["Team DogChamp", "Arkosh Gaming", [1, 2]]
+    ],
+    [
+      ["Wind and Rain", "felt", ["-", "W"]],
+      ["Team DogChamp", "D2 Hustlers", [0, 2]],
+      ["5ManMidas", "Arkosh Gaming", [0, 2]]
+    ]
+  ],
+  "tiebreak": {"lower": {}, "upper": {}}
+}

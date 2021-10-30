@@ -53,7 +53,7 @@ class Tiebreaker:
                 team_order.append(team)
         return team_order
 
-    def bo1_tiebreak(self, boundary, teams):
+    def bo1_tiebreak(self, boundary, teams, played_matches=None):
         """Breaks a tie along a given boundary using round-robin bo1s.
         Only ties along the boundary are considered, so in the case of
         a multi-way tie (which is when this tiebreak method is used at
@@ -67,32 +67,42 @@ class Tiebreaker:
             for boundary_tiebreak for more information
         teams : list of str
             list of team names
+        played_matches : list
+            If provided, contains a list of match results.
         """
         tiebreak_points = {team: 0 for team in teams}
-        matches = list(combinations(teams, 2))
+        if played_matches is not None:
+            matches = played_matches
+        else:
+            matches = list(combinations(teams, 2))
+            random.shuffle(matches)
 
-        random.shuffle(matches)
         for match in matches:
-            team1_win = self.sim.sim_bo1(match[0], match[1])
-            tiebreak_points[match[1 - int(team1_win)]] += 1
-            tiebreak_points[match[int(team1_win)]] -= 1
+            if len(match) == 3: # pre-defined result
+                team1_win = match[2][0] == 1
+                tiebreak_points[match[1 - int(team1_win)]] += 1
+                tiebreak_points[match[int(team1_win)]] -= 1
+            else:
+                team1_win = self.sim.sim_bo1(match[0], match[1])
+                tiebreak_points[match[1 - int(team1_win)]] += 1
+                tiebreak_points[match[int(team1_win)]] -= 1
 
-            # a 3-way tiebreaker may be cut off early if a team goes
-            # 2-0 or 0-2 in the first two matches and such a result
-            # resolves the tie without needing the third match
-            # (see TI8 for an example)
-            # in theory something similar could happen with a 4+ way
-            # tie but matches might be played simultaneously and there
-            # isn't any precedence to determine whether the matches
-            # would end early anyway so I explicitly only stop early
-            # for 3-way ties
-            if len(teams) == 3:
-                if (tiebreak_points[match[1-int(team1_win)]] == len(teams) - 1
-                      and boundary[0] == 0):
-                    break
-                if (tiebreak_points[match[int(team1_win)]] == 1 - len(teams)
-                      and boundary[1] == len(teams) - 1):
-                    break
+                # a 3-way tiebreaker may be cut off early if a team goes
+                # 2-0 or 0-2 in the first two matches and such a result
+                # resolves the tie without needing the third match
+                # (see TI8 for an example)
+                # in theory something similar could happen with a 4+ way
+                # tie but matches might be played simultaneously and there
+                # isn't any precedence to determine whether the matches
+                # would end early anyway so I explicitly only stop early
+                # for 3-way ties
+                if len(teams) == 3:
+                    if (tiebreak_points[match[1-int(team1_win)]]==len(teams)-1
+                          and boundary[0] == 0):
+                        break
+                    if (tiebreak_points[match[int(team1_win)]] == 1 - len(teams)
+                          and boundary[1] == len(teams) - 1):
+                        break
 
         team_order = self.order_teams(teams, tiebreak_points)
 
@@ -113,7 +123,8 @@ class Tiebreaker:
 
         return team_order
 
-    def boundary_tiebreak(self, tiebreak_boundaries, team_order, point_map):
+    def boundary_tiebreak(self, tiebreak_boundaries, team_order,
+                          point_map, matches=None):
         """Breaks ties along a boundary by playing additional matches.
         Once the boundary tie has been broken, no additional matches
         are played. Following official TI rules, a bo3 is used for
@@ -138,6 +149,19 @@ class Tiebreaker:
             Team ordering as returned by order_teams
         point_map : dict
             Mapping from team name to current points.
+        matches : dict, default=None
+            If provided, should contain a list of tiebreaker results
+            for each boundary where a tie is necessary. For example:
+            {
+                "3": [["Team A", "Team B", [2, 1]]],
+                "7": [
+                    ["Team C", "Team D", [1, 0]],
+                    ["Team D", "Team E", [1, 0]],
+                    ["Team E", "Team C", [0, 1]]
+                ]
+            }
+            These results will be used instead of simulating the
+            tiebreaker matches.
 
         Returns
         -------
@@ -173,7 +197,14 @@ class Tiebreaker:
             if len(teams) == 2:
                 # 2-way tiebreak, play a single bo3
                 teams = list(teams)
-                result = self.sim.sim_bo_n(3, teams[0], teams[1])
+                if matches is not None and str(boundary[0]) in matches:
+                    match = matches[str(boundary[0])][0]
+                    if teams[0] == match[0]:
+                        result = match[2]
+                    else:
+                        result = (2 - match[2][0], 2 - match[2][1])
+                else:
+                    result = self.sim.sim_bo_n(3, teams[0], teams[1])
                 if result[0] == 2: # team 1 victory
                     team_order[num_groups - i-1:num_groups - i] = [
                         teams[0], teams[1]]
@@ -186,7 +217,11 @@ class Tiebreaker:
                 # multi-way tiebreak, play bo1s until tiebreak resolved
                 break_pos = boundary[0] - rank_start
                 relative_boundary = (break_pos, break_pos + 1)
-                reordered = self.bo1_tiebreak(relative_boundary, teams)
+                if matches is not None and str(boundary[0]) in matches:
+                    reordered = self.bo1_tiebreak(relative_boundary, teams,
+                        matches[str(boundary[0])])
+                else:
+                    reordered = self.bo1_tiebreak(relative_boundary, teams)
                 team_order[num_groups - i-1:num_groups - i] = reordered
 
                 rank_end -= len(teams)
