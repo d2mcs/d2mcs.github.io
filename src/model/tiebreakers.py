@@ -202,7 +202,7 @@ class Tiebreaker:
                     if teams[0] == match[0]:
                         result = match[2]
                     else:
-                        result = (2 - match[2][0], 2 - match[2][1])
+                        result = (match[2][1], match[2][0])
                 else:
                     result = self.sim.sim_bo_n(3, teams[0], teams[1])
                 if result[0] == 2: # team 1 victory

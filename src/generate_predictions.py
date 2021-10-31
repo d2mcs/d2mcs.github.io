@@ -49,8 +49,8 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
     model = Glicko2Model(tau)
     model.compute_ratings(match_db.get_matches(max_tier),stop_after=stop_after)
 
-    with open(f"data/{folder}/team_ids.json") as tid_f:
-        team_ids = json.load(tid_f)
+    with open(f"data/{folder}/team_data.json") as tid_f:
+        team_ids = {team: data["id"] for team,data in json.load(tid_f).items()}
 
     with open(f"data/{folder}/glicko_ratings.json", "w") as output_f:
         output_f.write("{\n")

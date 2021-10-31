@@ -55,6 +55,8 @@ def predict_matches_ti(sampler, matches, static_ratings):
     """
     records = {team: [0,0,0] for team in sampler.model.ratings.keys()}
     match_predictions = {"a": [], "b": []}
+    sq_errs = []
+    ref_errs = []
     for group in ["a", "b"]:
         for match_list in matches[group]:
             match_predictions[group].append([])
@@ -68,6 +70,8 @@ def predict_matches_ti(sampler, matches, static_ratings):
                     team2 = match[1]
                     if not static_ratings:
                         result = (match[2], 2 - match[2])
+                        sq_errs.append((1 - match_probs[result[1]])**2)
+                        ref_errs.append((1/2)**2 if result[0]==1 else (3/4)**2)
                         sampler.model.update_ratings(team1, team2, result)
 
                     records[match[0]][2 - match[2]] += 1
@@ -76,14 +80,20 @@ def predict_matches_ti(sampler, matches, static_ratings):
                 match_predictions[group][-1].append({
                     "teams": (match[0], match[1]), "result": match[2],
                     "probs": [float(f"{p:.4f}") for p in match_probs]})
-    return records, match_predictions
+    if len(sq_errs) > 0:
+        brier_skill_score = 1 - ((sum(sq_errs)/len(sq_errs))
+                                 / (sum(ref_errs)/len(ref_errs)))
+    else:
+        brier_skill_score = 0
+    return records, match_predictions, brier_skill_score
 
-def predict_matches_dpc(sampler, matches, static_ratings):
+def predict_matches_dpc(sampler,matches,static_ratings):
     """Code for computing each team's record and the probabilities of
     them wining each match.
     """
     records = {team: [0,0] for team in sampler.model.ratings.keys()}
     match_predictions = {"upper": [], "lower": []}
+    sq_errs = []
     for division in ["upper", "lower"]:
         for match_list in matches[division]:
             match_predictions[division].append([])
@@ -105,6 +115,8 @@ def predict_matches_dpc(sampler, matches, static_ratings):
                             result = [0, 0]
                     elif not static_ratings:
                         sampler.model.update_ratings(team1, team2, result)
+                        sq_errs.append((int(result[0] > result[1])
+                                       - bo3_win_prob)**2)
 
                     if sum(result) > 0:
                         winner = int(result[1] > result[0])
@@ -120,7 +132,11 @@ def predict_matches_dpc(sampler, matches, static_ratings):
             for match_list in matches["tiebreak"][division].values():
                 for team1, team2, result in match_list:
                     sampler.model.update_ratings(team1, team2, result)
-    return records, match_predictions
+    if len(sq_errs) > 0:
+        brier_skill_score = 1 - ((sum(sq_errs)/len(sq_errs)) / 0.25)
+    else:
+        brier_skill_score = 0
+    return records, match_predictions, brier_skill_score
 
 def generate_html_dpc(output_file, tabs, title, wildcard_slots):
     """Generates the output forecast report with the provided tabs and
@@ -236,7 +252,7 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
         teams = json.load(team_f)
 
     probs = sampler.sample_league(teams, matches, wildcard_slots, n_samples)
-    records,match_preds = predict_matches_dpc(sampler, matches, static_ratings)
+    records,match_preds,_ = predict_matches_dpc(sampler,matches,static_ratings)
     ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
               for team in sampler.model.ratings.keys()}
     output_json = {
@@ -349,7 +365,7 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
         probs = sampler.sample_main_event(groups, matches,
                                           bracket, n_samples)
 
-    records, match_preds = predict_matches_ti(sampler, matches, static_ratings)
+    records,match_preds,_ = predict_matches_ti(sampler,matches,static_ratings)
     ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
               for team in sampler.model.ratings.keys()}
     output_json = {
