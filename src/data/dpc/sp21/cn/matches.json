@@ -1,0 +1,99 @@
+{
+  "upper": [
+    [
+      ["Sparking Arrow Gaming", "Royal Never Give Up", [0, 2]],
+      ["EHOME", "Royal Never Give Up", [2, 1]],
+      ["Elephant", "EHOME", [2, 0]]
+    ],
+    [
+      ["Elephant", "Sparking Arrow Gaming", [2, 0]],
+      ["EHOME", "Sparking Arrow Gaming", [2, 0]],
+      ["Elephant", "Royal Never Give Up", [0, 2]]
+    ],
+    [
+      ["Invictus Gaming", "Team Aster", [0, 2]],
+      ["Vici Gaming", "PSG.LGD", [2, 0]],
+      ["Invictus Gaming", "Vici Gaming", [2, 1]],
+      ["Team Aster", "PSG.LGD", [2, 0]],
+      ["Team Aster", "Vici Gaming", [2, 1]],
+      ["PSG.LGD", "Invictus Gaming", [2, 0]]
+    ],
+    [
+      ["Sparking Arrow Gaming", "Team Aster", [0, 2]],
+      ["PSG.LGD", "EHOME", [2, 1]],
+      ["Invictus Gaming", "Royal Never Give Up", [2, 1]],
+      ["Vici Gaming", "Elephant", [2, 0]],
+      ["PSG.LGD", "Sparking Arrow Gaming", [2, 0]],
+      ["Invictus Gaming", "Elephant", [0, 2]]
+    ],
+    [
+      ["Vici Gaming", "EHOME", [2, 0]],
+      ["Team Aster", "Royal Never Give Up", [2, 1]],
+      ["Team Aster", "EHOME", [0, 2]],
+      ["Vici Gaming", "Royal Never Give Up", [2, 0]],
+      ["Invictus Gaming", "Sparking Arrow Gaming", [2, 0]],
+      ["PSG.LGD", "Elephant", [2, 1]]
+    ],
+    [
+      ["Invictus Gaming", "EHOME", [2, 0]],
+      ["PSG.LGD", "Royal Never Give Up", [2, 0]],
+      ["Sparking Arrow Gaming", "Vici Gaming", [0, 2]],
+      ["Team Aster", "Elephant", [2, 1]]
+    ]
+  ],
+  "lower": [
+    [
+      ["Team MagMa", "Aster.Aries", [2, 0]],
+      ["CDEC Gaming", "Xtreme Gaming", [2, 0]],
+      ["LBZS", "Demon Slayer", ["W", "-"]],
+      ["Phoenix Gaming", "Dragon", ["W", "-"]],
+      ["LBZS", "Aster.Aries", [1, 2]],
+      ["Team MagMa", "Demon Slayer", ["W", "-"]],
+      ["Phoenix Gaming", "Xtreme Gaming", [2, 0]]
+    ],
+    [
+      ["CDEC Gaming", "Dragon", ["W", "-"]],
+      ["Phoenix Gaming", "Aster.Aries", [2, 1]],
+      ["Team MagMa", "Dragon", ["W", "-"]],
+      ["CDEC Gaming", "Demon Slayer", ["W", "-"]],
+      ["LBZS", "Xtreme Gaming", [2, 1]],
+      ["Phoenix Gaming", "Demon Slayer", ["W", "-"]],
+      ["LBZS", "Dragon", ["W", "-"]]
+    ],
+    [
+      ["Team MagMa", "Xtreme Gaming", [0, 2]],
+      ["CDEC Gaming", "Aster.Aries", [1, 2]],
+      ["Team MagMa", "Phoenix Gaming", [0, 2]],
+      ["LBZS", "CDEC Gaming", [2, 0]]
+    ],
+    [
+      ["Aster.Aries", "Demon Slayer", ["W", "-"]],
+      ["Xtreme Gaming", "Dragon", ["W", "-"]],
+      ["Dragon", "Demon Slayer", ["-", "-"]],
+      ["LBZS", "Phoenix Gaming", [2, 1]]
+    ],
+    [
+      ["Xtreme Gaming", "Aster.Aries", [0, 2]],
+      ["Team MagMa", "CDEC Gaming", [2, 0]],
+      ["Xtreme Gaming", "Demon Slayer", ["W", "-"]],
+      ["Dragon", "Aster.Aries", ["-", "W"]]
+    ],
+    [
+      ["Team MagMa", "LBZS", [2, 1]],
+      ["CDEC Gaming", "Phoenix Gaming", [1, 2]]
+    ]
+  ],
+  "tiebreak": {
+    "upper": {"1": [["Vici Gaming", "PSG.LGD", [1, 2]]]},
+    "lower": {
+      "1": [
+        ["LBZS", "Team MagMa", [0, 1]],
+        ["LBZS", "Aster.Aries", [1, 0]],
+        ["Team MagMa", "Aster.Aries", [0, 1]],
+        ["LBZS", "Team MagMa", [1, 0]],
+        ["LBZS", "Aster.Aries", [1, 0]],
+        ["Team MagMa", "Aster.Aries", [0, 1]]
+      ]
+    }
+  }
+}

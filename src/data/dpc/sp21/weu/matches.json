@@ -1,0 +1,95 @@
+{
+  "upper": [
+    [
+      ["Tundra Esports", "Hellbear Smashers", [2, 1]],
+      ["OG", "Brame", [2, 0]],
+      ["Team Liquid", "Alliance", [1, 2]],
+      ["Brame", "Tundra Esports", [2, 0]],
+      ["Team Secret", "Team Nigma", [0, 2]]
+    ],
+    [
+      ["Team Secret", "Hellbear Smashers", [2, 1]],
+      ["Alliance", "OG", [2, 1]],
+      ["Team Nigma", "Team Liquid", [1, 2]],
+      ["Team Secret", "Tundra Esports", [2, 1]],
+      ["Alliance", "Team Nigma", [2, 1]]
+    ],
+    [
+      ["Brame", "Team Liquid", [1, 2]],
+      ["Hellbear Smashers", "OG", [1, 2]],
+      ["Team Secret", "Alliance", [1, 2]],
+      ["Team Liquid", "Hellbear Smashers", [2, 0]],
+      ["Team Nigma", "Brame", [2, 1]]
+    ],
+    [
+      ["OG", "Tundra Esports", [1, 2]],
+      ["Brame", "Alliance", [2, 1]],
+      ["Hellbear Smashers", "Team Nigma", [0, 2]],
+      ["Tundra Esports", "Team Liquid", [1, 2]],
+      ["Team Secret", "OG", [0, 2]]
+    ],
+    [
+      ["Hellbear Smashers", "Brame", [1, 2]],
+      ["Tundra Esports", "Alliance", [1, 2]],
+      ["Team Secret", "Team Liquid", [2, 1]],
+      ["Alliance", "Hellbear Smashers", [2, 0]],
+      ["OG", "Team Nigma", [0, 2]]
+    ],
+    [
+      ["Team Secret", "Brame", [2, 0]],
+      ["Team Nigma", "Tundra Esports", [1, 2]],
+      ["Team Liquid", "OG", [2, 0]]
+    ]
+  ],
+  "lower": [
+    [
+      ["Vikin.gg", "Level UP", [2, 1]],
+      ["Hippomaniacs", "No Bounty Hunter", [0, 2]],
+      ["Ghost Frogs", "Into The Breach", [2, 1]],
+      ["Team Bald Reborn", "Chicken Fighters", [0, 2]]
+    ],
+    [
+      ["Vikin.gg", "No Bounty Hunter", [2, 0]],
+      ["Level UP", "Into The Breach", [2, 0]],
+      ["Hippomaniacs", "Chicken Fighters", [0, 2]],
+      ["Ghost Frogs", "Team Bald Reborn", [2, 0]],
+      ["Vikin.gg", "Hippomaniacs", [2, 1]]
+    ],
+    [
+      ["Team Bald Reborn", "No Bounty Hunter", [2, 1]],
+      ["Ghost Frogs", "Level UP", [0, 2]],
+      ["Chicken Fighters", "Into The Breach", [1, 2]],
+      ["No Bounty Hunter", "Ghost Frogs", [2, 1]],
+      ["Vikin.gg", "Chicken Fighters", [2, 0]]
+    ],
+    [
+      ["Level UP", "Hippomaniacs", [2, 0]],
+      ["Into The Breach", "Team Bald Reborn", [0, 2]],
+      ["No Bounty Hunter", "Level UP", [1, 2]],
+      ["Chicken Fighters", "Ghost Frogs", [0, 2]],
+      ["Into The Breach", "Hippomaniacs", [2, 0]]
+    ],
+    [
+      ["Vikin.gg", "Team Bald Reborn", [2, 0]],
+      ["Into The Breach", "No Bounty Hunter", [2, 0]],
+      ["Team Bald Reborn", "Hippomaniacs", [2, 0]],
+      ["Vikin.gg", "Ghost Frogs", [2, 1]],
+      ["Chicken Fighters", "Level UP", [0, 2]]
+    ],
+    [
+      ["Hippomaniacs", "Ghost Frogs", [0, 2]],
+      ["Vikin.gg", "Into The Breach", [2, 1]],
+      ["No Bounty Hunter", "Chicken Fighters", [2, 1]],
+      ["Level UP", "Team Bald Reborn", [0, 2]]
+    ]
+  ],
+  "tiebreak": {
+    "upper":
+      {"5": [
+        ["OG", "Brame", [1, 0]],
+        ["Tundra Esports", "OG", [1, 0]],
+        ["Brame", "Tundra Esports", [0, 1]]
+      ]},
+    "lower": {}
+  }
+}

@@ -1,16 +1,20 @@
 """This module contains the command-line interface for generating
-probability reports using the TI simulator.
+probability reports using the TI and DPC league simulators.
 """
 
 from datetime import datetime
 import argparse
 import json
 import sys
+import http.server
+import webbrowser
+import os
 
 from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
 from model.match_data import MatchDatabase
-from website.generate_html import generate_html_ti
+from website.report import (generate_data_ti, generate_html_ti,
+                            generate_data_dpc, generate_html_dpc)
 
 def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
     """Code for generating rating estimates for each provided team
@@ -64,37 +68,52 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
                 output_f.write(f'  "{team}": {rating}\n')
         output_f.write("}\n")
 
-def retroactive_predictions(timestamp, k, n_samples, tournament,
-                            train_elo, use_cached):
+def retroactive_ti_predictions(timestamp, k, n_samples, tournament,
+                               train_elo, html_only=False):
     """Code for generating retroactive TI predictions. Will only work
     if matches.db exists in the data folder.
     """
-    tabs = {
-        "all": [["Pre-tournament", "-pre.html"], ["Day 1", "-1.html"],
-                ["Day 2", "-2.html"], ["Day 3", "-3.html"],
-                ["Day 4", "-4.html"], ["Current", ".html"]]
-    }
-    if tournament == "ti10":
+    if tournament in ["ti/8", "ti/9"]:
+        tabs = [["Aug. 25 (Current)", ""],["Aug 18 (Group Stage Day 4)", "-4"],
+                ["Aug. 17 (Group Stage Day 3)", "-3"],
+                ["Aug. 16 (Group Stage Day 2)", "-2"],
+                ["Aug. 15 (Group Stage Day 1)", "-1"],
+                ["Aug. 14 (Pre-tournament)", "-pre"]]
+
+    if tournament == "ti/10":
         stop_after = datetime.fromisoformat("2021-10-05").timestamp()
         title = "The International 10"
-    elif tournament == "ti9":
+        tabs = [["Oct. 17 (Current)", ""],["Oct 10 (Group Stage Day 4)", "-4"],
+                ["Oct. 9 (Group Stage Day 3)", "-3"],
+                ["Oct. 8 (Group Stage Day 2)", "-2"],
+                ["Oct. 7 (Group Stage Day 1)", "-1"],
+                ["Oct. 6 (Pre-tournament)", "-pre"]]
+    elif tournament == "ti/9":
         stop_after = datetime.fromisoformat("2019-08-13").timestamp()
         title = "The International 2019"
-    elif tournament == "ti8":
+    elif tournament == "ti/8":
         stop_after = datetime.fromisoformat("2018-08-13").timestamp()
         title = "The International 2018"
-    elif tournament == "ti7":
+    elif tournament == "ti/7":
         stop_after = datetime.fromisoformat("2017-07-31").timestamp()
         title = "The International 2017"
+        tabs = [["Aug. 12 (Current)", ""],["Aug 5 (Group Stage Day 4)", "-4"],
+                ["Aug. 4 (Group Stage Day 3)", "-3"],
+                ["Aug. 3 (Group Stage Day 2)", "-2"],
+                ["Aug. 2 (Group Stage Day 1)", "-1"],
+                ["Aug. 1 (Pre-tournament)", "-pre"]]
     else:
         raise ValueError("Invalid tournament")
+
+    generate_html_ti(tournament + "/forecast.html", tabs, title)
+    if html_only:
+        return
 
     if train_elo:
         generate_team_ratings_elo(3, k, 1.5, tournament, stop_after)
         generate_team_ratings_glicko(3, 0.5, tournament, stop_after)
 
-    for i, tab in enumerate(tabs["all"]):
-        tabs["active"] = tab
+    for i, tab in enumerate(reversed(tabs)):
         with open(f"data/{tournament}/matches.json") as match_f:
             matches = json.load(match_f)
         for group in ["a", "b"]:
@@ -102,16 +121,59 @@ def retroactive_predictions(timestamp, k, n_samples, tournament,
                 for match in matches[group][day]:
                     match[2] = -1
 
-        generate_html_ti(f"data/{tournament}/elo_ratings.json", matches, "elo",
-            n_samples, tournament, k, timestamp, tabs=tabs, title=title,
-            use_cached=use_cached,
+        generate_data_ti(f"data/{tournament}/elo_ratings.json", matches,
+            "elo" + tab[1], n_samples, tournament, k, timestamp,
             bracket_file=f"data/{tournament}/main_event_matches.json"
-                         if tab[0] == "Current" else None)
-        generate_html_ti(f"data/{tournament}/fixed_ratings.json", matches,
-            "fixed", n_samples, tournament, k, timestamp, static_ratings=True,
-            tabs=tabs, title=title, use_cached=use_cached,
+                         if tab[1] == "" else None)
+        generate_data_ti(f"data/{tournament}/fixed_ratings.json", matches,
+            "fixed" + tab[1], n_samples, tournament, k, timestamp,
+            static_ratings=True,
             bracket_file=f"data/{tournament}/main_event_matches.json"
-                         if tab[0] == "Current" else None)
+                         if tab[1] == "" else None)
+
+def retroactive_dpc_predictions(timestamp, k, n_samples, region,
+                                train_elo, html_only=False):
+    """Code for generating retroactive DPC league predictions. Will
+    only work if matches.db exists in the data folder.
+    """
+    tabs = [["May 23 (Current)", ""],
+            ["May 21 (Week 6)", "-6"], ["May 16 (Week 5)", "-5"],
+            ["May 9 (Week 4)", "-4"], ["May 2 (Week 3)", "-3"],
+            ["Apr. 25 (Week 2)", "-2"], ["Apr. 18 (Week 1)", "-1"],
+            ["Apr. 11 (Pre-tournament)", "-pre"]]
+    full_name = {
+        "na": "North America", "sa": "South America", "weu": "Western Europe",
+        "eeu": "Eastern Europe", "cn": "China", "sea": "Southeast Asia"
+    }
+    wildcard_slots = {"sea": 1, "eeu": 1, "cn": 2, "weu": 2, "na": 0, "sa": 0}
+
+    if train_elo:
+        generate_team_ratings_elo(3, k, 1.5, "dpc/sp21/"+region,
+            stop_after=datetime.fromisoformat("2021-04-10").timestamp())
+    generate_html_dpc(f"dpc/sp21/{region}/forecast.html", tabs,
+        "DPC Spring 2021: " + full_name[region], wildcard_slots[region])
+    if html_only:
+        return
+
+    for i, tab in enumerate(reversed(tabs)):
+        with open(f"data/dpc/sp21/{region}/matches.json") as match_f:
+            matches = json.load(match_f)
+        for division in ["upper", "lower"]:
+            for day in range(i, 6):
+                for match in matches[division][day]:
+                    match[2] = []
+            if tab[1] != "":
+                matches["tiebreak"][division] = {}
+
+        generate_data_dpc(f"data/dpc/sp21/{region}/elo_ratings.json",
+                          matches, "elo" + tab[1], n_samples,
+                          f"dpc/sp21/{region}", k, wildcard_slots[region],
+                          timestamp=timestamp, static_ratings=False)
+        generate_data_dpc(f"data/dpc/sp21/{region}/fixed_ratings.json",
+                          matches, "fixed" + tab[1], n_samples,
+                          f"dpc/sp21/{region}", k, wildcard_slots[region],
+                          timestamp=timestamp, static_ratings=True)
+
 
 def validate_ti10_files():
     """Some simple checks for the ti10 data files to help users catch
@@ -120,7 +182,7 @@ def validate_ti10_files():
     data = {}
     for file in ["elo_ratings", "groups", "matches"]:
         try:
-            with open(f"data/ti10/{file}.json") as json_f:
+            with open(f"data/ti/10/{file}.json") as json_f:
                 data[file] = json.load(json_f)
         except json.decoder.JSONDecodeError:
             print(f"ERROR: Failed to load {file}.json: invalid JSON")
@@ -176,10 +238,12 @@ def main():
         default=False,
         help=argparse.SUPPRESS if "-H" not in sys.argv else "Generates "
         "retroactive predictions for past TIs.")
-    parser.add_argument("-c","--use-cached", action='store_true',
-        default=False,
-        help=argparse.SUPPRESS if "-H" not in sys.argv else "Use cached "
-        "probability estimates if they exist.")
+    parser.add_argument("--rd", action='store_true', default=False,
+        help=argparse.SUPPRESS if "-H" not in sys.argv else "Generates "
+        "retroactive predictions for past DPC leagues.")
+    parser.add_argument("--html", action='store_true', default=False,
+        help=argparse.SUPPRESS if "-H" not in sys.argv else "Updates HTML "
+        "files without generating new predictions.")
     parser.add_argument("-f","--full-report", action='store_true',
         default=False, help="Generates a full report for use on the website.")
     parser.add_argument("-k", default=55, type=int, help="k parameter for the "
@@ -192,43 +256,54 @@ def main():
     k = args.k
     timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M")
     n_samples = args.n_samples
-    use_cached = args.use_cached
+    tabs = [["Oct. 17 (Current)", ""],["Oct 10 (Group Stage Day 4)", "-4"],
+            ["Oct. 9 (Group Stage Day 3)", "-3"],
+            ["Oct. 8 (Group Stage Day 2)", "-2"],
+            ["Oct. 7 (Group Stage Day 1)", "-1"],
+            ["Oct. 6 (Pre-tournament)", "-pre"]]
 
     if args.retroactive_predict:
-        for event in ["ti7", "ti8", "ti9", "ti10"]:
-            retroactive_predictions(timestamp, k, n_samples,
-                                    event, args.train_elo, use_cached)
+        for event in ["ti/7", "ti/8", "ti/9", "ti/10"]:
+            retroactive_ti_predictions(timestamp, k, n_samples,
+                                       event, args.train_elo, args.html)
+    elif args.rd:
+        for region in ["sea", "eeu", "cn", "weu", "na", "sa"]:
+            retroactive_dpc_predictions(timestamp, k, n_samples,
+                                        region, args.train_elo, args.html)
     elif args.full_report:
         if args.train_elo:
-            generate_team_ratings_elo(3, k, 1.5, "ti10",
+            generate_team_ratings_elo(3, k, 1.5, "ti/10",
                 stop_after=datetime.fromisoformat("2021-10-05").timestamp())
 
-        tabs = {
-            "active": ["Current", ".html"],
-            "all": [["Pre-tournament", "-pre.html"], ["Day 1", "-1.html"],
-                    ["Day 2", "-2.html"], ["Day 3", "-3.html"],
-                    ["Current", ".html"]]
-        }
-        with open("data/ti10/matches.json") as match_f:
+        with open("data/ti/10/matches.json") as match_f:
             matches = json.load(match_f)
-        generate_html_ti("data/ti10/elo_ratings.json", matches, "elo",
-                         n_samples, "ti10", k, timestamp, tabs=tabs,
-                         bracket_file="data/ti10/main_event_matches.json",
-                         use_cached=use_cached)
-        generate_html_ti("data/ti10/fixed_ratings.json", matches, "fixed",
-                         n_samples, "ti10", k, timestamp,
-                         static_ratings=True, tabs=tabs,
-                         bracket_file="data/ti10/main_event_matches.json",
-                         use_cached=use_cached)
+
+        generate_html_ti("ti/10/forecast.html", tabs, "The International 10")
+        if not args.html:
+            generate_data_ti("data/ti/10/elo_ratings.json", matches, "elo",
+                n_samples, "ti/10", k, timestamp,
+                bracket_file="data/ti/10/main_event_matches.json")
+            generate_data_ti("data/ti/10/fixed_ratings.json", matches, "fixed",
+                n_samples, "ti/10", k, timestamp, static_ratings=True,
+                bracket_file="data/ti/10/main_event_matches.json")
     else:
-        with open("data/ti10/matches.json") as match_f:
+        with open("data/ti/10/matches.json") as match_f:
             matches = json.load(match_f)
         if validate_ti10_files():
-            generate_html_ti("data/ti10/elo_ratings.json", matches,
-                             "output.html", n_samples, "ti10", k, timestamp,
-                             static_ratings=args.static_ratings,
-                             use_cached=use_cached)
-            print("Output saved to ti10/output.html")
+            generate_html_ti("ti/10/user_forecast.html", [["Current", ""]],
+                             "The International 10")
+            generate_data_ti("data/ti/10/elo_ratings.json", matches,
+                             "custom", n_samples, "ti/10", k, timestamp,
+                             static_ratings=args.static_ratings)
+            os.chdir("..")
+            print("Output running at http://localhost:8000/ti/10/"
+                  "user_forecast.html?model=custom. Press ctrl+c"
+                  " or close this window to exit.")
+            webbrowser.open(
+                "http://localhost:8000/ti/10/user_forecast.html?model=custom")
+            server = http.server.HTTPServer(('127.0.0.1', 8000),
+                http.server.SimpleHTTPRequestHandler)
+            server.serve_forever()
 
 if __name__ == "__main__":
     main()

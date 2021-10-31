@@ -1,0 +1,90 @@
+{
+  "upper": [
+    [
+      ["beastcoast", "Hokori", [2, 0]],
+      ["NoPing e-sports", "SG esports", [2, 0]],
+      ["Hokori", "Infinity Esports", [1, 2]],
+      ["Infamous", "Thunder Predator", [1, 2]],
+      ["beastcoast", "Team Unknown", [2, 0]]
+    ],
+    [
+      ["Team Unknown", "Thunder Predator", [0, 2]],
+      ["Hokori", "NoPing e-sports", [0, 2]],
+      ["Infamous", "Team Unknown", [2, 0]],
+      ["beastcoast", "Infinity Esports", [2, 0]],
+      ["SG esports", "Thunder Predator", [1, 2]]
+    ],
+    [
+      ["Infamous", "SG esports", [2, 0]],
+      ["Infinity Esports", "NoPing e-sports", [0, 2]],
+      ["beastcoast", "Thunder Predator", [2, 1]],
+      ["Hokori", "Team Unknown", [2, 0]],
+      ["Infinity Esports", "SG esports", [0, 2]]
+    ],
+    [
+      ["NoPing e-sports", "Thunder Predator", [2, 1]],
+      ["beastcoast", "Infamous", [1, 2]],
+      ["Infinity Esports", "Team Unknown", [0, 2]],
+      ["Hokori", "SG esports", [2, 1]],
+      ["Infamous", "NoPing e-sports", [0, 2]]
+    ],
+    [
+      ["Team Unknown", "NoPing e-sports", [0, 2]],
+      ["Hokori", "Thunder Predator", [0, 2]],
+      ["Infamous", "Infinity Esports", [2, 0]],
+      ["beastcoast", "SG esports", [2, 0]],
+      ["Thunder Predator", "Infinity Esports", [2, 0]]
+    ],
+    [
+      ["Infamous", "Hokori", [1, 2]],
+      ["Team Unknown", "SG esports", [1, 2]],
+      ["NoPing e-sports", "beastcoast", [1, 2]]
+    ]
+  ],
+  "lower": [
+    [
+      ["EgoBoys", "BINOMISTAS", [2, 1]],
+      ["Latam Defenders", "Omega Gaming", [2, 1]],
+      ["Crewmates", "Gorillaz-Pride", [1, 2]],
+      ["incubus club", "Inverse", [1, 2]],
+      ["Gorillaz-Pride", "BINOMISTAS", [1, 2]]
+    ],
+    [
+      ["incubus club", "EgoBoys", [2, 1]],
+      ["Latam Defenders", "BINOMISTAS", [1, 2]],
+      ["Crewmates", "Inverse", [2, 0]],
+      ["EgoBoys", "Omega Gaming", [1, 2]],
+      ["incubus club", "Gorillaz-Pride", [0, 2]]
+    ],
+    [
+      ["BINOMISTAS", "Inverse", [2, 0]],
+      ["EgoBoys", "Crewmates", [2, 0]],
+      ["Omega Gaming", "Gorillaz-Pride", [2, 0]],
+      ["Latam Defenders", "Inverse", [0, 2]],
+      ["incubus club", "Crewmates", [2, 0]]
+    ],
+    [
+      ["incubus club", "Latam Defenders", [0, 2]],
+      ["Omega Gaming", "Inverse", [1, 2]],
+      ["EgoBoys", "Gorillaz-Pride", [2, 1]],
+      ["Latam Defenders", "Crewmates", [1, 2]],
+      ["Omega Gaming", "BINOMISTAS", [0, 2]]
+    ],
+    [
+      ["BINOMISTAS", "Crewmates", [1, 2]],
+      ["Latam Defenders", "EgoBoys", [0, 2]],
+      ["Gorillaz-Pride", "Inverse", [0, 2]],
+      ["Crewmates", "Omega Gaming", [2, 1]],
+      ["Gorillaz-Pride", "Latam Defenders", [2, 0]]
+    ],
+    [
+      ["incubus club", "Omega Gaming", [1, 2]],
+      ["Inverse", "EgoBoys", [0, 2]],
+      ["incubus club", "BINOMISTAS", [0, 2]]
+    ]
+  ],
+  "tiebreak": {
+    "lower": {},
+    "upper": {"0": [["beastcoast", "NoPing e-sports", [0, 2]]]}
+  }
+}

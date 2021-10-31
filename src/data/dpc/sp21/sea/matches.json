@@ -1,0 +1,108 @@
+{
+  "upper": [
+    [
+      ["Lilgun", "Omega Esports", [1, 2]],
+      ["TNC Predator", "Execration", [2, 0]],
+      ["BOOM Esports", "Execration", [2, 1]],
+      ["Lilgun", "BOOM Esports", [0, 2]],
+      ["T1", "Omega Esports", [1, 2]]
+    ],
+    [
+      ["Omega Esports", "TNC Predator", [0, 2]],
+      ["Execration", "Fnatic", [2, 0]],
+      ["BOOM Esports", "OB Esports x Neon", [0, 2]],
+      ["TNC Predator", "OB Esports x Neon", [2, 1]],
+      ["Lilgun", "T1", [0, 2]]
+    ],
+    [
+      ["Fnatic", "BOOM Esports", [2, 1]],
+      ["Execration", "Omega Esports", [2, 0]],
+      ["BOOM Esports", "T1", [2, 1]],
+      ["OB Esports x Neon", "Execration", [1, 2]],
+      ["T1", "TNC Predator", [2, 1]]
+    ],
+    [
+      ["Omega Esports", "Fnatic", [1, 2]],
+      ["TNC Predator", "BOOM Esports", [2, 1]],
+      ["Omega Esports", "OB Esports x Neon", [0, 2]],
+      ["Execration", "T1", [1, 2]],
+      ["Fnatic", "Lilgun", [2, 0]]
+    ],
+    [
+      ["OB Esports x Neon", "Lilgun", [2, 0]],
+      ["Fnatic", "T1", [0, 2]],
+      ["OB Esports x Neon", "Fnatic", [0, 2]],
+      ["Lilgun", "TNC Predator", [2, 0]],
+      ["Omega Esports", "BOOM Esports", [2, 0]]
+    ],
+    [
+      ["Execration", "Lilgun", [2, 0]],
+      ["Fnatic", "TNC Predator", [1, 2]],
+      ["OB Esports x Neon", "T1", [1, 2]]
+    ]
+  ],
+  "lower": [
+    [
+      ["496 Gaming", "South Built Esports", [1, 2]],
+      ["Cignal Ultra", "Motivate.Trust Gaming", [0, 2]],
+      ["Team SMG", "Galaxy Racer", [2, 0]],
+      ["South Built Esports", "Army Geniuses", [2, 1]],
+      ["Galaxy Racer", "South Built Esports", [0, 2]]
+    ],
+    [
+      ["Army Geniuses", "Cignal Ultra", [2, 0]],
+      ["Team Mystery", "Team SMG", [0, 2]],
+      ["Motivate.Trust Gaming", "496 Gaming", [2, 0]],
+      ["South Built Esports", "Team Mystery", [1, 2]],
+      ["Team SMG", "Motivate.Trust Gaming", [0, 2]]
+    ],
+    [
+      ["Cignal Ultra", "496 Gaming", [0, 2]],
+      ["Army Geniuses", "Galaxy Racer", [0, 2]],
+      ["496 Gaming", "Team SMG", [0, 2]],
+      ["Team Mystery", "Army Geniuses", [0, 2]],
+      ["Motivate.Trust Gaming", "South Built Esports", [2, 0]]
+    ],
+    [
+      ["Team SMG", "Cignal Ultra", [2, 0]],
+      ["Galaxy Racer", "Team Mystery", [2, 0]],
+      ["Team Mystery", "496 Gaming", [0, 2]],
+      ["Army Geniuses", "Motivate.Trust Gaming", [1, 2]],
+      ["Cignal Ultra", "Galaxy Racer", [0, 2]]
+    ],
+    [
+      ["496 Gaming", "Army Geniuses", [2, 1]],
+      ["Motivate.Trust Gaming", "Team Mystery", [2, 0]],
+      ["Team Mystery", "Cignal Ultra", [2, 0]],
+      ["Team SMG", "South Built Esports", [2, 0]],
+      ["Army Geniuses", "Team SMG", [0, 2]]
+    ],
+    [
+      ["Cignal Ultra", "South Built Esports", [1, 2]],
+      ["Galaxy Racer", "496 Gaming", [2, 1]],
+      ["Galaxy Racer", "Motivate.Trust Gaming", [1, 2]]
+    ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "0": [
+        ["T1", "TNC Predator", [2, 0]]
+      ],
+      "2": [
+        ["Execration", "Fnatic", [2, 0]]
+      ],
+      "5": [
+        ["Omega Esports", "BOOM Esports", [1, 0]],
+        ["BOOM Esports", "OB Esports x Neon", [1, 0]],
+        ["Omega Esports", "OB Esports x Neon", [0, 1]],
+        ["Omega Esports", "BOOM Esports", [1, 0]],
+        ["BOOM Esports", "OB Esports x Neon", [0, 1]]
+      ]
+    },
+    "lower": {
+      "5": [
+        ["Army Geniuses", "Team Mystery", [2, 0]]
+      ]
+    }
+  }
+}

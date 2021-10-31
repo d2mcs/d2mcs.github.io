@@ -328,3 +328,95 @@ class TIGroupStage(Simulator):
         points = [(team, point_map[team]) for team in team_order]
 
         return points, tiebreak_sizes
+
+class DPCLeague(Simulator):
+    """DPC League Simulator: 8 team round-robin with additional
+    matches played along the specified boundaries (e.g., (1,2) and
+    (5,6) for a lower division league).
+
+    Parameters
+    ----------
+    tiebreak_boundaries : list
+        List of boundaries for which additional matches should be
+        played to break ties. Example:
+
+            [(1,2), (5,6)]
+
+    Otherwise identical to Simulator. See above for details
+    """
+    def __init__(self, model, tiebreak_boundaries, static_ratings=False):
+        super().__init__(model, static_ratings)
+        self.tiebreak_boundaries = tiebreak_boundaries
+
+    def simulate(self, teams, matches, tiebreak_matches):
+        """Simulates a single group stage and returns the resulting
+        team ranks.
+
+        Parameters
+        ----------
+        teams : list of str
+            List of teams in each division
+        matches : list
+            List of matches. See DPCSampler for detailed documentation.
+        tiebreak_matches : list
+            List of tiebreaker matches. An empty list can be provided
+            if none were played.
+        Returns
+        -------
+        list of list(str, int)
+            Sorted list of teams and points. Example:
+                [["Team A", 10], ["Team B", 9], ["Team C", 5]]
+        dict
+            dict mapping each boundary to the number of teams tied
+            along that boundary
+        """
+        records = {team: [0,0] for team in teams}
+        h2h_results = {team: {} for team in teams}
+        tiebreak_sizes = []
+        points = []
+
+        for match_week_list in matches:
+            for match in match_week_list:
+                if len(match[2]) == 0:
+                    if self.static_ratings:
+                        result = self.sim_bo_n(3, match[0], match[1])
+                    else:
+                        result = self.sim_bo_n(3, match[0], match[1])
+                        self.model.update_ratings(match[0], match[1], result)
+                else:
+                    result = match[2]
+                    if isinstance(result[0], str): # default result
+                        if result[0] == "W":
+                            result = [2, 0]
+                        elif result[1] == "W":
+                            result = [0, 2]
+                        else:
+                            result = [0, 0]
+                    elif not self.static_ratings:
+                        self.model.update_ratings(match[0], match[1], result)
+
+                if sum(result) > 0:
+                    winner = int(result[1] > result[0])
+
+                    records[match[winner]][0] += 1
+                    records[match[1 - winner]][1] += 1
+                h2h_results[match[0]][match[1]] = result[0]
+                h2h_results[match[1]][match[0]] = result[1]
+
+        point_map = {}
+        for team, record in records.items():
+            point_map[team] = record[0]
+
+        tiebreaker = Tiebreaker(self)
+        team_order = tiebreaker.order_teams(point_map.keys(), point_map)
+
+        if len(tiebreak_matches) > 0:
+            team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
+                self.tiebreak_boundaries,team_order,point_map,tiebreak_matches)
+        else:
+            team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
+                self.tiebreak_boundaries, team_order, point_map)
+        team_order = tiebreaker.h2h_tiebreak(h2h_results,team_order,point_map)
+        points = [(team, point_map[team]) for team in team_order]
+
+        return points, tiebreak_sizes

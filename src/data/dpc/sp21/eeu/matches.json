@@ -1,0 +1,90 @@
+{
+  "upper": [
+    [
+      ["Virtus.pro", "AS Monaco Gambit", [2, 1]],
+      ["Team Spirit", "Natus Vincere", [2, 0]],
+      ["EXTREMUM", "Winstrike Team", [1, 2]],
+      ["Team Unique", "PuckChamp", [2, 1]],
+      ["AS Monaco Gambit", "Team Spirit", [0, 2]]
+    ],
+    [
+      ["Natus Vincere", "EXTREMUM", [2, 0]],
+      ["Winstrike Team", "Team Unique", [2, 1]],
+      ["Virtus.pro", "PuckChamp", [2, 0]],
+      ["Natus Vincere", "AS Monaco Gambit", [2, 0]],
+      ["Winstrike Team", "Team Spirit", [1, 2]]
+    ],
+    [
+      ["PuckChamp", "EXTREMUM", [2, 0]],
+      ["Virtus.pro", "Team Unique", [2, 0]],
+      ["AS Monaco Gambit", "Winstrike Team", [2, 0]],
+      ["Team Spirit", "PuckChamp", [2, 0]],
+      ["Virtus.pro", "Natus Vincere", [2, 0]]
+    ],
+    [
+      ["EXTREMUM", "Team Unique", [1, 2]],
+      ["Winstrike Team", "Natus Vincere", [0, 2]],
+      ["PuckChamp", "AS Monaco Gambit", [0, 2]],
+      ["Team Unique", "Team Spirit", [0, 2]],
+      ["Virtus.pro", "EXTREMUM", [2, 0]]
+    ],
+    [
+      ["Virtus.pro", "Team Spirit", [2, 1]],
+      ["PuckChamp", "Winstrike Team", [2, 1]],
+      ["EXTREMUM", "AS Monaco Gambit", [1, 2]],
+      ["Team Unique", "Natus Vincere", [2, 1]],
+      ["Virtus.pro", "Winstrike Team", [2, 0]]
+    ],
+    [
+      ["Team Spirit", "EXTREMUM", [2, 0]],
+      ["AS Monaco Gambit", "Team Unique", [2, 0]],
+      ["Natus Vincere", "PuckChamp", [1, 2]]
+    ]
+  ],
+  "lower": [
+    [
+      ["Nemiga Gaming", "NoTechies", [2, 0]],
+      ["B8", "Prosti Esli", [1, 2]],
+      ["Trident Clan", "HellRaisers", [0, 2]],
+      ["Team Empire", "Fantastic Five", [2, 0]],
+      ["B8", "NoTechies", [2, 0]]
+    ],
+    [
+      ["Fantastic Five", "HellRaisers", [0, 2]],
+      ["Team Empire", "Prosti Esli", [0, 2]],
+      ["Trident Clan", "Nemiga Gaming", [0, 2]],
+      ["Prosti Esli", "Fantastic Five", [0, 2]],
+      ["NoTechies", "HellRaisers", [0, 2]]
+    ],
+    [
+      ["Team Empire", "Nemiga Gaming", [2, 1]],
+      ["NoTechies", "Trident Clan", [2, 1]],
+      ["HellRaisers", "B8", [2, 0]],
+      ["Nemiga Gaming", "Prosti Esli", [2, 1]],
+      ["Team Empire", "B8", [1, 2]]
+    ],
+    [
+      ["Trident Clan", "Fantastic Five", [1, 2]],
+      ["Team Empire", "NoTechies", [2, 0]],
+      ["HellRaisers", "Nemiga Gaming", [2, 1]],
+      ["Prosti Esli", "Trident Clan", [2, 1]],
+      ["Fantastic Five", "B8", [2, 0]]
+    ],
+    [
+      ["Fantastic Five", "Nemiga Gaming", [2, 0]],
+      ["HellRaisers", "Prosti Esli", [2, 0]],
+      ["Nemiga Gaming", "B8", [2, 0]],
+      ["NoTechies", "Fantastic Five", [0, 2]],
+      ["Team Empire", "HellRaisers", [2, 0]]
+    ],
+    [
+      ["B8", "Trident Clan", [2, 0]],
+      ["Prosti Esli", "NoTechies", [1, 2]],
+      ["Team Empire", "Trident Clan", [2, 0]]
+    ]
+  ],
+  "tiebreak": {
+    "lower": {"1": [["Team Empire", "Fantastic Five", [2, 0]]]},
+    "upper": {}
+  }
+}
