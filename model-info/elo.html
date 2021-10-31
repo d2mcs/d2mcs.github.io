@@ -29,7 +29,7 @@
   </nav>
   <div class="container mt-3 mb-3 flex-grow-1" style="max-width: 1000px">
     <h1 class="text-center">d2mcs</h1>
-    <h5 class="text-center">Elo Forecaster Version 0.1</h5>
+    <h5 class="text-center">Elo Forecaster Version 0.2</h5>
     <hr>
     <h2>Forecasting Model</h2>
     <p>
@@ -56,12 +56,21 @@
     where \(r_1\) is team 1's rating and \(r_2\) is team 2's rating.
     </p>
 
+    <h4>Region ratings</h4>
+    <p>
+      Online matches are far more common than offline matches, so estimating the strength of teams which don't frequently play at LAN events can be difficult. To help deal with this, the model maintains a global rating adjustment for each of the six DPC regions (North America, South America, Western Europe, Eastern Europe, China, and Southeast Asia). Whenever a team plays a match against a team from a different region, 10% of the rating update is applied to the team's region.<br><br>
+
+      As an example, suppose a team from North America with a rating of 1600 loses to a team from Southeast Asia with a rating of 1750. With a k value of 60, this would result in a rating adjustment of 18. The Southeast Asian team would therefore have an updated rating of 1768, and the North American team would have an updated rating of 1582. Because the match is international, 10% of this rating update is applied to the region as whole. The rating of all other North American teams will decrease by 1.8 points, and the rating of all other Southeast Asian teams will increase by 1.8 points.<br><br>
+
+      Keeping the region share small means it will have a fairly small effect on teams which frequently play international matches. The main purpose is to improve ratings for teams which don't frequently play at LAN events.
+    </p>
+
     <h4>K adjustments</h4>
     <p>
-    Because online matches are far more common than offline matches, the model tends to have a lot of difficulty accounting for regional strength. In general, the more competitive a region is the lower the average rating of its teams will be. This also means that teams which perform well in their region but struggle internationally (e.g. Team Aster) are very difficult to accurately predict. I'm planning on eventually properly accounting for this using region/league quality but for now I'm just using heuristics. The current model uses a dynamic k-factor based on team quality and Liquipedia tier:
+    The current model uses a dynamic k-factor based on team quality and Liquipedia tier:
 
     <ul>
-      <li>Team quality: similar to chess, the k factor is decreased for higher rated teams. Specifically, the actual k factor scales linearly from 150% of the base k factor for teams with a rating less than or equal to 1000 to 50% of the base k factor for teams with a rating greater than or equal to 2000.</li>
+      <li>Team quality: similar to chess, the k factor is decreased for higher rated teams. Specifically, the actual k factor scales linearly from 150% of the base k factor for teams with a rating less than or equal to 1000 to 50% of the base k factor for teams with a rating greater than or equal to 2000. The base rating is 1500.</li>
       <li>League quality: because the model was designed to make predictions for high-profile tournaments, it places greater weight on results at high-profile tournaments. Specifically, the k factor decays relative to the tier of the tournament by a factor of \(t^{-.75}\), where t is the Liquipedia tier of the tournament.</li>
     </ul>
 
@@ -70,7 +79,7 @@
 
     <h4>Evaluation</h4>
     <p>
-    Elo predictions use a base k parameter of 55. A typical tier 1 team has a rating of around 1850, so a typical tier 1 match will result in an adjusted k of ~32. I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), then computed evaluation metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
+    Elo predictions use a base k parameter of 55. A typical tier 1 team has a rating of around 1850, so a typical tier 1 match will result in an adjusted k of ~36. I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), then computed evaluation metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
 
     <img class="mx-auto d-block pt-2" src="../image/model_calibration.png" style="max-width: 700px" alt="Plot comparing estimated win probability to actual win probability for tier 1 matches">
 
@@ -90,6 +99,7 @@
 
     <h2>Changelog</h2>
     <ul>
+      <li><b>0.2</b> (2021-10-31): added region ratings.
       <li><b>0.1</b> (2021-10-24): models are now versioned.
     </ul>
   </div>

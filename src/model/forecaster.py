@@ -148,7 +148,7 @@ class PlayerModel:
             raise ValueError("Teams must have 5 players")
         team_rating = sum([self.ratings[id] for id in player_ids])/5
         if region is not None:
-            team_rating += self._region_rating(region)
+            team_rating += self._region_rating(region.upper())
         return team_rating
 
     def get_win_prob(self, team1, team2, regions=None):
@@ -276,6 +276,22 @@ class PlayerModel:
                 series["league_tier"], series["timestamp"]))
         return ordered_series
 
+    def _get_regions(self, team1_id, team2_id):
+        """Private helper method for compute_ratings which determines
+        the region of two teams. If one team's region is unknown and
+        the other's isn't, the unknown team's region is assumed to be
+        the same as the known team's region.
+        """
+        region1 = self.tid_to_region.get(team1_id, "UNK")
+        region2 = self.tid_to_region.get(team2_id, "UNK")
+        if region1 == "UNK" and region2 != "UNK":
+            region1 = region2
+            self.tid_to_region[team1_id] = region2
+        elif region2 == "UNK" and region1 != "UNK":
+            region2 = region1
+            self.tid_to_region[team2_id] = region1
+        return region1, region2
+
     def compute_ratings(self, matches, track_history=False, stop_after=None):
         """Updates model ratings given an iterable containing match
         date (teams, winner/loser)
@@ -315,21 +331,11 @@ class PlayerModel:
             timestamp = series[4]
 
             if self.tid_to_region is not None:
-                region1 = self.tid_to_region.get(team1_id, "UNK")
-                region2 = self.tid_to_region.get(team2_id, "UNK")
-                # if one of the teams is from an unknown region, it's most
-                # likely a local match so use the other team's region
-                if region1 == "UNK" and region2 != "UNK":
-                    region1 = region2
-                    self.tid_to_region[team1_id] = region2
-                elif region2 == "UNK" and region1 != "UNK":
-                    region2 = region1
-                    self.tid_to_region[team2_id] = region1
-                self.update_ratings(team1_players, team2_players,
-                                    score, league_tier, (region1, region2))
+                regions = self._get_regions(team1_id, team2_id)
             else:
-                self.update_ratings(team1_players, team2_players,
-                                    score, league_tier)
+                regions = None
+            self.update_ratings(team1_players, team2_players,
+                                score, league_tier, regions)
 
             if track_history:
                 if team1_id not in team_ratings:
@@ -337,10 +343,10 @@ class PlayerModel:
                 if team2_id not in team_ratings:
                     team_ratings[team2_id] = []
                 team_ratings[team1_id].append((self.get_team_rating(
-                    team1_players, region1 if self.tid_to_region is not None
+                    team1_players, regions[0] if self.tid_to_region is not None
                                    else None), timestamp))
                 team_ratings[team2_id].append((self.get_team_rating(
-                    team2_players, region2 if self.tid_to_region is not None
+                    team2_players, regions[1] if self.tid_to_region is not None
                                    else None), timestamp))
                 if self.tid_to_region is not None:
                     for region, rating in self.region_ratings.items():
@@ -351,7 +357,7 @@ class PlayerModel:
         return team_ratings
 
     def compute_ratings_evaluation_mode(self, matches, bins=20, start_at=0,
-            stop_after=2147483647, max_tier=3):
+            stop_after=2147483647, max_tier=3, min_appearances=0):
         """Function for calculating how well model estimations line up
         with actual outcomes. Matches are binned by estimated
         probability thresholds (e.g., win probability between 10% and
@@ -372,6 +378,9 @@ class PlayerModel:
             metric calculation.
         max_tier : int, default=3
             Maximum tier of match to consider in metric calculation.
+        min_appearances : int, default=0
+            Metrics will only be computed for teams which have played
+            in this number of series.
 
         Returns
         -------
@@ -390,7 +399,7 @@ class PlayerModel:
         match_count = 0
         series_list = self._get_series(matches, stop_after)
 
-        team_appearances = {}
+        appearances = {}
         for series in series_list:
             team1_id, team2_id = series[0]
             team1_players, team2_players = series[1]
@@ -399,28 +408,20 @@ class PlayerModel:
             timestamp = series[4]
 
             for tid in (team1_id, team2_id):
-                team_appearances[tid] = team_appearances.get(tid, 0) + 1
+                appearances[tid] = appearances.get(tid, 0) + 1
 
             if self.tid_to_region is not None:
-                region1 = self.tid_to_region.get(team1_id, "UNK")
-                region2 = self.tid_to_region.get(team2_id, "UNK")
-                # if one of the teams is from an unknown region, it's most
-                # likely a local match so use the other team's region
-                if region1 == "UNK" and region2 != "UNK":
-                    region1 = region2
-                    self.tid_to_region[team1_id] = region2
-                elif region2 == "UNK" and region1 != "UNK":
-                    region2 = region1
-                    self.tid_to_region[team2_id] = region1
+                regions = self._get_regions(team1_id, team2_id)
+            else:
+                regions = None
 
             if timestamp > stop_after:
                 break
             if timestamp > start_at and league_tier <= max_tier:
-                if (team_appearances[team1_id] > 5 and
-                      team_appearances[team2_id] > 5):
+                if (appearances[team1_id] > min_appearances
+                      and appearances[team2_id] > min_appearances):
                     win_p_t1 = self.get_win_prob(team1_players, team2_players,
-                        (region1, region2) if self.tid_to_region is not None
-                        else None)
+                        regions if self.tid_to_region is not None else None)
                     actual_score = score[0]/sum(score)
 
                     count_bins[int(win_p_t1*bins)][0] += actual_score
@@ -431,8 +432,7 @@ class PlayerModel:
                     match_count += 1
 
             self.update_ratings(team1_players, team2_players,
-                                score, league_tier, (region1, region2)
-                                if self.tid_to_region is not None else None)
+                                score, league_tier, regions)
 
         prob_bins = []
         for event_count, total_count in count_bins:
