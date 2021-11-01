@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>d2mcs | Global DPC Team Ratings</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">d2mcs</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/global_ratings.html">Global Team Ratings</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container mt-3 mb-3" style="max-width: 800px">
+  <h1 class="text-center">Global DPC Team Ratings</h1>
+  <h6 class="text-center pb-3">Updated {{timestamp}} UTC</h6>
+  <div class="table-responsive">
+    <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Team</th>
+        <th scope="col">Rating</th>
+        <th scope="col"><span class="d-none d-sm-block d-md-inline">Last Match</span></th>
+        <th scope="col">Region</th>
+      </tr>
+    </thead>
+    <tbody class="table-light">
+    {% for team, region_short, region_long, rating, last_update in team_data %}
+    <tr>
+      <td>{{loop.index}}</td>
+      <td><img id="im-{{i}}" src="dpc/{{dpc_season}}/{{region_short}}/image/{{team}}.png" height=20px> <span id="team-{{i}}">{{team}}</span></td>
+      <td id="rating-{{i}}">{{rating}}</td>
+      <td id="last-update-{{i}}"><span class="d-none d-sm-block d-md-inline">{{last_update}}</span></td>
+      <td id="region-{{i}}"><img id="im-{{i}}" src="image/{{region_short}}.png" height=20px> <span class="d-none d-sm-block d-md-inline">{{region_long}}</span><span class="d-inline d-sm-none">{{region_short|upper}}</span></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+  </div>
+</div>
+<footer>
+  <hr>
+  <div class="container" style="max-width: 1500px">
+    <p><small>
+      Source code can be found <a href="https://github.com/d2mcs/d2mcs.github.io">here</a>.<br>
+      d2mcs uses league data collected from Liquipedia and match data collected from the Steam WebAPI. This site is not endorsed by or affiliated with Valve or Steam.<br>
+      Region icons are taken from <a href="https://liquipedia.net/commons">Liquipedia Commons</a>. All icons were created by Liquipedia user IMarbot and are available under the <a href="http://artlibre.org/lal/en">Free Art License</a>.
+    </small></p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>

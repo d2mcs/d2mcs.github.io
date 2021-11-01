@@ -2,7 +2,7 @@
 probability reports using the TI and DPC league simulators.
 """
 
-from datetime import datetime
+from datetime import datetime, date
 import argparse
 import json
 import sys
@@ -14,7 +14,8 @@ from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
 from model.match_data import MatchDatabase
 from website.report import (generate_data_ti, generate_html_ti,
-                            generate_data_dpc, generate_html_dpc)
+                            generate_data_dpc, generate_html_dpc,
+                            generate_html_global_rankings)
 
 def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
     """Code for generating rating estimates for each provided team
@@ -67,6 +68,32 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
             else:
                 output_f.write(f'  "{team}": {rating}\n')
         output_f.write("}\n")
+
+def generate_global_ratings_elo(max_tier, k, p, dpc_season, timestamp):
+    match_db = MatchDatabase("data/matches.db")
+    player_ids = match_db.get_player_ids()
+    id_to_region = match_db.get_id_region_map()
+    p_model = PlayerModel(player_ids, k, p, tid_region_map=id_to_region)
+    rating_history = p_model.compute_ratings(match_db.get_matches(max_tier),
+                                             track_history=True)
+
+    team_ids = {}
+    regions = {}
+    for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
+        with open(f"data/dpc/{dpc_season}/{region}/team_data.json") as roster_f:
+            for team, team_data in json.load(roster_f).items():
+                team_ids[team] = team_data["id"]
+                regions[team] = region
+    output_data = {
+        "timestamp": timestamp,
+        "ratings": [(team, regions[team],
+                    float(f"{rating_history[tid][-1][0]:.2f}"),
+                    str(date.fromtimestamp(rating_history[tid][-1][1])))
+                    for team, tid in team_ids.items()]
+    }
+
+    with open(f"data/global/elo_ratings.json", "w") as output_f:
+        json.dump(output_data, output_f)
 
 def retroactive_ti_predictions(timestamp, k, n_samples, tournament,
                                train_elo, html_only=False):
@@ -241,6 +268,10 @@ def main():
     parser.add_argument("--rd", action='store_true', default=False,
         help=argparse.SUPPRESS if "-H" not in sys.argv else "Generates "
         "retroactive predictions for past DPC leagues.")
+    parser.add_argument("-g","--global_ratings", action='store_true',
+        default=False,
+        help=argparse.SUPPRESS if "-H" not in sys.argv else "Generates "
+        "a global rating of all 96 DPC teams")
     parser.add_argument("--html", action='store_true', default=False,
         help=argparse.SUPPRESS if "-H" not in sys.argv else "Updates HTML "
         "files without generating new predictions.")
@@ -286,6 +317,10 @@ def main():
             generate_data_ti("data/ti/10/fixed_ratings.json", matches, "fixed",
                 n_samples, "ti/10", k, timestamp, static_ratings=True,
                 bracket_file="data/ti/10/main_event_matches.json")
+    elif args.global_ratings:
+        if args.train_elo:
+            generate_global_ratings_elo(3, k, 1.5, "sp21", timestamp)
+        generate_html_global_rankings("global_ratings.html", "sp21")
     else:
         with open("data/ti/10/matches.json") as match_f:
             matches = json.load(match_f)

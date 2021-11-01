@@ -386,3 +386,33 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
     Path(f"../{folder}/data").mkdir(exist_ok=True)
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
         json.dump(output_json, json_f)
+
+def generate_html_global_rankings(output_file, dpc_season):
+    """Generates the output forecast report with the provided tabs and
+    title. generate_data is used for generating the JSON data files
+    used by this report.
+
+    Parameters
+    ----------
+    output_file : str
+        Name of output html file
+    """
+    with open("data/template_global_rating.html") as input_f:
+        template_str = input_f.read()
+    template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
+
+    with open("data/global/elo_ratings.json") as json_f:
+        team_ratings = json.load(json_f)
+
+    full_name = {
+        "na": "North America", "sa": "South America", "weu": "Western Europe",
+        "eeu": "Eastern Europe", "cn": "China", "sea": "Southeast Asia"
+    }
+    team_data = [(team, region, full_name[region], round(rating), last_update)
+                 for team, region, rating, last_update in
+                 sorted(team_ratings["ratings"], key=lambda x: -x[2])]
+
+    output = template.render(team_data=team_data, dpc_season=dpc_season,
+                             timestamp=team_ratings["timestamp"])
+    with open(f"../{output_file}", "w") as output_f:
+        output_f.write(output)
