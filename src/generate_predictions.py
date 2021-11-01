@@ -70,6 +70,10 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
         output_f.write("}\n")
 
 def generate_global_ratings_elo(max_tier, k, p, dpc_season, timestamp):
+    """Code for generating an Elo rating for every team which competed
+    in the provided DPC season. Uses the last recorded rating for the
+    teamid of that team.
+    """
     match_db = MatchDatabase("data/matches.db")
     player_ids = match_db.get_player_ids()
     id_to_region = match_db.get_id_region_map()

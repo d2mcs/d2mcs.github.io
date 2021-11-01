@@ -388,14 +388,17 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
         json.dump(output_json, json_f)
 
 def generate_html_global_rankings(output_file, dpc_season):
-    """Generates the output forecast report with the provided tabs and
-    title. generate_data is used for generating the JSON data files
-    used by this report.
+    """Generates a global team rating using the
+    /global/elo_ratings.json data file
 
     Parameters
     ----------
     output_file : str
         Name of output html file
+    dpc_season : str
+        DPC season used to get team list. This is used to find images,
+        so it should be whatever the folder in /data/dpc is called
+        (e.g., "sp21")
     """
     with open("data/template_global_rating.html") as input_f:
         template_str = input_f.read()
