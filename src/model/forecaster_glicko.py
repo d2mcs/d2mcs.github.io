@@ -8,33 +8,56 @@ class Glicko2Model:
     """Glicko-2 ratings model implemented following
     http://glicko.net/glicko/glicko2.pdf
 
+    The model differs slightly from base Glicko-2 in how it handles new
+    teams. Whenever a new team ID appears or a team ID appears with two
+    or more of its players changed, its rating is (re)initialized as
+    the average rating of its players. The rating deviation is slightly
+    higher than the average rating deviation of its players' previous
+    teams, up to a maximum of 3 (slightly higher than the base Glicko-2
+    default RD of 2) to prevent RDs from getting ridiculously high.
+
     Parameters
     ----------
     tau : int
         System parameter tau
+    rating_period : int
+        Duration of a rating period. The default is 30 days.
     """
-    def __init__(self, tau):
+    def __init__(self, tau, rating_period=2592000):
         self.player_ratings = {}
         self.ratings = {}
+        self.rosters = {}
 
-        self._tau = tau
+        self.tau = tau
+        self.rating_period = rating_period
         self.k = 0 # not used but needed for compatibility
 
     def _get_player_rating(self, player_id):
         """Private method for getting or initializing a player's
         rating. This is used to estimate an initial team rating.
+
+        A default player RD of 1.75 ensures that a team of new players
+        will have a default team RD of 2.
         """
         if player_id not in self.player_ratings:
-            self.player_ratings[player_id] = 0
+            self.player_ratings[player_id] = (0, 1.75)
         return self.player_ratings[player_id]
 
-    def _initialize_team(self, team, player_ids):
+    def initialize_team(self, team, player_ids):
         """Private method for initializing a team's rating using the
-        last recorded rating of each of its players.
+        last recorded rating of each of its players. The team's rating
+        deviation is the root sum of squares of the rating deviations
+        of it's players' previous teams, up to a maximum of 3.
+
+        Note that player RDs are intentionally divided by 4 instead of
+        by 5 to ensure that the new team has a slightly higher RD than
+        just the average of its players' previous teams (it's a new
+        team, so the RD should be relatively high).
         """
         player_ratings = [self._get_player_rating(pid) for pid in player_ids]
-        team_rating = sum(player_ratings)/len(player_ratings)
-        self.ratings[team] = (team_rating, 2, 0.06)
+        team_rating = sum([r[0] for r in player_ratings])/5
+        team_rd = sum([(r[1]**2)/4 for r in player_ratings])**(1/2)
+        self.ratings[team] = (team_rating, team_rd, 0.06)
 
     def get_team_rating(self, team):
         """Obtain's a team's rating on the Glicko-1 scale.
@@ -129,7 +152,7 @@ class Glicko2Model:
         return (
             (exp(x)*(delta**2 - phi**2 - v - exp(x))
              / (2*( (phi**2 + v + exp(x))**2 )))
-            - (x - a)/(self._tau**2)
+            - (x - a)/(self.tau**2)
         )
 
     def _get_new_sigma(self, sigma, delta, phi, v):
@@ -141,9 +164,9 @@ class Glicko2Model:
             B = log(delta**2 - phi**2 - v)
         else:
             k = 1
-            while self._vol_f(a - k*self._tau, a, delta, phi, v) < 0:
+            while self._vol_f(a - k*self.tau, a, delta, phi, v) < 0:
                 k = k + 1
-            B = a - k*self._tau
+            B = a - k*self.tau
 
         f_A = self._vol_f(A, a, delta, phi, v)
         f_B = self._vol_f(B, a, delta, phi, v)
@@ -182,7 +205,7 @@ class Glicko2Model:
                       team2: [(team1, score[1]/match_count)]}
         self.update_ratings_batch(match_dict)
 
-    def update_ratings_batch(self, match_dict):
+    def update_ratings_batch(self, match_dict, update_players=False):
         """Updates model ratings using a large number of results. This
         is how the Glicko model should typically be updated.
 
@@ -199,6 +222,9 @@ class Glicko2Model:
                 "B": [("A", 0), ("A", 1), ("C", 1)],
                 "C": [("A", 1), ("B", 0)]
             }
+        update_players : bool, default=False
+            If true, the model will update the ratings of players based
+            on the rating of their current team.
         """
         new_ratings = {}
         for team, matches in match_dict.items():
@@ -230,19 +256,45 @@ class Glicko2Model:
 
         for team, rating in new_ratings.items():
             self.ratings[team] = rating
+            if update_players:
+                for pid in self.rosters[team]:
+                    self.player_ratings[pid] = (rating[0], rating[1])
+
+    def _update_team(self, tid, pids, change_thresh=3):
+        """Private helper method for initializing team ratings. If the
+        team id is new or its roster has changed by 2+ players, the
+        team's rating is re-initialized using the previous team ratings
+        and RDs of each of its members
+        """
+        if tid not in self.ratings:
+            self.initialize_team(tid, pids)
+            self.rosters[tid] = sorted(pids)
+        else:
+            if self.rosters[tid] != sorted(pids):
+                existing_roster = set(self.rosters[tid])
+                diff_count = 0
+                for pid in pids:
+                    if pid not in existing_roster:
+                        diff_count += 1
+                if diff_count >= change_thresh:
+                    self.initialize_team(tid, pids)
+                self.rosters[tid] = sorted(pids)
+
+    def _rd_increase(self, teams):
+        """Increases the rating deviation of teams which haven't played
+        any matches during a rating period. Also updates the players on
+        those teams.
+        """
+        for team in teams:
+            rating = self.ratings[team]
+            new_rd = (self._phi(team)**2 + self._sigma(team)**2)**(1/2)
+            self.ratings[team] = (rating[0], new_rd, rating[2])
+            for pid in self.rosters[team]:
+                self.player_ratings[pid] = (rating[0], new_rd)
 
     def compute_ratings(self, matches, stop_after=None):
         """Updates model ratings given an iterable containing match
-        date (teams, winner/loser). This differs slightly from the
-        indended Glicko-2 update method in the following ways:
-
-        - Rating periods are not a standard length of time. Instead,
-          updates are batched by league. Whenever no matches are played
-          in a league for 5 days, all matches which haven't been
-          processed yet are used to update ratings.
-        - Partially as a consequence of the above, rating deviation
-          does not increase over time for teams that have not competed
-          in the rating period.
+        information.
 
         Parameters
         ----------
@@ -262,47 +314,51 @@ class Glicko2Model:
             timestamp, in seconds). If track_history=False, an empty
             dictionary is returned instead.
         """
-        league_matches = {}
-        # the rating period can be longer than this, but if no matches
-        # are played in a league in this timeframe that league will be
-        # used for an update
-        min_rating_period_duration = 60*60*24*5 # 5 days
+        batch = {}
+        last_update = 0
         for match in matches:
             if stop_after is not None and match.timestamp > stop_after:
                 break
 
-            if match.radiant_id not in self.ratings:
-                self._initialize_team(match.radiant_id, match.radiant)
-            if match.dire_id not in self.ratings:
-                self._initialize_team(match.dire_id, match.dire)
+            self._update_team(match.radiant_id, match.radiant)
+            self._update_team(match.dire_id, match.dire)
 
-            radiant = match.radiant_id
-            dire = match.dire_id
-            if match.league_id in league_matches:
-                league_matches[match.league_id]["last"] = match.timestamp
+            radiant_id = match.radiant_id
+            dire_id = match.dire_id
+            if radiant_id not in batch:
+                batch[radiant_id] = [(dire_id, match.radiant_win)]
             else:
-                league_matches[match.league_id] = {
-                    "last" : match.timestamp, "matches": {}}
-
-            batch = league_matches[match.league_id]["matches"]
-            if radiant not in batch:
-                batch[radiant] = [(dire, match.radiant_win)]
+                batch[radiant_id].append((dire_id, match.radiant_win))
+            if dire_id not in batch:
+                batch[dire_id] = [(radiant_id, 1 - match.radiant_win)]
             else:
-                batch[radiant].append((dire, match.radiant_win))
-            if dire not in batch:
-                batch[dire] = [(radiant, 1 - match.radiant_win)]
-            else:
-                batch[dire].append((radiant, 1 - match.radiant_win))
+                batch[dire_id].append((radiant_id, 1 - match.radiant_win))
 
-            for league in list(league_matches.keys()):
-                if (match.timestamp - league_matches[league]["last"]
-                      > min_rating_period_duration):
-                    self.update_ratings_batch(
-                        league_matches[league]["matches"])
-                    del league_matches[league]
+            if match.timestamp - last_update > self.rating_period:
+                self.update_ratings_batch(batch, update_players=True)
+                last_update = match.timestamp
+                self._rd_increase([team for team in self.ratings
+                                   if team not in batch])
+                batch = {}
 
-        for league in league_matches.keys():
-            self.update_ratings_batch(league_matches[league]["matches"])
+        self.update_ratings_batch(batch, update_players=True)
+
+    def _backup_ratings(self, teams):
+        """Private helper for backing up current ratings"""
+        prev_team_ratings = {team: self.ratings[team] for team in teams}
+        prev_player_ratings = {}
+        for team in teams:
+            for pid in self.rosters[team]:
+                if pid in self.player_ratings:
+                    prev_player_ratings[pid] = self.player_ratings[pid]
+        return prev_team_ratings, prev_player_ratings
+
+    def _restore_ratings(self, prev_team_ratings, prev_player_ratings):
+        """Private helper for restoring ratings"""
+        for team, rating in prev_team_ratings.items():
+            self.ratings[team] = rating
+        for player, rating in prev_player_ratings.items():
+            self.player_ratings[player] = rating
 
     def compute_ratings_evaluation_mode(self, matches, bins=20,
             start_at=None, stop_after=None, max_tier=3):
@@ -312,10 +368,10 @@ class Glicko2Model:
         12%) then the actually probability these events occur is
         calculated.
 
-        Ratings are always updated using all league data up to the
-        match metrics are being computed for. This makes computation
-        a bit slow because the entire league batch has to be processed
-        for each match.
+        The rating period is always ended before computing metrics for
+        a match to ensure ratings are current. This makes computation a
+        bit slow because for every match being evaluated the ratings
+        must be backed up, updated, then restored.
 
         Parameters
         ----------
@@ -343,69 +399,55 @@ class Glicko2Model:
         float
             Mean squared error over all matches
         """
-        league_matches = {}
-        # the rating period can be longer than this, but if no matches
-        # are played in a league in this timeframe that league will be
-        # used for an update
-        min_rating_period_duration = 60*60*24*5
+        batch = {}
 
         count_bins = [[0, 0] for _ in range(bins)]
         model_sse = 0
         baseline_sse = 0
         match_count = 0
+        last_update = 0
         for match in matches:
             if start_at is not None and match.timestamp < start_at:
                 continue
             if stop_after is not None and match.timestamp > stop_after:
                 break
 
-            if match.radiant_id not in self.ratings:
-                self._initialize_team(match.radiant_id, match.radiant)
-            if match.dire_id not in self.ratings:
-                self._initialize_team(match.dire_id, match.dire)
+            self._update_team(match.radiant_id, match.radiant)
+            self._update_team(match.dire_id, match.dire)
 
-            radiant = match.radiant_id
-            dire = match.dire_id
-            if match.league_id in league_matches:
-                league_matches[match.league_id]["last"] = match.timestamp
+            radiant_id = match.radiant_id
+            dire_id = match.dire_id
+            if radiant_id not in batch:
+                batch[radiant_id] = [(dire_id, match.radiant_win)]
             else:
-                league_matches[match.league_id] = {
-                    "last" : match.timestamp, "matches": {}}
-
-            batch = league_matches[match.league_id]["matches"]
-            if radiant not in batch:
-                batch[radiant] = [(dire, match.radiant_win)]
+                batch[radiant_id].append((dire_id, match.radiant_win))
+            if dire_id not in batch:
+                batch[dire_id] = [(radiant_id, 1 - match.radiant_win)]
             else:
-                batch[radiant].append((dire, match.radiant_win))
-            if dire not in batch:
-                batch[dire] = [(radiant, 1 - match.radiant_win)]
-            else:
-                batch[dire].append((radiant, 1 - match.radiant_win))
+                batch[dire_id].append((radiant_id, 1 - match.radiant_win))
 
             if match.league_tier <= max_tier:
                 # temporarily end ratings period to make predictions
-                prev_ratings = {team: self.ratings[team]
-                    for team in league_matches[match.league_id]["matches"]}
-                self.update_ratings_batch(
-                    league_matches[match.league_id]["matches"])
-                win_p_r = self.get_win_prob(radiant, dire)
+                prev_ratings = self._backup_ratings(batch.keys())
 
+                self.update_ratings_batch(batch, update_players=True)
+                win_p_r = self.get_win_prob(radiant_id, dire_id)
                 count_bins[int(win_p_r*bins)][0] += match.radiant_win
                 count_bins[int(win_p_r*bins)][1] += 1
                 model_sse += pow(match.radiant_win - win_p_r, 2)
                 baseline_sse += pow(match.radiant_win - 0.5, 2)
                 match_count += 1
-                for team, rating in prev_ratings.items():
-                    self.ratings[team] = rating
 
-            for league in list(league_matches.keys()):
-                if (match.timestamp - league_matches[league]["last"]
-                      > min_rating_period_duration):
-                    self.update_ratings_batch(
-                        league_matches[league]["matches"])
-                    del league_matches[league]
-        for league in league_matches.keys():
-            self.update_ratings_batch(league_matches[league]["matches"])
+                self._restore_ratings(*prev_ratings)
+
+            if match.timestamp - last_update > self.rating_period:
+                self.update_ratings_batch(batch, update_players=True)
+                last_update = match.timestamp
+                self._rd_increase([team for team in self.ratings
+                                   if team not in batch])
+                batch = {}
+
+        self.update_ratings_batch(batch, update_players=True)
 
         prob_bins = []
         for event_count, total_count in count_bins:
