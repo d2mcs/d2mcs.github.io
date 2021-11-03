@@ -238,6 +238,7 @@ class PlayerModel:
         series in the order they occured.
         """
         series = {}
+        tid_counts = {}
         for match in matches:
             if stop_after is not None and match.timestamp > stop_after:
                 break
@@ -267,9 +268,13 @@ class PlayerModel:
                     "timestamp": match.timestamp,
                     "league_tier": match.league_tier
                 }
+            tid_counts[match.radiant_id] = tid_counts.get(match.radiant_id,0)+1
+            tid_counts[match.dire_id] = tid_counts.get(match.dire_id,0)+1
         ordered_series = []
         for series in sorted(series.values(), key=lambda x: x['timestamp']):
             teams = [k for k in series.keys() if isinstance(k, (int, float))]
+            if tid_counts[teams[0]] < 10 or tid_counts[teams[0]] < 10:
+                continue
             players = [series[t]["players"] for t in teams]
             score = (series[teams[0]]["score"], series[teams[1]]["score"])
             ordered_series.append((teams, players, score,

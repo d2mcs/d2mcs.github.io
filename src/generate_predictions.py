@@ -141,8 +141,8 @@ def retroactive_ti_predictions(timestamp, k, n_samples, tournament,
         return
 
     if train_elo:
-        generate_team_ratings_elo(3, k, 1.5, tournament, stop_after)
-        generate_team_ratings_glicko(3, 0.5, tournament, stop_after)
+        generate_team_ratings_elo(2, k, 1.5, tournament, stop_after)
+        generate_team_ratings_glicko(2, 0.5, tournament, stop_after)
 
     for i, tab in enumerate(reversed(tabs)):
         with open(f"data/{tournament}/matches.json") as match_f:
@@ -179,7 +179,7 @@ def retroactive_dpc_predictions(timestamp, k, n_samples, region,
     wildcard_slots = {"sea": 1, "eeu": 1, "cn": 2, "weu": 2, "na": 0, "sa": 0}
 
     if train_elo:
-        generate_team_ratings_elo(3, k, 1.5, "dpc/sp21/"+region,
+        generate_team_ratings_elo(2, k, 1.5, "dpc/sp21/"+region,
             stop_after=datetime.fromisoformat("2021-04-10").timestamp())
     generate_html_dpc(f"dpc/sp21/{region}/forecast.html", tabs,
         "DPC Spring 2021: " + full_name[region], wildcard_slots[region])
@@ -307,7 +307,7 @@ def main():
                                         region, args.train_elo, args.html)
     elif args.full_report:
         if args.train_elo:
-            generate_team_ratings_elo(3, k, 1.5, "ti/10",
+            generate_team_ratings_elo(2, k, 1.5, "ti/10",
                 stop_after=datetime.fromisoformat("2021-10-05").timestamp())
 
         with open("data/ti/10/matches.json") as match_f:
@@ -323,7 +323,7 @@ def main():
                 bracket_file="data/ti/10/main_event_matches.json")
     elif args.global_ratings:
         if args.train_elo:
-            generate_global_ratings_elo(3, k, 1.5, "sp21", timestamp)
+            generate_global_ratings_elo(2, k, 1.5, "sp21", timestamp)
         generate_html_global_rankings("global_ratings.html", "sp21")
     else:
         with open("data/ti/10/matches.json") as match_f:

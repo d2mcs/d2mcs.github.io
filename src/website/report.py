@@ -267,7 +267,7 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
         "ratings": ratings,
         "timestamp": timestamp,
         "n_samples": n_samples,
-        "model_version": "0.2"
+        "model_version": "0.3"
     }
     Path(f"../{folder}/data").mkdir(exist_ok=True)
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
@@ -381,7 +381,7 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
         "ratings": ratings,
         "timestamp": timestamp,
         "n_samples": n_samples,
-        "model_version": "0.2"
+        "model_version": "0.3"
     }
     Path(f"../{folder}/data").mkdir(exist_ok=True)
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
