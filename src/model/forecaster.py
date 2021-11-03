@@ -273,7 +273,7 @@ class PlayerModel:
         ordered_series = []
         for series in sorted(series.values(), key=lambda x: x['timestamp']):
             teams = [k for k in series.keys() if isinstance(k, (int, float))]
-            if tid_counts[teams[0]] < 10 or tid_counts[teams[0]] < 10:
+            if tid_counts[teams[0]] < 10 or tid_counts[teams[1]] < 10:
                 continue
             players = [series[t]["players"] for t in teams]
             score = (series[teams[0]]["score"], series[teams[1]]["score"])
