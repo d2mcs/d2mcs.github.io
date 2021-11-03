@@ -151,6 +151,8 @@ def retroactive_ti_predictions(timestamp, k, n_samples, tournament,
             for day in range(i, 4):
                 for match in matches[group][day]:
                     match[2] = -1
+            if tab[1] != "" and "tiebreak" in matches:
+                matches["tiebreak"][group] = {}
 
         generate_data_ti(f"data/{tournament}/elo_ratings.json", matches,
             "elo" + tab[1], n_samples, tournament, k, timestamp,

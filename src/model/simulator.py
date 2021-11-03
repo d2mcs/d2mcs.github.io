@@ -259,7 +259,7 @@ class TIGroupStage(Simulator):
     Identical to Simulator. See above for details
     """
 
-    def simulate(self, group, matches):
+    def simulate(self, group, matches, tiebreak_matches):
         """Simulates a single group stage and returns the resulting
         team ranks.
 
@@ -278,6 +278,9 @@ class TIGroupStage(Simulator):
 
             In this case the results are A 0-2 B, B 1-1 C, D 2-0 E, and
             E vs D has not yet been played.
+        tiebreak_matches : list
+            List of tiebreaker matches. An empty list can be provided
+            if none were played.
 
         Returns
         -------
@@ -321,8 +324,12 @@ class TIGroupStage(Simulator):
         tiebreaker = Tiebreaker(self)
         team_order = tiebreaker.order_teams(point_map.keys(), point_map)
 
-        team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
-            [(3,4), (7,8)], team_order, point_map)
+        if len(tiebreak_matches) > 0:
+            team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
+                [(3,4), (7,8)], team_order, point_map, tiebreak_matches)
+        else:
+            team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
+                [(3,4), (7,8)], team_order, point_map)
         team_order = tiebreaker.h2h_tiebreak(h2h_results,
                                              team_order, point_map)
         points = [(team, point_map[team]) for team in team_order]

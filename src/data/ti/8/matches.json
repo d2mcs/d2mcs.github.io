@@ -90,5 +90,14 @@
       ["Vici Gaming", "OpTic Gaming", 0],
       ["paiN Gaming", "Team Serenity", 0]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "a": {"7": [["Winstrike Team", "Invictus Gaming", [2, 0]]]},
+    "b": {
+      "3": [
+        ["Newbee", "OpTic Gaming", [0, 1]],
+        ["Newbee", "Team Secret", [0, 1]]
+      ]
+    }
+  }
 }

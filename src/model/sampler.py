@@ -174,8 +174,10 @@ class TISampler(Sampler):
         """
         gs_sim = TIGroupStage(model, static_ratings)
 
-        points_a, tiebreak_sizes_a = gs_sim.simulate(groups["a"], matches["a"])
-        points_b, tiebreak_sizes_b = gs_sim.simulate(groups["b"], matches["b"])
+        points_a, tiebreak_sizes_a = gs_sim.simulate(groups["a"], matches["a"],
+            matches.get("tiebreak", {}).get("a", {}))
+        points_b, tiebreak_sizes_b = gs_sim.simulate(groups["b"], matches["b"],
+            matches.get("tiebreak", {}).get("b", {}))
 
         bracket_sim = TIEliminationBracket(gs_sim.model, static_ratings)
         bracket_sim.seed({"a": [p[0] for p in points_a],
