@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>d2mcs | Global DPC Team Ratings</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -29,29 +30,68 @@
 <div class="container mt-3 mb-3" style="max-width: 800px">
   <h1 class="text-center">Global DPC Team Ratings</h1>
   <h6 class="text-center pb-3">Updated {{timestamp}} UTC</h6>
-  <div class="table-responsive">
-    <table class="table table-striped table-sm">
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Team</th>
-        <th scope="col">Rating</th>
-        <th scope="col"><span class="d-none d-sm-block d-md-inline">Last Match</span></th>
-        <th scope="col">Region</th>
-      </tr>
-    </thead>
-    <tbody class="table-light">
-    {% for team, region_short, region_long, rating, last_update in team_data %}
-    <tr>
-      <td>{{loop.index}}</td>
-      <td><img id="im-{{i}}" src="dpc/{{dpc_season}}/{{region_short}}/image/{{team}}.png" height=20px> <span id="team-{{i}}">{{team}}</span></td>
-      <td id="rating-{{i}}">{{rating}}</td>
-      <td id="last-update-{{i}}"><span class="d-none d-sm-block d-md-inline">{{last_update}}</span></td>
-      <td id="region-{{i}}"><img id="im-{{i}}" src="image/{{region_short}}.png" height=20px> <span class="d-none d-sm-block d-md-inline">{{region_long}}</span><span class="d-inline d-sm-none">{{region_short|upper}}</span></td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    </table>
+  <ul class="nav nav-tabs nav-fill">
+    <li class="nav-item">
+      <button id="rank-table-tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#rank-table" aria-controls="rank-table" aria-current="page">Global Ranking</button>
+    </li>
+    <li class="nav-item">
+      <button id="region-overview-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#region-overview" aria-controls="region-overview">Region Overview</button>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane show active" id="rank-table" aria-labelledby="rank-table-tab">
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th></th>
+            <th scope="col"></th>
+            <th scope="col">Team</th>
+            <th scope="col">Rating</th>
+            <th scope="col"><span class="d-none d-sm-block d-md-inline">Last Match</span></th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        {% for team, region, rating, last_update in team_data %}
+        <tr style="position: relative">
+          <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c {{(100*(rating - 1200))//(team_data[0][2] - 1200)}}%, transparent 0);"></td>
+          <td class="global-rating">{{loop.index}}</td>
+          <td class="global-rating"><img id="im-{{i}}" src="dpc/{{dpc_season}}/{{region}}/image/{{team}}.png" height=20px> <span id="team-{{i}}">{{team}}</span></td>
+          <td class="global-rating" id="rating-{{i}}">{{rating}}</td>
+          <td class="global-rating" id="last-update-{{i}}"><span class="d-none d-sm-block d-md-inline">{{last_update}}</span></td>
+          <td class="global-rating" id="region-{{i}}"><img id="im-{{i}}" src="image/{{region}}.png" height=20px> <span class="d-none d-sm-block d-md-inline">{{full_name[region]}}</span><span class="d-inline d-sm-none">{{region|upper}}</span></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane" id="region-overview" aria-labelledby="region-overview-tab">
+      <div class="table-responsive">
+        <table class="table table-striped table-sm">
+        <thead>
+          <tr>
+            <th scope="col">Region</th>
+            <th scope="col">Upper Division Rating</th>
+            <th scope="col">Lower Division Rating</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+          {% for region in ["na", "sa", "weu", "eeu", "cn", "sea"] %}
+          <tr>
+            <td><img src="image/{{region}}.png" height=20px> <span class="d-none d-sm-block d-md-inline">{{full_name[region]}}</span><span class="d-inline d-sm-none">{{region}}</span>
+            <td>{{"%.0f" % region_ratings[region]["upper"]}}</td>
+            <td>{{"%.0f" % region_ratings[region]["lower"]}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+        <p>
+        </p>
+        Regional league ratings are calculated as the average rating of the 8 teams in that league. League ratings use each team's current rating, including matches outside of the DPC.
+      </div>
+    </div>
   </div>
 </div>
 <footer>

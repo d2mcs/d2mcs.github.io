@@ -407,15 +407,29 @@ def generate_html_global_rankings(output_file, dpc_season):
     with open("data/global/elo_ratings.json") as json_f:
         team_ratings = json.load(json_f)
 
+    regions = ["na", "sa", "weu", "eeu", "cn", "sea"]
+    region_ratings = {region: {"upper": 0, "lower": 0} for region in regions}
+    division_map = {}
+    for region in regions:
+        with open(f"data/dpc/{dpc_season}/{region}/teams.json") as team_f:
+            team_data = json.load(team_f)
+        for division in ["upper", "lower"]:
+            for team in team_data[division]:
+                division_map[team] = division
+    for team, region, rating, _ in team_ratings["ratings"]:
+        region_ratings[region][division_map[team]] += rating/8
+
     full_name = {
         "na": "North America", "sa": "South America", "weu": "Western Europe",
         "eeu": "Eastern Europe", "cn": "China", "sea": "Southeast Asia"
     }
-    team_data = [(team, region, full_name[region], round(rating), last_update)
+    team_data = [(team, region, round(rating), last_update)
                  for team, region, rating, last_update in
                  sorted(team_ratings["ratings"], key=lambda x: -x[2])]
 
     output = template.render(team_data=team_data, dpc_season=dpc_season,
-                             timestamp=team_ratings["timestamp"])
+                             timestamp=team_ratings["timestamp"],
+                             region_ratings=region_ratings,
+                             full_name=full_name)
     with open(f"../{output_file}", "w") as output_f:
         output_f.write(output)

@@ -1,0 +1,14 @@
+.nav-pills > li > a.active {
+    background-color: #cbc8da !important;
+}
+
+td.global-rating {
+  background-color: #00000000;
+}
+
+td.rating-bar {
+  position: absolute;
+  z-index: -1;
+  background-color: #f8f9fa;
+  width: 100%; height: 100%;
+}
