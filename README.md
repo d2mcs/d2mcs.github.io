@@ -1,10 +1,14 @@
 # d2mcs.github.io
 
-d2mcs started as a forecasting model specifically for TI10 but is currently being expanded to provide predictions for all upcoming DPC leagues/tournaments. Details about the current version of the model can be found on the website's [model information page](https://d2mcs.github.io/model-info/elo.html). The information below is specific to TI10 and will be changed as the website is updated in preparation for the upcoming DPC season.
-
 ## Overview
 
-This repository contains code for estimating the probability of various outcomes at The International Dota 2 Championships using Monte Carlo sampling. Current predictions can be found [here](https://d2mcs.github.io/ti/10/forecast.html). To the best of my knowledge the simulator is entirely consistent with official TI rules, including details such as:
+This repository contains the source code for d2mcs, a forecasting model for events in the Dota 2 Pro Circuit. Details about the current version of the model can be found on the website's [model information page](https://d2mcs.github.io/model-info/elo.html). The repository also contains the source code of the website itself, including the code used to generate miscellaneous pages such as the [hero popularity tracker](https://d2mcs.github.io/misc/hero_popularity.html).
+
+Note that d2mcs relies on data collected from the Steam WebAPI which I can't publicly share. The components which rely on this data (the Elo model for estimating team ratings, in particular) have been isolated wherever possible to make the rest of the code usable without this dataset. Currently it is possible to generate forecasts using custom ratings for the one tournament that has taken place since d2mcs was released (TI10). Details on how to do so are provided below -- once more information is available about the upcoming DPC season similar instructions will be provided for the Fall leagues.
+
+## Running the TI Simulator
+
+To the best of my knowledge the TI simulator is entirely consistent with official TI rules, including details such as:
 
 - Ties along upper bracket/lower bracket and lower bracket/elimination boundaries are broken with additional matches (bo3 for a 2 way tie, bo1 round-robin for a 3+ way tie).
 - Other ties are broken using head to head results, followed by results against lower seeded teams, followed by a coin flip.
@@ -12,8 +16,6 @@ This repository contains code for estimating the probability of various outcomes
 - The elimination bracket correctly orders teams and crosses over for the losers of upper bracket round 2.
 
 Predictions are made both with generic team ratings (i.e., 50% win probability for each match) and ratings based on a modified Elo model (mathematical details below). Unfortunately I can't share match data pulled from the Steam Web API so it is not currently possible to replicate the Elo model's team ratings using the provided code. However, the model's ratings are saved as a plaintext JSON file (in [src/data/ti/10/elo_ratings.json](src/data/ti/10/elo_ratings.json) for TI10) and can be manually modified or replaced with the output of a different model to see how this would affect the output distribution.
-
-## Running the Code
 
 Source code is contained in the `src/` folder. Code must be run from that folder. The command line interface currently only generates TI10 predictions (the cli will be updated once DPC forecasts go up), so output is saved to the `ti/10/` folder.
 

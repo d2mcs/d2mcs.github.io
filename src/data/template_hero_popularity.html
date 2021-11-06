@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>d2mcs | Hero Popularity History</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">d2mcs</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/global_ratings.html">Global Team Ratings</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container mt-3 mb-3 flex-grow-1">
+  <h1 class="text-center">Hero Popularity in Professional Matches</h1>
+  <h6 class="text-center">Updated {{timestamp}} UTC</h6>
+  <ul class="nav nav-tabs nav-fill pt-4">
+    <li class="nav-item">
+      <button onclick="resize_plots()" id="popularity-tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#popularity" aria-controls="popularity" aria-selected="true">Picks Only</button>
+    </li>
+    <li class="nav-item">
+      <button onclick="resize_plots()" id="popularity-first-phase-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#popularity-first-phase" aria-controls="popularity-first-phase" aria-selected="false">Picks and First Phase Bans</button>
+    </li>
+    <li class="nav-item">
+      <button onclick="resize_plots()" id="popularity-all-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#popularity-all" aria-controls="popularity-all" aria-selected="false">Picks and Bans</button>
+    </li>
+  </ul>
+  <div class="tab-content">
+  {% for plot_type in ["popularity", "popularity-first-phase", "popularity-all"] %}
+    <div class="tab-pane{% if plot_type == 'popularity'%} show active{% endif %}" id="{{plot_type}}" aria-labelledby="{{plot_type}}-tab">
+    {{ plot_divs[plot_type] }}
+
+    <p class="mb-3">
+      Popularity history is calculated using the percentage of matches each hero was picked or banned (depending on the tab) in every 200 professional matches with a Liquipedia tier of 1 - 3. For example, if the "Picks and First Phase Bans" plot for Abaddon is at 0.156 on January 19th, 2016, it means that Abaddon was either picked or banned in the first phase in 15.6% of the 200 tier 1 - 3 matches leading up to January 19th.<br><br>
+
+      The pick rate data used to generate this plot can be downloaded <a href="/src/data/hero-popularity/{{plot_type}}.json">here</a>.
+    </p>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+<footer>
+  <hr>
+  <div class="container" style="max-width: 1500px">
+    <p><small>
+      Source code can be found <a href="https://github.com/d2mcs/d2mcs.github.io">here</a>.<br>
+      d2mcs uses league data collected from Liquipedia and match data collected from the Steam WebAPI. This site is not endorsed by or affiliated with Valve or Steam.
+    </small></p>
+  </div>
+</footer>
+<script>
+function resize_plots() {
+  const plot_divs = document.querySelectorAll(".plotly-graph-div");
+  for (let i = 0; i < plot_divs.length; i++)
+    Plotly.relayout(plot_divs[i], {autosize: true});
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
