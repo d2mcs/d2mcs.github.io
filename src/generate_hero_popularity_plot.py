@@ -35,9 +35,9 @@ def generate_draft_data(match_database, max_tier=3, bans=None):
         FROM matches JOIN liquipediatier
              ON matches.league_id = liquipediatier.league_id
         ORDER BY timestamp""")
-    dates = []
     popularities = []
-    running_pop = {}
+    timestamp_window = []
+    popularity_window = {}
     match_counter = 0
     for row in draft_data:
         timestamp = row[-2]
@@ -47,6 +47,7 @@ def generate_draft_data(match_database, max_tier=3, bans=None):
             continue
         if row[-1] > max_tier:
             continue
+
         if bans is None:
             hero_list = row[:10]
         elif bans == "first-phase":
@@ -62,22 +63,24 @@ def generate_draft_data(match_database, max_tier=3, bans=None):
             hero_list = row[:-2]
         else:
             raise ValueError("Invalid ban configuration string")
+
         for hero_id in hero_list:
             if hero_id != 0:
                 hero = hero_map[hero_id]
-                running_pop[hero] = running_pop.get(hero, 0) + 1
+                popularity_window[hero] = popularity_window.get(hero, 0) + 1
+        timestamp_window.append(timestamp)
 
         match_counter = (match_counter + 1) % 200
         if match_counter == 0:
-            timestamp = row[-2]
-            dates.append(timestamp)
             current_popularity = {}
             for hero in hero_map.values():
-                current_popularity[hero] = running_pop.get(hero, 0)/200
+                current_popularity[hero] = popularity_window.get(hero, 0)/200
             popularities.append({
-                "timestamp": timestamp, "pick_rate": current_popularity
+                "timestamp": sum(timestamp_window)/len(timestamp_window),
+                "pick_rate": current_popularity
             })
-            running_pop = {}
+            popularity_window = {}
+            timestamp_window = []
     if bans is not None:
         output_path = f"data/hero-popularity/popularity-{bans}.json"
     else:
@@ -121,17 +124,18 @@ def make_hero_popularity_page():
             include_plotlyjs="cdn" if data_file == "popularity" else False,
             full_html=False, config={"responsive": True})
 
-    with open(f"data/hero-popularity/metadata.json") as metadata_f:
+    with open("data/hero-popularity/metadata.json") as metadata_f:
         timestamp = json.load(metadata_f)["last-update"]
 
     with open("data/template_hero_popularity.html") as input_f:
         template_str = input_f.read()
     template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
     output = template.render(plot_divs=plot_divs, timestamp=timestamp)
-    with open(f"../misc/hero_popularity.html", "w") as output_f:
+    with open("../misc/hero_popularity.html", "w") as output_f:
         output_f.write(output)
 
 def main():
+    """Command-line interface for hero popularity report generation"""
     parser = argparse.ArgumentParser(
         description="Generate hero popularity report for pro Dota 2 matches.")
     parser.add_argument("-r","--regen-data", action='store_true',
