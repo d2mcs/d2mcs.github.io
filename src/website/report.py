@@ -4,10 +4,97 @@ simulator predictions.
 
 import json
 from pathlib import Path
+from datetime import date
 
 from jinja2 import Template
 
 from model.sampler import TISampler, DPCSampler
+from model.forecaster import PlayerModel, TeamModel
+from model.forecaster_glicko import Glicko2Model
+from model.match_data import MatchDatabase
+
+def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
+    """Code for generating rating estimates for each provided team
+    roster. Will only work if matches.db and a list of team rosters
+    exist in the data folder.
+    """
+    match_db = MatchDatabase("data/matches.db")
+    player_ids = match_db.get_player_ids()
+    id_to_region = match_db.get_id_region_map()
+    p_model = PlayerModel(player_ids, k, p, tid_region_map=id_to_region)
+    p_model.compute_ratings(match_db.get_matches(max_tier),
+        stop_after=stop_after)
+
+    with open(f"data/{folder}/team_data.json") as tid_f:
+        regions = {team: data["region"]
+                   for team, data in json.load(tid_f).items()}
+
+    with open(f"data/{folder}/rosters.json") as roster_f:
+        rosters = json.load(roster_f)
+    model = TeamModel.from_player_model(p_model, rosters, regions)
+
+    with open(f"data/{folder}/elo_ratings.json", "w") as output_f:
+        output_f.write("{\n")
+        for i, team in enumerate(rosters.keys()):
+            rating = model.get_team_rating(team)
+            if i != len(rosters) - 1:
+                output_f.write(f'  "{team}": {rating:.2f},\n')
+            else:
+                output_f.write(f'  "{team}": {rating:.2f}\n')
+        output_f.write("}\n")
+
+def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
+    """Code for generating rating estimates for each provided team
+    roster. Will only work if matches.db exists in the data folder.
+    """
+    match_db = MatchDatabase("data/matches.db")
+    model = Glicko2Model(tau)
+    model.compute_ratings(match_db.get_matches(max_tier),stop_after=stop_after)
+
+    with open(f"data/{folder}/team_data.json") as tid_f:
+        team_ids = {team: data["id"] for team,data in json.load(tid_f).items()}
+
+    with open(f"data/{folder}/glicko_ratings.json", "w") as output_f:
+        output_f.write("{\n")
+        for i, (team, tid) in enumerate(team_ids.items()):
+            mean, rd, sigma = model.get_team_rating_tuple(tid)
+            rating = f"[{mean:.2f}, {rd:.4f}, {sigma:.7f}]"
+            if i != len(team_ids) - 1:
+                output_f.write(f'  "{team}": {rating},\n')
+            else:
+                output_f.write(f'  "{team}": {rating}\n')
+        output_f.write("}\n")
+
+def generate_global_ratings_elo(max_tier, k, p, dpc_season, timestamp):
+    """Code for generating an Elo rating for every team which competed
+    in the provided DPC season. Uses the last recorded rating for the
+    teamid of that team.
+    """
+    match_db = MatchDatabase("data/matches.db")
+    player_ids = match_db.get_player_ids()
+    id_to_region = match_db.get_id_region_map()
+    p_model = PlayerModel(player_ids, k, p, tid_region_map=id_to_region)
+    rating_history = p_model.compute_ratings(match_db.get_matches(max_tier),
+                                             track_history=True)
+
+    team_ids = {}
+    regions = {}
+    for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
+        with open(f"data/dpc/{dpc_season}/"
+                  f"{region}/team_data.json") as roster_f:
+            for team, team_data in json.load(roster_f).items():
+                team_ids[team] = team_data["id"]
+                regions[team] = region
+    output_data = {
+        "timestamp": timestamp,
+        "ratings": [(team, regions[team],
+                    float(f"{rating_history[tid][-1][0]:.2f}"),
+                    str(date.fromtimestamp(rating_history[tid][-1][1])))
+                    for team, tid in team_ids.items()]
+    }
+
+    with open("data/global/elo_ratings.json", "w") as output_f:
+        json.dump(output_data, output_f)
 
 def get_gs_ranks(rank_probs, groups):
     """Orders group stage rank probabilities into a list and trims
@@ -354,7 +441,7 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
         sampler = TISampler.from_ratings_file(ratings_file, k,
             static_ratings=static_ratings)
 
-    with open(f"data/{folder}/groups.json") as group_f:
+    with open(f"data/{folder}/teams.json") as group_f:
         groups = json.load(group_f)
 
     if bracket_file is None:
