@@ -778,7 +778,7 @@ class DPCSeasonSampler(Sampler):
         return matches
 
     @staticmethod
-    def _get_point_allocation(season):
+    def get_point_allocation(season):
         """Returns the point allocation per rank for the provided
         season.
         """
@@ -908,7 +908,7 @@ class DPCSeasonSampler(Sampler):
         wildcard_slots = {"sea":1, "eeu":1, "cn":2, "weu":2, "na":0, "sa":0}
 
         league_allocation, major_allocation = (
-            DPCSeasonSampler._get_point_allocation(season))
+            DPCSeasonSampler.get_point_allocation(season))
 
         for tour_idx, tour in enumerate(["winter", "spring", "summer"]):
             # regional league simulation:
@@ -968,7 +968,7 @@ class DPCSeasonSampler(Sampler):
         needed for most cases and increases the multiprocessing load.
         """
         point_value = {}
-        _, major_allocation = self._get_point_allocation(season)
+        _, major_allocation = self.get_point_allocation(season)
         for tour_idx, tour in enumerate(["winter", "spring", "summer"]):
             point_value[tour] = {}
             for i, rank in enumerate(["1", "2", "3", "4", "5-6", "7-8"]):

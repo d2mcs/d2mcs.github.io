@@ -1,0 +1,6 @@
+/* controls text element widths to improve readability of blog-type pages */
+
+h2, h3, h4, p, ul.paragraph {
+  width: 100%;
+  max-width: 900px;
+}

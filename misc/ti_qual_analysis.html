@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>d2mcs | What Does It Take to Qualify for TI?</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <link rel="stylesheet" href="/style/style.css">
+  <link rel="stylesheet" href="/style/text_style.css">
+</head>
+<body class="d-flex flex-column min-vh-100">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">d2mcs</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="/global_ratings.html">Global Team Ratings</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container mt-3 mb-3 flex-grow-1">
+  <h1 class="text-center">What Does It Take to Qualify for TI?</h1>
+  <h6 class="text-center">2021-11-13</h6>
+
+  <div class="container d-flex flex-column align-items-center" style="max-width: 1200px">
+  <h2 class="pt-4">Simulation Overview</h2>
+  <p class="pt-2">
+    How many DPC points does it take to qualify for TI? To get a general idea, I wrote a simulator of the entire upcoming DPC season (3 tours, each consisting of one regional league followed by a major). The simulator is designed to be a complete replica of the actual system:
+  </p>
+  <ul class="paragraph">
+    <li>Best-of-3 round-robin leagues, with additional matches to break ties along seeding boundaries.</li>
+    <li>Upper/lower division with promotion and relegation.</li>
+    <li>Majors with bo2 wildcard round robin, bo2 group stage round robin, and 12 team playoff bracket seeded using league results.</li>
+  </ul>
+  <p>
+    I then ran the simulator 100,000 times with two different settings. In the first setting, teams have a 50% chance to win every match they play. In the second, teams are assigned a rating which makes them more or less likely to win matches. Specifically, I used an Elo forecaster with team ratings taken from the pre-tournament <a href="/dpc/sp21/na/forecast.html">Spring DPC forecasts</a> (ratings are decayed by 75% to add a bit of additional uncertainty). The Winter 2021 DPC teams will of course be different, but that doesn't really matter because I'm not looking at which teams qualify for TI but how many points the teams that did earned. Using these ratings just makes the simulation behave a bit more realistically (i.e., team performance is more or less consistent rather than being entirely random).<br><br>
+
+    It's always important to understand the limits of simulation, so I want to point out up front that both methods come with important drawbacks. If all matches have 50% win probabilitiy, the simulator has no notion of team quality so the team which wins the first league/major isn't any more likely to win the following one. This is obviously not at all how things go in reality. Using Elo ratings deals with this issue by giving the simulator a notion of "good teams" and "bad teams." This comes with its own problem, however: it becomes very unlikely that a team will win its regional league but perform far worse at the major than other teams from its region. As a result, outcomes which hinge on teams such as Alliance and Team Aster will be given far lower probabilities than they should. Also note that neither method accounts for point deductions from roster changes.
+    <br><br>
+
+    Before getting into the results for the 2021 - 2022 season, let's look at what the simulator would've predicted last season. Below is a table showing how many points each method expected each DPC rank to earn, along with how many points the team that achieved that rank actually earned. Each expected points value for a rating is the sample mean of the points teams achieved at that rating plus/minus two times the sample standard deviation (if we assume expected points follow a normal distribution, this can be interpreted as a 95.4% standard error bound).
+  </p>
+
+  <div class="table-responsive d-flex justify-content-center mt-3 mb-3">
+    <table class="table table-striped table-sm" style="max-width: 750px">
+    <thead>
+      <tr>
+        <th scope="col">Rank</th>
+        <th scope="col">Expected Points<br>(Elo Ratings)</th>
+        <th scope="col">Expected Points<br>(50% Win Prob)</th>
+        <th scope="col">Actual Points</th>
+        <th scope="col">Team</th>
+      </tr>
+    </thead>
+    <tbody class="table-light">
+      <tr><td>1</td> <td>1762 +/- 352</td> <td>1501 +/- 484</td> <td>1700</td> <td>Evil Geniuses</td></tr>
+      <tr><td>2</td> <td>1576 +/- 302</td> <td>1260 +/- 377</td> <td>1300</td> <td>PSG.LGD</td></tr>
+      <tr><td>3</td> <td>1422 +/- 308</td> <td>1124 +/- 264</td> <td>1200</td> <td>Virtus.pro</td></tr>
+      <tr><td>4</td> <td>1287 +/- 286</td> <td>1043 +/- 184</td> <td>1100</td> <td>Quincy Crew</td></tr>
+      <tr><td>5</td> <td>1171 +/- 246</td> <td>987 +/- 142</td> <td>1100</td> <td>Invictus Gaming</td></tr>
+      <tr><td>6</td> <td>1076 +/- 208</td> <td>941 +/- 129</td> <td>1070</td> <td>T1</td></tr>
+      <tr><td>7</td> <td>996 +/- 184</td> <td>898 +/- 125</td> <td>950</td> <td>Vici Gaming</td></tr>
+      <tr><td>8</td> <td>925 +/- 176</td> <td>855 +/- 120</td> <td>950</td> <td>Team Secret</td></tr>
+      <tr><td>9</td> <td>857 +/- 174</td> <td>815 +/- 117</td> <td>800</td> <td>Team Aster</td></tr>
+      <tr><td>10</td> <td>790 +/- 172</td> <td>774 +/- 122</td> <td>800</td> <td>Alliance</td></tr>
+      <tr><td>11</td> <td>726 +/- 174</td> <td>732 +/- 129</td> <td>800</td> <td>beastcoast</td></tr>
+      <tr><td>12</td> <td>663 +/- 174</td> <td>688 +/- 134</td> <td>800</td> <td>Thunder Predator</td></tr>
+      <tr><td>13</td> <td>603 +/- 168</td> <td>642 +/- 137</td> <td>670</td> <td>Nigma Galaxy</td></tr>
+      <tr><td>14</td> <td>550 +/- 156</td> <td>596 +/- 134</td> <td>585</td> <td>Team Spirit</td></tr>
+      <tr><td>15</td> <td>501 +/- 148</td> <td>554 +/- 123</td> <td>585</td> <td>NoPing e-sports</td></tr>
+      <tr><td>16</td> <td>457 +/- 144</td> <td>517 +/- 115</td> <td>572.25</td> <td>TNC Predator</td></tr>
+      <tr><td>17</td> <td>416 +/- 138</td> <td>483 +/- 121</td> <td>552.5</td> <td>OB Esports x Neon</td></tr>
+      <tr><td>18</td> <td>378 +/- 126</td> <td>448 +/- 137</td> <td>446.25</td> <td>Fnatic</td></tr>
+      <tr><td>19</td> <td>345 +/- 110</td> <td>409 +/- 144</td> <td>400</td> <td>Team Liquid</td></tr>
+      <tr><td>20</td> <td>317 +/- 94</td> <td>372 +/- 133</td> <td>400</td> <td>Team Undying</td></tr>
+    </tbody>
+    </table>
+  </div>
+
+  <p>
+    As expected, the model using 50% win probabilities consistently underestimates the amount of points top teams will have because it has no notion of "good" and "bad" teams. Unfortunately, the Elo model overcorrects a bit because it can't take into account the nuances of regional/LAN performance disparity and consistently overestimates the amount of points top teams will have. Still, neither model is very far off and all actual point values are within the 95% confidence bound of the expected point values.<br><br>
+  </p>
+
+  <h2 class="pt-2">2021 - 2022 Season Simulations</h2>
+  <p class="pt-2">
+    So, where does the simulator expect the TI cutoff to be this season? Using 2021 - 2022 point allocation rules, the 12th place team is expected to have 826 +/- 194 points (Elo ratings) or 797 +/ 124 points (50% win probability). Note that, as shown above, the actual cutoff was quite a but higher than expected last year largely because 3 teams (Alliance, Aster, and Beastcoast) got 1st/2nd in their region but collectively failed to win a single playoff series all season. If a similar situation happens this season, the cutoff is likely to again be in the upper range of these intervals (i.e. 900 - 1000). I provide qualification probabilities below for the sake of comparison with the old rules, but keep in mind they may be overestimates.<br><br>
+
+    With that in mind, let's look at some of the situations that drew a lot of complaints last year. Assume a team bombs out of every major, but gets first or second in their league every tour:
+  </p>
+  <ul class="paragraph">
+    <li>3/3 first, 0/3 second: 1200 points, >99% chance of TI invite.</li>
+    <li>2/3 first, 1/3 second: 1000 - 1080 points, depending on which tour the team gets second. ~99% chance of TI invite with either method.</li>
+    <li>1/3 first, 2/3 second: 840 - 920 points, depending on which tour the team wins. 67% - 90% chance of TI invite per Elo ratings, 82% - 99% per 50% win probabilities.</li>
+    <li>0/3 first, 3/3 second: 720 points. 20% chance of TI invite per Elo ratings, 16% chance per 50% win probabilities.</li>
+  </ul>
+  <p>
+    So if you get top 2 in your region each tour and win once or twice (ideally towards the end of the season) you'll probably get a TI invite regardless of major results. How different is this from last season's rules? With previous season rules the cutoff would be at 968 +/- 208 points (Elo) or 911 +/- 124 points (50% win probability), so the upper range would be 1050 - 1150. Old rules gave a flat 500 points for first and 300 points for second, meaning:
+  </p>
+  <ul class="paragraph">
+    <li>3/3 first 0/3 second: 1500 points, >99% chance of TI invite.</li>
+    <li>2/3 first 1/3 second: 1300 points, ~99% chance of TI invite.</li>
+    <li>1/3 first 2/3 second: 1100 points, 94% chance of TI invite per Elo ratings, 99% chance per 50% win probabilities.</li>
+    <li>0/3 first 3/3 second: 900 points, 36% chance of TI invite per Elo ratings, 54% chance per 50% win probabilities.</li>
+  </ul>
+  <p>
+    There's clearly a difference between the two, particularly for consistent second placers, but it isn't huge. The main distinction is that teams are much better off if their best results come at the end of the season, which is what the new format is intended to do.<br><br>
+
+    To confirm the observation that the two formats aren't very different, I kept track of how many teams qualified for TI in the simulations without earning any points from a major. With the new ruleset, an average of 0.4 teams (Elo) or 0.2 teams (50% win probabilities) achieved this. With the old ruleset, these numbers were 0.5 (Elo) and 0.3 (50% win probabilities). Not exactly a massive difference. Note that the estimates for last season were 1.1 (Elo) and 0.6 (50% win probabilities) -- having 3 tours instead of 2 makes a much larger difference than changing the point allocation format. Of course, the actual number of teams which did this last season was 3, not 1.1 (Aster, Alliance and Beastcoast, though Beastcoast probably shouldn't be included because they missed out on their playoff seed at Singapore due to COVID). Based on all of the above, it is entirely possible a team will qualify for TI without earning a single point from majors.<br><br>
+  </p>
+
+  <h2 class="pt-2">The Major Format</h2>
+  <p class="pt-2">
+    So it remains possible to receive a TI invite without winning a single game on LAN. What if a team wins two? At the final major last season, NoPing e-sports was matched up against Quincy Crew as their upper bracket seeding and were one (very close) game from earning enough DPC points to directly qualify for TI despite finishing fourth in their league the previous tour and not qualifying for the first major. How possible is such a scenario this season?<br><br>
+
+    As it turns out, a scenario like this is even more likely with the new rules! Say a team earns no DPC points whatsoever from tours 1 and 2, but wins their regional league the final tour, wins their initial upper bracket matchup at the major, then loses their remaining games. This would earn the team 900 points, enough for a pretty decent shot at TI qualification. Under the old rules, this would only earn 800 points, almost certain to be short of the qualification cutoff. As before, the main difference is in when it happens rather than if it happens. The first tour is worth far fewer points.<br><br>
+
+    What makes this possible has nothing to do with league/major point allocation and everything to do with seeding: getting a direct seed to the playoffs corresponds to a <i>huge</i> increase in expected points. For reference, assuming all teams are equal, here is how many points each seed is "worth" (i.e., the average number of points earned by each seed type across 100,000 simulations. These values are actually fairly straightforward to directly calculate, so my code does that too to verify that the simulator is behaving reasonably):
+  </p>
+  <ul class="paragraph">
+    <li>Wildcard seeds are expected to earn 30/45/60 points from each major</li>
+    <li>Group stage seeds are expected to earn 90/135/180 points from each major</li>
+    <li>Playoff seeds are expected to earn 194/269/344 points from each major</li>
+  </ul>
+  <p>
+    In other words, a playoff seed is roughly twice as valuable as a group stage seed and six times as valuable as a wildcard seed. Even if leagues didn't grant any points at all, this would be enough to make league placement very important. Winning a tiebreaker match for 1st/2nd place in a league corresponds to an increase in expected points of 350 - 365, far larger than any match all season.<br><br>
+
+    Perhaps no team understands this better than TNC. T1 beat TNC in a tiebreaker for first place in the Spring 2021 DPC season, and as such were seeded directly into the playoffs. Coincidentally, both teams faced the same opponent as their first playoff matchup (Team Aster). Both teams went on to win that matchup. The only difference? By winning their match, T1 immediately qualified for TI10, having earned 800 points from the tour (they went on to win their next series as well, bringing the total to 900). TNC, on the other hand, ended up in a distant 16th place having earned only 500 points from the tour. Losing the tiebreaker series against T1 cost them 300 DPC points, and, after a reverse sweep at the hands of Fnatic in the SEA qualifier, their spot at The International.<br><br>
+
+  <h2 class="pt-2">Conclusions</h2>
+  <p class="pt-2">
+    In retrospect, it shouldn't be surprising that the new point allocation format doesn't change much. After all, only 4 teams who earned points from a major failed to qualify for TI last season. It makes sense that a small change in point allocation doesn't meaningfully change much.<br><br>
+
+    I'm hesitant to call a particular format "bad" or "good" based solely on which types of results it values more. However, I also don't think it is accurate to say the DPC format places a lot of weight on regional performance as opposed to major performance. Rather, it places a massive amount of weight on the specific ordering of the top few teams in regional leagues -- an ordering which generally comes down to one or two matches, because each team only plays seven league series per tour. I'm not entirely convinced Valve intends the format to function like this. Their decision to slightly reduce the point allocation for leagues rather than changing anything about the massive difference beween 1st/2nd/3rd leaves me with the impression that they haven't really put much thought into figuring out what their format prioritizes and if those priorities line up with their own.<br><br>
+
+    In summary, the changes to major/league point allocation are fairly minor: in simulation, about 0.1 more teams qualified to TI without earning any points from majors. It remains entirely possible to qualify on league results alone, and major seeding is as important as ever (with the final tour being worth the most points, I'm sure there'll be some major drama about playoff seeding when the final major rolls around). That said, having 3 tours instead of 2 will make a fairly substantial difference, and I at least expect that every team which qualifies for TI through DPC points will have won at least one series at a major. Surely that's not too much to ask?<br><br>
+
+    The script used to compute all estimates referenced in this analysis can be found at <a href="https://github.com/d2mcs/d2mcs.github.io/blob/main/src/dpc_season_analysis.py">src/dpc_season_analysis.py</a>.
+  </p>
+
+  </div>
+</div>
+<footer>
+  <hr>
+  <div class="container" style="max-width: 1500px">
+    <p class="mw-100"><small>
+      Source code can be found <a href="https://github.com/d2mcs/d2mcs.github.io">here</a>.<br>
+      d2mcs uses league data collected from Liquipedia and match data collected from the Steam WebAPI. This site is not endorsed by or affiliated with Valve or Steam.
+    </small></p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+</body>
