@@ -179,7 +179,7 @@ class TIEliminationBracket(Simulator):
 
     def _get_winner(self, round_name, n, i):
         """Private helper function which gets the winner of a match
-        from the bracket if the match has happens and simulates it
+        from the bracket if the match has happened and simulates it
         otherwise.
         """
         match = self.bracket[round_name][i]
@@ -271,10 +271,14 @@ class TIGroupStage(Simulator):
             List of matches. Each match is a 3-element list containing
             team 1, team 2, and the match result as an int (0 for a
             0-2, 1 for a 1-1, 2 for a 2-0, and -1 if the match hasn't
-            happened yet). Example:
+            happened yet). Matches are separated by day. Example:
 
-                [["Team A", "Team B", 0], ["Team B", "Team C", 1],
-                 ["Team D", "Team E", 2], ["Team E", "Team D", -1]]
+                [[
+                    ["Team A", "Team B", 0], ["Team B", "Team C", 1]
+                 ],
+                 [
+                    ["Team D", "Team E", 2], ["Team E", "Team D", -1]
+                ]]
 
             In this case the results are A 0-2 B, B 1-1 C, D 2-0 E, and
             E vs D has not yet been played.
@@ -368,6 +372,7 @@ class DPCLeague(Simulator):
         tiebreak_matches : list
             List of tiebreaker matches. An empty list can be provided
             if none were played.
+
         Returns
         -------
         list of list(str, int)
@@ -385,10 +390,8 @@ class DPCLeague(Simulator):
         for match_week_list in matches:
             for match in match_week_list:
                 if len(match[2]) == 0:
-                    if self.static_ratings:
-                        result = self.sim_bo_n(3, match[0], match[1])
-                    else:
-                        result = self.sim_bo_n(3, match[0], match[1])
+                    result = self.sim_bo_n(3, match[0], match[1])
+                    if not self.static_ratings:
                         self.model.update_ratings(match[0], match[1], result)
                 else:
                     result = match[2]
@@ -427,3 +430,186 @@ class DPCLeague(Simulator):
         points = [(team, point_map[team]) for team in team_order]
 
         return points, tiebreak_sizes
+
+class DPCMajor(Simulator):
+    """DPC Major simulator: bo2 round-robin tiebreaker into bo2 round-
+    robin group stage into 12 team double elimination playoff round.
+    Ties along seeding boundaries require additional matches, other
+    ties are broken by h2h results/results against lower seeded teams.
+
+    This simulator currently differs from official Major rules in two
+    ways:
+    - 2-way ties are broken by bo3s when they should be broken by bo1s.
+      This will be fixed eventually
+    - Time ratings aren't used to break ties. Frankly time ratings
+      might as well be a coin flip so I probably will leave this
+      unimplemented.
+
+    Parameters
+    ----------
+    Identical to Simulator. See above for details
+    """
+
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.tiebreaker = Tiebreaker(self)
+
+    def _bo2_round_robin(self, teams, matches):
+        """Helper function for simulating a bo2 round-robin stage.
+        Assumes that 2-0s are with 2 points and 1-1s are worth 1 point.
+        """
+        records = {team: [0,0,0] for team in teams}
+        h2h_results = {team: {} for team in teams}
+
+        for match_list in matches:
+            for match in match_list:
+                if len(match[2]) == 0:
+                    if self.static_ratings:
+                        result = self.sim_bo2(match[0], match[1])
+                    else:
+                        result = self.sim_bo2(match[0], match[1],momentum=0.05)
+                else:
+                    result = match[2]
+                    if not self.static_ratings:
+                        self.model.update_ratings(match[0], match[1], result)
+                records[match[0]][2 - result[0]] += 1
+                records[match[1]][2 - result[1]] += 1
+                h2h_results[match[0]][match[1]] = result[0]
+                h2h_results[match[1]][match[0]] = result[1]
+        return records, h2h_results
+
+    def sim_wildcard(self, teams, matches, tiebreak_matches):
+        """Simulates a wildcard round and returns the resulting ordered
+        team scores and size of any tiebreaker matches played.
+
+        Parameters
+        ----------
+        teams : list
+            List of teams in wildcard round.
+        matches : list
+            List of wildcard matches, separated by day. Example:
+            [[
+                ["Team A", "Team B", [0, 2]], ["Team B", "Team C", [1, 1]]
+             ],
+             [
+                ["Team D", "Team E", [2, 0]], ["Team E", "Team D", []]
+            ]]
+        tiebreak_matches : dict
+            If any tiebreak matches were played, this should map the
+            first number of the tiebreak boundary (as a str) to the
+            list of matches played to break the tie along that boundary
+
+        Returns
+        -------
+        list of list(str, int)
+            Sorted list of teams and points. Example:
+                [["Team A", 10], ["Team B", 9], ["Team C", 5]]
+        dict
+            dict mapping each boundary to the number of teams tied
+            along that boundary
+        """
+        records, h2h_results = self._bo2_round_robin(teams, matches)
+
+        point_map = {}
+        for team, record in records.items():
+            point_map[team] = record[0]*2 + record[1]
+        team_order = self.tiebreaker.order_teams(point_map.keys(), point_map)
+
+        team_order, tiebreak_sizes = self.tiebreaker.boundary_tiebreak(
+            [(1,2)], team_order, point_map,
+            tiebreak_matches if len(tiebreak_matches) > 0 else None)
+        team_order = self.tiebreaker.h2h_tiebreak(h2h_results,
+                                                  team_order, point_map)
+        points = [(team, point_map[team]) for team in team_order]
+
+        return points, tiebreak_sizes
+
+    def sim_group_stage(self, teams, matches, tiebreak_matches):
+        """Simulates a group stage round and returns the resulting
+        ordered team scores and size of any tiebreaker matches played.
+
+        Parameters and return values are identical to sim_wildcard.
+        """
+        records, h2h_results = self._bo2_round_robin(teams, matches)
+
+        point_map = {}
+        for team, record in records.items():
+            point_map[team] = record[0]*2 + record[1]
+        team_order = self.tiebreaker.order_teams(point_map.keys(), point_map)
+
+        team_order, tiebreak_sizes = self.tiebreaker.boundary_tiebreak(
+            [(1,2), (5,6)], team_order, point_map,
+            tiebreak_matches if len(tiebreak_matches) > 0 else None)
+        team_order = self.tiebreaker.h2h_tiebreak(h2h_results,
+                                                  team_order, point_map)
+        points = [(team, point_map[team]) for team in team_order]
+
+        return points, tiebreak_sizes
+
+    def _get_winner(self, bracket, round_name, n, i):
+        """Private helper function which gets the winner of a match
+        from the bracket if the match has happened and simulates it
+        otherwise.
+        """
+        match = bracket[round_name][i]
+        if len(match[2]) == 0:
+            result = self.sim_bo_n(n, match[0], match[1])
+            match[2] = result
+        elif not self.static_ratings:
+            self.model.update_ratings(*match)
+        return 1 - int(match[2][0] == n//2 + 1)
+
+    def sim_playoffs(self, bracket):
+        """Simulates every game in the playoffs and returns the
+        resulting placement of each team.
+
+        Returns
+        -------
+        dict
+            dictionary mapping placement (in the form of a string) to
+            teams which received that placement. For consistency all
+            dict values are sets even for ranks that only can contain
+            one team
+        """
+        ranks = {"9-12": set(), "7-8": set(), "5-6": set(),
+                 "4": set(), "3": set(), "2": set(), "1": set()}
+        for i, match in enumerate(bracket["UB-R1"]):
+            winner = self._get_winner(bracket, "UB-R1", 3, i)
+            bracket["UB-R2"][i//2][i % 2] = match[winner]
+            bracket["LB-R1"][i][0] = match[1 - winner]
+        for i, match in enumerate(bracket["LB-R1"]):
+            winner = self._get_winner(bracket, "LB-R1", 3, i)
+            bracket["LB-R2"][i//2][i % 2] = match[winner]
+            ranks["9-12"].add(match[1 - winner])
+        for i, match in enumerate(bracket["UB-R2"]):
+            winner = self._get_winner(bracket, "UB-R2", 3, i)
+            bracket["UB-F"][0][i] = match[winner]
+            bracket["LB-R3"][1 - i][0] = match[1 - winner]
+        for i, match in enumerate(bracket["LB-R2"]):
+            winner = self._get_winner(bracket, "LB-R2", 3, i)
+            bracket["LB-R3"][i][1] = match[winner]
+            ranks["7-8"].add(match[1 - winner])
+        for i, match in enumerate(bracket["LB-R3"]):
+            winner = self._get_winner(bracket, "LB-R3", 3, i)
+            bracket["LB-R4"][0][i] = match[winner]
+            ranks["5-6"].add(match[1 - winner])
+        match = bracket["UB-F"][0]
+        winner = self._get_winner(bracket, "UB-F", 3, 0)
+        bracket["GF"][0][0] = match[winner]
+        bracket["LB-F"][0][0] = match[1 - winner]
+
+        match = bracket["LB-R4"][0]
+        winner = self._get_winner(bracket, "LB-R4", 3, 0)
+        bracket["LB-F"][0][1] = match[winner]
+        ranks["4"].add(match[1 - winner])
+
+        match = bracket["LB-F"][0]
+        winner = self._get_winner(bracket, "LB-F", 3, 0)
+        bracket["GF"][0][1] = match[winner]
+        ranks["3"].add(match[1 - winner])
+
+        match = bracket["GF"][0]
+        winner = self._get_winner(bracket, "GF", 5, 0)
+        ranks["2"].add(match[1 - winner])
+        ranks["1"].add(match[winner])
+        return ranks

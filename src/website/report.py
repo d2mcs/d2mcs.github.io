@@ -8,7 +8,8 @@ from datetime import date
 
 from jinja2 import Template
 
-from model.sampler import TISampler, DPCSampler
+from model.sampler import (TISampler, DPCLeagueSampler,
+                           DPCMajorSampler, DPCSeasonSampler)
 from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
 from model.match_data import MatchDatabase
@@ -329,10 +330,10 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
         # static ratings are always used for the Glicko simulator
         # because Glicko explicitly accounts for uncertainty using
         # ratinng deviation.
-        sampler = DPCSampler.from_ratings_file_glicko2(ratings_file,
+        sampler = DPCLeagueSampler.from_ratings_file_glicko2(ratings_file,
             0.5, static_ratings=True)
     else:
-        sampler = DPCSampler.from_ratings_file(ratings_file, k,
+        sampler = DPCLeagueSampler.from_ratings_file(ratings_file, k,
             static_ratings=static_ratings)
 
     with open(f"data/{folder}/teams.json") as team_f:
@@ -520,3 +521,28 @@ def generate_html_global_rankings(output_file, dpc_season):
                              full_name=full_name)
     with open(f"../{output_file}", "w") as output_f:
         output_f.write(output)
+
+def generate_data_major(ratings_file, matches, output_file, n_samples, folder,
+                        k, timestamp="", static_ratings=False):
+    """TODO
+    The core simulation code is finished, but the HTML report hasn't
+    been written yet and the only probabilities returned are final
+    rank probabilities.
+    Currently this function simply prints final rank probabilities
+    """
+    if output_file == "glicko":
+        sampler = DPCMajorSampler.from_ratings_file_glicko2(ratings_file,
+            0.5, static_ratings=True)
+    else:
+        sampler = DPCMajorSampler.from_ratings_file(ratings_file, k,
+            static_ratings=static_ratings)
+
+    with open(f"data/{folder}/teams.json") as team_f:
+        teams = json.load(team_f)
+
+    probs = sampler.sample_major(teams, matches, n_samples)
+    print(probs["final_rank"])
+
+def generate_html_major():
+    """TODO"""
+    return

@@ -11,7 +11,8 @@ from pathlib import Path
 import os
 
 from website.report import (generate_data_ti, generate_html_ti,
-    generate_data_dpc, generate_html_dpc,  generate_team_ratings_elo)
+    generate_data_dpc, generate_html_dpc,
+    generate_data_major, generate_html_major, generate_team_ratings_elo)
 
 def retroactive_ti_predictions(timestamp, k, n_samples, tournament,
                                train_elo, html_only=False):
@@ -116,6 +117,25 @@ def retroactive_dpc_predictions(timestamp, k, n_samples, region,
                           f"dpc/sp21/{region}", k, wildcard_slots[region],
                           timestamp=timestamp, static_ratings=True)
 
+def retroactive_major_predictions(timestamp, k, n_samples,
+                                  train_elo, html_only=False):
+    """TODO
+    HTML report for major events hasn't been finished yet. This is
+    currently only used for testing purposes
+    """
+    stop_after = datetime.fromisoformat("2021-06-01").timestamp()
+    title = "Animajor"
+    tabs = [["Current", ""]]
+
+    if train_elo:
+        generate_team_ratings_elo(2, k, 1.5, "dpc/sp21/major", stop_after)
+
+    with open("data/dpc/sp21/major/matches.json") as match_f:
+        matches = json.load(match_f)
+
+    generate_data_major("data/dpc/sp21/major/elo_ratings.json", matches,
+            "elo" + tabs[0][1], n_samples, "dpc/sp21/major", k, timestamp)
+
 def main():
     """Command-line interface for retroactive report generation"""
     # code must be run from the src/ folder
@@ -134,6 +154,8 @@ def main():
         help="Generate retroactive TI predictions")
     parser.add_argument("-d", "--dpc", action='store_true', default=False,
         help="Generate retroactive DPC league predictions")
+    parser.add_argument("-m", "--major", action='store_true', default=False,
+        help="Generate retroactive DPC major predictions")
 
     args = parser.parse_args()
 
@@ -147,6 +169,9 @@ def main():
         for region in ["sea", "eeu", "cn", "weu", "na", "sa"]:
             retroactive_dpc_predictions(timestamp, args.k, args.n_samples,
                                         region, args.train_elo, args.html)
+    if args.major:
+        retroactive_major_predictions(timestamp, args.k, args.n_samples,
+                                      args.train_elo, args.html)
 
 if __name__ == "__main__":
     main()

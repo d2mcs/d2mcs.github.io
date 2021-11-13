@@ -1,0 +1,26 @@
+{
+  "wildcard": [
+    "Team Nigma",
+    "Team Secret",
+    "Vici Gaming",
+    "Invictus Gaming",
+    "Execration",
+    "AS Monaco Gambit"
+  ],
+  "group stage": [
+    "Team Liquid",
+    "PSG.LGD",
+    "TNC Predator",
+    "Team Spirit",
+    "Evil Geniuses",
+    "beastcoast"
+  ],
+  "playoffs": [
+    "Alliance",
+    "Team Aster",
+    "T1",
+    "Virtus.pro",
+    "Quincy Crew",
+    "NoPing e-sports"
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "wildcard": [
+    [
+      ["Team Secret", "AS Monaco Gambit", [1, 1]],
+      ["Execration", "Invictus Gaming", [1, 1]],
+      ["Vici Gaming", "Team Secret", [1, 1]],
+      ["Team Nigma", "Invictus Gaming", [0, 2]],
+      ["Vici Gaming", "Team Nigma", [1, 1]],
+      ["Team Nigma", "AS Monaco Gambit", [2, 0]],
+      ["AS Monaco Gambit", "Execration", [1, 1]],
+      ["Execration", "Vici Gaming", [1, 1]]
+    ],
+    [
+      ["Vici Gaming", "AS Monaco Gambit", [2, 0]],
+      ["Execration", "Team Nigma", [0, 2]],
+      ["Team Nigma", "Team Secret", [1, 1]],
+      ["Invictus Gaming", "Team Secret", [2, 0]],
+      ["Execration", "Team Secret", [1, 1]],
+      ["Invictus Gaming", "Vici Gaming", [0, 2]],
+      ["Invictus Gaming", "AS Monaco Gambit", [1, 1]]
+    ]
+  ],
+  "group stage": [
+    [
+      ["Evil Geniuses", "TNC Predator", []],
+      ["PSG.LGD", "beastcoast", []],
+      ["TBD/wildcard1", "Team Liquid", []],
+      ["TBD/wildcard1", "TNC Predator", []],
+      ["Team Liquid", "beastcoast", []],
+      ["Team Spirit", "Evil Geniuses", []],
+      ["TBD/wildcard2", "PSG.LGD", []],
+      ["Team Spirit", "TBD/wildcard2", []]
+    ],
+    [
+      ["Team Spirit", "TBD/wildcard1", []],
+      ["Team Liquid", "TBD/wildcard2", []],
+      ["Evil Geniuses", "TBD/wildcard1", []],
+      ["PSG.LGD", "Team Liquid", []],
+      ["Evil Geniuses", "beastcoast", []],
+      ["TNC Predator", "beastcoast", []],
+      ["Team Spirit", "PSG.LGD", []],
+      ["TNC Predator", "TBD/wildcard2", []]
+    ],
+    [
+      ["PSG.LGD", "TNC Predator", []],
+      ["PSG.LGD", "Evil Geniuses", []],
+      ["Team Liquid", "TNC Predator", []],
+      ["TBD/wildcard2", "Evil Geniuses", []],
+      ["TBD/wildcard1", "beastcoast", []],
+      ["TBD/wildcard2", "TBD/wildcard1", []],
+      ["Team Spirit", "beastcoast", []],
+      ["Team Spirit", "Team Liquid", []]
+    ],
+    [
+      ["PSG.LGD", "TBD/wildcard1", []],
+      ["Team Spirit", "TNC Predator", []],
+      ["TBD/wildcard2", "beastcoast", []],
+      ["Team Liquid", "Evil Geniuses", []]
+    ]
+  ],
+  "playoffs": {
+    "UB-R1": [
+      ["Virtus.pro", "TBD/gs2", []],
+      ["Alliance", "TBD/gs1", []],
+      ["Team Aster", "T1", []],
+      ["Quincy Crew", "NoPing e-sports", []]
+    ],
+    "UB-R2": [
+      ["", "", []],
+      ["", "", []]
+    ],
+    "UB-F": [["", "", []]],
+    "LB-R1": [
+        ["", "TBD/gs3", []],
+        ["", "TBD/gs6", []],
+        ["", "TBD/gs5", []],
+        ["", "TBD/gs4", []]
+    ],
+    "LB-R2": [
+      ["", "", []],
+      ["", "", []]
+    ],
+    "LB-R3": [
+      ["", "", []],
+      ["", "", []]
+    ],
+    "LB-R4": [["", "", []]],
+    "LB-F": [["", "", []]],
+    "GF": [["", "", []]]
+  },
+  "tiebreak": {
+    "wildcard": {
+      "1": [["Team Nigma", "Invictus Gaming", [1, 0]]]
+    }
+  }
+}
