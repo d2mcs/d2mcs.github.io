@@ -125,16 +125,35 @@ def retroactive_major_predictions(timestamp, k, n_samples,
     """
     stop_after = datetime.fromisoformat("2021-06-01").timestamp()
     title = "Animajor"
-    tabs = [["Current", ""]]
+    tabs = [["Jun. 13 (Current)", ""],
+            ["Jun. 8 (After Group Stage)", "-gs"],
+            ["Jun. 4 (After Wildcard)", "-wc"],
+            ["Jun. 1 (Pre-tournament)", "-pre"]]
 
     if train_elo:
         generate_team_ratings_elo(2, k, 1.5, "dpc/sp21/major", stop_after)
+    generate_html_major(f"dpc/sp21/major/forecast.html", tabs,
+        "DPC Spring 2021: " + title)
+    if html_only:
+        return
 
-    with open("data/dpc/sp21/major/matches.json") as match_f:
-        matches = json.load(match_f)
+    for i, tab in enumerate(reversed(tabs)):
+        with open("data/dpc/sp21/major/matches.json") as match_f:
+            matches = json.load(match_f)
+        if i < 1:
+            matches["wildcard"] = {}
+        if i < 2:
+            matches["group stage"] = {}
+            matches["tiebreak"] = {}
+        if i < 3:
+            matches["playoffs"] = {}
+            matches["tiebreak"]["group stage"] = {}
 
-    generate_data_major("data/dpc/sp21/major/elo_ratings.json", matches,
-            "elo" + tabs[0][1], n_samples, "dpc/sp21/major", k, timestamp)
+        generate_data_major("data/dpc/sp21/major/elo_ratings.json", matches,
+                "elo" + tab[1], n_samples, "dpc/sp21/major", k, timestamp)
+        generate_data_major("data/dpc/sp21/major/fixed_ratings.json", matches,
+                "fixed" + tab[1], n_samples, "dpc/sp21/major", k, timestamp,
+                static_ratings=True)
 
 def main():
     """Command-line interface for retroactive report generation"""

@@ -148,18 +148,6 @@ def simulate_major_expected_points(n_samples):
         "data/dpc/sp21/major/fixed_ratings.json", k=0, static_ratings=True)
     with open("data/dpc/sp21/major/teams.json") as team_f:
         teams = json.load(team_f)
-    with open("data/dpc/sp21/major/matches.json") as match_f:
-        matches = json.load(match_f)
-
-    # remove any existing results
-    for stage in ["wildcard", "group stage"]:
-        for match_list in matches[stage]:
-            for match in match_list:
-                match[2] = []
-    for match_list in matches["playoffs"].values():
-        for match in match_list:
-            match[2] = []
-    matches["tiebreak"] = {}
 
     # get mapping from team name to starting stage
     # (wildcard, group stage, playoffs)
@@ -180,10 +168,10 @@ def simulate_major_expected_points(n_samples):
 
             with Pool() as pool:
                 sim_results = [pool.apply_async(sampler.get_sample, (
-                        sampler.model, matches, teams, True))
+                        sampler.model, {}, teams, True))
                     for _ in range(pool_size)]
                 for sim_result in sim_results:
-                    final_ranks = sim_result.get()
+                    final_ranks, _, _ = sim_result.get()
                     for i, rank in enumerate(["1","2","3","4","5-6","7-8"]):
                         for team in final_ranks[rank]:
                             for tour_idx in range(3):

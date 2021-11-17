@@ -517,7 +517,7 @@ class DPCMajor(Simulator):
 
         team_order, tiebreak_sizes = self.tiebreaker.boundary_tiebreak(
             [(1,2)], team_order, point_map,
-            tiebreak_matches if len(tiebreak_matches) > 0 else None)
+            tiebreak_matches if len(tiebreak_matches) > 0 else None, "bo1")
         team_order = self.tiebreaker.h2h_tiebreak(h2h_results,
                                                   team_order, point_map)
         points = [(team, point_map[team]) for team in team_order]
@@ -539,7 +539,7 @@ class DPCMajor(Simulator):
 
         team_order, tiebreak_sizes = self.tiebreaker.boundary_tiebreak(
             [(1,2), (5,6)], team_order, point_map,
-            tiebreak_matches if len(tiebreak_matches) > 0 else None)
+            tiebreak_matches if len(tiebreak_matches) > 0 else None, "bo1")
         team_order = self.tiebreaker.h2h_tiebreak(h2h_results,
                                                   team_order, point_map)
         points = [(team, point_map[team]) for team in team_order]

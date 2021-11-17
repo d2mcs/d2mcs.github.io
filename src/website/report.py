@@ -8,8 +8,7 @@ from datetime import date
 
 from jinja2 import Template
 
-from model.sampler import (TISampler, DPCLeagueSampler,
-                           DPCMajorSampler, DPCSeasonSampler)
+from model.sampler import (TISampler, DPCLeagueSampler, DPCMajorSampler)
 from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
 from model.match_data import MatchDatabase
@@ -188,8 +187,7 @@ def predict_matches_dpc(sampler,matches,static_ratings):
             for match in match_list:
                 team1 = match[0]
                 team2 = match[1]
-                win_prob = sampler.model.get_win_prob(team1, team2)
-                bo3_win_prob = win_prob**2 + (2*win_prob**2*(1 - win_prob))
+                win_prob = sampler.get_bo_n_win_prob(3, team1, team2)
                 if len(match[2]) != 0:
                     # match has already been played, so update team
                     # ratings and current records
@@ -204,7 +202,7 @@ def predict_matches_dpc(sampler,matches,static_ratings):
                     elif not static_ratings:
                         sampler.model.update_ratings(team1, team2, result)
                         sq_errs.append((int(result[0] > result[1])
-                                       - bo3_win_prob)**2)
+                                       - win_prob)**2)
 
                     if sum(result) > 0:
                         winner = int(result[1] > result[0])
@@ -213,8 +211,8 @@ def predict_matches_dpc(sampler,matches,static_ratings):
 
                 match_predictions[division][-1].append({
                     "teams": (match[0], match[1]), "result": match[2],
-                    "probs": [float(f"{bo3_win_prob:.4f}"),
-                              float(f"{1 - bo3_win_prob:.4f}")]})
+                    "probs": [float(f"{win_prob:.4f}"),
+                              float(f"{1 - win_prob:.4f}")]})
     if not static_ratings:
         for division in ["upper", "lower"]:
             for match_list in matches["tiebreak"][division].values():
@@ -222,6 +220,60 @@ def predict_matches_dpc(sampler,matches,static_ratings):
                     sampler.model.update_ratings(team1, team2, result)
     if len(sq_errs) > 0:
         brier_skill_score = 1 - ((sum(sq_errs)/len(sq_errs)) / 0.25)
+    else:
+        brier_skill_score = 0
+    return records, match_predictions, brier_skill_score
+
+def predict_matches_major(sampler, matches, static_ratings):
+    """Code for computing each team's record and the probabilities of
+    them wining each match.
+    """
+    records = {"wildcard": {}, "group stage": {}}
+    match_predictions = {"wildcard": [], "group stage": [], "playoffs": {}}
+    sq_errs = []
+    ref_errs = []
+    for group in ["wildcard", "group stage"]:
+        for match_list in matches[group]:
+            match_predictions[group].append([])
+            for match in match_list:
+                for team in match[:2]:
+                    if team not in records[group]:
+                        records[group][team] = [0,0,0]
+                match_probs = sampler.get_bo2_probs(match[0], match[1],
+                    draw_adjustment=0.05 if not static_ratings else 0.0)
+                if len(match[2]) != 0:
+                    result = match[2]
+                    if not static_ratings:
+                        sq_errs.append((1 - match_probs[result[1]])**2)
+                        ref_errs.append((1/2)**2 if result[0]==1 else (3/4)**2)
+                        sampler.model.update_ratings(*match)
+
+                    records[group][match[0]][2 - result[0]] += 1
+                    records[group][match[1]][2 - result[1]] += 1
+
+                match_predictions[group][-1].append({
+                    "teams": (match[0], match[1]), "result": match[2],
+                    "probs": [float(f"{p:.4f}") for p in match_probs]})
+    for round, match_list in matches["playoffs"].items():
+        match_predictions["playoffs"][round] = []
+        for match in match_list:
+            if round == "GF":
+                win_prob = sampler.get_bo_n_win_prob(5, match[0], match[1])
+            else:
+                win_prob = sampler.get_bo_n_win_prob(3, match[0], match[1])
+            if len(match[2]) != 0:
+                if not static_ratings:
+                    result = match[2]
+                    sq_errs.append((int(result[0] > result[1]) - win_prob)**2)
+                    ref_errs.append((1/2)**2 if result[0]==1 else (3/4)**2)
+                    sampler.model.update_ratings(*match)
+            match_predictions["playoffs"][round].append({
+                "teams": (match[0], match[1]), "result": match[2],
+                "probs": [float(f"{win_prob:.4f}"),
+                          float(f"{1 - win_prob:.4f}")]})
+    if len(sq_errs) > 0:
+        brier_skill_score = 1 - ((sum(sq_errs)/len(sq_errs))
+                                 / (sum(ref_errs)/len(ref_errs)))
     else:
         brier_skill_score = 0
     return records, match_predictions, brier_skill_score
@@ -524,11 +576,45 @@ def generate_html_global_rankings(output_file, dpc_season):
 
 def generate_data_major(ratings_file, matches, output_file, n_samples, folder,
                         k, timestamp="", static_ratings=False):
-    """TODO
-    The core simulation code is finished, but the HTML report hasn't
-    been written yet and the only probabilities returned are final
-    rank probabilities.
-    Currently this function simply prints final rank probabilities
+    """Generates an output JSON file containing final rank probabilities
+    for a major.
+
+    Parameters
+    ----------
+    ratings_file : str
+        Path to JSON file mapping team names to ratings. The file
+        should look something like this:
+        {
+          "Team A": 1500,
+          "Team B": 1600
+        }
+    matches : dict
+        List of all matches to be played at the major. The format is
+        quite long so instead of documenting it here I refer to the
+        file at src/dpc/spring/major/matches.json as an example.
+
+        Note that the dicationary contains 4 keys, the last of which is
+        optional (wildcard, group stage, playoffs, tiebreak). Match
+        format depends on the stage of the competition.
+
+        If matches for a stage are not provided, the schedule will
+        be generated randomly.
+    output_file : str
+        Name of output file to save.
+    n_samples : int
+        Number of Monte Carlo samples to simulate.
+    folder : str
+        Folder name to save output to / look for data from.
+    k : int
+        K parameter for Elo model.
+    timestamp : str, default=""
+        Timestamp to put at the top of the report. This is a parameter
+        instead of being determined from the current time because I
+        generate multiple reports and want them to have the same
+        timestamp
+    static_ratings : bool, default=False
+        If true, ratings will not be updated over the course of a
+        simulation. This is used for the fixed-ratings output.
     """
     if output_file == "glicko":
         sampler = DPCMajorSampler.from_ratings_file_glicko2(ratings_file,
@@ -541,8 +627,66 @@ def generate_data_major(ratings_file, matches, output_file, n_samples, folder,
         teams = json.load(team_f)
 
     probs = sampler.sample_major(teams, matches, n_samples)
-    print(probs["final_rank"])
 
-def generate_html_major():
-    """TODO"""
-    return
+    # By default, pre-tournament group stage probabilities will include
+    # teams from the wildcard. These teams should be filtered out until
+    # wildcard results are final.
+    for team, prob_list in list(probs["group_stage_rank"].items()):
+        if sum(prob_list) < (n_samples - 1)/n_samples:
+            del probs["group_stage_rank"][team]
+    group_rank_probs = get_gs_ranks(
+        {"wc": probs["wildcard_rank"], "gs": probs["group_stage_rank"]},
+        ["wc", "gs"])
+    for _ in range(len(group_rank_probs["gs"]), 8):
+        group_rank_probs["gs"].append({"team": "TBD",
+                                       "probs": [0 for _ in range(8)]})
+
+    records, _, _ = predict_matches_major(sampler, matches, static_ratings)
+    records["group stage"]["TBD"] = [0,0,0]
+    for team in teams["wildcard"]:
+        if team not in records["wildcard"]:
+            records["wildcard"][team] = [0,0,0]
+    for team in probs["group_stage_rank"].keys():
+        if team not in records["group stage"]:
+            records["group stage"][team] = [0,0,0]
+
+    ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
+              for team in sampler.model.ratings.keys()}
+    ratings["TBD"] = 0
+
+    output_json = {
+        "probs": {
+            "group_rank": group_rank_probs,
+            "final_rank": get_final_ranks(probs["final_rank"])
+        },
+        "ratings": ratings,
+        "records": records,
+        "timestamp": timestamp,
+        "n_samples": n_samples,
+        "model_version": "0.3"
+    }
+    Path(f"../{folder}/data").mkdir(exist_ok=True)
+    with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
+        json.dump(output_json, json_f)
+
+def generate_html_major(output_file, tabs, title):
+    """Generates the output forecast report with the provided tabs and
+    title. generate_data is used for generating the JSON data files
+    used by this report.
+
+    Parameters
+    ----------
+    output_file : str
+        Name of output html file
+    tabs : dict
+        Dictionary containing the name and suffix of each tab.
+    title : str
+        Name to put at the top of the report.
+    """
+    with open("data/template_major.html") as input_f:
+        template_str = input_f.read()
+    template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
+
+    output = template.render(tabs=tabs, title=title)
+    with open(f"../{output_file}", "w") as output_f:
+        output_f.write(output)

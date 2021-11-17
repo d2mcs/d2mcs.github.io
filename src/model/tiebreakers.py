@@ -100,7 +100,7 @@ class Tiebreaker:
                     if (tiebreak_points[match[1-int(team1_win)]]==len(teams)-1
                           and boundary[0] == 0):
                         break
-                    if (tiebreak_points[match[int(team1_win)]] == 1 - len(teams)
+                    if (tiebreak_points[match[int(team1_win)]] == 1-len(teams)
                           and boundary[1] == len(teams) - 1):
                         break
 
@@ -124,7 +124,7 @@ class Tiebreaker:
         return team_order
 
     def boundary_tiebreak(self, tiebreak_boundaries, team_order,
-                          point_map, matches=None):
+                          point_map, matches=None, two_way_match_type="bo3"):
         """Breaks ties along a boundary by playing additional matches.
         Once the boundary tie has been broken, no additional matches
         are played. Following official TI rules, a bo3 is used for
@@ -162,6 +162,8 @@ class Tiebreaker:
             }
             These results will be used instead of simulating the
             tiebreaker matches.
+        two_way_match_type : {"bo1", "bo3"}, default = "bo3"
+            Which match type to use for breaking two-way ties.
 
         Returns
         -------
@@ -195,7 +197,7 @@ class Tiebreaker:
 
             # there is a tie, and it is along a boundary
             if len(teams) == 2:
-                # 2-way tiebreak, play a single bo3
+                # 2-way tiebreak, play a single match
                 teams = list(teams)
                 if matches is not None and str(boundary[0]) in matches:
                     match = matches[str(boundary[0])][0]
@@ -204,8 +206,14 @@ class Tiebreaker:
                     else:
                         result = (match[2][1], match[2][0])
                 else:
-                    result = self.sim.sim_bo_n(3, teams[0], teams[1])
-                if result[0] == 2: # team 1 victory
+                    if two_way_match_type == "bo3":
+                        result = self.sim.sim_bo_n(3, teams[0], teams[1])
+                    elif two_way_match_type == "bo1":
+                        team_1_win = self.sim.sim_bo1(teams[0], teams[1])
+                        result = (int(team_1_win), 1 - int(team_1_win))
+                    else:
+                        raise ValueError("Invalid tiebreaker match type")
+                if result[0] > result[1]: # team 1 victory
                     team_order[num_groups - i-1:num_groups - i] = [
                         teams[0], teams[1]]
                 else:

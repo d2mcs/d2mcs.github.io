@@ -83,17 +83,54 @@ function render_team_probs_ti(team_data, team_index, group, n_samples) {
   }
 }
 
+function render_team_probs_major(team_data, team_index, group, n_samples) {
+  if (group === "gs") {
+    var prob_types = ["upper", "lower", "elim"];
+    for (let type_i = 0; type_i < 3; type_i++) {
+      let prob_type = prob_types[type_i];
+      let prob_html = document.getElementById("gs-" + prob_type + "-prob-" + group + "-" + team_index);
+      let prob = 0;
+      if (prob_type == "upper")
+        prob = team_data["probs"].slice(0, 2).reduce((a, b) => a + b, 0);
+      else if (prob_type == "lower")
+        prob = team_data["probs"].slice(2, 6).reduce((a, b) => a + b, 0);
+      else
+        prob = team_data["probs"].slice(6, 8).reduce((a, b) => a + b, 0);
+      prob_html.innerText = format_prob(prob, n_samples);
+      prob_html.style.backgroundColor = color_prob(prob, prob_type);
+    }
+  }
+  else {
+    var prob_types = ["gs", "elim"];
+    for (let type_i = 0; type_i < 2; type_i++) {
+      let prob_type = prob_types[type_i];
+      let prob_html = document.getElementById("gs-" + prob_type + "-prob-" + group + "-" + team_index);
+      let prob = 0;
+      if (prob_type == "gs")
+        prob = team_data["probs"].slice(0, 2).reduce((a, b) => a + b, 0);
+      else
+        prob = team_data["probs"].slice(2, 6).reduce((a, b) => a + b, 0);
+      prob_html.innerText = format_prob(prob, n_samples);
+
+      if (prob_type === "gs")
+        prob_html.style.backgroundColor = color_prob(prob, "upper");
+      else
+        prob_html.style.backgroundColor = color_prob(prob, prob_type);
+    }
+  }
+}
+
 function render_group_rank_probs(format, sim_data, wildcard_slots) {
-  if (format === "ti") {
+  if (format === "ti")
     var groups = ['a', 'b'];
-    var team_count = 9;
-  }
-  else if (format === "dpc") {
+  else if (format === "dpc")
     var groups = ['upper', 'lower'];
-    var team_count = 8;
-  }
+  else if (format === "major")
+    var groups = ['wc', 'gs'];
+
   for (let group_i = 0; group_i < 2; group_i++) {
-    let group = groups[group_i]
+    let group = groups[group_i];
+    let team_count = sim_data["probs"]["group_rank"][group].length;
     for (let i = 0; i < team_count; i++) {
       let team_data = sim_data["probs"]["group_rank"][group][i]
       let team = team_data["team"];
@@ -101,28 +138,42 @@ function render_group_rank_probs(format, sim_data, wildcard_slots) {
       document.getElementById("gs-team-" + group + "-" + i).innerText = team;
       document.getElementById("gs-im-" + group + "-" + i).src = "image/"+team+".png";
       document.getElementById("gs-rating-" + group + "-" + i).innerText = sim_data["ratings"][team];
-      let record = sim_data["records"][team];
       if (format === "ti") {
+        let record = sim_data["records"][team];
         document.getElementById("gs-record-" + group + "-" + i).innerText = (
           record[0] + "-" + record[1] + "-" + record[2]);
       }
       else if (format === "dpc") {
+        let record = sim_data["records"][team];
         document.getElementById("gs-record-" + group + "-" + i).innerText = (
           record[0] + "-" + record[1]);
       }
+      else if (format === "major") {
+        let record = [0, 0, 0];
+        if (group === "wc")
+          record = sim_data["records"]["wildcard"][team];
+        else if (group === "gs")
+          record = sim_data["records"]["group stage"][team];
+        document.getElementById("gs-record-" + group + "-" + i).innerText = (
+          record[0] + "-" + record[1] + "-" + record[2]);
+      }
 
-      document.getElementById("gs-rank-team-" + group + "-" + i).innerText = team;
-      document.getElementById("gs-rank-im-" + group + "-" + i).src = "image/"+team+".png";
-      for (let j = 0; j < team_count; j++) {
-        let prob_html = document.getElementById("group-" + group + "-team-" + i + "-rank" + j + "-prob");
-        prob_html.innerText = format_prob(team_data["probs"][j], sim_data["n_samples"]);
-        prob_html.style.backgroundColor = color_prob(team_data["probs"][j]);
+      if (format !== "major") {
+        document.getElementById("gs-rank-team-" + group + "-" + i).innerText = team;
+        document.getElementById("gs-rank-im-" + group + "-" + i).src = "image/"+team+".png";
+        for (let j = 0; j < team_count; j++) {
+          let prob_html = document.getElementById("group-" + group + "-team-" + i + "-rank" + j + "-prob");
+          prob_html.innerText = format_prob(team_data["probs"][j], sim_data["n_samples"]);
+          prob_html.style.backgroundColor = color_prob(team_data["probs"][j]);
+        }
       }
 
       if (format === "ti")
         render_team_probs_ti(team_data, i, group, sim_data["n_samples"]);
       else if (format === "dpc")
         render_team_probs_dpc(team_data, i, group, wildcard_slots, sim_data["n_samples"]);
+      else if (format === "major")
+        render_team_probs_major(team_data, i, group, sim_data["n_samples"]);
     }
   }
 }
@@ -155,12 +206,16 @@ function render_tiebreak_probs(format, sim_data, wildcard_slots) {
   }
 }
 
-function render_final_rank_probs(sim_data) {
+function render_final_rank_probs(format, sim_data) {
+  if (format === "ti")
+    var rank_groups = 9;
+  else if (format === "major")
+    var rank_groups = 13;
   for (let team_i = 0; team_i < 18; team_i++) {
     let team = sim_data["probs"]["final_rank"][team_i]["team"];
     document.getElementById("final-rank-team-" + team_i).innerText = team;
     document.getElementById("final-rank-im-" + team_i).src = "image/"+team+".png";
-    for (let rank_i = 0; rank_i < 9; rank_i++) {
+    for (let rank_i = 0; rank_i < rank_groups; rank_i++) {
       let prob_html = document.getElementById("team-" + team_i + "-final-rank-" + rank_i + "-prob");
       let prob = sim_data["probs"]["final_rank"][team_i]["probs"][rank_i];
       prob_html.innerText = format_prob(prob, sim_data["n_samples"]);
@@ -341,7 +396,7 @@ function render_data_ti(path) {
       render_tiebreak_probs("ti", sim_data);
       render_record_rank_probs("ti", sim_data);
       render_match_probs("ti", sim_data);
-      render_final_rank_probs(sim_data);
+      render_final_rank_probs("ti", sim_data);
       render_metadata(sim_data);
     });
 }
@@ -354,6 +409,16 @@ function render_data_dpc(path, wildcard_slots) {
       render_match_probs("dpc", sim_data);
       render_record_rank_probs("dpc", sim_data);
       render_tiebreak_probs("dpc", sim_data, wildcard_slots);
+      render_metadata(sim_data);
+    });
+}
+
+function render_data_major(path) {
+  fetch(path)
+    .then(function(res) { return res.json(); })
+    .then(function(sim_data) {
+      render_group_rank_probs("major", sim_data);
+      render_final_rank_probs("major", sim_data);
       render_metadata(sim_data);
     });
 }

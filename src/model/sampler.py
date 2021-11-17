@@ -8,6 +8,7 @@ import json
 import copy
 from itertools import combinations
 import random
+from math import factorial
 
 from tqdm import tqdm
 
@@ -69,6 +70,33 @@ class Sampler:
             p0_2 = (1 - win_p_t1)*min(max(0.95, 1 - win_p_t1),
                                       (1 - win_p_t1) + draw_adjustment)
         return (p2_0, (1 - (p2_0 + p0_2)), p0_2)
+
+    def get_bo_n_win_prob(self, n, team1, team2):
+        """Computes the probability that team 1 will win a best-of-n
+        series using the binomial CDF. Intended for odd values of n but
+        even values also work -- this computes the probability that team
+        1 wins the majority of matches (e.g., both matches in a bo2).
+
+        Parameters
+        ----------
+        n : int
+            Max number of matches in the series.
+        team1 : hashable
+            Team 1 identifier (string team name or integer team ID)
+        team2 : hashable
+            Team 2 identifier (string team name or integer team ID)
+
+        Returns
+        -------
+        float
+            Win probability in the range [0, 1]
+        """
+        win_p = self.model.get_win_prob(team1, team2)
+        bo_n_win_prob = 0
+        for i in range(n//2 + 1):
+            nCi = factorial(n)/(factorial(i)*factorial(n - i))
+            bo_n_win_prob += nCi * win_p**i * (1 - win_p)**(n - i)
+        return 1 - bo_n_win_prob
 
     @classmethod
     def from_ratings_file(cls, ratings_file, k, static_ratings=False):
@@ -420,6 +448,23 @@ class DPCLeagueSampler(Sampler):
     """
 
     @staticmethod
+    def _random_schedule(teams):
+        """Randomly generates a DPC league match schedule with a 6-week
+        league duration.
+        """
+        upper_matches = [[match[0], match[1], []]
+            for match in combinations(teams["upper"], 2)]
+        lower_matches = [[match[0], match[1], []]
+            for match in combinations(teams["lower"], 2)]
+        random.shuffle(upper_matches)
+        random.shuffle(lower_matches)
+        matches = {
+            "upper": [upper_matches[i*5:(i+1)*5] for i in range(6)],
+            "lower": [lower_matches[i*5:(i+1)*5] for i in range(6)],
+        }
+        return matches
+
+    @staticmethod
     def get_sample(model, matches, teams, wildcard_slots, static_ratings):
         """Gets a single sample of DPC league placement.
 
@@ -452,6 +497,9 @@ class DPCLeagueSampler(Sampler):
         else:
             upper_div_sim = DPCLeague(model, [(0,1), (1,2), (5,6)],
                                       static_ratings)
+        if len(matches) == 0:
+            matches = DPCLeagueSampler._random_schedule(teams)
+
         points_upper, tiebreak_sizes_upper = upper_div_sim.simulate(
             teams["upper"], matches["upper"],
             matches.get("tiebreak", {}).get("upper", {}))
@@ -511,6 +559,8 @@ class DPCLeagueSampler(Sampler):
             ranks 6 and 7). Note that this is in a nested list because
             there may be multiple tiebreak matches (e.g., for a 3-way
             tie).
+            If the match dictionary is empty, matches will be generated
+            randomly.
         wildcard_slots : int, {0, 1, 2}
             Number of wildcard slots provided to the league.
         n_trials : int
@@ -593,6 +643,42 @@ class DPCMajorSampler(Sampler):
     """
 
     @staticmethod
+    def _random_schedule(teams, stage):
+        """Randomly generates a DPC major schedule"""
+        if stage == "wildcard":
+            matches = [[match[0], match[1], []]
+                       for match in combinations(teams, 2)]
+            random.shuffle(matches)
+            return [matches[:8], matches[8:]]
+        elif stage == "group stage":
+            gs_teams = teams + ["TBD/wildcard1", "TBD/wildcard2"]
+            matches = [[match[0], match[1], []]
+                       for match in combinations(gs_teams, 2)]
+            random.shuffle(matches)
+            return [matches[:8], matches[8:16], matches[16:24], matches[24:]]
+        elif stage == "playoffs":
+            playoff_seeds = teams + ["TBD/gs1", "TBD/gs2"]
+            # playoff seeding will probably be based on DPC points but
+            # nothing has been confirmed so seeds are random instead
+            random.shuffle(playoff_seeds)
+            matches = {
+                "UB-R1": [
+                  [playoff_seeds[0], playoff_seeds[7], []],
+                  [playoff_seeds[1], playoff_seeds[6], []],
+                  [playoff_seeds[2], playoff_seeds[5],[]],
+                  [playoff_seeds[3], playoff_seeds[4],[]]],
+                "UB-R2": [["", "", []], ["", "", []]], "UB-F": [["", "", []]],
+                "LB-R1": [["", "TBD/gs3", []], ["", "TBD/gs6", []],
+                          ["", "TBD/gs5", []], ["", "TBD/gs4", []]],
+                "LB-R2": [["", "", []], ["", "", []]],
+                "LB-R3": [["", "", []], ["", "", []]],
+                "LB-R4": [["", "", []]], "LB-F": [["", "", []]],
+                "GF": [["", "", []]]}
+        else:
+            raise ValueError("Invalid major stage")
+        return matches
+
+    @staticmethod
     def get_sample(model, matches, teams, static_ratings):
         """Gets a single sample of a DPC major (wildcard, group stage,
         and playoffs).
@@ -622,10 +708,15 @@ class DPCMajorSampler(Sampler):
             "4": None, "3": None, "2": None, "1": None}
 
         sim = DPCMajor(model, static_ratings)
-        points, _ = sim.sim_wildcard(teams["wildcard"], matches["wildcard"],
+        for stage in ["wildcard", "group stage", "playoffs"]:
+            if len(matches.get(stage, {})) == 0:
+                matches[stage] = DPCMajorSampler._random_schedule(teams[stage],
+                                                                  stage)
+
+        wc_points, _ = sim.sim_wildcard(teams["wildcard"], matches["wildcard"],
             matches.get("tiebreak", {}).get("wildcard", {}))
         wildcard_map = {}
-        for i, (team, score) in enumerate(points):
+        for i, (team, score) in enumerate(wc_points):
             if i < 2:
                 wildcard_map[f"TBD/wildcard{i+1}"] = team
                 teams["group stage"].append(team)
@@ -638,11 +729,11 @@ class DPCMajorSampler(Sampler):
                     if match[i] in wildcard_map:
                         match[i] = wildcard_map[match[i]]
 
-        points, _ = sim.sim_group_stage(teams["group stage"],
+        gs_points, _ = sim.sim_group_stage(teams["group stage"],
             matches["group stage"],
             matches.get("tiebreak", {}).get("group stage", {}))
         groups_map = {}
-        for i, (team, score) in enumerate(points):
+        for i, (team, score) in enumerate(gs_points):
             if i < 6:
                 groups_map[f"TBD/gs{i+1}"] = team
             else:
@@ -658,7 +749,7 @@ class DPCMajorSampler(Sampler):
         for rank, team_set in playoff_ranks.items():
             final_ranks[rank] = team_set
 
-        return final_ranks
+        return final_ranks, wc_points, gs_points
 
     def sample_major(self, teams, matches, n_samples):
         """Gets many samples of major placement and returns aggregate
@@ -682,6 +773,9 @@ class DPCMajorSampler(Sampler):
             which is optional (wildcard, group stage, playoffs,
             tiebreak). Match format depends on the stage of the
             competition.
+
+            If matches for a stage are not provided, the schedule will
+            be generated randomly.
         n_samples : int
             Number of simulations to run.
         """
@@ -691,6 +785,10 @@ class DPCMajorSampler(Sampler):
                 "13": 0, "9-12": 0, "7-8": 0,"5-6": 0, "4": 0,
                 "3": 0, "2": 0, "1": 0}
             for team in all_teams}
+        wildcard_rank_probs = {team: [0 for _ in range(6)]
+                               for team in teams["wildcard"]}
+        group_rank_probs = {team: [0 for _ in range(8)]
+                            for team in teams["group stage"]+teams["wildcard"]}
 
         remaining_trials = n_samples
         with tqdm(total=n_samples) as pbar:
@@ -703,14 +801,22 @@ class DPCMajorSampler(Sampler):
                             self.model, matches, teams, self.static_ratings))
                         for _ in range(pool_size)]
                     for sim_result in sim_results:
-                        final_ranks = sim_result.get()
+                        final_ranks, wc_points, gs_points = sim_result.get()
                         for rank, team_set in final_ranks.items():
                             for team in team_set:
                                 final_rank_probs[team][rank] += 1/n_samples
+                        for i, (team, points) in enumerate(wc_points):
+                            if team in wildcard_rank_probs:
+                                wildcard_rank_probs[team][i] += 1/n_samples
+                        for i, (team, points) in enumerate(gs_points):
+                            if team in group_rank_probs:
+                                group_rank_probs[team][i] += 1/n_samples
 
                 pbar.update(pool_size)
 
         return {
+            "wildcard_rank": wildcard_rank_probs,
+            "group_stage_rank": group_rank_probs,
             "final_rank": final_rank_probs
         }
 
@@ -726,61 +832,24 @@ class DPCSeasonSampler(Sampler):
     """
 
     @staticmethod
-    def _get_league_schedule(teams):
-        """Randomly generates a DPC league match schedule with a 6-week
-        league duration (league duration doesn't really matter, but the
-        league simulator assumes matches are split into per-week lists)
-        """
-        upper_matches = [[match[0], match[1], []]
-            for match in combinations(teams["upper"], 2)]
-        lower_matches = [[match[0], match[1], []]
-            for match in combinations(teams["lower"], 2)]
-        random.shuffle(upper_matches)
-        random.shuffle(lower_matches)
-        matches = {
-            "upper": [upper_matches[i*5:(i+1)*5] for i in range(6)],
-            "lower": [lower_matches[i*5:(i+1)*5] for i in range(6)],
-        }
-        return matches
-
-    @staticmethod
-    def _get_major_schedule(teams):
-        """Randomly generates a DPC major schedule"""
-        wildcard_matches = [[match[0], match[1], []]
-            for match in combinations(teams["wildcard"], 2)]
-        gs_matches = [[match[0], match[1], []]
-            for match in combinations(teams["group stage"]
-                                  + ["TBD/wildcard1", "TBD/wildcard2"], 2)]
-        random.shuffle(wildcard_matches)
-        random.shuffle(gs_matches)
-        # playoff seeding will probably be based on DPC points but
-        # nothing has been confirmed so seeds are random instead
-        random.shuffle(teams["playoffs"])
-        bracket = {
-            "UB-R1": [
-              [teams["playoffs"][0], "TBD/gs2", []],
-              [teams["playoffs"][1], "TBD/gs1", []],
-              [teams["playoffs"][2], teams["playoffs"][3],[]],
-              [teams["playoffs"][4], teams["playoffs"][5],[]]],
-            "UB-R2": [["", "", []], ["", "", []]], "UB-F": [["", "", []]],
-            "LB-R1": [["", "TBD/gs3", []], ["", "TBD/gs6", []],
-                      ["", "TBD/gs5", []], ["", "TBD/gs4", []]],
-            "LB-R2": [["", "", []], ["", "", []]],
-            "LB-R3": [["", "", []], ["", "", []]],
-            "LB-R4": [["", "", []]], "LB-F": [["", "", []]],
-            "GF": [["", "", []]]}
-        matches = {
-            "wildcard": [wildcard_matches[:8], wildcard_matches[8:]],
-            "group stage": [gs_matches[:8], gs_matches[8:16],
-                            gs_matches[16:24], gs_matches[24:]],
-            "playoffs": bracket
-        }
-        return matches
-
-    @staticmethod
     def get_point_allocation(season):
         """Returns the point allocation per rank for the provided
         season.
+
+        Parameters
+        ----------
+        season : {"20-21", "21-22"}
+            Which season to return point allocation for.
+
+        Returns
+        -------
+        list
+            List of (int, int, int) tuples containing the number of
+            points each league rank earns across the three tours.
+        list
+            List of (int, int, int) tuples containing the number of
+            points each major rank earns across the three tours. 5-6
+            and 7-8 are provided as a single tuple.
         """
         if season == "21-22":
             league_allocation = [
@@ -914,8 +983,7 @@ class DPCSeasonSampler(Sampler):
             # regional league simulation:
             major_teams = {"playoffs": [], "group stage": [], "wildcard": []}
             for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
-                matches = DPCSeasonSampler._get_league_schedule(teams[region])
-                points, _ = DPCLeagueSampler.get_sample(model, matches,
+                points, _ = DPCLeagueSampler.get_sample(model, {},
                     teams[region], wildcard_slots[region], static_ratings)
 
                 # major seeding
@@ -935,9 +1003,8 @@ class DPCSeasonSampler(Sampler):
                     league_results[tour][team] = i
 
             # major simulation:
-            matches = DPCSeasonSampler._get_major_schedule(major_teams)
-            major_ranks = DPCMajorSampler.get_sample(model,matches,major_teams,
-                                                     static_ratings)
+            major_ranks, _, _ = DPCMajorSampler.get_sample(model, {},
+                major_teams, static_ratings)
             for rank, team_set in major_ranks.items():
                 for team in team_set:
                     major_results[tour][team] = rank
