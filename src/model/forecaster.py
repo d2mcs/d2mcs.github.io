@@ -285,6 +285,8 @@ class PlayerModel:
         for team_i in range(2):
             team_pids = pids[team_i]
             tid = tids[team_i]
+            if tid == -1:
+                tid = random.random()
             if tid not in self.team_ratings:
                 self.team_ratings[tid] = {
                     "lan": self.get_team_rating(-1, team_pids, "lan"),
