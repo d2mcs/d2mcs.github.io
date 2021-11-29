@@ -4,7 +4,7 @@ simulator predictions.
 
 import json
 from pathlib import Path
-from datetime import date
+from datetime import date, datetime
 
 from jinja2 import Template
 
@@ -21,27 +21,32 @@ def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
     match_db = MatchDatabase("data/matches.db")
     player_ids = match_db.get_player_ids()
     id_to_region = match_db.get_id_region_map()
-    p_model = PlayerModel(player_ids, k, p, tid_region_map=id_to_region)
-    p_model.compute_ratings(match_db.get_matches(max_tier),
-        stop_after=stop_after)
+    model = PlayerModel(player_ids, k, p, 0.75, id_to_region,
+                        0.1, match_db.predict_match_setting())
+    model.compute_ratings(match_db.get_matches(max_tier),stop_after=stop_after)
 
+    regions = {}
+    tids = {}
     with open(f"data/{folder}/team_data.json") as tid_f:
-        regions = {team: data["region"]
-                   for team, data in json.load(tid_f).items()}
+        for team, data in json.load(tid_f).items():
+            regions[team] = data["region"]
+            tids[team] = data["id"]
 
     with open(f"data/{folder}/rosters.json") as roster_f:
         rosters = json.load(roster_f)
-    model = TeamModel.from_player_model(p_model, rosters, regions)
 
-    with open(f"data/{folder}/elo_ratings.json", "w") as output_f:
-        output_f.write("{\n")
-        for i, team in enumerate(rosters.keys()):
-            rating = model.get_team_rating(team)
-            if i != len(rosters) - 1:
-                output_f.write(f'  "{team}": {rating:.2f},\n')
-            else:
-                output_f.write(f'  "{team}": {rating:.2f}\n')
-        output_f.write("}\n")
+    with open(f"data/{folder}/elo_ratings_lan.json", "w") as lan_f, open(
+              f"data/{folder}/elo_ratings_online.json", "w") as online_f:
+        for output_f, setting in [(lan_f, "lan"), (online_f, "online")]:
+            output_f.write("{\n")
+            for i, team in enumerate(rosters.keys()):
+                elo_rating = model.get_team_rating(tids[team], rosters[team],
+                                                   regions[team], setting)
+                if i != len(rosters) - 1:
+                    output_f.write(f'  "{team}": {elo_rating:.2f},\n')
+                else:
+                    output_f.write(f'  "{team}": {elo_rating:.2f}\n')
+            output_f.write("}\n")
 
 def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
     """Code for generating rating estimates for each provided team
@@ -53,10 +58,14 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
 
     with open(f"data/{folder}/team_data.json") as tid_f:
         team_ids = {team: data["id"] for team,data in json.load(tid_f).items()}
+    with open(f"data/{folder}/rosters.json") as roster_f:
+        rosters = json.load(roster_f)
 
     with open(f"data/{folder}/glicko_ratings.json", "w") as output_f:
         output_f.write("{\n")
         for i, (team, tid) in enumerate(team_ids.items()):
+            if tid not in model.ratings:
+                model.initialize_team(tid, rosters[team])
             mean, rd, sigma = model.get_team_rating_tuple(tid)
             rating = f"[{mean:.2f}, {rd:.4f}, {sigma:.7f}]"
             if i != len(team_ids) - 1:
@@ -65,10 +74,13 @@ def generate_team_ratings_glicko(max_tier, tau, folder, stop_after=None):
                 output_f.write(f'  "{team}": {rating}\n')
         output_f.write("}\n")
 
-def generate_global_ratings_elo(max_tier, k, p, dpc_season, timestamp):
+def generate_global_ratings_elo(max_tier, k, p, tour, timestamp):
     """Code for generating an Elo rating for every team which competed
-    in the provided DPC season. Uses the last recorded rating for the
-    teamid of that team.
+    in the provided DPC season. Ratings will be
+    - last recorded rating of the team ID (if the team has played
+      under that ID in the last month)
+    - current rating of their roster according to the elo_ratings.json
+      file for the provided DPC season (remaining teams)
     """
     match_db = MatchDatabase("data/matches.db")
     player_ids = match_db.get_player_ids()
@@ -79,19 +91,38 @@ def generate_global_ratings_elo(max_tier, k, p, dpc_season, timestamp):
 
     team_ids = {}
     regions = {}
+    dpc_ratings = {}
     for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
-        with open(f"data/dpc/{dpc_season}/"
-                  f"{region}/team_data.json") as roster_f:
+        folder = f"data/dpc/{tour}/{region}"
+        with open(folder + "/team_data.json") as roster_f:
             for team, team_data in json.load(roster_f).items():
                 team_ids[team] = team_data["id"]
                 regions[team] = region
-    output_data = {
-        "timestamp": timestamp,
-        "ratings": [(team, regions[team],
+        with open(folder + "/elo_ratings_lan.json") as lan_rating_f:
+            for team, rating in json.load(lan_rating_f).items():
+                dpc_ratings[team] = [rating]
+        with open(folder + "/elo_ratings_online.json") as online_rating_f:
+            for team, rating in json.load(online_rating_f).items():
+                dpc_ratings[team].append(rating)
+
+    output_data = {"timestamp": timestamp, "ratings": []}
+    current_timestamp = datetime.utcnow().timestamp()
+    for team, tid in team_ids.items():
+        if tid in rating_history:
+            last_rating = rating_history[tid][-1][2]
+            if current_timestamp - last_rating < 60*60*24*30:
+                output_data["ratings"].append((team, regions[team],
                     float(f"{rating_history[tid][-1][0]:.2f}"),
-                    str(date.fromtimestamp(rating_history[tid][-1][1])))
-                    for team, tid in team_ids.items()]
-    }
+                    float(f"{rating_history[tid][-1][1]:.2f}"),
+                    str(date.fromtimestamp(last_rating))
+                ))
+            else:
+                output_data["ratings"].append((team, regions[team],
+                    *dpc_ratings[team], str(date.fromtimestamp(last_rating))
+                ))
+        else:
+            output_data["ratings"].append((team, regions[team],
+                                           *dpc_ratings[team], "-"))
 
     with open("data/global/elo_ratings.json", "w") as output_f:
         json.dump(output_data, output_f)
@@ -215,7 +246,8 @@ def predict_matches_dpc(sampler,matches,static_ratings):
                               float(f"{1 - win_prob:.4f}")]})
     if not static_ratings:
         for division in ["upper", "lower"]:
-            for match_list in matches["tiebreak"][division].values():
+            for match_list in matches.get("tiebreak",
+                                          {}).get(division, {}).values():
                 for team1, team2, result in match_list:
                     sampler.model.update_ratings(team1, team2, result)
     if len(sq_errs) > 0:
@@ -299,12 +331,13 @@ def generate_html_dpc(output_file, tabs, title, wildcard_slots):
 
     match_counts = {"upper": [5, 5, 5, 5, 5, 3], "lower": [5, 5, 5, 5, 5, 3]}
 
-    if "weu" in output_file:
-        match_counts["lower"][0] = 4
-        match_counts["lower"][5] = 4
-    if "cn" in output_file:
-        match_counts = {"upper": [3, 3, 6, 6, 6, 4],
-                        "lower": [7, 7, 4, 4, 4, 2]}
+    if "sp21" in output_file:
+        if "weu" in output_file:
+            match_counts["lower"][0] = 4
+            match_counts["lower"][5] = 4
+        if "cn" in output_file:
+            match_counts = {"upper": [3, 3, 6, 6, 6, 4],
+                            "lower": [7, 7, 4, 4, 4, 2]}
     output = template.render(tabs=tabs, title=title, match_counts=match_counts,
         wildcard_slots=wildcard_slots)
     with open(f"../{output_file}", "w") as output_f:
@@ -391,6 +424,9 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
     with open(f"data/{folder}/teams.json") as team_f:
         teams = json.load(team_f)
 
+    if len(matches) == 0:
+        matches = sampler._random_schedule(teams)
+
     probs = sampler.sample_league(teams, matches, wildcard_slots, n_samples)
     records,match_preds,_ = predict_matches_dpc(sampler,matches,static_ratings)
     ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
@@ -407,7 +443,7 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
         "ratings": ratings,
         "timestamp": timestamp,
         "n_samples": n_samples,
-        "model_version": "0.3"
+        "model_version": "0.4"
     }
     Path(f"../{folder}/data").mkdir(exist_ok=True)
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
@@ -521,13 +557,13 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
         "ratings": ratings,
         "timestamp": timestamp,
         "n_samples": n_samples,
-        "model_version": "0.3"
+        "model_version": "0.4"
     }
     Path(f"../{folder}/data").mkdir(exist_ok=True)
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
         json.dump(output_json, json_f)
 
-def generate_html_global_rankings(output_file, dpc_season):
+def generate_html_global_rankings(output_file, tour):
     """Generates a global team rating using the
     /global/elo_ratings.json data file
 
@@ -535,8 +571,8 @@ def generate_html_global_rankings(output_file, dpc_season):
     ----------
     output_file : str
         Name of output html file
-    dpc_season : str
-        DPC season used to get team list. This is used to find images,
+    tour : str
+        DPC tour used to get team list. This is used to find images,
         so it should be whatever the folder in /data/dpc is called
         (e.g., "sp21")
     """
@@ -551,23 +587,24 @@ def generate_html_global_rankings(output_file, dpc_season):
     region_ratings = {region: {"upper": 0, "lower": 0} for region in regions}
     division_map = {}
     for region in regions:
-        with open(f"data/dpc/{dpc_season}/{region}/teams.json") as team_f:
+        with open(f"data/dpc/{tour}/{region}/teams.json") as team_f:
             team_data = json.load(team_f)
         for division in ["upper", "lower"]:
             for team in team_data[division]:
                 division_map[team] = division
-    for team, region, rating, _ in team_ratings["ratings"]:
-        region_ratings[region][division_map[team]] += rating/8
+    for team, region, lan_rating, online_rating, _ in team_ratings["ratings"]:
+        region_ratings[region][division_map[team]] += lan_rating/8
 
     full_name = {
         "na": "North America", "sa": "South America", "weu": "Western Europe",
         "eeu": "Eastern Europe", "cn": "China", "sea": "Southeast Asia"
     }
-    team_data = [(team, region, round(rating), last_update)
-                 for team, region, rating, last_update in
+    team_data = [(team, region, round(lan_rating),
+                  round(online_rating), last_update)
+                 for team, region, lan_rating, online_rating, last_update in
                  sorted(team_ratings["ratings"], key=lambda x: -x[2])]
 
-    output = template.render(team_data=team_data, dpc_season=dpc_season,
+    output = template.render(team_data=team_data, tour=tour,
                              timestamp=team_ratings["timestamp"],
                              region_ratings=region_ratings,
                              full_name=full_name)
@@ -663,7 +700,7 @@ def generate_data_major(ratings_file, matches, output_file, n_samples, folder,
         "records": records,
         "timestamp": timestamp,
         "n_samples": n_samples,
-        "model_version": "0.3"
+        "model_version": "0.4"
     }
     Path(f"../{folder}/data").mkdir(exist_ok=True)
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:

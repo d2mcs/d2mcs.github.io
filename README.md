@@ -56,7 +56,7 @@ Unplayed matches are simply empty lists:
 
 `["Team A", "Team B", []]`
 
-By default, whatever ratings you are using in the `ratings.json` file will be assumed to be "correct," and will not be changed by match results. If you want team ratings to be updated based on match results rather you can use the `-s` option:
+There are multiple ratings files; the one that can be modified for user-generated forecasts is `fixed_ratings.json`. By default, whatever ratings you are using in the `fixed_ratings.json` file will be assumed to be "correct," and will not be changed by match results. If you want team ratings to be updated based on match results rather you can use the `-s` option:
 
 ```
 python generate_predictions.py -s 10000

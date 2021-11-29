@@ -29,7 +29,7 @@
   </nav>
   <div class="container mt-3 mb-3 flex-grow-1" style="max-width: 1000px">
     <h1 class="text-center">d2mcs</h1>
-    <h5 class="text-center">Elo Forecaster Version 0.3</h5>
+    <h5 class="text-center">Elo Forecaster Version 0.4</h5>
     <hr>
     <h2>Forecasting Model</h2>
     <p>
@@ -38,18 +38,18 @@
 
     <h4>Player-based ratings</h4>
     <p>
-    Ratings are player-based rather than team-based. Win probabilities and rating adjustments are still calculated using team ratings, where a team's rating is equal to the average of that team's player ratings. This helps deal with some of the issues traditional Elo models run into with Dota 2 (frequent substitutes, organization/team ID changes, roster instability, etc.). The team rating adjustment after each match is distributed unequally among players such that each player's rating drifts towards the team rating -- thus, if a team maintains a consistent roster for a long period of time its players will eventually end up with identical ratings. This is accomplished by calculating each player's share of a rating adjustment as
+    Ratings are predominately player-based rather than team-based. Win probabilities and rating adjustments are still calculated using team ratings, where a team's rating is equal to the average of that team's player ratings. This helps deal with some of the issues traditional Elo models run into with Dota 2 (frequent substitutes, organization/team ID changes, roster instability, etc.). The team rating adjustment after each match is distributed unequally among players such that each player's rating drifts towards the team rating -- thus, if a team maintains a consistent roster for a long period of time its players will eventually end up with identical ratings. This is accomplished by calculating each player's share of a rating adjustment as
     $$f(p_{i})=\frac{r_{i}}{\sum_{j}r_{j}}$$
     if the team loses and
     $$f(p_{i})=\frac{1/r_{i}}{\sum_{j}1/r_{j}}$$
-    if the team wins, where \(r_i\) is player i's rating and \(f(p_i)\) is player i's share of the team's rating adjustment. Note that player ratings shouldn't be interpreted as individual player skill, because the model can't measure skill gap within a team. The main advantage is that this system is able to handle roster signings and major roster changes much better than a model which only assigns ratings to team IDs. It is also able to make a decent estimate of a newly-formed team's initial rating.
+    if the team wins, where \(r_i\) is player i's rating and \(f(p_i)\) is player i's share of the team's rating adjustment. Note that player ratings shouldn't be interpreted as individual player skill, because the model can't measure skill gap within a team. The main advantage is that this system is able to handle roster signings and major roster changes much better than a model which only assigns ratings to team IDs. It is also able to make a decent estimate of a newly-formed team's initial rating.<br><br>
+
+    Since model version 0.4, final ratings use a combination of player ratings and team ID ratings. New team IDs are given an initial rating equal to the team's player rating, then updated alongside the player ratings. The longer the team ID remains in use, the more it contributes to the combined rating (starting at 0% for 0 matches played and rising linearly to 33% at 100 matches played). The team  ID rating never makes up more than 33% of the combined rating. This reduces the rating drop which occurs when established teams add up-and-coming players while still relying primarily on player ratings.
     </p>
 
     <h4>Series-based rating updates</h4>
     <p>
     Ratings are updated based on series results rather than individual game results. As with a typical Elo system the rating update formula is \(r_{new} = r_{old} + k(score_{actual} - score_{expected})\). The number of matches a team is expected to win in a series is simply \(match\_count \times win\_probability\)<sup>*</sup>, so \(score_{actual}\) is the percentage of matches the team won (e.g. 66.67% for a 2-1) and \(score_{expected}\) is their win probability.<br><br>
-
-    I suspect that these numbers should probably be adjusted based on the type of match (bo1, bo2, bo3, etc.), but as far as I can tell the Steam Web API doesn't differentiate between a bo2 and a bo3. This means that it is impossible to tell whether a 2-0 series is a bo2 or a bo3. Heuristics could probably be used to make a reasonable guess (most tournaments will not have bo2s and bo3s on the same match day), but for now the model does not use this information.<br><br>
 
     <sup>*</sup>As with a typical Elo system the win probability of team 1 is calculated as
     $$\frac{1}{1+10^{(r_{2}-r_{1})/400}}$$
@@ -65,21 +65,34 @@
       Keeping the region share small means it will have a fairly small effect on teams which frequently play international matches. The main purpose is to improve ratings for teams which don't frequently play at LAN events.
     </p>
 
-    <h4>K adjustments</h4>
+    <h4>Online/LAN Rating Split</h4>
     <p>
-    The current model uses a dynamic k-factor based on team quality and Liquipedia tier:
+      Starting from model version 0.4, players have two ratings: a LAN rating and and online rating. I don't have ground truth match setting data, so matches are determined to be LAN/online based on the following rule: for every three-day window of matches played on a single league ticket, there must be teams representing at least 4 unique DPC regions for the matches to be considered LAN. Otherwise the matches will be considered online. To prevent qualifiers played within the same window from being marked as LAN matches, matches between teams of the same region are discarded. LAN events aren't always international and not all international events are played on LAN but without ground-truth data this seems to be the best option available.<br><br>
 
-    <ul>
-      <li>Team quality: similar to chess, the k factor is decreased for higher rated teams. Specifically, the actual k factor scales linearly from 150% of the base k factor for teams with a rating less than or equal to 1000 to 50% of the base k factor for teams with a rating greater than or equal to 2000. The base rating is 1500.</li>
-      <li>League quality: because the model was designed to make predictions for high-profile tournaments, it places greater weight on results at high-profile tournaments. Specifically, the k factor decays relative to the tier of the tournament by a factor of \(t^{-.75}\), where t is the Liquipedia tier of the tournament.</li>
-    </ul>
+      Splitting ratings in this way improves predictions for the 2021 DPC season, but makes predictions worse for prior years. Because the current DPC system has only been in place for one year, it remains unclear whether splitting LAN/online ratings is better because there are fewer international events now or because the 2021 season was simply an outlier. Because of this, the ratings are currently fairly closely tied:
 
-    Intuitively these two adjustments mean that the model is least sensitive to results from high-rated teams in low-quality tournaments and most sensitive to results from low-rated teams in high-quality tournaments.
+      <ul>
+        <li>For online matches, LAN ratings are updated at a rate of 80%. Online ratings are updated at a rate of 100%</li>
+        <li>For LAN matches, both online and LAN ratings are updated at a rate of 100%.</li>
+      </ul>
+
+      In other words, a team's LAN rating tends to drag behind their online rating if they haven't played many LAN matches or underperform on LAN but otherwise the two ratings are identical.
+
+    </p>
+
+    <h4>Miscellaneous Adjustments</h4>
+    <p>
+    Because the model was designed to make predictions for high-profile tournaments, it places greater weight on results at high-profile tournaments. Specifically, the k factor decays relative to the tier of the tournament by a factor of \(t^{-.75}\), where t is the Liquipedia tier of the tournament. Only events with a Liquipedia tier of 1 - 3 are used to compute team ratings.<br><br>
+
+    To account for the uncertainty following the post-TI roster shuffle, all ratings are decayed towards 1500 by 80% after each TI. The prediction improvement from this adjustment is not consistent but it is particularly helpful for years with large reshuffles. This has the added benefit of slowly reducing the rating of players who have been inactive for large periods of time.<br><br>
+
+    Predicting lower division leagues is difficult because many of the players are entirely unknown. One issue this causes is that open qualifier teams tend to be overrated by the model simply because the only matches many of their players have appeared in were the ones in the open qualifier (which, of course, they won). To deal with this, starting with model version 0.4 players are started at a rating of 1400 (rather than the intended average of 1500) and receive a fixed rating adjutment of +5 after each their first 20 matches. This is a fairly simplistic solution but seems to do a decent job of improving lower division prediction. Prior to model version 0.4, ratings were also updated more slowly for higher rated teams, but after all the other minor changes the prediction gain from this adjustment was no longer significant.
+
     </p>
 
     <h4>Evaluation</h4>
     <p>
-    Elo predictions use a base k parameter of 55. A typical tier 1 team has a rating of around 1850, so a typical tier 1 match will result in an adjusted k of ~36. I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), then computed evaluation metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
+    Elo predictions use a base k parameter of 35. I tuned these parameters using all matches up to January 1st, 2017 (the earliest match in my database took place on Feb 1st, 2013), then computed evaluation metrics over all tier 1 matches from then until January 1st, 2021. Note that qualifiers are frequently played on the same league ticket as the main event so this includes a lot of open qualifier matches. A plot comparing estimated win probability with actual win probability is shown below:
 
     <img class="mx-auto d-block pt-2" src="../image/model_calibration.png" style="max-width: 700px" alt="Plot comparing estimated win probability to actual win probability for tier 1 matches">
 
@@ -99,7 +112,8 @@
 
     <h2>Changelog</h2>
     <ul>
-      <li><b>0.3</b> (2021-11-02): results from tournaments with a Liquipedia tier of 3 are no longer used. Teams that appear in 10 or fewer total matches are now ignored for rating updates (this is mostly useful for preventing teams from gaining an inflated rating through open qualifiers).
+      <li><b>0.4</b> (2021-11-28): split ratings into LAN/online, added partial contribution from team ID rating. Removed k reduction for higher rated teams and added rating warmup and post-TI rating decay. Restored tier 3 tournaments and decreased k from 55 to 35.
+      <li><b>0.3</b> (2021-11-02): results from tournaments with a Liquipedia tier of 3 are no longer used. Teams that appear in 10 or fewer total matches are now ignored for rating updates.
       <li><b>0.2</b> (2021-10-31): added region ratings.
       <li><b>0.1</b> (2021-10-24): models are now versioned.
     </ul>

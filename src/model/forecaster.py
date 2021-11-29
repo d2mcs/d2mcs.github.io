@@ -3,6 +3,7 @@ and win probabilities.
 """
 
 import random
+from datetime import datetime
 
 class PlayerModel:
     """Modified Elo model. Unlike typical Elo models, ratings are
@@ -55,17 +56,36 @@ class PlayerModel:
         If region data is used, this controls the percentage of each
         rating update after an international match which is used to
         update the region rather than the team.
+    match_to_setting : dict, default=None
+        If provided, should map match IDs (int) to one of {"online",
+        "lan"} indicating the setting the match was played on.
+        Note that, while it's not explicitly required by the code, the
+        model was designed with the assumption that
+
+            "online" --> domestic competition
+            "lan" --> international competition
+
+        So local competitions played on LAN are better categorized as
+        "online" for the purpose of rating calculation (the method in
+        match_data.py guesses LAN/online based on regional information
+        so this happens automatically).
+
+        If no dict is provided, all matches will be assumed to have been
+        played online.
     """
     def __init__(self, players, k, p, league_p=0.75,
-                 tid_region_map=None, region_share=0.1):
+                 tid_region_map=None, region_share=0.1,
+                 match_to_setting=None):
         self.region_ratings = {"NA": 0, "SA": 0, "WEU": 0,
                                "EEU": 0, "CN": 0, "SEA": 0}
-        self.ratings = self._initialize_ratings(players)
+        self.ratings, self.match_counts = self._initialize_ratings(players)
+        self.team_ratings = {}
         self.k = k
         self.p = p
         self.league_p = league_p
         self.tid_to_region = tid_region_map
         self.region_share = region_share
+        self.match_to_setting = match_to_setting
 
     def _region_rating(self, region):
         """Private accessor function for region_ratings. This makes it
@@ -80,12 +100,15 @@ class PlayerModel:
 
     def _initialize_ratings(self, player_ids):
         """Private method for giving players an initial rating"""
-        ratings = {}
+        ratings = {"lan": {}, "online": {}}
+        match_counts = {}
         for player_id in player_ids:
-            ratings[player_id] = 1500
-        return ratings
+            ratings["lan"][player_id] = 1400
+            ratings["online"][player_id] = 1400
+            match_counts[player_id] = 0
+        return ratings, match_counts
 
-    def _get_modifier_distribution(self, team, win):
+    def _get_modifier_distribution(self, team, win, setting="online"):
         """Private method for computing how the rating update should be
         distributed among players. When a team loses, each player's
         share of the rating loss is computed as:
@@ -105,9 +128,11 @@ class PlayerModel:
         Parameters
         ----------
         team: list of int
-            list of player IDs for the team
+            list of player IDs for the team.
         win: bool
-            True if the team won, False otherwise
+            True if the team won, False otherwise.
+        setting : {"lan", "online"}
+            Which setting the match was played on.
 
         Returns
         -------
@@ -116,21 +141,26 @@ class PlayerModel:
             rating update. Should always sum to 1.
         """
         if win:
-            inverse_sum = sum([pow(1/self.ratings[pid], self.p)
+            inverse_sum = sum([pow(1/self.ratings[setting][pid], self.p)
                                for pid in team])
-            player_mod = [pow(1/self.ratings[pid],self.p)/inverse_sum
+            player_mod = [pow(1/self.ratings[setting][pid],self.p)/inverse_sum
                           for pid in team]
         else:
-            rating_sum = sum([pow(self.ratings[id], self.p) for id in team])
-            player_mod=[pow(self.ratings[id],self.p)/rating_sum for id in team]
+            rating_sum = sum([pow(self.ratings[setting][pid], self.p)
+                              for pid in team])
+            player_mod = [pow(self.ratings[setting][pid],self.p)/rating_sum
+                          for pid in team]
 
         return player_mod
 
-    def get_team_rating(self, player_ids, region="UNK"):
+    def get_team_rating(self, team_id, player_ids,
+                        region="UNK", setting="online"):
         """Computes the team rating given a list of player IDs.
 
         Parameters
         ----------
+        team_id : int
+            Team ID.
         player_ids : list of int
             List of player IDs to compute a rating for. Throws an error
             if the list length isn't 5 rather than just computing the
@@ -138,6 +168,8 @@ class PlayerModel:
         region : str, default=None
             If provided, the region's modifier will be applied to the
             team's rating.
+        setting : {"lan", "online"}
+            Which setting the match was played on.
 
         Returns
         -------
@@ -146,23 +178,35 @@ class PlayerModel:
         """
         if len(player_ids) != 5:
             raise ValueError("Teams must have 5 players")
-        team_rating = sum([self.ratings[id] for id in player_ids])/5
+        player_rating = sum([self.ratings[setting].get(id, 1400)
+                             for id in player_ids])/5
+        if team_id in self.team_ratings:
+            # team share is currently not used
+            team_share = min(1, self.team_ratings[team_id]["matches"]/100)/3
+            team_rating = self.team_ratings[team_id][setting]
+        else:
+            team_share = 0
+            team_rating = 1500
+        combined_rating = (player_rating*(1 - team_share)
+                           + team_rating*team_share)
         if region is not None:
-            team_rating += self._region_rating(region.upper())
-        return team_rating
+            combined_rating += self._region_rating(region.upper())
+        return combined_rating
 
-    def get_win_prob(self, team1, team2, regions=None):
+    def get_win_prob(self, tids, pids, regions=None, setting="online"):
         """Computes the win probability for a single match.
 
         Parameters
         ----------
-        team1 : list of int
-            list of player IDs for team 1.
-        team2 : list of int
-            list of player IDs for team 2.
+        tids : (int, int)
+            Team IDs.
+        pids : (list of int, list of int)
+            list of player IDs for each team.
         regions : tuple of (str, str), default=None
             If provided, win probabilities will use the teams' regional
             modifiers.
+        setting : {"lan", "online"}
+            Which setting the match was played on.
 
         Returns
         -------
@@ -170,25 +214,27 @@ class PlayerModel:
             Probability (in the range [0, 1]) of team 1 winning.
         """
         if regions is None:
-            rating_t1 = self.get_team_rating(team1)
-            rating_t2 = self.get_team_rating(team2)
+            rating_t1 = self.get_team_rating(tids[0], pids[0], setting=setting)
+            rating_t2 = self.get_team_rating(tids[1], pids[1], setting=setting)
         else:
-            rating_t1 = self.get_team_rating(team1, regions[0])
-            rating_t2 = self.get_team_rating(team2, regions[1])
-        win_p_t1 = 1/(1 + pow(10, (rating_t2 - rating_t1)/400))
-        return win_p_t1
+            rating_t1 = self.get_team_rating(tids[0], pids[0],
+                                             regions[0], setting)
+            rating_t2 = self.get_team_rating(tids[1], pids[1],
+                                             regions[1], setting)
+        win_prob_t1 = 1/(1 + pow(10, (rating_t2 - rating_t1)/400))
+        return win_prob_t1
 
-    def update_ratings(self, team1, team2, score, league_tier=None,
-            regions=None):
+    def update_ratings(self, tids, pids, score, league_tier=None,
+                       regions=None, setting="online"):
         """Updates model ratings given two teams and the results of a
         series between those teams.
 
         Parameters
         ----------
-        team1 : list of int
-            list of player IDs for team 1.
-        team2 : list of int
-            list of player IDs for team 2.
+        tids : (int, int)
+            Team IDs.
+        pids : (list of int, list of int)
+            list of player IDs for each team.
         score : tuple of (int, int)
             tuple containing number of team 1 wins and team 2 wins
         league_tier : int [1 - 7]
@@ -197,45 +243,73 @@ class PlayerModel:
         regions : tuple of (str, str), default=None
             If provided, win probabilities will use the teams' regional
             modifiers.
+        setting : {"lan", "online"}
+            Which setting the match was played on.
         """
-        if regions is None:
-            team1_rating = self.get_team_rating(team1)
-            team2_rating = self.get_team_rating(team2)
-        else:
-            team1_rating = self.get_team_rating(team1, regions[0])
-            team2_rating = self.get_team_rating(team2, regions[1])
-        quality_mod1 = 1.5 - min(1, max(0, (team1_rating - 1000)/1000))
-        quality_mod2 = 1.5 - min(1, max(0, (team2_rating - 1000)/1000))
+        team_ratings = []
+
+        for i in range(2):
+            if regions is None:
+                rating = self.get_team_rating(tids[i],pids[i], setting=setting)
+            else:
+                rating = self.get_team_rating(tids[i], pids[i],
+                                              regions[i], setting)
+            team_ratings.append(rating)
+
         if league_tier is not None:
             league_mod = pow(league_tier, -self.league_p)
         else:
             league_mod = 1
 
-        expected_score = self.get_win_prob(team1, team2, regions)
+        expected_score = self.get_win_prob(tids, pids, regions, setting)
         actual_score = score[0]/sum(score)
         adjustment = league_mod*self.k*(actual_score - expected_score)
 
-        delta_t1 = adjustment*quality_mod1
-        delta_t2 = -adjustment*quality_mod2
+        deltas = [adjustment, -adjustment]
         if regions is not None and regions[0] != regions[1]:
-            if regions[0] != "UNK":
-                self.region_ratings[regions[0]] += delta_t1*self.region_share
-                delta_t1 = delta_t1*(1 - self.region_share)
-            if regions[1] != "UNK":
-                self.region_ratings[regions[1]] += delta_t2*self.region_share
-                delta_t2 = delta_t2*(1 - self.region_share)
+            for i in range(2):
+                if regions[i] != "UNK":
+                    self.region_ratings[regions[i]] += (
+                        deltas[i]*self.region_share)
+                    deltas[i] = deltas[i]*(1 - self.region_share)
 
-        player_dist1 = self._get_modifier_distribution(team1,
-            actual_score > expected_score)
-        player_dist2 = self._get_modifier_distribution(team2,
-            actual_score < expected_score)
-        for i in range(5):
-            self.ratings[team1[i]] += delta_t1*5*player_dist1[i]
-            self.ratings[team2[i]] += delta_t2*5*player_dist2[i]
+        player_dists = [self._get_modifier_distribution(pids[0],
+                            actual_score > expected_score, setting),
+                        self._get_modifier_distribution(pids[1],
+                            actual_score < expected_score, setting)]
+
+        if setting == "lan":
+            update_share = {"lan": 1, "online": 1}
+        else:
+            update_share = {"lan": 0.8, "online": 1}
+        for team_i in range(2):
+            team_pids = pids[team_i]
+            tid = tids[team_i]
+            if tid not in self.team_ratings:
+                self.team_ratings[tid] = {
+                    "lan": self.get_team_rating(-1, team_pids, "lan"),
+                    "online": self.get_team_rating(-1, team_pids, "online"),
+                    "matches": 1
+                }
+            else:
+                self.team_ratings[tid]["matches"] += 1
+
+            for rating_setting in ["online", "lan"]:
+                self.team_ratings[tid][rating_setting] += (
+                    update_share[rating_setting]*deltas[team_i])
+                for i in range(5):
+                    self.ratings[rating_setting][team_pids[i]] += (
+                        update_share[rating_setting]*deltas[team_i]
+                        *5*player_dists[team_i][i])
+
+                    if self.match_counts[team_pids[i]] < 20:
+                        self.ratings[rating_setting][team_pids[i]] += 5
+                    self.match_counts[team_pids[i]] += 1
 
     def _get_series(self, matches, stop_after=None):
         """Private helper method for compute_ratings which collects all
-        series in the order they occured.
+        series in the order they occured. Ignores series with team IDs
+        that appear in fewer than 10 matches.
         """
         series = {}
         tid_counts = {}
@@ -247,38 +321,44 @@ class PlayerModel:
                 # series IDs are occasionally reused for reasons I
                 # don't entirely understand.
                 while (series_id in series and (
-                        match.radiant_id not in series[series_id]
-                        or match.dire_id not in series[series_id])):
+                        match.radiant_id not in series[series_id]["score"]
+                        or match.dire_id not in series[series_id]["score"])):
                     series_id += .1
 
             if series_id in series:
                 radiant_win = match.radiant_win
-                series[series_id][match.radiant_id]["score"] += radiant_win
-                series[series_id][match.dire_id]["score"] += 1 - radiant_win
+                series[series_id]["score"][match.radiant_id] += radiant_win
+                series[series_id]["score"][match.dire_id] += 1 - radiant_win
+                series[series_id]["match_ids"].append(match.match_id)
             else:
                 if series_id == 0:
                     series_id = random.random()
                 if match.radiant_id == match.dire_id:
                     continue
                 series[series_id] = {
-                    match.radiant_id: {
-                        "score": match.radiant_win, "players": match.radiant},
-                    match.dire_id: {
-                        "score": 1 - match.radiant_win, "players": match.dire},
+                    "score" : {
+                        match.radiant_id: match.radiant_win,
+                        match.dire_id: 1 - match.radiant_win
+                    },
+                    "players": {
+                        match.radiant_id: match.radiant,
+                        match.dire_id: match.dire
+                    },
                     "timestamp": match.timestamp,
-                    "league_tier": match.league_tier
+                    "league_tier": match.league_tier,
+                    "match_ids": [match.match_id]
                 }
             tid_counts[match.radiant_id] = tid_counts.get(match.radiant_id,0)+1
             tid_counts[match.dire_id] = tid_counts.get(match.dire_id,0)+1
         ordered_series = []
         for series in sorted(series.values(), key=lambda x: x['timestamp']):
-            teams = [k for k in series.keys() if isinstance(k, (int, float))]
+            teams = list(series["score"].keys())
             if tid_counts[teams[0]] < 10 or tid_counts[teams[1]] < 10:
                 continue
-            players = [series[t]["players"] for t in teams]
-            score = (series[teams[0]]["score"], series[teams[1]]["score"])
-            ordered_series.append((teams, players, score,
-                series["league_tier"], series["timestamp"]))
+            players = [series["players"][t] for t in teams]
+            score = [series["score"][t] for t in teams]
+            ordered_series.append((teams, players, score,series["league_tier"],
+                                   series["timestamp"], series["match_ids"]))
         return ordered_series
 
     def _get_regions(self, team1_id, team2_id):
@@ -296,6 +376,123 @@ class PlayerModel:
             region2 = region1
             self.tid_to_region[team2_id] = region1
         return region1, region2
+
+    def _compute_ratings_general(self, matches, track_history=False,
+            evaluation_mode=False, start_at=None, stop_after=None,
+            bins=None, max_tier=3, min_appearances=0):
+        """Private general-purpose function for computing ratings which
+        allows for both tracking history and computing evaluation
+        metrics. This allows the normal compute_ratings and
+        compute_ratings_evaluation_mode to share code without polluting
+        their parameters/return values.
+        """
+        team_ratings = {}
+        if track_history and self.tid_to_region is not None:
+            for region in self.region_ratings:
+                team_ratings["REGION/" + region] = []
+        if evaluation_mode:
+            count_bins = [[0, 0] for _ in range(bins)]
+            model_sse = 0
+            baseline_sse = 0
+            match_count = 0
+            predictions = {"correct": 0, "total": 0}
+            appearances = {}
+
+        # Ratings decay back towards 1500 by 80% after every TI
+        decay_points = [datetime.fromisoformat(ti_date).timestamp()
+                        for ti_date in [
+            "2013-08-14","2014-07-24","2015-08-11","2016-08-16",
+            "2017-08-15","2018-08-28","2019-08-28","2021-10-20","2022-12-31"
+        ]]
+
+        series_list = self._get_series(matches, stop_after)
+        for series in series_list:
+            (team_ids, team_players, score, league_tier, timestamp,
+                match_ids) = series
+            if self.match_to_setting is not None:
+                setting = self.match_to_setting.get(match_ids[0], "online")
+            else:
+                setting = "online"
+
+            if self.tid_to_region is not None:
+                regions = self._get_regions(*team_ids)
+            else:
+                regions = None
+
+            if timestamp > decay_points[0]:
+                for setting in ["lan", "online"]:
+                    for pid, rating in self.ratings[setting].items():
+                        if self.match_counts[pid] < 20:
+                            continue
+                        self.ratings[setting][pid] = 1500 + (rating - 1500)*0.8
+                for tid, rating_dict in self.team_ratings.items():
+                    for setting in ["lan", "online"]:
+                        rating = rating_dict[setting]
+                        self.team_ratings[tid][setting] = (1500
+                                                         + (rating - 1500)*0.8)
+                decay_points.pop(0)
+
+            if evaluation_mode:
+                for tid in team_ids:
+                    appearances[tid] = appearances.get(tid, 0) + 1
+                if timestamp > start_at and league_tier <= max_tier:
+                    if (appearances[team_ids[0]] > min_appearances
+                          and appearances[team_ids[1]] > min_appearances):
+                        win_prob_t1 = self.get_win_prob(team_ids,
+                                                        team_players, regions)
+                        actual_score = score[0]/sum(score)
+                        if actual_score != 0.5:
+                            predictions["total"] += 1
+                            if actual_score < 0.5:
+                                if win_prob_t1 < 0.5:
+                                    predictions["correct"] += 1
+                            elif actual_score > 0.5:
+                                if win_prob_t1 > 0.5:
+                                    predictions["correct"] += 1
+
+                        count_bins[int(win_prob_t1*bins)][0] += actual_score
+                        count_bins[int(win_prob_t1*bins)][1] += 1
+
+                        model_sse += pow(actual_score - win_prob_t1, 2)
+                        baseline_sse += pow(actual_score - 0.5, 2)
+                        match_count += 1
+
+            self.update_ratings(team_ids, team_players, score, league_tier,
+                                regions, setting)
+
+            if track_history:
+                for team_i in range(2):
+                    tid = team_ids[team_i]
+                    if tid not in team_ratings:
+                        team_ratings[tid] = []
+
+                    if regions is not None:
+                        region = regions[team_i]
+                    else:
+                        region = None
+                    players = team_players[team_i]
+                    team_ratings[tid].append((
+                        self.get_team_rating(tid, players, region, "lan"),
+                        self.get_team_rating(tid, players, region, "online"),
+                        timestamp))
+                if self.tid_to_region is not None:
+                    for region, rating in self.region_ratings.items():
+                        team_ratings["REGION/" + region].append(
+                            (rating, timestamp))
+
+        if evaluation_mode:
+            prob_bins = []
+            for event_count, total_count in count_bins:
+                if total_count > 0:
+                    prob_bins.append((event_count/total_count, total_count))
+                else:
+                    prob_bins.append((0, 0))
+
+            brier_skill_score = 1-(model_sse/match_count)/(baseline_sse/match_count)
+            return (prob_bins, brier_skill_score,
+                    predictions["correct"]/predictions["total"])
+        else:
+            return team_ratings
 
     def compute_ratings(self, matches, track_history=False, stop_after=None):
         """Updates model ratings given an iterable containing match
@@ -322,44 +519,9 @@ class PlayerModel:
             timestamp, in seconds). If track_history=False, an empty
             dictionary is returned instead.
         """
-        team_ratings = {}
-        if self.tid_to_region is not None:
-            for region in self.region_ratings:
-                team_ratings["REGION/" + region] = []
-
-        series_list = self._get_series(matches, stop_after)
-        for series in series_list:
-            team1_id, team2_id = series[0]
-            team1_players, team2_players = series[1]
-            score = series[2]
-            league_tier = series[3]
-            timestamp = series[4]
-
-            if self.tid_to_region is not None:
-                regions = self._get_regions(team1_id, team2_id)
-            else:
-                regions = None
-            self.update_ratings(team1_players, team2_players,
-                                score, league_tier, regions)
-
-            if track_history:
-                if team1_id not in team_ratings:
-                    team_ratings[team1_id] = []
-                if team2_id not in team_ratings:
-                    team_ratings[team2_id] = []
-                team_ratings[team1_id].append((self.get_team_rating(
-                    team1_players, regions[0] if self.tid_to_region is not None
-                                   else None), timestamp))
-                team_ratings[team2_id].append((self.get_team_rating(
-                    team2_players, regions[1] if self.tid_to_region is not None
-                                   else None), timestamp))
-                if self.tid_to_region is not None:
-                    for region, rating in self.region_ratings.items():
-                        team_ratings["REGION/" + region].append(
-                            (rating, timestamp))
-
-
-        return team_ratings
+        return self._compute_ratings_general(matches, track_history,
+                                             evaluation_mode=False,
+                                             stop_after=stop_after)
 
     def compute_ratings_evaluation_mode(self, matches, bins=20, start_at=0,
             stop_after=2147483647, max_tier=3, min_appearances=0):
@@ -396,58 +558,13 @@ class PlayerModel:
             that outcome and the number of matches the probability was
             computed over.
         float
-            Mean squared error over all matches
+            Brier skill score over all matches
+        float
+            Model accuracy (probability of a team winning given a win
+            probability >50%)
         """
-        count_bins = [[0, 0] for _ in range(bins)]
-        model_sse = 0
-        baseline_sse = 0
-        match_count = 0
-        series_list = self._get_series(matches, stop_after)
-
-        appearances = {}
-        for series in series_list:
-            team1_id, team2_id = series[0]
-            team1_players, team2_players = series[1]
-            score = series[2]
-            league_tier = series[3]
-            timestamp = series[4]
-
-            for tid in (team1_id, team2_id):
-                appearances[tid] = appearances.get(tid, 0) + 1
-
-            if self.tid_to_region is not None:
-                regions = self._get_regions(team1_id, team2_id)
-            else:
-                regions = None
-
-            if timestamp > stop_after:
-                break
-            if timestamp > start_at and league_tier <= max_tier:
-                if (appearances[team1_id] > min_appearances
-                      and appearances[team2_id] > min_appearances):
-                    win_p_t1 = self.get_win_prob(team1_players, team2_players,
-                        regions if self.tid_to_region is not None else None)
-                    actual_score = score[0]/sum(score)
-
-                    count_bins[int(win_p_t1*bins)][0] += actual_score
-                    count_bins[int(win_p_t1*bins)][1] += 1
-
-                    model_sse += pow(actual_score - win_p_t1, 2)
-                    baseline_sse += pow(actual_score - 0.5, 2)
-                    match_count += 1
-
-            self.update_ratings(team1_players, team2_players,
-                                score, league_tier, regions)
-
-        prob_bins = []
-        for event_count, total_count in count_bins:
-            if total_count > 0:
-                prob_bins.append((event_count/total_count, total_count))
-            else:
-                prob_bins.append((0, 0))
-
-        skill_score = 1 - (model_sse/match_count)/(baseline_sse/match_count)
-        return prob_bins, skill_score
+        return self._compute_ratings_general(matches, False, True, start_at,
+            stop_after, bins, max_tier, min_appearances)
 
 class TeamModel:
     """Team-based Elo model. There is not currently any code for
@@ -552,12 +669,10 @@ class TeamModel:
         """
         team1_rating = self.get_team_rating(team1)
         team2_rating = self.get_team_rating(team2)
-        quality_mod1 = 1.5 - min(1, max(0, (team1_rating - 1000)/1000))
-        quality_mod2 = 1.5 - min(1, max(0, (team2_rating - 1000)/1000))
 
         expected_score = self.get_win_prob(team1, team2)
         actual_score = score[0]/sum(score)
         adjustment_t1 = self.k*(actual_score - expected_score)
 
-        self.ratings[team1] += adjustment_t1*quality_mod1
-        self.ratings[team2] -= adjustment_t1*quality_mod2
+        self.ratings[team1] += adjustment_t1
+        self.ratings[team2] -= adjustment_t1

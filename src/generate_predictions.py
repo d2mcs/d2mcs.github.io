@@ -70,13 +70,13 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                 ["Oct. 7 (Group Stage Day 1)", "-1"],
                 ["Oct. 6 (Pre-tournament)", "-pre"]]
         if train_elo:
-            generate_team_ratings_elo(2, k, 1.5, "ti/10")
+            generate_team_ratings_elo(3, k, 1.5, "ti/10")
 
         with open("data/ti/10/matches.json") as match_f:
             matches = json.load(match_f)
         generate_html_ti("ti/10/forecast.html", tabs, "The International 10")
         if not html_only:
-            generate_data_ti("data/ti/10/elo_ratings.json", matches,
+            generate_data_ti("data/ti/10/elo_ratings_lan.json", matches,
                 "elo", n_samples, "ti/10", k, timestamp,
                 bracket_file="data/ti/10/main_event_matches.json")
             generate_data_ti("data/ti/10/fixed_ratings.json", matches,
@@ -84,11 +84,17 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                 static_ratings=True,
                 bracket_file="data/ti/10/main_event_matches.json")
     else:
-        tabs = [["May 23 (Current)", ""],
-                ["May 21 (Week 6)", "-6"], ["May 16 (Week 5)", "-5"],
-                ["May 9 (Week 4)", "-4"], ["May 2 (Week 3)", "-3"],
-                ["Apr. 25 (Week 2)", "-2"], ["Apr. 18 (Week 1)", "-1"],
-                ["Apr. 11 (Pre-tournament)", "-pre"]]
+        tour = event.split("-")[-1]
+        if tour == "sp21":
+            tabs = [["May 23 (Current)", ""],
+                    ["May 21 (Week 6)", "-6"], ["May 16 (Week 5)", "-5"],
+                    ["May 9 (Week 4)", "-4"], ["May 2 (Week 3)", "-3"],
+                    ["Apr. 25 (Week 2)", "-2"], ["Apr. 18 (Week 1)", "-1"],
+                    ["Apr. 11 (Pre-tournament)", "-pre"]]
+            tour_name = "Spring"
+        else:
+            tabs = [["Current", ""]]
+            tour_name = "Winter"
         full_name = {
             "na": "North America", "sa": "South America",
             "weu": "Western Europe", "eeu": "Eastern Europe",
@@ -98,13 +104,24 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                           "weu": 2, "na": 0, "sa": 0}
         for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
             if train_elo:
-                generate_team_ratings_elo(2, k, 1.5, "dpc/sp21/" + region)
-            generate_data_dpc(f"data/dpc/sp21/{region}/elo_ratings.json",
-                              matches, "elo", n_samples,
-                              f"dpc/sp21/{region}", k, wildcard_slots[region],
-                              timestamp=timestamp, static_ratings=False)
-            generate_html_dpc(f"dpc/sp21/{region}/forecast.html", tabs,
-                "DPC Fall 2021: " + full_name[region], wildcard_slots[region])
+                generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/{region}")
+            generate_html_dpc(f"dpc/{tour}/{region}/forecast.html", tabs,
+                              f"DPC {tour_name} 2021: {full_name[region]}",
+                              wildcard_slots[region])
+            if html_only:
+                return
+
+            with open( f"data/dpc/{tour}/{region}/matches.json") as match_f:
+                matches = json.load(match_f)
+            generate_data_dpc(
+                f"data/dpc/{tour}/{region}/elo_ratings_online.json",
+                 matches, "elo", n_samples, f"dpc/{tour}/{region}", k,
+                 wildcard_slots[region], timestamp=timestamp,
+                 static_ratings=False)
+            generate_data_dpc(f"data/dpc/{tour}/{region}/fixed_ratings.json",
+                              matches, "fixed", n_samples,
+                              f"dpc/{tour}/{region}", k,wildcard_slots[region],
+                              timestamp=timestamp, static_ratings=True)
 
 def custom_report(event, region, k, n_samples, timestamp, static_ratings):
     """Generates a custom forecast with user-modified Elo ratings."""
@@ -119,16 +136,17 @@ def custom_report(event, region, k, n_samples, timestamp, static_ratings):
         else:
             return
     else:
-        folder = f"dpc/sp21/{region}"
+        tour = event.split("-")[-1]
+        folder = f"dpc/{tour}/{region}"
         wildcard_slots = {"sea": 1, "eeu": 1, "cn": 2,
                           "weu": 2, "na": 0, "sa": 0}
 
-        with open(f"data/dpc/sp21/{region}/matches.json") as match_f:
+        with open(f"data/dpc/{tour}/{region}/matches.json") as match_f:
             matches = json.load(match_f)
-        if validate_data_files(f"dpc/sp21/{region}", ["upper","lower"], 6):
-            generate_data_dpc(f"data/dpc/sp21/{region}/elo_ratings.json",
+        if validate_data_files(f"dpc/{tour}/{region}", ["upper","lower"], 6):
+            generate_data_dpc(f"data/dpc/{tour}/{region}/fixed_ratings.json",
                               matches, "custom", n_samples,
-                              f"dpc/sp21/{region}", k,
+                              f"dpc/{tour}/{region}", k,
                               wildcard_slots[region], timestamp=timestamp,
                               static_ratings=False)
         else:
@@ -150,7 +168,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="Generate probability report for TI10 group stage.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("event", type=str, choices=["ti10", "dpc-sp21"],
+    parser.add_argument("event", type=str,
+        choices=["ti10", "dpc-sp21", "dpc-wn21"],
         help="Which event to generate predictions for.")
     parser.add_argument("n_samples", default=100000, type=int,
         help="Number of Monte Carlo samples to simulate")
@@ -176,7 +195,7 @@ def main():
     parser.add_argument("-f","--full-report", action='store_true',
         default=False, help=argparse.SUPPRESS if "-H" not in sys.argv else "Ge"
         "nerates a full report for use on the website.")
-    parser.add_argument("-k", default=55, type=int, help="k parameter for the "
+    parser.add_argument("-k", default=35, type=int, help="k parameter for the "
         "Elo model. Unless the Elo model is being retrained this only matters "
         "if static ratings are disabled")
     if "-H" in sys.argv:
@@ -198,8 +217,8 @@ def main():
                         timestamp, args.train_elo, args.html)
     elif args.global_ratings:
         if args.train_elo:
-            generate_global_ratings_elo(2, k, 1.5, "sp21", timestamp)
-        generate_html_global_rankings("global_ratings.html", "sp21")
+            generate_global_ratings_elo(3, k, 1.5, "wn21", timestamp)
+        generate_html_global_rankings("global_ratings.html", "wn21")
     else:
         custom_report(args.event, args.region, k, n_samples,
                       timestamp, args.static_ratings)

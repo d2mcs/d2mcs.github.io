@@ -66,7 +66,7 @@ def retroactive_ti_predictions(timestamp, k, n_samples, tournament,
             if tab[1] != "" and "tiebreak" in matches:
                 matches["tiebreak"][group] = {}
 
-        generate_data_ti(f"data/{tournament}/elo_ratings.json", matches,
+        generate_data_ti(f"data/{tournament}/elo_ratings_lan.json", matches,
             "elo" + tab[1], n_samples, tournament, k, timestamp,
             bracket_file=f"data/{tournament}/main_event_matches.json"
                          if tab[1] == "" else None)
@@ -108,7 +108,7 @@ def retroactive_dpc_predictions(timestamp, k, n_samples, region,
             if tab[1] != "":
                 matches["tiebreak"][division] = {}
 
-        generate_data_dpc(f"data/dpc/sp21/{region}/elo_ratings.json",
+        generate_data_dpc(f"data/dpc/sp21/{region}/elo_ratings_online.json",
                           matches, "elo" + tab[1], n_samples,
                           f"dpc/sp21/{region}", k, wildcard_slots[region],
                           timestamp=timestamp, static_ratings=False)
@@ -119,10 +119,7 @@ def retroactive_dpc_predictions(timestamp, k, n_samples, region,
 
 def retroactive_major_predictions(timestamp, k, n_samples,
                                   train_elo, html_only=False):
-    """TODO
-    HTML report for major events hasn't been finished yet. This is
-    currently only used for testing purposes
-    """
+    """Code for generating retroactive major predictions."""
     stop_after = datetime.fromisoformat("2021-06-01").timestamp()
     title = "Animajor"
     tabs = [["Jun. 13 (Current)", ""],
@@ -149,7 +146,7 @@ def retroactive_major_predictions(timestamp, k, n_samples,
             matches["playoffs"] = {}
             matches["tiebreak"]["group stage"] = {}
 
-        generate_data_major("data/dpc/sp21/major/elo_ratings.json", matches,
+        generate_data_major("data/dpc/sp21/major/elo_ratings_lan.json",matches,
                 "elo" + tab[1], n_samples, "dpc/sp21/major", k, timestamp)
         generate_data_major("data/dpc/sp21/major/fixed_ratings.json", matches,
                 "fixed" + tab[1], n_samples, "dpc/sp21/major", k, timestamp,
@@ -165,7 +162,7 @@ def main():
         help="Number of Monte Carlo samples to simulate")
     parser.add_argument("-e","--train-elo", action='store_true', default=False,
         help="Retrain Elo model before generating probabilities.")
-    parser.add_argument("-k", default=55, type=int, help="k parameter for the "
+    parser.add_argument("-k", default=35, type=int, help="k parameter for the "
         "Elo model.")
     parser.add_argument("--html", action='store_true', default=False,
         help="Updates HTML files without generating new predictions.")

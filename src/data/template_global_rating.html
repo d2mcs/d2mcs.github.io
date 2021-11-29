@@ -47,18 +47,20 @@
             <th></th>
             <th scope="col"></th>
             <th scope="col">Team</th>
-            <th scope="col">Rating</th>
+            <th scope="col">Rating (LAN)</th>
+            <th scope="col">Rating (online)</th>
             <th scope="col"><span class="d-none d-sm-block d-md-inline">Last Match</span></th>
             <th scope="col">Region</th>
           </tr>
         </thead>
         <tbody class="table-light">
-        {% for team, region, rating, last_update in team_data %}
+        {% for team, region, lan_rating, online_rating, last_update in team_data %}
         <tr style="position: relative">
-          <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c {{(100*(rating - 1200))//(team_data[0][2] - 1200)}}%, transparent 0);"></td>
+          <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c {{(100*(lan_rating - 1200))//(team_data[0][2] - 1200)}}%, transparent 0);"></td>
           <td class="global-rating">{{loop.index}}</td>
-          <td class="global-rating"><img id="im-{{i}}" src="dpc/{{dpc_season}}/{{region}}/image/{{team}}.png" height=20px> <span id="team-{{i}}">{{team}}</span></td>
-          <td class="global-rating" id="rating-{{i}}">{{rating}}</td>
+          <td class="global-rating"><img id="im-{{i}}" src="dpc/{{tour}}/{{region}}/image/{{team}}.png" height=20px> <span id="team-{{i}}">{{team}}</span></td>
+          <td class="global-rating" id="lan-rating-{{i}}">{{lan_rating}}</td>
+          <td class="global-rating" id="online-rating-{{i}}">{{online_rating}}</td>
           <td class="global-rating" id="last-update-{{i}}"><span class="d-none d-sm-block d-md-inline">{{last_update}}</span></td>
           <td class="global-rating" id="region-{{i}}"><img id="im-{{i}}" src="image/{{region}}.png" height=20px> <span class="d-none d-sm-block d-md-inline">{{full_name[region]}}</span><span class="d-inline d-sm-none">{{region|upper}}</span></td>
         </tr>

@@ -52,7 +52,7 @@ class MatchDatabase:
         self.con = sqlite3.connect(database_file)
         self.cur = self.con.cursor()
 
-    def get_matches(self, max_tier=3):
+    def get_matches(self, max_tier=3, min_pool=100000000):
         """Collects all matches from the database with a tier less than
         or equal to max_tier. Tiers are between 1 (premier) and 7
         (show match). For more information, see:
@@ -60,8 +60,11 @@ class MatchDatabase:
 
         Parameters
         ----------
-        max_tier: int, default=3
+        max_tier : int, default=3
             The highest numeric tier of matches to collect
+        min_pool : int, default=100000000
+            If the tournament has a prize pool larger than this value,
+            it will be included regardless of liquipedia tier.
 
         Yields
         ------
@@ -76,6 +79,7 @@ class MatchDatabase:
             FROM matches JOIN liquipediatier
                          ON matches.league_id = liquipediatier.league_id
             WHERE liquipediatier.tier <= {max_tier}
+               OR liquipediatier.prizepool >= {min_pool}
             ORDER BY match_id"""
 
         for row in self.cur.execute(match_query):
@@ -156,7 +160,82 @@ class MatchDatabase:
         dict of int to str
             Mapping from team ID to team name
         """
-        id_to_team = {}
+        id_to_region = {}
         for row in self.cur.execute("SELECT id, region FROM teams"):
-            id_to_team[row[0]] = row[1]
-        return id_to_team
+            id_to_region[row[0]] = row[1]
+        return id_to_region
+
+    def predict_match_setting(self):
+        """Predicts whether each match in the dataset was played online
+        or on LAN using the assumption that LAN event should contain
+        matches between teams of at least 4/6 DPC regions within a three
+        day window. Note that matches between teams of the same region
+        are ignored for this count (qualifiers are frequently played on
+        the same league ticket on the same day, but should not be
+        detected as LAN).
+
+        This is obviously not a perfect method -- not all LAN events
+        include teams from 4+ regions and if qualifiers are played on
+        the same league ticket with an NA/SA match and WEU/EEU match
+        within 3 days they will be categorized as LAN matches -- but it
+        works fine for most cases, particularly after WEU/EEU and NA/SA
+        were separated.
+
+        Returns
+        -------
+        dict
+            Mapping from match ID (int) to one of {"lan", "online"}
+        """
+        id_to_region = self.get_id_region_map()
+
+        match_query = """SELECT radiant_teamid, dire_teamid,
+                                league_id, match_id, timestamp
+                         FROM matches"""
+        match_setting_map = {}
+        match_window = {}
+
+        def _predict_region(league_id):
+            """small nested helper function for predicting regions"""
+            regions = set()
+            for region1, region2 in match_window[league_id]["regions"]:
+                if region1 == "UNK" or region2 == "UNK":
+                    continue
+                if region1 != region2:
+                    # only add regions if they're different
+                    regions.update({region1, region2})
+            if len(regions) > 3:
+                guess = "lan"
+            else:
+                guess = "online"
+            # if there are 4+ unique regions in the window assume that
+            # every match in the window was a LAN match
+            for match_id in match_window[league_id]["matches"]:
+                match_setting_map[match_id] = guess
+            del match_window[league_id] # clear window
+
+        for row in self.cur.execute(match_query):
+            radiant_id, dire_id, league_id, match_id, timestamp = row
+            if (league_id in match_window and match_window[league_id
+                    ]["timestamp"] - timestamp > 3*24*60*60):
+                # if the first match in the league window is more than
+                # 3 days old, guess whether the window is online/lan
+                _predict_region(league_id)
+            if league_id not in match_window:
+                # no window for league, create one
+                match_window[league_id] = {
+                    "timestamp": timestamp,
+                    "regions": [(id_to_region.get(radiant_id, "UNK"),
+                                 id_to_region.get(dire_id, "UNK"))],
+                    "matches": [match_id]
+                }
+            else:
+                # add match to current window
+                match_window[league_id]["regions"].append(
+                    (id_to_region.get(radiant_id, "UNK"),
+                     id_to_region.get(dire_id, "UNK")))
+                match_window[league_id]["matches"].append(match_id)
+
+        for league_id in list(match_window.keys()):
+            # empty any remaining windows
+            _predict_region(league_id)
+        return match_setting_map
