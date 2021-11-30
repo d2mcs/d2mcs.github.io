@@ -350,17 +350,14 @@ function render_dpc_match(group, day, match_index, match, n_samples) {
 }
 
 function render_match_probs(format, sim_data) {
-  if (format === "ti") {
+  if (format === "ti")
     var groups = ['a', 'b'];
-    var days = 4;
-  }
-  else if (format === "dpc") {
+  else if (format === "dpc")
     var groups = ['upper', 'lower'];
-    var days = 6;
-  }
+
   for (let group_i = 0; group_i < 2; group_i++) {
-    let group = groups[group_i]
-    for (let day = 0; day < days; day++) {
+    let group = groups[group_i];
+    for (let day = 0; day < sim_data["probs"]["matches"][group].length; day++) {
       let matches = sim_data["probs"]["matches"][group][day];
       for (let match_i = 0; match_i < matches.length; match_i++) {
         let match = matches[match_i];

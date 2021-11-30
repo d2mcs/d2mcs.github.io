@@ -1,1 +1,86 @@
-{}
+{
+  "upper": [
+    [
+      ["Team Empire", "AS Monaco Gambit", []],
+      ["Natus Vincere", "PuckChamp", []],
+      ["Team Spirit", "Team Unique", []],
+      ["PuckChamp", "AS Monaco Gambit", []],
+      ["Virtus.pro", "HellRaisers", []]
+    ],
+    [
+      ["Natus Vincere", "Team Empire", []],
+      ["Team Spirit", "PuckChamp", []],
+      ["HellRaisers", "Team Unique", []],
+      ["Team Empire", "PuckChamp", []],
+      ["Virtus.pro", "AS Monaco Gambit", []]
+    ],
+    [
+      ["HellRaisers", "AS Monaco Gambit", []],
+      ["Virtus.pro", "Team Unique", []],
+      ["Team Spirit", "Team Empire", []],
+      ["Natus Vincere", "Team Unique", []],
+      ["Virtus.pro", "PuckChamp", []]
+    ],
+    [
+      ["Team Spirit", "AS Monaco Gambit", []],
+      ["Natus Vincere", "HellRaisers", []],
+      ["Virtus.pro", "Team Empire", []],
+      ["Team Unique", "PuckChamp", []],
+      ["Team Spirit", "Natus Vincere", []]
+    ],
+    [
+      ["Team Spirit", "Virtus.pro", []],
+      ["Team Empire", "HellRaisers", []],
+      ["Team Unique", "AS Monaco Gambit", []],
+      ["HellRaisers", "PuckChamp", []],
+      ["Natus Vincere", "AS Monaco Gambit", []]
+    ],
+    [
+      ["Team Empire", "Team Unique", []],
+      ["Natus Vincere", "Virtus.pro", []],
+      ["HellRaisers", "Team Spirit", []]
+    ]
+  ],
+  "lower": [
+    [
+      ["Gambit Esports", "B8", [2, 0]],
+      ["CIS Rejects", "Nemiga Gaming", []],
+      ["V-Gaming", "Fantastic Five", []],
+      ["Winstrike Team", "HYDRA", []],
+      ["B8", "CIS Rejects", []]
+    ],
+    [
+      ["Nemiga Gaming", "HYDRA", []],
+      ["Gambit Esports", "V-Gaming", []],
+      ["Winstrike Team", "Fantastic Five", []],
+      ["B8", "HYDRA", []],
+      ["Fantastic Five", "Gambit Esports", []]
+    ],
+    [
+      ["CIS Rejects", "V-Gaming", []],
+      ["Winstrike Team", "Nemiga Gaming", []],
+      ["Fantastic Five", "CIS Rejects", []],
+      ["V-Gaming", "HYDRA", []],
+      ["Nemiga Gaming", "B8", []]
+    ],
+    [
+      ["Winstrike Team", "Gambit Esports", []],
+      ["Fantastic Five", "HYDRA", []],
+      ["Nemiga Gaming", "V-Gaming", []],
+      ["Gambit Esports", "CIS Rejects", []],
+      ["Winstrike Team", "B8", []]
+    ],
+    [
+      ["Nemiga Gaming", "Fantastic Five", []],
+      ["Gambit Esports", "Nemiga Gaming", []],
+      ["V-Gaming", "B8", []],
+      ["HYDRA", "CIS Rejects", []],
+      ["B8", "Fantastic Five", []]
+    ],
+    [
+      ["HYDRA", "Gambit Esports", []],
+      ["CIS Rejects", "Winstrike Team", []],
+      ["V-Gaming", "Winstrike Team", []]
+    ]
+  ]
+}

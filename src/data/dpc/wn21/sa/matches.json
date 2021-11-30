@@ -1,1 +1,86 @@
-{}
+{
+  "upper": [
+    [
+      ["Infamous", "Thunder Predator", []],
+      ["NoPing e-sports", "Hokori", []],
+      ["beastcoast", "King Of Kings", []],
+      ["Lava", "King Of Kings", []],
+      ["Thunder Predator", "Hokori", []]
+    ],
+    [
+      ["Infamous", "SG esports", []],
+      ["NoPing e-sports", "King Of Kings", []],
+      ["beastcoast", "Lava", []],
+      ["Thunder Predator", "SG esports", []],
+      ["Infamous", "NoPing e-sports", []]
+    ],
+    [
+      ["Lava", "SG esports", []],
+      ["beastcoast", "Hokori", []],
+      ["Lava", "Thunder Predator", []],
+      ["Infamous", "Hokori", []],
+      ["SG esports", "King Of Kings", []]
+    ],
+    [
+      ["beastcoast", "NoPing e-sports", []],
+      ["Thunder Predator", "King Of Kings", []],
+      ["beastcoast", "Infamous", []],
+      ["Lava", "NoPing e-sports", []],
+      ["Hokori", "SG esports", []]
+    ],
+    [
+      ["Thunder Predator", "beastcoast", []],
+      ["Thunder Predator", "NoPing e-sports", []],
+      ["Lava", "Hokori", []],
+      ["Lava", "Infamous", []],
+      ["King Of Kings", "Hokori", []]
+    ],
+    [
+      ["SG esports", "beastcoast", []],
+      ["King Of Kings", "Infamous", []],
+      ["SG esports", "NoPing e-sports", []]
+    ]
+  ],
+  "lower": [
+    [
+      ["Team Unknown", "Infinity Esports", [0, 2]],
+      ["Interitus", "Inverse", []],
+      ["Omega Gaming", "Gorillaz-Pride", []],
+      ["Our Way", "Balrogs", []],
+      ["Team Unknown", "Inverse", []]
+    ],
+    [
+      ["Infinity Esports", "Interitus", []],
+      ["Gorillaz-Pride", "Balrogs", []],
+      ["Our Way", "Omega Gaming", []],
+      ["Team Unknown", "Interitus", []],
+      ["Infinity Esports", "Balrogs", []]
+    ],
+    [
+      ["Gorillaz-Pride", "Our Way", []],
+      ["Omega Gaming", "Inverse", []],
+      ["Team Unknown", "Our Way", []],
+      ["Infinity Esports", "Inverse", []],
+      ["Gorillaz-Pride", "Inverse", []]
+    ],
+    [
+      ["Balrogs", "Omega Gaming", []],
+      ["Team Unknown", "Balrogs", []],
+      ["Infinity Esports", "Omega Gaming", []],
+      ["Interitus", "Our Way", []],
+      ["Gorillaz-Pride", "Interitus", []]
+    ],
+    [
+      ["Omega Gaming", "Interitus", []],
+      ["Our Way", "Inverse", []],
+      ["Omega Gaming", "Team Unknown", []],
+      ["Gorillaz-Pride", "Infinity Esports", []],
+      ["Balrogs", "Inverse", []]
+    ],
+    [
+      ["Gorillaz-Pride", "Team Unknown", []],
+      ["Our Way", "Infinity Esports", []],
+      ["Balrogs", "Interitus", []]
+    ]
+  ]
+}

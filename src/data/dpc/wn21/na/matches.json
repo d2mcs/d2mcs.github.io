@@ -1,1 +1,86 @@
-{}
+{
+  "upper": [
+    [
+      ["Quincy Crew", "simply TOOBASED", []],
+      ["Team Undying", "D2 Hustlers", []],
+      ["4 Zoomers", "Black N Yellow", []],
+      ["Evil Geniuses", "Arkosh Gaming", []],
+      ["Quincy Crew", "4 Zoomers", []]
+    ],
+    [
+      ["Team Undying", "simply TOOBASED", []],
+      ["Evil Geniuses", "Black N Yellow", []],
+      ["Arkosh Gaming", "D2 Hustlers", []],
+      ["Team Undying", "Black N Yellow", []],
+      ["Quincy Crew", "Arkosh Gaming", []]
+    ],
+    [
+      ["Evil Geniuses", "D2 Hustlers", []],
+      ["4 Zoomers", "simply TOOBASED", []],
+      ["Arkosh Gaming", "Black N Yellow", []],
+      ["Quincy Crew", "D2 Hustlers", []],
+      ["Evil Geniuses", "simply TOOBASED", []]
+    ],
+    [
+      ["Team Undying", "4 Zoomers", []],
+      ["D2 Hustlers", "Black N Yellow", []],
+      ["Arkosh Gaming", "simply TOOBASED", []],
+      ["Evil Geniuses", "4 Zoomers", []],
+      ["Quincy Crew", "Team Undying", []]
+    ],
+    [
+      ["Evil Geniuses", "Quincy Crew", []],
+      ["Team Undying", "Evil Geniuses", []],
+      ["Black N Yellow", "simply TOOBASED", []],
+      ["D2 Hustlers", "simply TOOBASED", []],
+      ["D2 Hustlers", "4 Zoomers", []]
+    ],
+    [
+      ["Arkosh Gaming", "4 Zoomers", []],
+      ["Black N Yellow", "Quincy Crew", []],
+      ["Arkosh Gaming", "Team Undying", []]
+    ]
+  ],
+  "lower": [
+    [
+      ["5ManMidas", "felt", [2, 1]],
+      ["Team Magnus", "Electronic Boys", []],
+      ["KBU.US", "Team DogChamp", []],
+      ["5RATFORCESTAFF", "The Cut", []],
+      ["Team Magnus", "felt", []]
+    ],
+    [
+      ["Electronic Boys", "Team DogChamp", []],
+      ["5ManMidas", "The Cut", []],
+      ["KBU.US", "5RATFORCESTAFF", []],
+      ["felt", "Electronic Boys", []],
+      ["Team DogChamp", "5ManMidas", []]
+    ],
+    [
+      ["Team Magnus", "5RATFORCESTAFF", []],
+      ["The Cut", "KBU.US", []],
+      ["Team DogChamp", "felt", []],
+      ["5RATFORCESTAFF", "5ManMidas", []],
+      ["The Cut", "Electronic Boys", []]
+    ],
+    [
+      ["Team Magnus", "KBU.US", []],
+      ["Electronic Boys", "5RATFORCESTAFF", []],
+      ["felt", "The Cut", []],
+      ["Team Magnus", "Team DogChamp", []],
+      ["5ManMidas", "KBU.US", []]
+    ],
+    [
+      ["Team DogChamp", "The Cut", []],
+      ["5ManMidas", "Electronic Boys", []],
+      ["KBU.US", "Electronic Boys", []],
+      ["KBU.US", "felt", []],
+      ["Team Magnus", "5ManMidas", []]
+    ],
+    [
+      ["5RATFORCESTAFF", "felt", []],
+      ["5RATFORCESTAFF", "Team DogChamp", []],
+      ["Team Magnus", "The Cut", []]
+    ]
+  ]
+}

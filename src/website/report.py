@@ -338,6 +338,11 @@ def generate_html_dpc(output_file, tabs, title, wildcard_slots):
         if "cn" in output_file:
             match_counts = {"upper": [3, 3, 6, 6, 6, 4],
                             "lower": [7, 7, 4, 4, 4, 2]}
+    if "wn21" in output_file:
+        if "cn" in output_file:
+            match_counts = {"upper": [10, 10, 8],
+                            "lower": [10, 10, 8]}
+
     output = template.render(tabs=tabs, title=title, match_counts=match_counts,
         wildcard_slots=wildcard_slots)
     with open(f"../{output_file}", "w") as output_f:

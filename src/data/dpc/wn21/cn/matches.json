@@ -1,1 +1,74 @@
-{}
+{
+  "lower": [
+    [
+      ["CDEC Gaming", "Sparking Arrow Gaming", [0, 2]],
+      ["Team MagMa", "Neptune Gaming", [2, 0]],
+      ["Neptune Gaming", "Ybb Gaming", []],
+      ["ShenZhen", "Sparking Arrow Gaming", []],
+      ["CDEC Gaming", "Team MagMa", []],
+      ["ShenZhen", "Neptune Gaming", []],
+      ["Aster.Aries", "Ybb Gaming", []],
+      ["Neptune Gaming", "Xtreme Gaming", []],
+      ["ShenZhen", "Aster.Aries", []],
+      ["Sparking Arrow Gaming", "Team MagMa", []]
+    ],
+    [
+      ["Aster.Aries", "Neptune Gaming", []],
+      ["Team MagMa", "Ybb Gaming", []],
+      ["Sparking Arrow Gaming", "Neptune Gaming", []],
+      ["Xtreme Gaming", "Ybb Gaming", []],
+      ["CDEC Gaming", "Aster.Aries", []],
+      ["CDEC Gaming", "Neptune Gaming", []],
+      ["ShenZhen", "Xtreme Gaming", []],
+      ["CDEC Gaming", "Ybb Gaming", []],
+      ["Sparking Arrow Gaming", "Aster.Aries", []],
+      ["Team MagMa", "Xtreme Gaming", []]
+    ],
+    [
+      ["CDEC Gaming", "ShenZhen", []],
+      ["Aster.Aries", "Xtreme Gaming", []],
+      ["ShenZhen", "Team MagMa", []],
+      ["Sparking Arrow Gaming", "Ybb Gaming", []],
+      ["CDEC Gaming", "Xtreme Gaming", []],
+      ["ShenZhen", "Ybb Gaming", []],
+      ["Aster.Aries", "Team MagMa", []],
+      ["Sparking Arrow Gaming", "Xtreme Gaming", []]
+    ]
+  ],
+  "upper": [
+    [
+      ["EHOME", "Phoenix Gaming", []],
+      ["PSG.LGD", "Team Aster", []],
+      ["Vici Gaming", "LBZS", []],
+      ["PSG.LGD", "Phoenix Gaming", []],
+      ["Invictus Gaming", "Royal Never Give Up", []],
+      ["Invictus Gaming", "EHOME", []],
+      ["Team Aster", "Vici Gaming", []],
+      ["Invictus Gaming", "Phoenix Gaming", []],
+      ["Royal Never Give Up", "LBZS", []],
+      ["PSG.LGD", "Vici Gaming", []]
+    ],
+    [
+      ["Invictus Gaming", "Vici Gaming", []],
+      ["EHOME", "Royal Never Give Up", []],
+      ["LBZS", "Phoenix Gaming", []],
+      ["Invictus Gaming", "PSG.LGD", []],
+      ["Royal Never Give Up", "Vici Gaming", []],
+      ["Phoenix Gaming", "Royal Never Give Up", []],
+      ["LBZS", "EHOME", []],
+      ["Invictus Gaming", "Team Aster", []],
+      ["Royal Never Give Up", "PSG.LGD", []],
+      ["EHOME", "Vici Gaming", []]
+    ],
+    [
+      ["Royal Never Give Up", "Team Aster", []],
+      ["EHOME", "PSG.LGD", []],
+      ["Phoenix Gaming", "Vici Gaming", []],
+      ["LBZS", "Invictus Gaming", []],
+      ["EHOME", "Team Aster", []],
+      ["Phoenix Gaming", "Team Aster", []],
+      ["LBZS", "PSG.LGD", []],
+      ["LBZS", "Team Aster", []]
+    ]
+  ]
+}

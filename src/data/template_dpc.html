@@ -109,7 +109,7 @@
       </div>
       <h3 class="pt-2">Match Probabilities</h3>
       <div class="accordion pb-4" id="matches-{{group}}-accordion">
-        {% for week in range(6) %}
+        {% for week in range(match_counts[group]|length) %}
         <div class="accordion-item">
           <h2 class="accordion-header" id="week-{{week}}-head-{{group}}">
             <button class="accordion-button{% if week != 0 %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#week-{{week}}-col-{{group}}" aria-expanded="{% if week == 0 %}true{% else %}false{% endif %}" aria-controls="week-{{week}}-col-{{group}}">
@@ -227,7 +227,7 @@
           </tr>
         </thead>
         <tbody class="table-light">
-        {% if group == 'upper'%}
+        {% if group == 'upper' %}
           {% for boundary in [0, 1, wildcard_slots + 1, 5] %}
           {% if wildcard_slots > 0 or loop.index != 2 %}
           <tr>

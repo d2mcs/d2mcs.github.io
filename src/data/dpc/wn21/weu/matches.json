@@ -1,1 +1,86 @@
-{}
+{
+  "upper": [
+    [
+      ["Alliance", "Tundra Esports", []],
+      ["Team Secret", "OG", []],
+      ["Team Liquid", "COOLGUYS", []],
+      ["Nigma Galaxy", "Team Tickles", []],
+      ["Alliance", "Team Secret", []]
+    ],
+    [
+      ["Tundra Esports", "Nigma Galaxy", []],
+      ["Team Liquid", "OG", []],
+      ["COOLGUYS", "Team Tickles", []],
+      ["Team Liquid", "Team Tickles", []],
+      ["Team Secret", "Tundra Esports", []]
+    ],
+    [
+      ["Alliance", "COOLGUYS", []],
+      ["OG", "Nigma Galaxy", []],
+      ["Team Liquid", "Tundra Esports", []],
+      ["Alliance", "Team Tickles", []],
+      ["Team Secret", "Nigma Galaxy", []]
+    ],
+    [
+      ["OG", "COOLGUYS", []],
+      ["Team Liquid", "Team Secret", []],
+      ["Alliance", "Nigma Galaxy", []],
+      ["Tundra Esports", "COOLGUYS", []],
+      ["OG", "Team Tickles", []]
+    ],
+    [
+      ["Team Liquid", "Alliance", []],
+      ["Nigma Galaxy", "Team Liquid", []],
+      ["OG", "Tundra Esports", []],
+      ["Team Tickles", "Tundra Esports", []],
+      ["Team Tickles", "Team Secret", []]
+    ],
+    [
+      ["COOLGUYS", "Team Secret", []],
+      ["OG", "Alliance", []],
+      ["COOLGUYS", "Nigma Galaxy", []]
+    ]
+  ],
+  "lower": [
+    [
+      ["Brame", "Entity", [2, 1]],
+      ["No Bounty Hunter", "Team Bald Reborn", []],
+      ["Chicken Fighters", "Ghost Frogs", []],
+      ["CHILLAX", "Into The Breach", []],
+      ["Brame", "Team Bald Reborn", []]
+    ],
+    [
+      ["Entity", "Ghost Frogs", []],
+      ["No Bounty Hunter", "Into The Breach", []],
+      ["Chicken Fighters", "CHILLAX", []],
+      ["Team Bald Reborn", "Entity", []],
+      ["Into The Breach", "Chicken Fighters", []]
+    ],
+    [
+      ["Brame", "CHILLAX", []],
+      ["No Bounty Hunter", "Ghost Frogs", []],
+      ["Into The Breach", "Entity", []],
+      ["Brame", "Chicken Fighters", []],
+      ["CHILLAX", "No Bounty Hunter", []]
+    ],
+    [
+      ["Ghost Frogs", "Team Bald Reborn", []],
+      ["Entity", "CHILLAX", []],
+      ["Team Bald Reborn", "Into The Breach", []],
+      ["Brame", "Ghost Frogs", []],
+      ["No Bounty Hunter", "Chicken Fighters", []]
+    ],
+    [
+      ["Into The Breach", "Brame", []],
+      ["Ghost Frogs", "Into The Breach", []],
+      ["No Bounty Hunter", "Entity", []],
+      ["Chicken Fighters", "Entity", []],
+      ["Chicken Fighters", "Team Bald Reborn", []]
+    ],
+    [
+      ["CHILLAX", "Team Bald Reborn", []],
+      ["No Bounty Hunter", "Brame", []],
+      ["CHILLAX", "Ghost Frogs", []]
+    ]
+  ]
+}

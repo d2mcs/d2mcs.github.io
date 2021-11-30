@@ -20,7 +20,7 @@ def validate_data_files(folder, groups, match_list_len):
     errors before they become python exceptions
     """
     data = {}
-    for file in ["elo_ratings", "teams", "matches"]:
+    for file in ["fixed_ratings", "teams", "matches"]:
         try:
             with open(f"data/{folder}/{file}.json") as json_f:
                 data[file] = json.load(json_f)
@@ -28,15 +28,16 @@ def validate_data_files(folder, groups, match_list_len):
             print(f"ERROR: Failed to load {file}.json: invalid JSON")
             return False
     teams = set()
-    for team, rating in data["elo_ratings"].items():
+    for team, rating in data["fixed_ratings"].items():
         teams.add(team)
         if not isinstance(rating, (float, int)):
-            print("ERROR: team ratings in elo_ratings.json must be numbers")
+            print("ERROR: team ratings in fixed_ratings.json must be numbers")
             return False
     for group, group_teams in data["teams"].items():
         for team in group_teams:
             if team not in teams:
-                print(f"ERROR: {team} (teams.json) is not in elo_ratings.json")
+                print(f"ERROR: {team} (teams.json) is not in "
+                      "fixed_ratings.json")
                 return False
     for group in groups:
         if len(data["matches"][group]) != match_list_len:
@@ -130,7 +131,7 @@ def custom_report(event, region, k, n_samples, timestamp, static_ratings):
         with open("data/ti/10/matches.json") as match_f:
             matches = json.load(match_f)
         if validate_data_files("ti/10", ["a", "b"], 4):
-            generate_data_ti("data/ti/10/elo_ratings.json", matches,
+            generate_data_ti("data/ti/10/fixed_ratings.json", matches,
                              "custom", n_samples, "ti/10", k, timestamp,
                              static_ratings=static_ratings)
         else:
