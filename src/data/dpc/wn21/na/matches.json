@@ -1,7 +1,7 @@
 {
   "upper": [
     [
-      ["Quincy Crew", "simply TOOBASED", []],
+      ["Quincy Crew", "simply TOOBASED", [2, 0]],
       ["Team Undying", "D2 Hustlers", []],
       ["4 Zoomers", "Black N Yellow", []],
       ["Evil Geniuses", "Arkosh Gaming", []],
@@ -44,7 +44,7 @@
   "lower": [
     [
       ["5ManMidas", "felt", [2, 1]],
-      ["Team Magnus", "Electronic Boys", []],
+      ["Team Magnus", "Electronic Boys", [2, 1]],
       ["KBU.US", "Team DogChamp", []],
       ["5RATFORCESTAFF", "The Cut", []],
       ["Team Magnus", "felt", []]

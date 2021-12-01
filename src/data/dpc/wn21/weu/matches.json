@@ -1,8 +1,8 @@
 {
   "upper": [
     [
-      ["Alliance", "Tundra Esports", []],
-      ["Team Secret", "OG", []],
+      ["Alliance", "Tundra Esports", [0, 2]],
+      ["Team Secret", "OG", [0, 2]],
       ["Team Liquid", "COOLGUYS", []],
       ["Nigma Galaxy", "Team Tickles", []],
       ["Alliance", "Team Secret", []]
@@ -44,7 +44,7 @@
   "lower": [
     [
       ["Brame", "Entity", [2, 1]],
-      ["No Bounty Hunter", "Team Bald Reborn", []],
+      ["No Bounty Hunter", "Team Bald Reborn", [0, 2]],
       ["Chicken Fighters", "Ghost Frogs", []],
       ["CHILLAX", "Into The Breach", []],
       ["Brame", "Team Bald Reborn", []]

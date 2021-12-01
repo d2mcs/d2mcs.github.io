@@ -94,7 +94,8 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                     ["Apr. 11 (Pre-tournament)", "-pre"]]
             tour_name = "Spring"
         else:
-            tabs = [["Current", ""]]
+            tabs = [["Nov. 30 (Current)", ""],
+                    ["Nov. 28 (Pre-tournament)", "-pre"]]
             tour_name = "Winter"
         full_name = {
             "na": "North America", "sa": "South America",
