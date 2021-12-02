@@ -2,28 +2,28 @@
   "upper": [
     [
       ["Quincy Crew", "simply TOOBASED", [2, 0]],
-      ["Team Undying", "D2 Hustlers", []],
-      ["4 Zoomers", "Black N Yellow", []],
+      ["Team Undying", "Wildcard Gaming", [2, 0]],
+      ["4 Zoomers", "Black N Yellow", [2, 1]],
       ["Evil Geniuses", "Arkosh Gaming", []],
       ["Quincy Crew", "4 Zoomers", []]
     ],
     [
       ["Team Undying", "simply TOOBASED", []],
       ["Evil Geniuses", "Black N Yellow", []],
-      ["Arkosh Gaming", "D2 Hustlers", []],
+      ["Arkosh Gaming", "Wildcard Gaming", []],
       ["Team Undying", "Black N Yellow", []],
       ["Quincy Crew", "Arkosh Gaming", []]
     ],
     [
-      ["Evil Geniuses", "D2 Hustlers", []],
+      ["Evil Geniuses", "Wildcard Gaming", []],
       ["4 Zoomers", "simply TOOBASED", []],
       ["Arkosh Gaming", "Black N Yellow", []],
-      ["Quincy Crew", "D2 Hustlers", []],
+      ["Quincy Crew", "Wildcard Gaming", []],
       ["Evil Geniuses", "simply TOOBASED", []]
     ],
     [
       ["Team Undying", "4 Zoomers", []],
-      ["D2 Hustlers", "Black N Yellow", []],
+      ["Wildcard Gaming", "Black N Yellow", []],
       ["Arkosh Gaming", "simply TOOBASED", []],
       ["Evil Geniuses", "4 Zoomers", []],
       ["Quincy Crew", "Team Undying", []]
@@ -32,8 +32,8 @@
       ["Evil Geniuses", "Quincy Crew", []],
       ["Team Undying", "Evil Geniuses", []],
       ["Black N Yellow", "simply TOOBASED", []],
-      ["D2 Hustlers", "simply TOOBASED", []],
-      ["D2 Hustlers", "4 Zoomers", []]
+      ["Wildcard Gaming", "simply TOOBASED", []],
+      ["Wildcard Gaming", "4 Zoomers", []]
     ],
     [
       ["Arkosh Gaming", "4 Zoomers", []],
