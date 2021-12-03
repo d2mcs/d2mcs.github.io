@@ -1,8 +1,8 @@
 {
   "upper": [
     [
-      ["Team Empire", "AS Monaco Gambit", []],
-      ["Natus Vincere", "PuckChamp", []],
+      ["Team Empire", "AS Monaco Gambit", [0, 2]],
+      ["Natus Vincere", "PuckChamp", [0, 2]],
       ["Team Spirit", "Team Unique", []],
       ["PuckChamp", "AS Monaco Gambit", []],
       ["Virtus.pro", "HellRaisers", []]
@@ -44,7 +44,7 @@
   "lower": [
     [
       ["Gambit Esports", "B8", [2, 0]],
-      ["CIS Rejects", "Nemiga Gaming", []],
+      ["CIS Rejects", "Nemiga Gaming", [2, 0]],
       ["V-Gaming", "Fantastic Five", []],
       ["Winstrike Team", "HYDRA", []],
       ["B8", "CIS Rejects", []]

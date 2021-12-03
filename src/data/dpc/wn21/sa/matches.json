@@ -1,7 +1,7 @@
 {
   "upper": [
     [
-      ["Infamous", "Thunder Predator", []],
+      ["Infamous", "Thunder Predator", [0, 2]],
       ["NoPing e-sports", "Hokori", []],
       ["beastcoast", "King Of Kings", []],
       ["Lava", "King Of Kings", []],
@@ -44,8 +44,8 @@
   "lower": [
     [
       ["Team Unknown", "Infinity Esports", [0, 2]],
-      ["Interitus", "Inverse", []],
-      ["Omega Gaming", "Gorillaz-Pride", []],
+      ["Interitus", "Inverse", [2, 0]],
+      ["Omega Gaming", "Gorillaz-Pride", [0, 2]],
       ["Our Way", "Balrogs", []],
       ["Team Unknown", "Inverse", []]
     ],
