@@ -6,8 +6,8 @@
       ["Neptune Gaming", "Ybb Gaming", [0, 2]],
       ["ShenZhen", "Sparking Arrow Gaming", [2, 1]],
       ["CDEC Gaming", "Team MagMa", [0, 2]],
-      ["ShenZhen", "Neptune Gaming", []],
-      ["Aster.Aries", "Ybb Gaming", []],
+      ["ShenZhen", "Neptune Gaming", [2, 0]],
+      ["Aster.Aries", "Ybb Gaming", [2, 0]],
       ["Neptune Gaming", "Xtreme Gaming", []],
       ["ShenZhen", "Aster.Aries", []],
       ["Sparking Arrow Gaming", "Team MagMa", []]

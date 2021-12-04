@@ -2,8 +2,8 @@
   "upper": [
     [
       ["Infamous", "Thunder Predator", [0, 2]],
-      ["NoPing e-sports", "Hokori", []],
-      ["beastcoast", "King Of Kings", []],
+      ["NoPing e-sports", "Hokori", [2, 0]],
+      ["beastcoast", "King Of Kings", [2, 0]],
       ["Lava", "King Of Kings", []],
       ["Thunder Predator", "Hokori", []]
     ],
