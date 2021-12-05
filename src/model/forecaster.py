@@ -490,7 +490,8 @@ class PlayerModel:
                 else:
                     prob_bins.append((0, 0))
 
-            brier_skill_score = 1-(model_sse/match_count)/(baseline_sse/match_count)
+            brier_skill_score = 1 - (model_sse/match_count)/(
+                                     baseline_sse/match_count)
             return (prob_bins, brier_skill_score,
                     predictions["correct"]/predictions["total"])
         else:
