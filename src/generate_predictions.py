@@ -95,7 +95,7 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
             tour_name = "Spring"
             stop_after = datetime.fromisoformat("2021-04-10").timestamp()
         else:
-            tabs = [["Dec. 5 (Current)", ""],
+            tabs = [["Dec. 6 (Current)", ""], ["Dec. 5 (Week 1)", "-1"],
                     ["Nov. 28 (Pre-tournament)", "-pre"]]
             tour_name = "Winter"
             stop_after = 1638144000  # 1 hour before first DPC match

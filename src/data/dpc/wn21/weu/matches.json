@@ -50,7 +50,7 @@
       ["Brame", "Team Bald Reborn", [2, 0]]
     ],
     [
-      ["Entity", "Ghost Frogs", []],
+      ["Entity", "Ghost Frogs", [2, 0]],
       ["No Bounty Hunter", "Into The Breach", []],
       ["Chicken Fighters", "CHILLAX", []],
       ["Team Bald Reborn", "Entity", []],

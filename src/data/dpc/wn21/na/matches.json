@@ -50,7 +50,7 @@
       ["Team Magnus", "felt", [1, 2]]
     ],
     [
-      ["Electronic Boys", "Team DogChamp", []],
+      ["Electronic Boys", "Team DogChamp", [1, 2]],
       ["5ManMidas", "The Cut", []],
       ["KBU.US", "5RATFORCESTAFF", []],
       ["felt", "Electronic Boys", []],
