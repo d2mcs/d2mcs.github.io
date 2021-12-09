@@ -9,8 +9,8 @@
     ],
     [
       ["Team Undying", "simply TOOBASED", [2, 0]],
-      ["Evil Geniuses", "Black N Yellow", []],
-      ["Arkosh Gaming", "Wildcard Gaming", []],
+      ["Evil Geniuses", "Black N Yellow", [1, 2]],
+      ["Arkosh Gaming", "Wildcard Gaming", [0, 2]],
       ["Team Undying", "Black N Yellow", []],
       ["Quincy Crew", "Arkosh Gaming", []]
     ],
