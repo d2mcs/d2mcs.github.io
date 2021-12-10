@@ -8,7 +8,7 @@
       ["Thunder Predator", "Hokori", [2, 0]]
     ],
     [
-      ["Infamous", "SG esports", []],
+      ["Infamous", "SG esports", [2, 0]],
       ["NoPing e-sports", "APU King Of Kings", []],
       ["beastcoast", "Lava", []],
       ["Thunder Predator", "SG esports", []],
@@ -51,8 +51,8 @@
     ],
     [
       ["Infinity Esports", "Interitus", [2, 0]],
-      ["Gorillaz-Pride", "Balrogs", []],
-      ["Wolf Team", "Omega Gaming", []],
+      ["Gorillaz-Pride", "Balrogs", [0, 2]],
+      ["Wolf Team", "Omega Gaming", [1, 2]],
       ["Team Unknown", "Interitus", []],
       ["Infinity Esports", "Balrogs", []]
     ],
