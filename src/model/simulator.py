@@ -391,8 +391,6 @@ class DPCLeague(Simulator):
             for match in match_week_list:
                 if len(match[2]) == 0:
                     result = self.sim_bo_n(3, match[0], match[1])
-                    if not self.static_ratings:
-                        self.model.update_ratings(match[0], match[1], result)
                 else:
                     result = match[2]
                     if isinstance(result[0], str): # default result

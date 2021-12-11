@@ -52,7 +52,7 @@
     [
       ["Electronic Boys", "Team DogChamp", [1, 2]],
       ["5ManMidas", "The Cut", [0, 2]],
-      ["KBU.US", "5RATFORCESTAFF", []],
+      ["KBU.US", "5RATFORCESTAFF", [1, 2]],
       ["felt", "Electronic Boys", []],
       ["Team DogChamp", "5ManMidas", []]
     ],
