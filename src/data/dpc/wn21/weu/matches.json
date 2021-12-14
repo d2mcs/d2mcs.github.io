@@ -57,7 +57,7 @@
       ["Into The Breach", "Chicken Fighters", [1, 2]]
     ],
     [
-      ["Brame", "CHILLAX", []],
+      ["Brame", "CHILLAX", [2, 1]],
       ["No Bounty Hunter", "Ghost Frogs", []],
       ["Into The Breach", "Entity", []],
       ["Brame", "Chicken Fighters", []],

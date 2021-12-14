@@ -57,7 +57,7 @@
       ["Team DogChamp", "5ManMidas", [2, 1]]
     ],
     [
-      ["Team Magnus", "5RATFORCESTAFF", []],
+      ["Team Magnus", "5RATFORCESTAFF", [0, 2]],
       ["The Cut", "KBU.US", []],
       ["Team DogChamp", "felt", []],
       ["5RATFORCESTAFF", "5ManMidas", []],
