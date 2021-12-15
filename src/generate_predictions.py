@@ -95,11 +95,11 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
             tour_name = "Spring"
             stop_after = datetime.fromisoformat("2021-04-10").timestamp()
         else:
-            tabs = [["Dec. 13 (Current)", ""], ["Dec. 12 (Week 2)", "-2"],
+            tabs = [["Dec. 14 (Current)", ""], ["Dec. 12 (Week 2)", "-2"],
                     ["Dec. 5 (Week 1)", "-1"],
                     ["Nov. 28 (Pre-tournament)", "-pre"]]
             tour_name = "Winter"
-            stop_after = 1638144000  # 1 hour before first DPC match
+            #stop_after = 1638144000  # 1 hour before first DPC match
         full_name = {
             "na": "North America", "sa": "South America",
             "weu": "Western Europe", "eeu": "Eastern Europe",
@@ -109,8 +109,8 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                           "weu": 2, "na": 0, "sa": 0}
         for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
             if train_elo:
-                generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/{region}",
-                                          stop_after)
+                generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/{region}"),
+#                                          stop_after)
             generate_html_dpc(f"dpc/{tour}/{region}/forecast.html", tabs,
                               f"DPC {tour_name} 2021: {full_name[region]}",
                               wildcard_slots[region])

@@ -27,9 +27,9 @@
     [
       ["CDEC Gaming", "ShenZhen", ["-", "W"]],
       ["Aster.Aries", "Xtreme Gaming", [0, 2]],
-      ["ShenZhen", "Team MagMa", []],
-      ["Sparking Arrow Gaming", "Ybb Gaming", []],
-      ["CDEC Gaming", "Xtreme Gaming", []],
+      ["ShenZhen", "Team MagMa", [0, 2]],
+      ["Sparking Arrow Gaming", "Ybb Gaming", [2, 1]],
+      ["CDEC Gaming", "Xtreme Gaming", [2, 1]],
       ["ShenZhen", "Ybb Gaming", []],
       ["Aster.Aries", "Team MagMa", []],
       ["Sparking Arrow Gaming", "Xtreme Gaming", []]

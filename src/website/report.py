@@ -205,10 +205,17 @@ def predict_matches_ti(sampler, matches, static_ratings):
         brier_skill_score = 0
     return records, match_predictions, brier_skill_score
 
-def predict_matches_dpc(sampler,matches,static_ratings):
+def predict_matches_dpc(sampler, matches, match_file,
+                        timestamp, static_ratings):
     """Code for computing each team's record and the probabilities of
     them wining each match.
     """
+    try:
+        with open(match_file) as match_f:
+            existing_preds = json.load(match_f)
+    except FileNotFoundError:
+        existing_preds = {}
+
     records = {team: [0,0] for team in sampler.model.ratings.keys()}
     match_predictions = {"upper": [], "lower": []}
     sq_errs = []
@@ -218,7 +225,16 @@ def predict_matches_dpc(sampler,matches,static_ratings):
             for match in match_list:
                 team1 = match[0]
                 team2 = match[1]
-                win_prob = sampler.get_bo_n_win_prob(3, team1, team2)
+                if len(match[2]) != 0 and f"{team1}-{team2}" in existing_preds:
+                    # if the match has already been played, use the last
+                    # recorded win prob
+                    win_prob = existing_preds[f"{team1}-{team2}"]["win_prob"]
+                else:
+                    win_prob = sampler.get_bo_n_win_prob(3, team1, team2)
+                    existing_preds[f"{team1}-{team2}"] = {
+                        "win_prob": win_prob, "timestamp": timestamp
+                    }
+
                 if len(match[2]) != 0:
                     # match has already been played, so update team
                     # ratings and current records
@@ -230,8 +246,7 @@ def predict_matches_dpc(sampler,matches,static_ratings):
                             result = [0, 2]
                         else:
                             result = [0, 0]
-                    elif not static_ratings:
-                        sampler.model.update_ratings(team1, team2, result)
+                    else:
                         sq_errs.append((int(result[0] > result[1])
                                        - win_prob)**2)
 
@@ -241,15 +256,12 @@ def predict_matches_dpc(sampler,matches,static_ratings):
                         records[match[1 - winner]][1] += 1
 
                 match_predictions[division][-1].append({
-                    "teams": (match[0], match[1]), "result": match[2],
+                    "teams": (team1, team2), "result": match[2],
                     "probs": [float(f"{win_prob:.4f}"),
                               float(f"{1 - win_prob:.4f}")]})
-    if not static_ratings:
-        for division in ["upper", "lower"]:
-            for match_list in matches.get("tiebreak",
-                                          {}).get(division, {}).values():
-                for team1, team2, result in match_list:
-                    sampler.model.update_ratings(team1, team2, result)
+    with open(match_file, "w") as match_f:
+        json.dump(existing_preds, match_f)
+
     if len(sq_errs) > 0:
         brier_skill_score = 1 - ((sum(sq_errs)/len(sq_errs)) / 0.25)
     else:
@@ -433,7 +445,8 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
         matches = sampler._random_schedule(teams)
 
     probs = sampler.sample_league(teams, matches, wildcard_slots, n_samples)
-    records,match_preds,_ = predict_matches_dpc(sampler,matches,static_ratings)
+    records,match_preds,_ = predict_matches_dpc(sampler, matches,
+        f"data/{folder}/match_predictions.json", timestamp, static_ratings)
     ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
               for team in sampler.model.ratings.keys()}
     output_json = {

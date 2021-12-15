@@ -32,10 +32,16 @@ class Simulator:
 
         Setting this option to True results in a tighter distribution
         and a significantly faster runtime.
+    update_on_existing : bool, default=False
+        If true, team ratings will be updated based on existing results.
+        Otherwise ratings will only be updated on simulated results.
+
+        If static_ratings is False, this option has no effect.
     """
-    def __init__(self, model, static_ratings=False):
+    def __init__(self, model, static_ratings=False, update_on_existing=False):
         self.model = model
         self.static_ratings = static_ratings
+        self.update_on_existing = update_on_existing
 
     def sim_bo1(self, team1, team2):
         """Simulates a best-of-1 match.
@@ -186,7 +192,7 @@ class TIEliminationBracket(Simulator):
         if max(match[2]) < n//2 + 1:
             result = self.sim_bo_n(n, match[0], match[1])
             match[2] = result
-        elif not self.static_ratings:
+        elif not self.static_ratings and self.update_on_existing:
             self.model.update_ratings(*match)
         return 1 - int(match[2][0] == n//2 + 1)
 
@@ -311,7 +317,7 @@ class TIGroupStage(Simulator):
                         result = self.sim_bo2(match[0], match[1],momentum=0.05)
                 else:
                     result = (match[2], 2 - match[2])
-                    if not self.static_ratings:
+                    if not self.static_ratings and self.update_on_existing:
                         # use normal k parameter for actual results
                         self.model.k = base_k
                         self.model.update_ratings(match[0], match[1], result)
@@ -400,7 +406,7 @@ class DPCLeague(Simulator):
                             result = [0, 2]
                         else:
                             result = [0, 0]
-                    elif not self.static_ratings:
+                    elif not self.static_ratings and self.update_on_existing:
                         self.model.update_ratings(match[0], match[1], result)
 
                 if sum(result) > 0:
@@ -468,7 +474,7 @@ class DPCMajor(Simulator):
                         result = self.sim_bo2(match[0], match[1],momentum=0.05)
                 else:
                     result = match[2]
-                    if not self.static_ratings:
+                    if not self.static_ratings and self.update_on_existing:
                         self.model.update_ratings(match[0], match[1], result)
                 records[match[0]][2 - result[0]] += 1
                 records[match[1]][2 - result[1]] += 1
@@ -553,7 +559,7 @@ class DPCMajor(Simulator):
         if len(match[2]) == 0:
             result = self.sim_bo_n(n, match[0], match[1])
             match[2] = result
-        elif not self.static_ratings:
+        elif not self.static_ratings and self.update_on_existing:
             self.model.update_ratings(*match)
         return 1 - int(match[2][0] == n//2 + 1)
 
