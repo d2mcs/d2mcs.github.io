@@ -75,7 +75,8 @@ class MatchDatabase:
                 radiant_acc4, radiant_acc5, dire_acc1, dire_acc2, dire_acc3,
                 dire_acc4, dire_acc5, radiant_win, radiant_teamid, dire_teamid,
                 timestamp, match_id, series_id, matches.league_id,
-                liquipediatier.tier
+                liquipediatier.tier,
+                radiant_ban1, radiant_ban2, dire_ban1, dire_ban2
             FROM matches JOIN liquipediatier
                          ON matches.league_id = liquipediatier.league_id
             WHERE liquipediatier.tier <= {max_tier}
@@ -83,7 +84,11 @@ class MatchDatabase:
             ORDER BY match_id"""
 
         for row in self.cur.execute(match_query):
-            yield Match(row)
+            # if first 4 bans are empty, something has gone wrong
+            # (this happens for some matches abandonded due
+            #  to lobby issues)
+            if not all(row[18:]) == 0:
+                yield Match(row)
 
     def get_player_ids(self, min_count=0):
         """Collects a list of players who have competed in a minium

@@ -446,7 +446,8 @@ def generate_data_dpc(ratings_file, matches, output_file, n_samples, folder, k,
 
     probs = sampler.sample_league(teams, matches, wildcard_slots, n_samples)
     records,match_preds,_ = predict_matches_dpc(sampler, matches,
-        f"data/{folder}/match_predictions.json", timestamp, static_ratings)
+        f"data/{folder}/match_predictions_{output_file}.json",
+        timestamp, static_ratings)
     ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
               for team in sampler.model.ratings.keys()}
     output_json = {

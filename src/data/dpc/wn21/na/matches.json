@@ -16,8 +16,8 @@
     ],
     [
       ["Evil Geniuses", "Wildcard Gaming", [0, 2]],
-      ["4 Zoomers", "simply TOOBASED", []],
-      ["Arkosh Gaming", "Black N Yellow", []],
+      ["4 Zoomers", "simply TOOBASED", [2, 0]],
+      ["Arkosh Gaming", "Black N Yellow", [2, 1]],
       ["Quincy Crew", "Wildcard Gaming", []],
       ["Evil Geniuses", "simply TOOBASED", []]
     ],
