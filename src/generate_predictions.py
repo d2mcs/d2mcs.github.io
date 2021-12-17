@@ -222,7 +222,8 @@ def main():
     elif args.global_ratings:
         if args.train_elo:
             generate_global_ratings_elo(3, k, 1.5, "wn21", timestamp)
-        generate_html_global_rankings("global_ratings.html", "wn21")
+        generate_html_global_rankings("global_ratings.html", "wn21",
+                                      n_samples, k)
     else:
         custom_report(args.event, args.region, k, n_samples,
                       timestamp, args.static_ratings)

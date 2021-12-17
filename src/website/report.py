@@ -8,10 +8,29 @@ from datetime import date, datetime
 
 from jinja2 import Template
 
-from model.sampler import (TISampler, DPCLeagueSampler, DPCMajorSampler)
+from model.sampler import (TISampler, DPCLeagueSampler,
+                           DPCMajorSampler, DPCSeasonSampler)
 from model.forecaster import PlayerModel, TeamModel
 from model.forecaster_glicko import Glicko2Model
 from model.match_data import MatchDatabase
+
+def format_prob(prob, n_samples):
+    """Translates a probability into a neat string"""
+    if prob < 1/n_samples:
+        return "-"
+    elif prob > (n_samples - 1)/n_samples:
+        return "✓"
+    elif prob < 0.001:
+        return "<0.1%"
+    elif prob > 0.999:
+        return ">99.9%"
+    else:
+        return f"{prob*100:.1f}%"
+
+def color_prob(prob):
+    """Generates a purple shade which is darker for higher probs"""
+    return (f"rgb({240 - 120*prob:0.0f}, {240 - 130*prob:0.0f}, "
+            f"{240 - 70*prob:0.0f})")
 
 def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
     """Code for generating rating estimates for each provided team
@@ -322,6 +341,48 @@ def predict_matches_major(sampler, matches, static_ratings):
         brier_skill_score = 0
     return records, match_predictions, brier_skill_score
 
+def predict_results_season(season, n_samples, ratings_type, k):
+    """Generates TI qualification probabilities and estimated DPC points
+    over a full DPC season.
+    """
+    season_format = "21-22"
+    if ratings_type == "elo":
+        rating_file = f"elo_ratings_lan.json"
+    else:
+        rating_file = f"fixed_ratings.json"
+
+    teams = {}
+    matches = {}
+    sampler = DPCSeasonSampler.from_ratings_file(
+        f"data/dpc/wn{season}/na/{rating_file}", k=k, static_ratings=False)
+    for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
+        with open(f"data/dpc/wn{season}/{region}/teams.json") as team_f:
+            teams[region] = json.load(team_f)
+        with open(f"data/dpc/wn{season}/{region}/{rating_file}") as rating_f:
+            for team, rating in json.load(rating_f).items():
+                sampler.model.ratings[team] = rating
+
+    for tour in ["wn", "sp", "sm"]:
+        matches[tour] = {}
+        for region in ["na", "sa", "weu", "eeu", "cn", "sea", "major"]:
+            if tour == "wn":
+                match_file = f"data/dpc/{tour}{season}/{region}/matches.json"
+            else:
+                match_file = (f"data/dpc/{tour}{int(season) + 1}/"
+                              f"{region}/matches.json")
+            if Path(match_file).exists():
+                with open(match_file) as match_f:
+                    matches[tour][region] = json.load(match_f)
+
+    probs = sampler.sample_season(teams, season_format, n_samples, matches)
+    formatted_probs = []
+    for (team, (points, _, qual_prob)) in sorted(probs["final_rank"].items(),
+                                                 key=lambda x: -x[1][2]):
+        formatted_probs.append([team, format_prob(qual_prob, n_samples),
+                                color_prob(qual_prob), f"{points:.0f}"])
+
+    return formatted_probs
+
 def generate_html_dpc(output_file, tabs, title, wildcard_slots):
     """Generates the output forecast report with the provided tabs and
     title. generate_data is used for generating the JSON data files
@@ -582,7 +643,7 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
     with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
         json.dump(output_json, json_f)
 
-def generate_html_global_rankings(output_file, tour):
+def generate_html_global_rankings(output_file, tour, n_samples, k):
     """Generates a global team rating using the
     /global/elo_ratings.json data file
 
@@ -594,6 +655,10 @@ def generate_html_global_rankings(output_file, tour):
         DPC tour used to get team list. This is used to find images,
         so it should be whatever the folder in /data/dpc is called
         (e.g., "sp21")
+    n_samples : int
+        Number of Monte Carlo samples to simulate.
+    k : int
+        K parameter for Elo model.
     """
     with open("data/template_global_rating.html") as input_f:
         template_str = input_f.read()
@@ -605,6 +670,7 @@ def generate_html_global_rankings(output_file, tour):
     regions = ["na", "sa", "weu", "eeu", "cn", "sea"]
     region_ratings = {region: {"upper": 0, "lower": 0} for region in regions}
     division_map = {}
+    region_map = {}
     for region in regions:
         with open(f"data/dpc/{tour}/{region}/teams.json") as team_f:
             team_data = json.load(team_f)
@@ -613,6 +679,7 @@ def generate_html_global_rankings(output_file, tour):
                 division_map[team] = division
     for team, region, lan_rating, online_rating, _ in team_ratings["ratings"]:
         region_ratings[region][division_map[team]] += lan_rating/8
+        region_map[team] = region
 
     full_name = {
         "na": "North America", "sa": "South America", "weu": "Western Europe",
@@ -623,10 +690,18 @@ def generate_html_global_rankings(output_file, tour):
                  for team, region, lan_rating, online_rating, last_update in
                  sorted(team_ratings["ratings"], key=lambda x: -x[2])]
 
+    ti_qual_data_elo = predict_results_season(tour[2:], n_samples, "elo", k)
+    ti_qual_data_fixed = predict_results_season(tour[2:], n_samples,"fixed", k)
+    for i in range(len(ti_qual_data_elo)):
+        ti_qual_data_elo[i].append(region_map[ti_qual_data_elo[i][0]])
+        ti_qual_data_fixed[i].append(region_map[ti_qual_data_fixed[i][0]])
+
     output = template.render(team_data=team_data, tour=tour,
                              timestamp=team_ratings["timestamp"],
                              region_ratings=region_ratings,
-                             full_name=full_name)
+                             full_name=full_name,
+                             ti_qual_data={"elo": ti_qual_data_elo,
+                                           "fixed": ti_qual_data_fixed})
     with open(f"../{output_file}", "w") as output_f:
         output_f.write(output)
 

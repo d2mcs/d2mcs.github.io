@@ -924,10 +924,10 @@ class DPCSeasonSampler(Sampler):
         season_ranks = {}
         for team, points in tied_teams:
             season_ranks[(team, points)] = []
-            for season in ["summer", "spring", "winter"]:
+            for season in ["sm", "sp", "wn"]:
                 season_ranks[(team, points)].append(
                     int(major_results[season].get(team, "20").split("-")[0]))
-            for season in ["summer", "spring", "winter"]:
+            for season in ["sm", "sp", "wn"]:
                 season_ranks[(team, points)].append(
                     league_results[season].get(team, 9))
 
@@ -940,7 +940,7 @@ class DPCSeasonSampler(Sampler):
         dpc_points[tie_start:tie_end + 1] = sorted_teams
 
     @staticmethod
-    def get_sample(model, teams, season, static_ratings):
+    def get_sample(model, teams, season, static_ratings, matches):
         """Simulates a single DPC season consisting of 3 tours (6
         regional leagues followed by a major).
 
@@ -956,6 +956,8 @@ class DPCSeasonSampler(Sampler):
             Determines which point allocation scheme to use.
         static_ratings : bool
             Copy of self.static_ratings.
+        matches : dict
+            (See: sample_season documentation below)
 
         Returns
         -------
@@ -972,18 +974,19 @@ class DPCSeasonSampler(Sampler):
             for division in ["upper", "lower"]:
                 for team in teams[region][division]:
                     dpc_points[team] = 0
-        major_results = {"winter": {}, "spring": {}, "summer": {}}
-        league_results = {"winter": {}, "spring": {}, "summer": {}}
+        major_results = {"wn": {}, "sp": {}, "sm": {}}
+        league_results = {"wn": {}, "sp": {}, "sm": {}}
         wildcard_slots = {"sea":1, "eeu":1, "cn":2, "weu":2, "na":0, "sa":0}
 
         league_allocation, major_allocation = (
             DPCSeasonSampler.get_point_allocation(season))
 
-        for tour_idx, tour in enumerate(["winter", "spring", "summer"]):
+        for tour_idx, tour in enumerate(["wn", "sp", "sm"]):
             # regional league simulation:
             major_teams = {"playoffs": [], "group stage": [], "wildcard": []}
             for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
-                points, _ = DPCLeagueSampler.get_sample(model, {},
+                points, _ = DPCLeagueSampler.get_sample(model,
+                    matches.get(tour, {}).get(region, {}),
                     teams[region], wildcard_slots[region], static_ratings)
 
                 # major seeding
@@ -1003,7 +1006,8 @@ class DPCSeasonSampler(Sampler):
                     league_results[tour][team] = i
 
             # major simulation:
-            major_ranks, _, _ = DPCMajorSampler.get_sample(model, {},
+            major_ranks, _, _ = DPCMajorSampler.get_sample(model,
+                matches.get(tour, {}).get("major", {}),
                 major_teams, static_ratings)
             for rank, team_set in major_ranks.items():
                 for team in team_set:
@@ -1036,7 +1040,7 @@ class DPCSeasonSampler(Sampler):
         """
         point_value = {}
         _, major_allocation = self.get_point_allocation(season)
-        for tour_idx, tour in enumerate(["winter", "spring", "summer"]):
+        for tour_idx, tour in enumerate(["wn", "sp", "sm"]):
             point_value[tour] = {}
             for i, rank in enumerate(["1", "2", "3", "4", "5-6", "7-8"]):
                 point_value[tour][rank] = major_allocation[i][tour_idx]
@@ -1044,13 +1048,13 @@ class DPCSeasonSampler(Sampler):
         contributions = []
         for team in teams:
             major_contribution = 0
-            for tour in ["winter", "spring", "summer"]:
+            for tour in ["wn", "sp", "sm"]:
                 rank = major_results[tour].get(team, "")
                 major_contribution += point_value[tour].get(rank, 0)
             contributions.append(major_contribution)
         return contributions
 
-    def sample_season(self, teams, season, n_samples):
+    def sample_season(self, teams, season, n_samples, matches={}):
         """Gets many samples of a full DPC season given a list of teams
         for each region.
 
@@ -1072,6 +1076,20 @@ class DPCSeasonSampler(Sampler):
             Determines which point allocation scheme to use.
         n_samples : int
             Number of simulations to run.
+        matches : dict, default = {}
+            (See: sample_season documentation below)
+            Match data for each tour for each region / major:
+            {
+                "wn": {
+                    "na": ...
+                    "sa": ...
+                    "major": ...
+                },
+                "sp": { ... }
+                "sm": { ... }
+            }
+            If any key is missing, the matches for that key will be
+            generated randomly.
         """
         all_teams = []
         for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
@@ -1079,8 +1097,8 @@ class DPCSeasonSampler(Sampler):
                 for team in teams[region][division]:
                     all_teams.append(team)
 
-        # mean/variance of team ranks
-        final_rank_probs = {team: [0, 0] for team in all_teams}
+        # mean/variance of team ranks, ti qual probs
+        final_rank_probs = {team: [0, 0, 0] for team in all_teams}
         # rank/point joint probability distribution
         rank_point_dist = [{} for rank in range(96)]
         # probability of obtaining x points from a major
@@ -1095,18 +1113,20 @@ class DPCSeasonSampler(Sampler):
 
                 with Pool() as pool:
                     sim_results = [pool.apply_async(self.get_sample, (
-                            self.model, teams, season, self.static_ratings))
+                            self.model, teams, season,
+                            self.static_ratings, matches))
                         for _ in range(pool_size)]
                     for sim_result in sim_results:
                         dpc_points, major_results, _ = sim_result.get()
                         ti_teams = []
                         for i, (team, points) in enumerate(dpc_points):
-                            final_rank_probs[team] = self._welford_update(
-                                *final_rank_probs[team], points, sim_count)
+                            final_rank_probs[team][:2] = self._welford_update(
+                                *final_rank_probs[team][:2], points, sim_count)
                             rank_point_dist[i][points]=rank_point_dist[i].get(
                                 points, 0) + 1/n_samples/96
                             if i < 12:
                                 ti_teams.append(team)
+                                final_rank_probs[team][2] += 1/n_samples
 
                         major_contribution = self._get_major_contribution(
                             ti_teams, major_results, season)

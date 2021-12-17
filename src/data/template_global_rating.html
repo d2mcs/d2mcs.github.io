@@ -35,6 +35,12 @@
       <button id="rank-table-tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#rank-table" aria-controls="rank-table" aria-current="page">Global Ranking</button>
     </li>
     <li class="nav-item">
+      <button id="ti-qual-elo-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#ti-qual-elo" aria-controls="ti-qual-elo">TI Invite Probs (Elo)</button>
+    </li>
+    <li class="nav-item">
+      <button id="ti-qual-fixed-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#ti-qual-fixed" aria-controls="ti-qual-fixed">TI Invite Probs (50% Win Probs)</button>
+    </li>
+    <li class="nav-item">
       <button id="region-overview-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#region-overview" aria-controls="region-overview">Region Overview</button>
     </li>
   </ul>
@@ -69,6 +75,34 @@
         </table>
       </div>
     </div>
+    {% for rating_type in ["elo", "fixed"] %}
+    <div class="tab-pane" id="ti-qual-{{rating_type}}" aria-labelledby="ti-qual-{{rating_type}}-tab">
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Team</th>
+            <th scope="col">Estimated Points</th>
+            <th scope="col">Invite Prob.</th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        {% for team, qual_prob, prob_color, est_points, region in ti_qual_data[rating_type] %}
+        <tr style="position: relative">
+          <td class="global-rating">{{loop.index}}</td>
+          <td class="global-rating"><img src="dpc/{{tour}}/{{region}}/image/{{team}}.png" height=20px> <span>{{team}}</span></td>
+          <td class="global-rating">{{est_points}}</td>
+          <td class="global-rating" style="background-color: {{prob_color}}">{{qual_prob}}</td>
+          <td class="global-rating"><img src="image/{{region}}.png" height=20px> <span class="d-none d-sm-block d-md-inline">{{full_name[region]}}</span><span class="d-inline d-sm-none">{{region|upper}}</span></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+      </div>
+    </div>
+    {% endfor %}
     <div class="tab-pane" id="region-overview" aria-labelledby="region-overview-tab">
       <div class="table-responsive">
         <table class="table table-striped table-sm">

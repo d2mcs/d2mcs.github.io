@@ -29,10 +29,16 @@
 </nav>
 <div class="container mt-3 mb-3 flex-grow-1" style="max-width: 800px">
   <h1 class="text-center">Global DPC Team Ratings</h1>
-  <h6 class="text-center pb-3">Updated 2021-12-17 01:44 UTC</h6>
+  <h6 class="text-center pb-3">Updated 2021-12-17 21:40 UTC</h6>
   <ul class="nav nav-tabs nav-fill">
     <li class="nav-item">
       <button id="rank-table-tab" class="nav-link active" data-bs-toggle="tab" data-bs-target="#rank-table" aria-controls="rank-table" aria-current="page">Global Ranking</button>
+    </li>
+    <li class="nav-item">
+      <button id="ti-qual-elo-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#ti-qual-elo" aria-controls="ti-qual-elo">TI Invite Probs (Elo)</button>
+    </li>
+    <li class="nav-item">
+      <button id="ti-qual-fixed-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#ti-qual-fixed" aria-controls="ti-qual-fixed">TI Invite Probs (50% Win Probs)</button>
     </li>
     <li class="nav-item">
       <button id="region-overview-tab" class="nav-link" data-bs-toggle="tab" data-bs-target="#region-overview" aria-controls="region-overview">Region Overview</button>
@@ -498,15 +504,6 @@
         <tr style="position: relative">
           <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c 50%, transparent 0);"></td>
           <td class="global-rating">50</td>
-          <td class="global-rating"><img id="im-" src="dpc/wn21/weu/image/COOLGUYS.png" height=20px> <span id="team-">COOLGUYS</span></td>
-          <td class="global-rating" id="lan-rating-">1518</td>
-          <td class="global-rating" id="online-rating-">1523</td>
-          <td class="global-rating" id="last-update-"><span class="d-none d-sm-block d-md-inline">2021-09-13</span></td>
-          <td class="global-rating" id="region-"><img id="im-" src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
-        </tr>
-        <tr style="position: relative">
-          <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c 50%, transparent 0);"></td>
-          <td class="global-rating">51</td>
           <td class="global-rating"><img id="im-" src="dpc/wn21/sa/image/Wolf Team.png" height=20px> <span id="team-">Wolf Team</span></td>
           <td class="global-rating" id="lan-rating-">1516</td>
           <td class="global-rating" id="online-rating-">1528</td>
@@ -515,7 +512,7 @@
         </tr>
         <tr style="position: relative">
           <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c 49%, transparent 0);"></td>
-          <td class="global-rating">52</td>
+          <td class="global-rating">51</td>
           <td class="global-rating"><img id="im-" src="dpc/wn21/sea/image/TNC Predator.png" height=20px> <span id="team-">TNC Predator</span></td>
           <td class="global-rating" id="lan-rating-">1514</td>
           <td class="global-rating" id="online-rating-">1530</td>
@@ -524,12 +521,21 @@
         </tr>
         <tr style="position: relative">
           <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c 49%, transparent 0);"></td>
-          <td class="global-rating">53</td>
+          <td class="global-rating">52</td>
           <td class="global-rating"><img id="im-" src="dpc/wn21/eeu/image/Nemiga Gaming.png" height=20px> <span id="team-">Nemiga Gaming</span></td>
           <td class="global-rating" id="lan-rating-">1510</td>
           <td class="global-rating" id="online-rating-">1522</td>
           <td class="global-rating" id="last-update-"><span class="d-none d-sm-block d-md-inline">2021-12-16</span></td>
           <td class="global-rating" id="region-"><img id="im-" src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c 49%, transparent 0);"></td>
+          <td class="global-rating">53</td>
+          <td class="global-rating"><img id="im-" src="dpc/wn21/weu/image/COOLGUYS.png" height=20px> <span id="team-">COOLGUYS</span></td>
+          <td class="global-rating" id="lan-rating-">1510</td>
+          <td class="global-rating" id="online-rating-">1513</td>
+          <td class="global-rating" id="last-update-"><span class="d-none d-sm-block d-md-inline">2021-09-13</span></td>
+          <td class="global-rating" id="region-"><img id="im-" src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
         </tr>
         <tr style="position: relative">
           <td class="rating-bar" colspan="5" style="background-image: linear-gradient(to right, #0000000c 49%, transparent 0);"></td>
@@ -917,6 +923,1384 @@
           <td class="global-rating" id="online-rating-">1351</td>
           <td class="global-rating" id="last-update-"><span class="d-none d-sm-block d-md-inline">2021-12-07</span></td>
           <td class="global-rating" id="region-"><img id="im-" src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane" id="ti-qual-elo" aria-labelledby="ti-qual-elo-tab">
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Team</th>
+            <th scope="col">Estimated Points</th>
+            <th scope="col">Invite Prob.</th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        <tr style="position: relative">
+          <td class="global-rating">1</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/PSG.LGD.png" height=20px> <span>PSG.LGD</span></td>
+          <td class="global-rating">2113</td>
+          <td class="global-rating" style="background-color: rgb(123, 114, 172)">97.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">2</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Team Spirit.png" height=20px> <span>Team Spirit</span></td>
+          <td class="global-rating">1887</td>
+          <td class="global-rating" style="background-color: rgb(126, 117, 174)">94.8%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">3</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/T1.png" height=20px> <span>T1</span></td>
+          <td class="global-rating">1342</td>
+          <td class="global-rating" style="background-color: rgb(148, 141, 186)">76.5%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">4</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Secret.png" height=20px> <span>Team Secret</span></td>
+          <td class="global-rating">1224</td>
+          <td class="global-rating" style="background-color: rgb(157, 150, 192)">69.0%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">5</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Team Undying.png" height=20px> <span>Team Undying</span></td>
+          <td class="global-rating">1066</td>
+          <td class="global-rating" style="background-color: rgb(161, 154, 194)">66.1%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">6</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Evil Geniuses.png" height=20px> <span>Evil Geniuses</span></td>
+          <td class="global-rating">1003</td>
+          <td class="global-rating" style="background-color: rgb(164, 158, 196)">63.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">7</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Invictus Gaming.png" height=20px> <span>Invictus Gaming</span></td>
+          <td class="global-rating">1024</td>
+          <td class="global-rating" style="background-color: rgb(168, 162, 198)">59.9%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">8</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Thunder Predator.png" height=20px> <span>Thunder Predator</span></td>
+          <td class="global-rating">927</td>
+          <td class="global-rating" style="background-color: rgb(172, 167, 200)">56.5%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">9</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/BOOM Esports.png" height=20px> <span>BOOM Esports</span></td>
+          <td class="global-rating">914</td>
+          <td class="global-rating" style="background-color: rgb(177, 172, 203)">52.4%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">10</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Virtus.pro.png" height=20px> <span>Virtus.pro</span></td>
+          <td class="global-rating">861</td>
+          <td class="global-rating" style="background-color: rgb(180, 175, 205)">50.2%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">11</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Tundra Esports.png" height=20px> <span>Tundra Esports</span></td>
+          <td class="global-rating">857</td>
+          <td class="global-rating" style="background-color: rgb(181, 176, 205)">49.5%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">12</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/beastcoast.png" height=20px> <span>beastcoast</span></td>
+          <td class="global-rating">769</td>
+          <td class="global-rating" style="background-color: rgb(187, 182, 209)">44.4%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">13</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Quincy Crew.png" height=20px> <span>Quincy Crew</span></td>
+          <td class="global-rating">744</td>
+          <td class="global-rating" style="background-color: rgb(191, 187, 211)">41.0%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">14</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Liquid.png" height=20px> <span>Team Liquid</span></td>
+          <td class="global-rating">743</td>
+          <td class="global-rating" style="background-color: rgb(192, 188, 212)">40.0%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">15</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Infamous.png" height=20px> <span>Infamous</span></td>
+          <td class="global-rating">500</td>
+          <td class="global-rating" style="background-color: rgb(211, 209, 223)">24.1%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">16</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/OG.png" height=20px> <span>OG</span></td>
+          <td class="global-rating">459</td>
+          <td class="global-rating" style="background-color: rgb(212, 210, 224)">23.0%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">17</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Royal Never Give Up.png" height=20px> <span>Royal Never Give Up</span></td>
+          <td class="global-rating">442</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.9%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">18</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Fnatic.png" height=20px> <span>Fnatic</span></td>
+          <td class="global-rating">378</td>
+          <td class="global-rating" style="background-color: rgb(219, 218, 228)">17.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">19</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Nigma Galaxy.png" height=20px> <span>Nigma Galaxy</span></td>
+          <td class="global-rating">305</td>
+          <td class="global-rating" style="background-color: rgb(220, 219, 229)">16.3%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">20</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Vici Gaming.png" height=20px> <span>Vici Gaming</span></td>
+          <td class="global-rating">346</td>
+          <td class="global-rating" style="background-color: rgb(221, 219, 229)">15.9%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">21</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Team Aster.png" height=20px> <span>Team Aster</span></td>
+          <td class="global-rating">336</td>
+          <td class="global-rating" style="background-color: rgb(222, 220, 229)">15.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">22</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Team SMG.png" height=20px> <span>Team SMG</span></td>
+          <td class="global-rating">350</td>
+          <td class="global-rating" style="background-color: rgb(223, 221, 230)">14.5%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">23</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Tickles.png" height=20px> <span>Team Tickles</span></td>
+          <td class="global-rating">302</td>
+          <td class="global-rating" style="background-color: rgb(223, 222, 230)">13.8%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">24</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Polaris Esports.png" height=20px> <span>Polaris Esports</span></td>
+          <td class="global-rating">270</td>
+          <td class="global-rating" style="background-color: rgb(225, 224, 231)">12.4%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">25</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Lava.png" height=20px> <span>Lava</span></td>
+          <td class="global-rating">301</td>
+          <td class="global-rating" style="background-color: rgb(225, 224, 231)">12.3%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">26</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/HellRaisers.png" height=20px> <span>HellRaisers</span></td>
+          <td class="global-rating">349</td>
+          <td class="global-rating" style="background-color: rgb(226, 225, 232)">11.9%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">27</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Natus Vincere.png" height=20px> <span>Natus Vincere</span></td>
+          <td class="global-rating">296</td>
+          <td class="global-rating" style="background-color: rgb(226, 225, 232)">11.5%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">28</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/4 Zoomers.png" height=20px> <span>4 Zoomers</span></td>
+          <td class="global-rating">334</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 232)">10.7%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">29</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Talon Esports.png" height=20px> <span>Talon Esports</span></td>
+          <td class="global-rating">214</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">30</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/CIS Rejects.png" height=20px> <span>CIS Rejects</span></td>
+          <td class="global-rating">228</td>
+          <td class="global-rating" style="background-color: rgb(229, 228, 233)">9.4%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">31</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Alliance.png" height=20px> <span>Alliance</span></td>
+          <td class="global-rating">185</td>
+          <td class="global-rating" style="background-color: rgb(230, 230, 234)">8.1%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">32</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Chicken Fighters.png" height=20px> <span>Chicken Fighters</span></td>
+          <td class="global-rating">180</td>
+          <td class="global-rating" style="background-color: rgb(231, 230, 235)">7.9%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">33</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Xtreme Gaming.png" height=20px> <span>Xtreme Gaming</span></td>
+          <td class="global-rating">198</td>
+          <td class="global-rating" style="background-color: rgb(232, 231, 235)">7.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">34</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Motivate.Trust Gaming.png" height=20px> <span>Motivate.Trust Gaming</span></td>
+          <td class="global-rating">208</td>
+          <td class="global-rating" style="background-color: rgb(232, 231, 235)">6.8%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">35</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/EHOME.png" height=20px> <span>EHOME</span></td>
+          <td class="global-rating">161</td>
+          <td class="global-rating" style="background-color: rgb(234, 233, 236)">5.4%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">36</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Entity.png" height=20px> <span>Entity</span></td>
+          <td class="global-rating">109</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.4%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">37</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Wildcard Gaming.png" height=20px> <span>Wildcard Gaming</span></td>
+          <td class="global-rating">224</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.3%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">38</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/NoPing e-sports.png" height=20px> <span>NoPing e-sports</span></td>
+          <td class="global-rating">146</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.3%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">39</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Nigma Galaxy SEA.png" height=20px> <span>Nigma Galaxy SEA</span></td>
+          <td class="global-rating">123</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.3%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">40</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Infinity Esports.png" height=20px> <span>Infinity Esports</span></td>
+          <td class="global-rating">132</td>
+          <td class="global-rating" style="background-color: rgb(236, 235, 237)">3.7%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">41</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/PuckChamp.png" height=20px> <span>PuckChamp</span></td>
+          <td class="global-rating">191</td>
+          <td class="global-rating" style="background-color: rgb(236, 235, 237)">3.6%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">42</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/HYDRA.png" height=20px> <span>HYDRA</span></td>
+          <td class="global-rating">109</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.2%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">43</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Hokori.png" height=20px> <span>Hokori</span></td>
+          <td class="global-rating">118</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.2%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">44</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Balrogs.png" height=20px> <span>Balrogs</span></td>
+          <td class="global-rating">102</td>
+          <td class="global-rating" style="background-color: rgb(237, 236, 238)">2.8%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">45</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Wolf Team.png" height=20px> <span>Wolf Team</span></td>
+          <td class="global-rating">84</td>
+          <td class="global-rating" style="background-color: rgb(237, 237, 238)">2.4%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">46</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/APU King Of Kings.png" height=20px> <span>APU King Of Kings</span></td>
+          <td class="global-rating">139</td>
+          <td class="global-rating" style="background-color: rgb(237, 237, 238)">2.3%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">47</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Brame.png" height=20px> <span>Brame</span></td>
+          <td class="global-rating">66</td>
+          <td class="global-rating" style="background-color: rgb(237, 237, 238)">2.3%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">48</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/TNC Predator.png" height=20px> <span>TNC Predator</span></td>
+          <td class="global-rating">72</td>
+          <td class="global-rating" style="background-color: rgb(237, 237, 239)">2.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">49</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Gambit Esports.png" height=20px> <span>Gambit Esports</span></td>
+          <td class="global-rating">76</td>
+          <td class="global-rating" style="background-color: rgb(237, 237, 239)">2.1%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">50</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Ragdoll.png" height=20px> <span>Ragdoll</span></td>
+          <td class="global-rating">53</td>
+          <td class="global-rating" style="background-color: rgb(238, 238, 239)">1.6%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">51</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Omega Gaming.png" height=20px> <span>Omega Gaming</span></td>
+          <td class="global-rating">61</td>
+          <td class="global-rating" style="background-color: rgb(238, 238, 239)">1.5%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">52</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/V-Gaming.png" height=20px> <span>V-Gaming</span></td>
+          <td class="global-rating">66</td>
+          <td class="global-rating" style="background-color: rgb(238, 238, 239)">1.4%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">53</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Team MagMa.png" height=20px> <span>Team MagMa</span></td>
+          <td class="global-rating">65</td>
+          <td class="global-rating" style="background-color: rgb(239, 238, 239)">1.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">54</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/OB Esports x Neon.png" height=20px> <span>OB Esports x Neon</span></td>
+          <td class="global-rating">42</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 239)">1.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">55</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Winstrike Team.png" height=20px> <span>Winstrike Team</span></td>
+          <td class="global-rating">41</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 239)">0.9%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">56</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/CHILLAX.png" height=20px> <span>CHILLAX</span></td>
+          <td class="global-rating">27</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 239)">0.8%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">57</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Gorillaz-Pride.png" height=20px> <span>Gorillaz-Pride</span></td>
+          <td class="global-rating">41</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 239)">0.8%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">58</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/SG esports.png" height=20px> <span>SG esports</span></td>
+          <td class="global-rating">42</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 239)">0.7%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">59</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Nemiga Gaming.png" height=20px> <span>Nemiga Gaming</span></td>
+          <td class="global-rating">33</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.7%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">60</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Phoenix Gaming.png" height=20px> <span>Phoenix Gaming</span></td>
+          <td class="global-rating">37</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.6%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">61</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Execration.png" height=20px> <span>Execration</span></td>
+          <td class="global-rating">42</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.6%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">62</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Sparking Arrow Gaming.png" height=20px> <span>Sparking Arrow Gaming</span></td>
+          <td class="global-rating">36</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.6%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">63</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/AS Monaco Gambit.png" height=20px> <span>AS Monaco Gambit</span></td>
+          <td class="global-rating">43</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.6%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">64</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Into The Breach.png" height=20px> <span>Into The Breach</span></td>
+          <td class="global-rating">20</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.5%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">65</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/LBZS.png" height=20px> <span>LBZS</span></td>
+          <td class="global-rating">34</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.5%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">66</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Bald Reborn.png" height=20px> <span>Team Bald Reborn</span></td>
+          <td class="global-rating">17</td>
+          <td class="global-rating" style="background-color: rgb(239, 239, 240)">0.5%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">67</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/COOLGUYS.png" height=20px> <span>COOLGUYS</span></td>
+          <td class="global-rating">12</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">68</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Team Empire.png" height=20px> <span>Team Empire</span></td>
+          <td class="global-rating">21</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">69</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Team DogChamp.png" height=20px> <span>Team DogChamp</span></td>
+          <td class="global-rating">35</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">70</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Arkosh Gaming.png" height=20px> <span>Arkosh Gaming</span></td>
+          <td class="global-rating">39</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">71</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Lilgun.png" height=20px> <span>Lilgun</span></td>
+          <td class="global-rating">13</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">72</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Black N Yellow.png" height=20px> <span>Black N Yellow</span></td>
+          <td class="global-rating">43</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">73</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/ShenZhen.png" height=20px> <span>ShenZhen</span></td>
+          <td class="global-rating">20</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.3%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">74</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Aster.Aries.png" height=20px> <span>Aster.Aries</span></td>
+          <td class="global-rating">18</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">75</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Team Unique.png" height=20px> <span>Team Unique</span></td>
+          <td class="global-rating">24</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">76</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/simply TOOBASED.png" height=20px> <span>simply TOOBASED</span></td>
+          <td class="global-rating">26</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">77</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Interitus.png" height=20px> <span>Interitus</span></td>
+          <td class="global-rating">14</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">78</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Fantastic Five.png" height=20px> <span>Fantastic Five</span></td>
+          <td class="global-rating">14</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">79</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Ghost Frogs.png" height=20px> <span>Ghost Frogs</span></td>
+          <td class="global-rating">8</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">80</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/5RATFORCESTAFF.png" height=20px> <span>5RATFORCESTAFF</span></td>
+          <td class="global-rating">24</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">81</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/KBU.US.png" height=20px> <span>KBU.US</span></td>
+          <td class="global-rating">19</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">82</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Electronic Boys.png" height=20px> <span>Electronic Boys</span></td>
+          <td class="global-rating">21</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">83</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/The Cut.png" height=20px> <span>The Cut</span></td>
+          <td class="global-rating">28</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">84</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Ybb Gaming.png" height=20px> <span>Ybb Gaming</span></td>
+          <td class="global-rating">12</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">85</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Inverse.png" height=20px> <span>Inverse</span></td>
+          <td class="global-rating">8</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.1%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">86</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Team Magnus.png" height=20px> <span>Team Magnus</span></td>
+          <td class="global-rating">17</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)">0.1%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">87</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/496 Gaming.png" height=20px> <span>496 Gaming</span></td>
+          <td class="global-rating">4</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">88</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/CDEC Gaming.png" height=20px> <span>CDEC Gaming</span></td>
+          <td class="global-rating">5</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">89</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/felt.png" height=20px> <span>felt</span></td>
+          <td class="global-rating">8</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">90</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Team Unknown.png" height=20px> <span>Team Unknown</span></td>
+          <td class="global-rating">5</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">91</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/5ManMidas.png" height=20px> <span>5ManMidas</span></td>
+          <td class="global-rating">7</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">92</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Army Geniuses.png" height=20px> <span>Army Geniuses</span></td>
+          <td class="global-rating">2</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">93</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/No Bounty Hunter.png" height=20px> <span>No Bounty Hunter</span></td>
+          <td class="global-rating">2</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">94</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/B8.png" height=20px> <span>B8</span></td>
+          <td class="global-rating">2</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">95</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/InterActive Philippines.png" height=20px> <span>InterActive Philippines</span></td>
+          <td class="global-rating">1</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">96</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Neptune Gaming.png" height=20px> <span>Neptune Gaming</span></td>
+          <td class="global-rating">1</td>
+          <td class="global-rating" style="background-color: rgb(240, 240, 240)"><0.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane" id="ti-qual-fixed" aria-labelledby="ti-qual-fixed-tab">
+      <div class="table-responsive">
+        <table class="table table-sm">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Team</th>
+            <th scope="col">Estimated Points</th>
+            <th scope="col">Invite Prob.</th>
+            <th scope="col">Region</th>
+          </tr>
+        </thead>
+        <tbody class="table-light">
+        <tr style="position: relative">
+          <td class="global-rating">1</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Liquid.png" height=20px> <span>Team Liquid</span></td>
+          <td class="global-rating">635</td>
+          <td class="global-rating" style="background-color: rgb(205, 203, 220)">28.8%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">2</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/BOOM Esports.png" height=20px> <span>BOOM Esports</span></td>
+          <td class="global-rating">566</td>
+          <td class="global-rating" style="background-color: rgb(209, 206, 222)">25.9%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">3</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/HellRaisers.png" height=20px> <span>HellRaisers</span></td>
+          <td class="global-rating">548</td>
+          <td class="global-rating" style="background-color: rgb(210, 207, 222)">25.1%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">4</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Team Spirit.png" height=20px> <span>Team Spirit</span></td>
+          <td class="global-rating">540</td>
+          <td class="global-rating" style="background-color: rgb(210, 208, 223)">24.9%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">5</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Thunder Predator.png" height=20px> <span>Thunder Predator</span></td>
+          <td class="global-rating">539</td>
+          <td class="global-rating" style="background-color: rgb(211, 209, 223)">24.2%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">6</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/T1.png" height=20px> <span>T1</span></td>
+          <td class="global-rating">505</td>
+          <td class="global-rating" style="background-color: rgb(212, 209, 223)">23.7%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">7</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Quincy Crew.png" height=20px> <span>Quincy Crew</span></td>
+          <td class="global-rating">532</td>
+          <td class="global-rating" style="background-color: rgb(212, 209, 224)">23.5%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">8</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Team Undying.png" height=20px> <span>Team Undying</span></td>
+          <td class="global-rating">529</td>
+          <td class="global-rating" style="background-color: rgb(212, 210, 224)">23.4%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">9</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/beastcoast.png" height=20px> <span>beastcoast</span></td>
+          <td class="global-rating">479</td>
+          <td class="global-rating" style="background-color: rgb(214, 211, 225)">22.0%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">10</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Secret.png" height=20px> <span>Team Secret</span></td>
+          <td class="global-rating">456</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.9%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">11</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/PuckChamp.png" height=20px> <span>PuckChamp</span></td>
+          <td class="global-rating">475</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.6%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">12</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/PSG.LGD.png" height=20px> <span>PSG.LGD</span></td>
+          <td class="global-rating">426</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.6%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">13</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Tickles.png" height=20px> <span>Team Tickles</span></td>
+          <td class="global-rating">448</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.6%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">14</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/LBZS.png" height=20px> <span>LBZS</span></td>
+          <td class="global-rating">426</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.6%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">15</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/OG.png" height=20px> <span>OG</span></td>
+          <td class="global-rating">446</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.5%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">16</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Vici Gaming.png" height=20px> <span>Vici Gaming</span></td>
+          <td class="global-rating">423</td>
+          <td class="global-rating" style="background-color: rgb(214, 212, 225)">21.4%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">17</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Royal Never Give Up.png" height=20px> <span>Royal Never Give Up</span></td>
+          <td class="global-rating">422</td>
+          <td class="global-rating" style="background-color: rgb(215, 212, 225)">21.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">18</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Invictus Gaming.png" height=20px> <span>Invictus Gaming</span></td>
+          <td class="global-rating">422</td>
+          <td class="global-rating" style="background-color: rgb(215, 212, 225)">21.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">19</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Team Aster.png" height=20px> <span>Team Aster</span></td>
+          <td class="global-rating">421</td>
+          <td class="global-rating" style="background-color: rgb(215, 212, 225)">21.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">20</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Motivate.Trust Gaming.png" height=20px> <span>Motivate.Trust Gaming</span></td>
+          <td class="global-rating">444</td>
+          <td class="global-rating" style="background-color: rgb(215, 213, 225)">21.0%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">21</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Phoenix Gaming.png" height=20px> <span>Phoenix Gaming</span></td>
+          <td class="global-rating">422</td>
+          <td class="global-rating" style="background-color: rgb(215, 213, 225)">20.9%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">22</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/EHOME.png" height=20px> <span>EHOME</span></td>
+          <td class="global-rating">417</td>
+          <td class="global-rating" style="background-color: rgb(215, 213, 225)">20.8%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">23</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Virtus.pro.png" height=20px> <span>Virtus.pro</span></td>
+          <td class="global-rating">429</td>
+          <td class="global-rating" style="background-color: rgb(216, 214, 226)">20.1%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">24</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Execration.png" height=20px> <span>Execration</span></td>
+          <td class="global-rating">389</td>
+          <td class="global-rating" style="background-color: rgb(217, 215, 227)">18.9%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">25</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Tundra Esports.png" height=20px> <span>Tundra Esports</span></td>
+          <td class="global-rating">387</td>
+          <td class="global-rating" style="background-color: rgb(218, 216, 227)">18.6%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">26</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/APU King Of Kings.png" height=20px> <span>APU King Of Kings</span></td>
+          <td class="global-rating">405</td>
+          <td class="global-rating" style="background-color: rgb(218, 216, 227)">18.5%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">27</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Natus Vincere.png" height=20px> <span>Natus Vincere</span></td>
+          <td class="global-rating">382</td>
+          <td class="global-rating" style="background-color: rgb(218, 216, 227)">18.5%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">28</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Wildcard Gaming.png" height=20px> <span>Wildcard Gaming</span></td>
+          <td class="global-rating">405</td>
+          <td class="global-rating" style="background-color: rgb(218, 216, 227)">18.3%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">29</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/4 Zoomers.png" height=20px> <span>4 Zoomers</span></td>
+          <td class="global-rating">402</td>
+          <td class="global-rating" style="background-color: rgb(218, 216, 227)">18.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">30</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Infamous.png" height=20px> <span>Infamous</span></td>
+          <td class="global-rating">403</td>
+          <td class="global-rating" style="background-color: rgb(218, 217, 227)">18.0%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">31</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Fnatic.png" height=20px> <span>Fnatic</span></td>
+          <td class="global-rating">366</td>
+          <td class="global-rating" style="background-color: rgb(219, 218, 228)">17.3%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">32</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Alliance.png" height=20px> <span>Alliance</span></td>
+          <td class="global-rating">337</td>
+          <td class="global-rating" style="background-color: rgb(220, 218, 228)">16.9%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">33</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Team SMG.png" height=20px> <span>Team SMG</span></td>
+          <td class="global-rating">355</td>
+          <td class="global-rating" style="background-color: rgb(220, 218, 228)">16.7%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">34</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Evil Geniuses.png" height=20px> <span>Evil Geniuses</span></td>
+          <td class="global-rating">294</td>
+          <td class="global-rating" style="background-color: rgb(223, 222, 230)">13.9%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">35</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/NoPing e-sports.png" height=20px> <span>NoPing e-sports</span></td>
+          <td class="global-rating">286</td>
+          <td class="global-rating" style="background-color: rgb(224, 222, 230)">13.6%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">36</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Lava.png" height=20px> <span>Lava</span></td>
+          <td class="global-rating">286</td>
+          <td class="global-rating" style="background-color: rgb(224, 223, 231)">13.4%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">37</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Chicken Fighters.png" height=20px> <span>Chicken Fighters</span></td>
+          <td class="global-rating">253</td>
+          <td class="global-rating" style="background-color: rgb(225, 224, 231)">12.6%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">38</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Team MagMa.png" height=20px> <span>Team MagMa</span></td>
+          <td class="global-rating">265</td>
+          <td class="global-rating" style="background-color: rgb(225, 224, 231)">12.5%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">39</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Hokori.png" height=20px> <span>Hokori</span></td>
+          <td class="global-rating">250</td>
+          <td class="global-rating" style="background-color: rgb(225, 224, 231)">12.3%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">40</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Xtreme Gaming.png" height=20px> <span>Xtreme Gaming</span></td>
+          <td class="global-rating">263</td>
+          <td class="global-rating" style="background-color: rgb(225, 224, 231)">12.2%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">41</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/AS Monaco Gambit.png" height=20px> <span>AS Monaco Gambit</span></td>
+          <td class="global-rating">238</td>
+          <td class="global-rating" style="background-color: rgb(226, 225, 232)">11.8%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">42</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Polaris Esports.png" height=20px> <span>Polaris Esports</span></td>
+          <td class="global-rating">233</td>
+          <td class="global-rating" style="background-color: rgb(226, 225, 232)">11.3%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">43</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/The Cut.png" height=20px> <span>The Cut</span></td>
+          <td class="global-rating">222</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 232)">11.0%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">44</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/COOLGUYS.png" height=20px> <span>COOLGUYS</span></td>
+          <td class="global-rating">209</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 232)">10.9%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">45</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Nigma Galaxy SEA.png" height=20px> <span>Nigma Galaxy SEA</span></td>
+          <td class="global-rating">211</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 232)">10.8%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">46</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Arkosh Gaming.png" height=20px> <span>Arkosh Gaming</span></td>
+          <td class="global-rating">221</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 232)">10.8%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">47</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Infinity Esports.png" height=20px> <span>Infinity Esports</span></td>
+          <td class="global-rating">216</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 233)">10.7%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">48</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Black N Yellow.png" height=20px> <span>Black N Yellow</span></td>
+          <td class="global-rating">222</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 233)">10.6%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">49</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Nigma Galaxy.png" height=20px> <span>Nigma Galaxy</span></td>
+          <td class="global-rating">206</td>
+          <td class="global-rating" style="background-color: rgb(227, 226, 233)">10.5%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">50</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/V-Gaming.png" height=20px> <span>V-Gaming</span></td>
+          <td class="global-rating">200</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.3%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">51</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Team Unique.png" height=20px> <span>Team Unique</span></td>
+          <td class="global-rating">202</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.3%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">52</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Ragdoll.png" height=20px> <span>Ragdoll</span></td>
+          <td class="global-rating">191</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.2%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">53</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/HYDRA.png" height=20px> <span>HYDRA</span></td>
+          <td class="global-rating">195</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.2%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">54</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/TNC Predator.png" height=20px> <span>TNC Predator</span></td>
+          <td class="global-rating">195</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">55</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/OB Esports x Neon.png" height=20px> <span>OB Esports x Neon</span></td>
+          <td class="global-rating">198</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">56</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Brame.png" height=20px> <span>Brame</span></td>
+          <td class="global-rating">195</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.0%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">57</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Entity.png" height=20px> <span>Entity</span></td>
+          <td class="global-rating">194</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.0%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">58</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/CIS Rejects.png" height=20px> <span>CIS Rejects</span></td>
+          <td class="global-rating">194</td>
+          <td class="global-rating" style="background-color: rgb(228, 227, 233)">10.0%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">59</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Gambit Esports.png" height=20px> <span>Gambit Esports</span></td>
+          <td class="global-rating">174</td>
+          <td class="global-rating" style="background-color: rgb(229, 228, 233)">9.3%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">60</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/simply TOOBASED.png" height=20px> <span>simply TOOBASED</span></td>
+          <td class="global-rating">186</td>
+          <td class="global-rating" style="background-color: rgb(229, 228, 234)">9.2%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">61</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/SG esports.png" height=20px> <span>SG esports</span></td>
+          <td class="global-rating">185</td>
+          <td class="global-rating" style="background-color: rgb(229, 228, 234)">9.2%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">62</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/5RATFORCESTAFF.png" height=20px> <span>5RATFORCESTAFF</span></td>
+          <td class="global-rating">171</td>
+          <td class="global-rating" style="background-color: rgb(229, 228, 234)">8.9%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">63</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Team DogChamp.png" height=20px> <span>Team DogChamp</span></td>
+          <td class="global-rating">169</td>
+          <td class="global-rating" style="background-color: rgb(229, 229, 234)">8.8%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">64</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Omega Gaming.png" height=20px> <span>Omega Gaming</span></td>
+          <td class="global-rating">159</td>
+          <td class="global-rating" style="background-color: rgb(230, 229, 234)">8.2%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">65</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Gorillaz-Pride.png" height=20px> <span>Gorillaz-Pride</span></td>
+          <td class="global-rating">158</td>
+          <td class="global-rating" style="background-color: rgb(230, 229, 234)">8.2%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">66</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Balrogs.png" height=20px> <span>Balrogs</span></td>
+          <td class="global-rating">157</td>
+          <td class="global-rating" style="background-color: rgb(230, 229, 234)">8.1%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">67</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Interitus.png" height=20px> <span>Interitus</span></td>
+          <td class="global-rating">156</td>
+          <td class="global-rating" style="background-color: rgb(230, 230, 234)">8.0%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">68</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Lilgun.png" height=20px> <span>Lilgun</span></td>
+          <td class="global-rating">146</td>
+          <td class="global-rating" style="background-color: rgb(231, 230, 235)">7.8%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">69</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Team Empire.png" height=20px> <span>Team Empire</span></td>
+          <td class="global-rating">142</td>
+          <td class="global-rating" style="background-color: rgb(231, 230, 235)">7.4%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">70</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/felt.png" height=20px> <span>felt</span></td>
+          <td class="global-rating">119</td>
+          <td class="global-rating" style="background-color: rgb(232, 232, 236)">6.4%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">71</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Team Magnus.png" height=20px> <span>Team Magnus</span></td>
+          <td class="global-rating">116</td>
+          <td class="global-rating" style="background-color: rgb(232, 232, 236)">6.4%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">72</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Winstrike Team.png" height=20px> <span>Winstrike Team</span></td>
+          <td class="global-rating">115</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">6.2%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">73</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/5ManMidas.png" height=20px> <span>5ManMidas</span></td>
+          <td class="global-rating">113</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">6.1%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">74</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/Electronic Boys.png" height=20px> <span>Electronic Boys</span></td>
+          <td class="global-rating">113</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">6.1%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">75</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Nemiga Gaming.png" height=20px> <span>Nemiga Gaming</span></td>
+          <td class="global-rating">111</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">6.0%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">76</td>
+          <td class="global-rating"><img src="dpc/wn21/na/image/KBU.US.png" height=20px> <span>KBU.US</span></td>
+          <td class="global-rating">110</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">6.0%</td>
+          <td class="global-rating"><img src="image/na.png" height=20px> <span class="d-none d-sm-block d-md-inline">North America</span><span class="d-inline d-sm-none">NA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">77</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Ghost Frogs.png" height=20px> <span>Ghost Frogs</span></td>
+          <td class="global-rating">110</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">5.8%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">78</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Team Bald Reborn.png" height=20px> <span>Team Bald Reborn</span></td>
+          <td class="global-rating">108</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">5.8%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">79</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Inverse.png" height=20px> <span>Inverse</span></td>
+          <td class="global-rating">108</td>
+          <td class="global-rating" style="background-color: rgb(233, 232, 236)">5.8%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">80</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/CHILLAX.png" height=20px> <span>CHILLAX</span></td>
+          <td class="global-rating">108</td>
+          <td class="global-rating" style="background-color: rgb(233, 233, 236)">5.6%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">81</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Talon Esports.png" height=20px> <span>Talon Esports</span></td>
+          <td class="global-rating">94</td>
+          <td class="global-rating" style="background-color: rgb(234, 233, 236)">5.1%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">82</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/No Bounty Hunter.png" height=20px> <span>No Bounty Hunter</span></td>
+          <td class="global-rating">86</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.5%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">83</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/B8.png" height=20px> <span>B8</span></td>
+          <td class="global-rating">83</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.5%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">84</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Wolf Team.png" height=20px> <span>Wolf Team</span></td>
+          <td class="global-rating">82</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.4%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">85</td>
+          <td class="global-rating"><img src="dpc/wn21/weu/image/Into The Breach.png" height=20px> <span>Into The Breach</span></td>
+          <td class="global-rating">85</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.4%</td>
+          <td class="global-rating"><img src="image/weu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Western Europe</span><span class="d-inline d-sm-none">WEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">86</td>
+          <td class="global-rating"><img src="dpc/wn21/eeu/image/Fantastic Five.png" height=20px> <span>Fantastic Five</span></td>
+          <td class="global-rating">81</td>
+          <td class="global-rating" style="background-color: rgb(235, 234, 237)">4.3%</td>
+          <td class="global-rating"><img src="image/eeu.png" height=20px> <span class="d-none d-sm-block d-md-inline">Eastern Europe</span><span class="d-inline d-sm-none">EEU</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">87</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/496 Gaming.png" height=20px> <span>496 Gaming</span></td>
+          <td class="global-rating">79</td>
+          <td class="global-rating" style="background-color: rgb(235, 235, 237)">4.2%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">88</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/Army Geniuses.png" height=20px> <span>Army Geniuses</span></td>
+          <td class="global-rating">76</td>
+          <td class="global-rating" style="background-color: rgb(235, 235, 237)">4.0%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">89</td>
+          <td class="global-rating"><img src="dpc/wn21/sea/image/InterActive Philippines.png" height=20px> <span>InterActive Philippines</span></td>
+          <td class="global-rating">73</td>
+          <td class="global-rating" style="background-color: rgb(235, 235, 237)">3.8%</td>
+          <td class="global-rating"><img src="image/sea.png" height=20px> <span class="d-none d-sm-block d-md-inline">Southeast Asia</span><span class="d-inline d-sm-none">SEA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">90</td>
+          <td class="global-rating"><img src="dpc/wn21/sa/image/Team Unknown.png" height=20px> <span>Team Unknown</span></td>
+          <td class="global-rating">71</td>
+          <td class="global-rating" style="background-color: rgb(235, 235, 237)">3.8%</td>
+          <td class="global-rating"><img src="image/sa.png" height=20px> <span class="d-none d-sm-block d-md-inline">South America</span><span class="d-inline d-sm-none">SA</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">91</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/CDEC Gaming.png" height=20px> <span>CDEC Gaming</span></td>
+          <td class="global-rating">66</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">92</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/ShenZhen.png" height=20px> <span>ShenZhen</span></td>
+          <td class="global-rating">67</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">93</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Neptune Gaming.png" height=20px> <span>Neptune Gaming</span></td>
+          <td class="global-rating">66</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">94</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Ybb Gaming.png" height=20px> <span>Ybb Gaming</span></td>
+          <td class="global-rating">68</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.1%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">95</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Aster.Aries.png" height=20px> <span>Aster.Aries</span></td>
+          <td class="global-rating">65</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.0%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
+        </tr>
+        <tr style="position: relative">
+          <td class="global-rating">96</td>
+          <td class="global-rating"><img src="dpc/wn21/cn/image/Sparking Arrow Gaming.png" height=20px> <span>Sparking Arrow Gaming</span></td>
+          <td class="global-rating">64</td>
+          <td class="global-rating" style="background-color: rgb(236, 236, 238)">3.0%</td>
+          <td class="global-rating"><img src="image/cn.png" height=20px> <span class="d-none d-sm-block d-md-inline">China</span><span class="d-inline d-sm-none">CN</span></td>
         </tr>
         </tbody>
         </table>
