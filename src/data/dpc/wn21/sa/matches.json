@@ -15,7 +15,7 @@
       ["Infamous", "NoPing e-sports", [2, 1]]
     ],
     [
-      ["Lava", "SG esports", []],
+      ["Lava", "SG esports", [2, 0]],
       ["beastcoast", "Hokori", []],
       ["Lava", "Thunder Predator", []],
       ["Infamous", "Hokori", []],
@@ -58,8 +58,8 @@
     ],
     [
       ["Gorillaz-Pride", "Wolf Team", [2, 1]],
-      ["Omega Gaming", "Inverse", []],
-      ["Team Unknown", "Wolf Team", []],
+      ["Omega Gaming", "Inverse", [2, 0]],
+      ["Team Unknown", "Wolf Team", [0, 2]],
       ["Infinity Esports", "Inverse", []],
       ["Gorillaz-Pride", "Inverse", []]
     ],
