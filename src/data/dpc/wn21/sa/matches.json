@@ -16,8 +16,8 @@
     ],
     [
       ["Lava", "SG esports", [2, 0]],
-      ["beastcoast", "Hokori", []],
-      ["Lava", "Thunder Predator", []],
+      ["beastcoast", "Hokori", [2, 0]],
+      ["Lava", "Thunder Predator", [0, 2]],
       ["Infamous", "Hokori", []],
       ["SG esports", "APU King Of Kings", []]
     ],
