@@ -17,9 +17,9 @@
     [
       ["BOOM Esports", "Team SMG", [2, 0]],
       ["Fnatic", "OB Esports x Neon", [2, 0]],
-      ["T1", "Motivate.Trust Gaming", []],
-      ["BOOM Esports", "Motivate.Trust Gaming", []],
-      ["TNC Predator", "Execration", []]
+      ["BOOM Esports", "Motivate.Trust Gaming", [2, 0]],
+      ["TNC Predator", "Execration", [0, 2]],
+      ["T1", "Motivate.Trust Gaming", []]
     ],
     [
       ["T1", "OB Esports x Neon", []],
@@ -60,8 +60,8 @@
       ["Nigma Galaxy SEA", "InterActive Philippines", [2, 1]],
       ["Polaris Esports", "InterActive Philippines", [2, 0]],
       ["Lilgun", "Army Geniuses", [2, 1]],
-      ["Lilgun", "Talon Esports", []],
-      ["496 Gaming", "Ragdoll", []]
+      ["496 Gaming", "Ragdoll", [1, 2]],
+      ["Lilgun", "Talon Esports", []]
     ],
     [
       ["Nigma Galaxy SEA", "Army Geniuses", []],
