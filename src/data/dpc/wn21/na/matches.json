@@ -60,8 +60,8 @@
       ["Team Magnus", "5RATFORCESTAFF", [0, 2]],
       ["The Cut", "KBU.US", [2, 0]],
       ["Team DogChamp", "felt", [2, 1]],
-      ["5RATFORCESTAFF", "5ManMidas", []],
-      ["The Cut", "Electronic Boys", []]
+      ["5RATFORCESTAFF", "5ManMidas", [2, 0]],
+      ["The Cut", "Electronic Boys", [2, 1]]
     ],
     [
       ["Team Magnus", "KBU.US", []],
