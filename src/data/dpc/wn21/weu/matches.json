@@ -64,7 +64,7 @@
       ["CHILLAX", "No Bounty Hunter", ["W", "-"]]
     ],
     [
-      ["Ghost Frogs", "Team Bald Reborn", []],
+      ["Ghost Frogs", "Team Bald Reborn", [1, 2]],
       ["Entity", "CHILLAX", []],
       ["Team Bald Reborn", "Into The Breach", []],
       ["Brame", "Ghost Frogs", []],
