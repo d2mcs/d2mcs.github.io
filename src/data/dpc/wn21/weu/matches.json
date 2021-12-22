@@ -22,8 +22,8 @@
       ["Team Secret", "Nigma Galaxy", [0, 2]]
     ],
     [
-      ["OG", "COOLGUYS", []],
-      ["Team Liquid", "Team Secret", []],
+      ["OG", "COOLGUYS", [2, 1]],
+      ["Team Liquid", "Team Secret", [2, 1]],
       ["Alliance", "Nigma Galaxy", []],
       ["Tundra Esports", "COOLGUYS", []],
       ["OG", "Team Tickles", []]
@@ -65,7 +65,7 @@
     ],
     [
       ["Ghost Frogs", "Team Bald Reborn", [1, 2]],
-      ["Entity", "CHILLAX", []],
+      ["Entity", "CHILLAX", [2, 0]],
       ["Team Bald Reborn", "Into The Breach", []],
       ["Brame", "Ghost Frogs", []],
       ["No Bounty Hunter", "Chicken Fighters", []]

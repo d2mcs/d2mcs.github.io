@@ -22,7 +22,7 @@
       ["Evil Geniuses", "simply TOOBASED", [2, 0]]
     ],
     [
-      ["Team Undying", "4 Zoomers", []],
+      ["Team Undying", "4 Zoomers", [2, 0]],
       ["Wildcard Gaming", "Black N Yellow", []],
       ["Arkosh Gaming", "simply TOOBASED", []],
       ["Evil Geniuses", "4 Zoomers", []],
@@ -65,7 +65,7 @@
     ],
     [
       ["Team Magnus", "KBU.US", [0, 2]],
-      ["Electronic Boys", "5RATFORCESTAFF", []],
+      ["Electronic Boys", "5RATFORCESTAFF", [1, 2]],
       ["felt", "The Cut", []],
       ["Team Magnus", "Team DogChamp", []],
       ["5ManMidas", "KBU.US", []]
