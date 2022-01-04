@@ -37,8 +37,8 @@
   ],
   "upper": [
     [
-      ["EHOME", "Phoenix Gaming", []],
-      ["PSG.LGD", "Team Aster", []],
+      ["EHOME", "Phoenix Gaming", [2, 0]],
+      ["PSG.LGD", "Team Aster", [2, 1]],
       ["Vici Gaming", "LBZS", []],
       ["PSG.LGD", "Phoenix Gaming", []],
       ["Invictus Gaming", "Royal Never Give Up", []],

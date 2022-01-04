@@ -95,7 +95,7 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
             tour_name = "Spring"
             stop_after = datetime.fromisoformat("2021-04-10").timestamp()
         else:
-            tabs = [["Dec. 31 (Current)", ""],
+            tabs = [["Jan. 3 (Current)", ""],
                     ["Dec. 31 (Week 4)", "-4-1"],
                     ["Dec. 19 (Week 3)", "-3"], ["Dec. 12 (Week 2)", "-2"],
                     ["Dec. 5 (Week 1)", "-1"],
