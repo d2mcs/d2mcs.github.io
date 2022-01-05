@@ -39,9 +39,9 @@
     [
       ["EHOME", "Phoenix Gaming", [2, 0]],
       ["PSG.LGD", "Team Aster", [2, 1]],
-      ["Vici Gaming", "LBZS", []],
-      ["PSG.LGD", "Phoenix Gaming", []],
-      ["Invictus Gaming", "Royal Never Give Up", []],
+      ["Vici Gaming", "LBZS", [2, 1]],
+      ["PSG.LGD", "Phoenix Gaming", [2, 0]],
+      ["Invictus Gaming", "Royal Never Give Up", [1, 2]],
       ["Invictus Gaming", "EHOME", []],
       ["Team Aster", "Vici Gaming", []],
       ["Invictus Gaming", "Phoenix Gaming", []],
