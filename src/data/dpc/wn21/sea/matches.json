@@ -22,8 +22,8 @@
       ["T1", "Motivate.Trust Gaming", []]
     ],
     [
-      ["T1", "OB Esports x Neon", []],
-      ["Team SMG", "Execration", []],
+      ["T1", "OB Esports x Neon", [1, 2]],
+      ["Team SMG", "Execration", [2, 0]],
       ["Fnatic", "Motivate.Trust Gaming", []],
       ["TNC Predator", "BOOM Esports", []],
       ["Team SMG", "OB Esports x Neon", []]
