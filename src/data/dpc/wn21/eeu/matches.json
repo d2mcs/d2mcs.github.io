@@ -22,23 +22,23 @@
       ["Virtus.pro", "PuckChamp", [1, 2]]
     ],
     [
-      ["Team Spirit", "AS Monaco Gambit", []],
-      ["Natus Vincere", "HellRaisers", []],
+      ["Team Spirit", "AS Monaco Gambit", [2, 0]],
+      ["Natus Vincere", "HellRaisers", [1, 2]],
       ["Virtus.pro", "Team Empire", []],
       ["Team Unique", "PuckChamp", []],
       ["Team Spirit", "Natus Vincere", []]
     ],
     [
-      ["Team Spirit", "Virtus.pro", []],
-      ["Team Empire", "HellRaisers", []],
-      ["Team Unique", "AS Monaco Gambit", []],
       ["HellRaisers", "PuckChamp", []],
-      ["Natus Vincere", "AS Monaco Gambit", []]
+      ["Natus Vincere", "AS Monaco Gambit", []],
+      ["Team Empire", "Team Unique", []],
+      ["Team Spirit", "HellRaisers", []],
+      ["Natus Vincere", "Virtus.pro", []]
     ],
     [
-      ["Team Empire", "Team Unique", []],
-      ["Natus Vincere", "Virtus.pro", []],
-      ["HellRaisers", "Team Spirit", []]
+      ["Team Empire", "HellRaisers", []],
+      ["Virtus.pro", "Team Spirit", []],
+      ["Team Unique", "AS Monaco Gambit", []]
     ]
   ],
   "lower": [
@@ -65,22 +65,22 @@
     ],
     [
       ["Winstrike Team", "Gambit Esports", [2, 0]],
-      ["Fantastic Five", "HYDRA", []],
+      ["Fantastic Five", "HYDRA", [1, 2]],
       ["Nemiga Gaming", "V-Gaming", []],
       ["Gambit Esports", "CIS Rejects", []],
       ["Winstrike Team", "B8", []]
     ],
     [
-      ["Nemiga Gaming", "Fantastic Five", []],
-      ["Gambit Esports", "Nemiga Gaming", []],
+      ["Fantastic Five", "Nemiga Gaming", []],
       ["V-Gaming", "B8", []],
-      ["HYDRA", "CIS Rejects", []],
-      ["B8", "Fantastic Five", []]
+      ["Gambit Esports", "HYDRA", []],
+      ["Winstrike Team", "CIS Rejects", []],
+      ["Fantastic Five", "B8", []]
     ],
     [
-      ["HYDRA", "Gambit Esports", []],
-      ["CIS Rejects", "Winstrike Team", []],
-      ["V-Gaming", "Winstrike Team", []]
+      ["Nemiga Gaming", "Gambit Esports", []],
+      ["HYDRA", "CIS Rejects", []],
+      ["Winstrike Team", "V-Gaming", []]
     ]
   ]
 }
