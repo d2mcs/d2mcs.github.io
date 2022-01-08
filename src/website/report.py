@@ -383,7 +383,7 @@ def predict_results_season(season, n_samples, ratings_type, k):
 
     return formatted_probs
 
-def generate_html_dpc(output_file, tabs, title, wildcard_slots):
+def generate_html_dpc(output_file, tabs, title, wildcard_slots, matches):
     """Generates the output forecast report with the provided tabs and
     title. generate_data is used for generating the JSON data files
     used by this report.
@@ -397,24 +397,16 @@ def generate_html_dpc(output_file, tabs, title, wildcard_slots):
         main() or retroactive_predictions() for an example.
     title : str
         Name to put at the top of the report.
+    matches : list
+        List of matches. This is used to determine how many match divs
+        are needed for each week.
     """
     with open("data/template_dpc.html") as input_f:
         template_str = input_f.read()
     template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
 
-    match_counts = {"upper": [5, 5, 5, 5, 5, 3], "lower": [5, 5, 5, 5, 5, 3]}
-
-    if "sp21" in output_file:
-        if "weu" in output_file:
-            match_counts["lower"][0] = 4
-            match_counts["lower"][5] = 4
-        if "cn" in output_file:
-            match_counts = {"upper": [3, 3, 6, 6, 6, 4],
-                            "lower": [7, 7, 4, 4, 4, 2]}
-    if "wn21" in output_file:
-        if "cn" in output_file:
-            match_counts = {"upper": [10, 10, 8],
-                            "lower": [10, 10, 8]}
+    match_counts = {"upper": [len(mch_list) for mch_list in matches["upper"]],
+                    "lower": [len(mch_list) for mch_list in matches["lower"]]}
 
     output = template.render(tabs=tabs, title=title, match_counts=match_counts,
         wildcard_slots=wildcard_slots)

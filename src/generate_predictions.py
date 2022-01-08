@@ -111,14 +111,14 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
         for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
             if train_elo:
                 generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/{region}")
+            with open( f"data/dpc/{tour}/{region}/matches.json") as match_f:
+                matches = json.load(match_f)
             generate_html_dpc(f"dpc/{tour}/{region}/forecast.html", tabs,
                               f"DPC {tour_name} 2021: {full_name[region]}",
-                              wildcard_slots[region])
+                              wildcard_slots[region], matches)
             if html_only:
                 return
 
-            with open( f"data/dpc/{tour}/{region}/matches.json") as match_f:
-                matches = json.load(match_f)
             generate_data_dpc(
                 f"data/dpc/{tour}/{region}/elo_ratings_online.json",
                  matches, "elo", n_samples, f"dpc/{tour}/{region}", k,

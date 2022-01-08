@@ -9,6 +9,7 @@ import argparse
 import json
 from pathlib import Path
 import os
+from copy import deepcopy
 
 from website.report import (generate_data_ti, generate_html_ti,
     generate_data_dpc, generate_html_dpc,
@@ -93,27 +94,29 @@ def retroactive_dpc_predictions(timestamp, k, n_samples, region,
     if train_elo:
         generate_team_ratings_elo(2, k, 1.5, "dpc/sp21/"+region,
             stop_after=datetime.fromisoformat("2021-04-10").timestamp())
+    with open(f"data/dpc/sp21/{region}/matches.json") as match_f:
+        matches = json.load(match_f)
     generate_html_dpc(f"dpc/sp21/{region}/forecast.html", tabs,
-        "DPC Spring 2021: " + full_name[region], wildcard_slots[region])
+        "DPC Spring 2021: " + full_name[region], wildcard_slots[region],
+        matches)
     if html_only:
         return
 
     for i, tab in enumerate(reversed(tabs)):
-        with open(f"data/dpc/sp21/{region}/matches.json") as match_f:
-            matches = json.load(match_f)
+        working_matches = deepcopy(matches)
         for division in ["upper", "lower"]:
             for day in range(i, 6):
-                for match in matches[division][day]:
+                for match in working_matches[division][day]:
                     match[2] = []
             if tab[1] != "":
-                matches["tiebreak"][division] = {}
+                working_matches["tiebreak"][division] = {}
 
         generate_data_dpc(f"data/dpc/sp21/{region}/elo_ratings_online.json",
-                          matches, "elo" + tab[1], n_samples,
+                          working_matches, "elo" + tab[1], n_samples,
                           f"dpc/sp21/{region}", k, wildcard_slots[region],
                           timestamp=timestamp, static_ratings=False)
         generate_data_dpc(f"data/dpc/sp21/{region}/fixed_ratings.json",
-                          matches, "fixed" + tab[1], n_samples,
+                          working_matches, "fixed" + tab[1], n_samples,
                           f"dpc/sp21/{region}", k, wildcard_slots[region],
                           timestamp=timestamp, static_ratings=True)
 
