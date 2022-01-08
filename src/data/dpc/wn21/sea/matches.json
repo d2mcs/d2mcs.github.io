@@ -18,27 +18,27 @@
       ["BOOM Esports", "Team SMG", [2, 0]],
       ["Fnatic", "OB Esports x Neon", [2, 0]],
       ["BOOM Esports", "Motivate.Trust Gaming", [2, 0]],
-      ["TNC Predator", "Execration", [0, 2]],
-      ["T1", "Motivate.Trust Gaming", []]
+      ["TNC Predator", "Execration", [0, 2]]
     ],
     [
       ["T1", "OB Esports x Neon", [1, 2]],
       ["Team SMG", "Execration", [2, 0]],
       ["Fnatic", "Motivate.Trust Gaming", [2, 1]],
       ["TNC Predator", "BOOM Esports", []],
-      ["Team SMG", "OB Esports x Neon", []]
+      ["T1", "Motivate.Trust Gaming", []]
     ],
     [
+      ["TNC Predator", "OB Esports x Neon", []],
+      ["T1", "Execration", []],
+      ["TNC Predator", "Team SMG", []],
+      ["Team SMG", "OB Esports x Neon", []],
       ["Fnatic", "Execration", []],
-      ["Execration", "T1", []],
-      ["Motivate.Trust Gaming", "OB Esports x Neon", []],
-      ["Fnatic", "T1", []],
-      ["OB Esports x Neon", "TNC Predator", []]
+      ["BOOM Esports", "T1", []]
     ],
     [
       ["BOOM Esports", "Execration", []],
-      ["BOOM Esports", "T1", []],
-      ["Team SMG", "TNC Predator", []]
+      ["Fnatic", "T1", []],
+      ["Motivate.Trust Gaming", "OB Esports x Neon", []]
     ]
   ],
   "lower": [
@@ -60,27 +60,28 @@
       ["Nigma Galaxy SEA", "InterActive Philippines", [2, 1]],
       ["Polaris Esports", "InterActive Philippines", [2, 0]],
       ["Lilgun", "Army Geniuses", [2, 1]],
-      ["496 Gaming", "Ragdoll", [1, 2]],
-      ["Lilgun", "Talon Esports", []]
+      ["496 Gaming", "Ragdoll", [1, 2]]
+
     ],
     [
       ["Nigma Galaxy SEA", "Army Geniuses", [2, 1]],
       ["Ragdoll", "Talon Esports", [2, 0]],
       ["496 Gaming", "Lilgun", [2, 0]],
-      ["Polaris Esports", "Army Geniuses", []],
       ["Talon Esports", "InterActive Philippines", []]
     ],
     [
-      ["Nigma Galaxy SEA", "Polaris Esports", []],
-      ["Nigma Galaxy SEA", "Lilgun", []],
-      ["Ragdoll", "Nigma Galaxy SEA", []],
-      ["Talon Esports", "496 Gaming", []],
-      ["InterActive Philippines", "Army Geniuses", []]
+      ["Polaris Esports", "Army Geniuses", []],
+      ["Lilgun", "Ragdoll", []],
+      ["496 Gaming", "Talon Esports", []],
+      ["Army Geniuses", "InterActive Philippines", []],
+      ["Nigma Galaxy SEA", "Ragdoll", []],
+      ["Lilgun", "Talon Esports", []],
+      ["Nigma Galaxy SEA", "Polaris Esports", []]
     ],
     [
-      ["Ragdoll", "Polaris Esports", []],
-      ["InterActive Philippines", "496 Gaming", []],
-      ["Ragdoll", "Lilgun", []]
+      ["496 Gaming", "InterActive Philippines", []],
+      ["Polaris Esports", "Ragdoll", []],
+      ["Nigma Galaxy SEA", "Lilgun", []]
     ]
   ]
 }
