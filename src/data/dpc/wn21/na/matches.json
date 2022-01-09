@@ -25,8 +25,8 @@
       ["Team Undying", "4 Zoomers", [2, 0]],
       ["Wildcard Gaming", "Black N Yellow", [2, 1]],
       ["Arkosh Gaming", "simply TOOBASED", [0, 2]],
-      ["Evil Geniuses", "4 Zoomers", []],
-      ["Quincy Crew", "Team Undying", []]
+      ["Evil Geniuses", "4 Zoomers", [2, 0]],
+      ["Quincy Crew", "Team Undying", [2, 1]]
     ],
     [
       ["Evil Geniuses", "Quincy Crew", []],
