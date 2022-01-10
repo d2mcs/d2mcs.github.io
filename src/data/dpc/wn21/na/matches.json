@@ -29,16 +29,16 @@
       ["Quincy Crew", "Team Undying", [2, 1]]
     ],
     [
-      ["Evil Geniuses", "Quincy Crew", []],
-      ["Team Undying", "Evil Geniuses", []],
-      ["Black N Yellow", "simply TOOBASED", []],
-      ["Wildcard Gaming", "simply TOOBASED", []],
-      ["Wildcard Gaming", "4 Zoomers", []]
+      ["Quincy Crew", "Black N Yellow", []],
+      ["Evil Geniuses", "Team Undying", []],
+      ["simply TOOBASED", "Wildcard Gaming", []],
+      ["4 Zoomers", "Arkosh Gaming", []],
+      ["Black N Yellow", "simply TOOBASED", []]
     ],
     [
-      ["Arkosh Gaming", "4 Zoomers", []],
-      ["Black N Yellow", "Quincy Crew", []],
-      ["Arkosh Gaming", "Team Undying", []]
+      ["4 Zoomers", "Wildcard Gaming", []],
+      ["Arkosh Gaming", "Team Undying", []],
+      ["Evil Geniuses", "Quincy Crew", []]
     ]
   ],
   "lower": [
@@ -67,20 +67,20 @@
       ["Team Magnus", "KBU.US", [0, 2]],
       ["Electronic Boys", "5RATFORCESTAFF", [1, 2]],
       ["felt", "The Cut", [0, 2]],
-      ["Team Magnus", "Team DogChamp", []],
-      ["5ManMidas", "KBU.US", []]
+      ["Team Magnus", "Team DogChamp", [0, 2]],
+      ["5ManMidas", "KBU.US", [1, 2]]
     ],
     [
+      ["felt", "5RATFORCESTAFF", []],
+      ["Electronic Boys", "KBU.US", []],
+      ["Team Magnus", "5ManMidas", []],
       ["Team DogChamp", "The Cut", []],
-      ["5ManMidas", "Electronic Boys", []],
-      ["KBU.US", "Electronic Boys", []],
-      ["KBU.US", "felt", []],
-      ["Team Magnus", "5ManMidas", []]
+      ["KBU.US", "felt", []]
     ],
     [
-      ["5RATFORCESTAFF", "felt", []],
-      ["5RATFORCESTAFF", "Team DogChamp", []],
-      ["Team Magnus", "The Cut", []]
+      ["Electronic Boys", "5ManMidas", []],
+      ["Team Magnus", "The Cut", []],
+      ["Team DogChamp", "5RATFORCESTAFF", []]
     ]
   ]
 }

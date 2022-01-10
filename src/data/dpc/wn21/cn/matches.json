@@ -44,9 +44,9 @@
       ["Invictus Gaming", "Royal Never Give Up", [1, 2]],
       ["Invictus Gaming", "EHOME", [1, 2]],
       ["Team Aster", "Vici Gaming", [2, 0]],
-      ["Invictus Gaming", "Phoenix Gaming", []],
-      ["Royal Never Give Up", "LBZS", []],
-      ["PSG.LGD", "Vici Gaming", []]
+      ["Invictus Gaming", "Phoenix Gaming", [2, 0]],
+      ["Royal Never Give Up", "LBZS", [1, 2]],
+      ["PSG.LGD", "Vici Gaming", [2, 0]]
     ],
     [
       ["Team Aster", "LBZS", []],

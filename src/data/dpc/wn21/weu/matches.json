@@ -29,16 +29,16 @@
       ["OG", "Team Tickles", [1, 2]]
     ],
     [
-      ["Team Liquid", "Alliance", []],
-      ["Nigma Galaxy", "Team Liquid", []],
-      ["OG", "Tundra Esports", []],
-      ["Team Tickles", "Tundra Esports", []],
-      ["Team Tickles", "Team Secret", []]
+      ["Team Liquid", "Nigma Galaxy", []],
+      ["Team Secret", "COOLGUYS", []],
+      ["Alliance", "OG", []],
+      ["Tundra Esports", "Team Tickles", []],
+      ["Nigma Galaxy", "COOLGUYS", []]
     ],
     [
-      ["COOLGUYS", "Team Secret", []],
-      ["OG", "Alliance", []],
-      ["COOLGUYS", "Nigma Galaxy", []]
+      ["Team Liquid", "Alliance", []],
+      ["Team Secret", "Team Tickles", []],
+      ["OG", "Tundra Esports", []]
     ]
   ],
   "lower": [
@@ -71,16 +71,16 @@
       ["No Bounty Hunter", "Chicken Fighters", ["-", "W"]]
     ],
     [
-      ["Into The Breach", "Brame", []],
-      ["Ghost Frogs", "Into The Breach", []],
-      ["No Bounty Hunter", "Entity", []],
+      ["CHILLAX", "Team Bald Reborn", []],
       ["Chicken Fighters", "Entity", []],
-      ["Chicken Fighters", "Team Bald Reborn", []]
+      ["Brame", "No Bounty Hunter", ["W", "-"]],
+      ["Into The Breach", "Ghost Frogs", []],
+      ["CHILLAX", "Ghost Frogs", []]
     ],
     [
-      ["CHILLAX", "Team Bald Reborn", []],
-      ["No Bounty Hunter", "Brame", []],
-      ["CHILLAX", "Ghost Frogs", []]
+      ["Entity", "No Bounty Hunter", ["W", "-"]],
+      ["Team Bald Reborn", "Chicken Fighters", []],
+      ["Brame", "Into The Breach", []]
     ]
   ]
 }
