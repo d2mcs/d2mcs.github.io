@@ -29,7 +29,7 @@
       ["Quincy Crew", "Team Undying", [2, 1]]
     ],
     [
-      ["Quincy Crew", "Black N Yellow", []],
+      ["Quincy Crew", "Black N Yellow", [2, 1]],
       ["Evil Geniuses", "Team Undying", []],
       ["simply TOOBASED", "Wildcard Gaming", []],
       ["4 Zoomers", "Arkosh Gaming", []],
@@ -72,7 +72,7 @@
     ],
     [
       ["felt", "5RATFORCESTAFF", [2, 1]],
-      ["Electronic Boys", "KBU.US", []],
+      ["Electronic Boys", "KBU.US", [1, 2]],
       ["Team Magnus", "5ManMidas", []],
       ["Team DogChamp", "The Cut", []],
       ["KBU.US", "felt", []]
