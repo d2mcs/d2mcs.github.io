@@ -31,14 +31,14 @@
     [
       ["Team Liquid", "Nigma Galaxy", [1, 2]],
       ["Team Secret", "COOLGUYS", [2, 0]],
-      ["Alliance", "OG", []],
-      ["Tundra Esports", "Team Tickles", []],
-      ["Nigma Galaxy", "COOLGUYS", []]
+      ["Alliance", "OG", [0, 2]],
+      ["Tundra Esports", "Team Tickles", [0, 2]],
+      ["Nigma Galaxy", "COOLGUYS", [2, 0]]
     ],
     [
-      ["Team Liquid", "Alliance", []],
-      ["Team Secret", "Team Tickles", []],
-      ["OG", "Tundra Esports", []]
+      ["Team Liquid", "Alliance", [2, 1]],
+      ["Team Secret", "Team Tickles", [2, 0]],
+      ["OG", "Tundra Esports", [0, 2]]
     ]
   ],
   "lower": [
@@ -74,13 +74,35 @@
       ["CHILLAX", "Team Bald Reborn", [2, 1]],
       ["Chicken Fighters", "Entity", [1, 2]],
       ["Brame", "No Bounty Hunter", ["W", "-"]],
-      ["Into The Breach", "Ghost Frogs", []],
-      ["CHILLAX", "Ghost Frogs", []]
+      ["Into The Breach", "Ghost Frogs", [2, 0]],
+      ["CHILLAX", "Ghost Frogs", [0, 2]]
     ],
     [
       ["Entity", "No Bounty Hunter", ["W", "-"]],
-      ["Team Bald Reborn", "Chicken Fighters", []],
-      ["Brame", "Into The Breach", []]
+      ["Team Bald Reborn", "Chicken Fighters", [0, 2]],
+      ["Brame", "Into The Breach", [2, 1]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "3": [
+        ["OG", "Tundra Esports", [0, 1]],
+        ["Team Secret", "Nigma Galaxy", [1, 0]],
+        ["OG", "Nigma Galaxy", [1, 0]],
+        ["Team Secret", "Tundra Esports", [0, 1]],
+        ["Tundra Esports", "Nigma Galaxy", [1, 0]],
+        ["OG", "Team Secret", [1, 0]]
+      ]
+    },
+    "lower": {
+      "1": [
+        ["Chicken Fighters", "Entity", [0, 1]],
+        ["Chicken Fighters", "Brame", [0, 1]],
+        ["Entity", "Brame", [1, 0]]
+      ],
+      "5": [
+        ["Into The Breach", "Ghost Frogs", [2, 0]]
+      ]
+    }
+  }
 }

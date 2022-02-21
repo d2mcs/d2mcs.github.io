@@ -940,7 +940,8 @@ class DPCSeasonSampler(Sampler):
         dpc_points[tie_start:tie_end + 1] = sorted_teams
 
     @staticmethod
-    def get_sample(model, teams, season, static_ratings, matches):
+    def get_sample(model, teams, season, static_ratings,
+                   matches, existing_dpc_points):
         """Simulates a single DPC season consisting of 3 tours (6
         regional leagues followed by a major).
 
@@ -958,6 +959,8 @@ class DPCSeasonSampler(Sampler):
             Copy of self.static_ratings.
         matches : dict
             (See: sample_season documentation below)
+        existing_dpc_points : dict
+            (See: sample_season documentation below)
 
         Returns
         -------
@@ -970,10 +973,15 @@ class DPCSeasonSampler(Sampler):
             Only returns results for upper division teams.
         """
         dpc_points = {}
-        for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
-            for division in ["upper", "lower"]:
-                for team in teams[region][division]:
-                    dpc_points[team] = 0
+        def _zero_init_teams(point_dict):
+            # small internal function for making sure all teams are
+            # in the point dictionary
+            for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
+                for division in ["upper", "lower"]:
+                    for team in teams[region][division]:
+                        if team not in point_dict:
+                            point_dict[team] = 0
+        _zero_init_teams(dpc_points)
         major_results = {"wn": {}, "sp": {}, "sm": {}}
         league_results = {"wn": {}, "sp": {}, "sm": {}}
         wildcard_slots = {"sea":1, "eeu":1, "cn":2, "weu":2, "na":0, "sa":0}
@@ -982,6 +990,10 @@ class DPCSeasonSampler(Sampler):
             DPCSeasonSampler.get_point_allocation(season))
 
         for tour_idx, tour in enumerate(["wn", "sp", "sm"]):
+            if tour in existing_dpc_points:
+                dpc_points = existing_dpc_points[tour]
+                _zero_init_teams(dpc_points)
+                continue
             # regional league simulation:
             major_teams = {"playoffs": [], "group stage": [], "wildcard": []}
             for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
@@ -1054,7 +1066,8 @@ class DPCSeasonSampler(Sampler):
             contributions.append(major_contribution)
         return contributions
 
-    def sample_season(self, teams, season, n_samples, matches={}):
+    def sample_season(self, teams, season, n_samples,
+                      matches={}, existing_dpc_points={}):
         """Gets many samples of a full DPC season given a list of teams
         for each region.
 
@@ -1077,7 +1090,6 @@ class DPCSeasonSampler(Sampler):
         n_samples : int
             Number of simulations to run.
         matches : dict, default = {}
-            (See: sample_season documentation below)
             Match data for each tour for each region / major:
             {
                 "wn": {
@@ -1090,6 +1102,16 @@ class DPCSeasonSampler(Sampler):
             }
             If any key is missing, the matches for that key will be
             generated randomly.
+        existing_dpc_points : dict, default = {}
+            DPC points for each team for each season. If a season is
+            present in this dictionary dpc points will be taken from
+            the dictionary instead of simulated. Example:
+            {
+                "wn": {
+                    "Team A": 350
+                    "Team B": 300
+                }
+            }
         """
         all_teams = []
         for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
@@ -1113,8 +1135,8 @@ class DPCSeasonSampler(Sampler):
 
                 with Pool() as pool:
                     sim_results = [pool.apply_async(self.get_sample, (
-                            self.model, teams, season,
-                            self.static_ratings, matches))
+                            self.model, teams, season, self.static_ratings,
+                            matches, existing_dpc_points))
                         for _ in range(pool_size)]
                     for sim_result in sim_results:
                         dpc_points, major_results, _ = sim_result.get()

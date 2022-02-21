@@ -53,10 +53,12 @@
   <div class="dropdown text-center">
     Forecast date:
     <button class="btn btn-secondary btn-sm dropdown-toggle ms-1" type="button" id="date-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-      Jan. 11 (Current)
+      Jan. 23 (Current)
     </button>
     <ul class="dropdown-menu" aria-labelledby="date-dropdown">
-      <li><button id="date-select" class="dropdown-item" onclick="date_update('')">Jan. 11 (Current)</button></li>
+      <li><button id="date-select" class="dropdown-item" onclick="date_update('')">Jan. 23 (Current)</button></li>
+      <li><button id="date-select-bt" class="dropdown-item" onclick="date_update('-bt')">Before Tiebreakers</button></li>
+      <li><button id="date-select-5" class="dropdown-item" onclick="date_update('-5')">Jan. 16 (Week 5)</button></li>
       <li><button id="date-select-4-2" class="dropdown-item" onclick="date_update('-4-2')">Jan. 9 (Week 4)</button></li>
       <li><button id="date-select-4-1" class="dropdown-item" onclick="date_update('-4-1')">Dec. 31 (Week 4)</button></li>
       <li><button id="date-select-3" class="dropdown-item" onclick="date_update('-3')">Dec. 19 (Week 3)</button></li>

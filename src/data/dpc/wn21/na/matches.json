@@ -30,15 +30,15 @@
     ],
     [
       ["Quincy Crew", "Black N Yellow", [2, 1]],
-      ["Evil Geniuses", "Team Undying", []],
-      ["simply TOOBASED", "Wildcard Gaming", []],
-      ["4 Zoomers", "Arkosh Gaming", []],
-      ["Black N Yellow", "simply TOOBASED", []]
+      ["Evil Geniuses", "Team Undying", [2, 0]],
+      ["simply TOOBASED", "Wildcard Gaming", [0, 2]],
+      ["4 Zoomers", "Arkosh Gaming", [2, 0]],
+      ["Black N Yellow", "simply TOOBASED", [0, 2]]
     ],
     [
-      ["4 Zoomers", "Wildcard Gaming", []],
-      ["Arkosh Gaming", "Team Undying", []],
-      ["Evil Geniuses", "Quincy Crew", []]
+      ["4 Zoomers", "Wildcard Gaming", [2, 0]],
+      ["Arkosh Gaming", "Team Undying", [0, 2]],
+      ["Evil Geniuses", "Quincy Crew", [2, 0]]
     ]
   ],
   "lower": [
@@ -73,14 +73,26 @@
     [
       ["felt", "5RATFORCESTAFF", [2, 1]],
       ["Electronic Boys", "KBU.US", [1, 2]],
-      ["Team Magnus", "5ManMidas", []],
-      ["Team DogChamp", "The Cut", []],
-      ["KBU.US", "felt", []]
+      ["Team Magnus", "5ManMidas", [0, 2]],
+      ["Team DogChamp", "The Cut", [1, 2]],
+      ["KBU.US", "felt", [2, 0]]
     ],
     [
-      ["Electronic Boys", "5ManMidas", []],
-      ["Team Magnus", "The Cut", []],
-      ["Team DogChamp", "5RATFORCESTAFF", []]
+      ["Electronic Boys", "5ManMidas", [0, 2]],
+      ["Team Magnus", "The Cut", [1, 2]],
+      ["Team DogChamp", "5RATFORCESTAFF", [2, 0]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "1": [
+        ["Evil Geniuses", "Undying", [0, 2]]
+      ]
+    },
+    "lower": {
+      "1": [
+        ["KBU.US", "Team DogChamp", [0, 2]]
+      ]
+    }
+  }
 }

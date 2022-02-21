@@ -95,7 +95,8 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
             tour_name = "Spring"
             stop_after = datetime.fromisoformat("2021-04-10").timestamp()
         else:
-            tabs = [["Jan. 11 (Current)", ""],
+            tabs = [["Jan. 23 (Current)", ""],
+                    ["Before Tiebreakers", "-bt"], ["Jan. 16 (Week 5)", "-5"],
                     ["Jan. 9 (Week 4)", "-4-2"], ["Dec. 31 (Week 4)", "-4-1"],
                     ["Dec. 19 (Week 3)", "-3"], ["Dec. 12 (Week 2)", "-2"],
                     ["Dec. 5 (Week 1)", "-1"],
@@ -175,7 +176,7 @@ def main():
         description="Generate probability report for TI10 group stage.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("event", type=str,
-        choices=["ti10", "dpc-sp21", "dpc-wn21"],
+        choices=["ti10", "dpc-sp21", "dpc-wn21", "dpc-sp22"],
         help="Which event to generate predictions for.")
     parser.add_argument("n_samples", default=100000, type=int,
         help="Number of Monte Carlo samples to simulate")
@@ -222,10 +223,12 @@ def main():
         generate_report(args.event, k, n_samples,
                         timestamp, args.train_elo, args.html)
     elif args.global_ratings:
+        if args.event[:3] != "dpc":
+            raise ValueError("Global ratings require a DPC season selection")
+        tour = args.event[4:]
         if args.train_elo:
-            generate_global_ratings_elo(3, k, 1.5, "wn21", timestamp)
-        generate_html_global_rankings("global_ratings.html", "wn21",
-                                      n_samples, k)
+            generate_global_ratings_elo(3, k, 1.5, tour, timestamp)
+        generate_html_global_rankings("global_ratings.html",tour, n_samples, k)
     else:
         custom_report(args.event, args.region, k, n_samples,
                       timestamp, args.static_ratings)

@@ -54,21 +54,28 @@
       ["Phoenix Gaming", "Royal Never Give Up", [0, 2]],
       ["EHOME", "Team Aster", [0, 2]],
       ["PSG.LGD", "LBZS", [2, 0]],
-      ["Phoenix Gaming", "LBZS", []],
-      ["Invictus Gaming", "Vici Gaming", []],
-      ["Invictus Gaming", "LBZS", []],
-      ["EHOME", "Vici Gaming", []],
-      ["PSG.LGD", "Royal Never Give Up", []]
+      ["Phoenix Gaming", "LBZS", [1, 2]],
+      ["Invictus Gaming", "Vici Gaming", [0, 2]],
+      ["Invictus Gaming", "LBZS", [0, 2]],
+      ["EHOME", "Vici Gaming", [2, 1]],
+      ["PSG.LGD", "Royal Never Give Up", [2, 0]]
     ],
     [
-      ["EHOME", "LBZS", []],
-      ["Team Aster", "Phoenix Gaming", []],
-      ["EHOME", "PSG.LGD", []],
-      ["Vici Gaming", "Royal Never Give Up", []],
-      ["Invictus Gaming", "Team Aster", []],
-      ["Vici Gaming", "Phoenix Gaming", []],
-      ["Team Aster", "Royal Never Give Up", []],
-      ["Invictus Gaming", "PSG.LGD", []]
+      ["EHOME", "LBZS", [2, 0]],
+      ["Team Aster", "Phoenix Gaming", [2, 0]],
+      ["EHOME", "PSG.LGD", [1, 2]],
+      ["Vici Gaming", "Royal Never Give Up", [0, 2]],
+      ["Invictus Gaming", "Team Aster", [0, 2]],
+      ["Vici Gaming", "Phoenix Gaming", [2, 1]],
+      ["Team Aster", "Royal Never Give Up", [1, 2]],
+      ["Invictus Gaming", "PSG.LGD", [1, 2]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "1": [
+        ["Team Aster", "Royal Never Give Up", [2, 1]]
+      ]
+    }
+  }
 }

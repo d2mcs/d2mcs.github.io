@@ -3,42 +3,42 @@
     [
       ["Team Empire", "AS Monaco Gambit", [0, 2]],
       ["Natus Vincere", "PuckChamp", [0, 2]],
-      ["Team Spirit", "Team Unique", [2, 0]],
+      ["Team Spirit", "Mind Games", [2, 0]],
       ["PuckChamp", "AS Monaco Gambit", [2, 0]],
       ["Virtus.pro", "HellRaisers", [1, 2]]
     ],
     [
       ["Natus Vincere", "Team Empire", [2, 1]],
       ["Team Spirit", "PuckChamp", [2, 0]],
-      ["HellRaisers", "Team Unique", [2, 0]],
+      ["HellRaisers", "Mind Games", [2, 0]],
       ["Team Empire", "PuckChamp", [1, 2]],
       ["Virtus.pro", "AS Monaco Gambit", [2, 1]]
     ],
     [
       ["HellRaisers", "AS Monaco Gambit", [2, 0]],
-      ["Virtus.pro", "Team Unique", [2, 0]],
+      ["Virtus.pro", "Mind Games", [2, 0]],
       ["Team Spirit", "Team Empire", [2, 0]],
-      ["Natus Vincere", "Team Unique", [2, 1]],
+      ["Natus Vincere", "Mind Games", [2, 1]],
       ["Virtus.pro", "PuckChamp", [1, 2]]
     ],
     [
       ["Team Spirit", "AS Monaco Gambit", [2, 0]],
       ["Natus Vincere", "HellRaisers", [1, 2]],
       ["Virtus.pro", "Team Empire", [2, 0]],
-      ["Team Unique", "PuckChamp", [1, 2]],
+      ["Mind Games", "PuckChamp", [1, 2]],
       ["Team Spirit", "Natus Vincere", [2, 1]]
     ],
     [
-      ["HellRaisers", "PuckChamp", []],
-      ["Natus Vincere", "AS Monaco Gambit", []],
-      ["Team Empire", "Team Unique", []],
-      ["Team Spirit", "HellRaisers", []],
-      ["Natus Vincere", "Virtus.pro", []]
+      ["HellRaisers", "PuckChamp", [0, 2]],
+      ["Natus Vincere", "AS Monaco Gambit", [2, 0]],
+      ["Team Empire", "Mind Games", [0, 2]],
+      ["Team Spirit", "HellRaisers", [2, 0]],
+      ["Natus Vincere", "Virtus.pro", [0, 2]]
     ],
     [
-      ["Team Empire", "HellRaisers", []],
-      ["Virtus.pro", "Team Spirit", []],
-      ["Team Unique", "AS Monaco Gambit", []]
+      ["Team Empire", "HellRaisers", [2, 1]],
+      ["Virtus.pro", "Team Spirit", [0, 2]],
+      ["Mind Games", "AS Monaco Gambit", [2, 0]]
     ]
   ],
   "lower": [
@@ -72,15 +72,31 @@
     ],
     [
       ["Fantastic Five", "Nemiga Gaming", [1, 2]],
-      ["V-Gaming", "B8", []],
-      ["Gambit Esports", "HYDRA", []],
-      ["Winstrike Team", "CIS Rejects", []],
-      ["Fantastic Five", "B8", []]
+      ["V-Gaming", "B8", [2, 1]],
+      ["Gambit Esports", "HYDRA", [1, 2]],
+      ["Winstrike Team", "CIS Rejects", [2, 1]],
+      ["Fantastic Five", "B8", [2, 0]]
     ],
     [
-      ["Nemiga Gaming", "Gambit Esports", []],
-      ["HYDRA", "CIS Rejects", []],
-      ["Winstrike Team", "V-Gaming", []]
+      ["Nemiga Gaming", "Gambit Esports", [0, 2]],
+      ["HYDRA", "CIS Rejects", [0, 2]],
+      ["Winstrike Team", "V-Gaming", [2, 0]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "2": [
+        ["Virtus.pro", "HellRaisers", [2, 0]]
+      ]
+    },
+    "lower": {
+      "1": [
+        ["Winstrike Team", "CIS Rejects", [0, 1]],
+        ["HYDRA", "V-Gaming", [1, 0]],
+        ["HYDRA", "CIS Rejects", [0, 1]],
+        ["Winstrike Team", "V-Gaming", [1, 0]],
+        ["Winstrike Team", "HYDRA", [1, 0]]
+      ]
+    }
+  }
 }

@@ -28,17 +28,17 @@
       ["T1", "Motivate.Trust Gaming", [2, 1]]
     ],
     [
-      ["TNC Predator", "OB Esports x Neon", []],
-      ["T1", "Execration", []],
-      ["TNC Predator", "Team SMG", []],
-      ["Team SMG", "OB Esports x Neon", []],
-      ["Fnatic", "Execration", []],
-      ["BOOM Esports", "T1", []]
+      ["TNC Predator", "OB Esports x Neon", [2, 0]],
+      ["T1", "Execration", [2, 0]],
+      ["TNC Predator", "Team SMG", [1, 2]],
+      ["Team SMG", "OB Esports x Neon", [2, 1]],
+      ["Fnatic", "Execration", [2, 0]],
+      ["BOOM Esports", "T1", [0, 2]]
     ],
     [
-      ["BOOM Esports", "Execration", []],
-      ["Fnatic", "T1", []],
-      ["Motivate.Trust Gaming", "OB Esports x Neon", []]
+      ["BOOM Esports", "Execration", [2, 0]],
+      ["Fnatic", "T1", [2, 1]],
+      ["Motivate.Trust Gaming", "OB Esports x Neon", [1, 2]]
     ]
   ],
   "lower": [
@@ -72,16 +72,38 @@
     [
       ["Polaris Esports", "Army Geniuses", [2, 0]],
       ["Lilgun", "Ragdoll", [1, 2]],
-      ["496 Gaming", "Talon Esports", []],
-      ["Army Geniuses", "InterActive Philippines", []],
-      ["Nigma Galaxy SEA", "Ragdoll", []],
-      ["Lilgun", "Talon Esports", []],
-      ["Nigma Galaxy SEA", "Polaris Esports", []]
+      ["496 Gaming", "Talon Esports", [0, 2]],
+      ["Army Geniuses", "InterActive Philippines", [2, 1]],
+      ["Nigma Galaxy SEA", "Ragdoll", [2, 0]],
+      ["Lilgun", "Talon Esports", [2, 0]],
+      ["Nigma Galaxy SEA", "Polaris Esports", [1, 2]]
     ],
     [
-      ["496 Gaming", "InterActive Philippines", []],
-      ["Polaris Esports", "Ragdoll", []],
-      ["Nigma Galaxy SEA", "Lilgun", []]
+      ["496 Gaming", "InterActive Philippines", [2, 0]],
+      ["Polaris Esports", "Ragdoll", [2, 0]],
+      ["Nigma Galaxy SEA", "Lilgun", [1, 2]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "1": [
+        ["Team SMG", "Fnatic", [0, 1]],
+        ["T1", "Fnatic", [0, 1]],
+        ["T1", "Team SMG", [1, 0]]
+      ],
+      "5": [
+        ["Execration", "OB Esports x Neon", [0, 1]],
+        ["Motivate.Trust Gaming", "OB Esports x Neon", [0, 1]],
+        ["Motivate.Trust Gaming", "Execration", [0, 1]]
+      ]
+    },
+    "lower": {
+      "1": [
+        ["Nigma Galaxy SEA", "Ragdoll", [2, 1]]
+      ],
+      "5": [
+        ["496 Gaming", "Army Geniuses", [0, 2]]
+      ]
+    }
+  }
 }

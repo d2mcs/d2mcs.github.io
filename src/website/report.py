@@ -55,12 +55,17 @@ def generate_team_ratings_elo(max_tier, k, p, folder, stop_after=None):
         rosters = json.load(roster_f)
 
     with open(f"data/{folder}/elo_ratings_lan.json", "w") as lan_f, open(
-              f"data/{folder}/elo_ratings_online.json", "w") as online_f:
-        for output_f, setting in [(lan_f, "lan"), (online_f, "online")]:
+              f"data/{folder}/elo_ratings_online.json", "w") as online_f, open(
+              f"data/{folder}/fixed_ratings.json", "w") as fixed_f:
+        for output_f, setting in [(lan_f, "lan"), (online_f, "online"),
+                                  (fixed_f, "fixed")]:
             output_f.write("{\n")
             for i, team in enumerate(rosters.keys()):
-                elo_rating = model.get_team_rating(tids[team], rosters[team],
-                                                   regions[team], setting)
+                if setting == "fixed":
+                    elo_rating = 1500
+                else:
+                    elo_rating = model.get_team_rating(
+                        tids[team], rosters[team], regions[team], setting)
                 if i != len(rosters) - 1:
                     output_f.write(f'  "{team}": {elo_rating:.2f},\n')
                 else:
@@ -347,34 +352,44 @@ def predict_results_season(season, n_samples, ratings_type, k):
     """
     season_format = "21-22"
     if ratings_type == "elo":
-        rating_file = f"elo_ratings_lan.json"
+        rating_file = "elo_ratings_lan.json"
     else:
-        rating_file = f"fixed_ratings.json"
+        rating_file = "fixed_ratings.json"
+
+    years = (season, str(int(season) + 1))
+    tours = [f"wn{years[0]}", f"sp{years[1]}", f"sm{years[1]}"]
+    dpc_points = {}
+    for tour in tours:
+        if Path(f"data/dpc/{tour}/dpc_points.json").is_file():
+            with open(f"data/dpc/{tour}/dpc_points.json") as dpc_point_f:
+                dpc_points[tour[:2]] = json.load(dpc_point_f)
+
+    # find the most recent tour for which there are ratings
+    last_tour = tours[0]
+    for tour in tours:
+        if Path(f"data/dpc/{tour}/na/{rating_file}").is_file():
+            last_tour = tour
 
     teams = {}
     matches = {}
     sampler = DPCSeasonSampler.from_ratings_file(
-        f"data/dpc/wn{season}/na/{rating_file}", k=k, static_ratings=False)
+        f"data/dpc/{last_tour}/na/{rating_file}", k=k, static_ratings=False)
     for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
-        with open(f"data/dpc/wn{season}/{region}/teams.json") as team_f:
+        with open(f"data/dpc/{last_tour}/{region}/teams.json") as team_f:
             teams[region] = json.load(team_f)
-        with open(f"data/dpc/wn{season}/{region}/{rating_file}") as rating_f:
+        with open(f"data/dpc/{last_tour}/{region}/{rating_file}") as rating_f:
             for team, rating in json.load(rating_f).items():
                 sampler.model.ratings[team] = rating
 
-    for tour in ["wn", "sp", "sm"]:
-        matches[tour] = {}
+    for tour in tours:
+        matches[tour[:2]] = {}
         for region in ["na", "sa", "weu", "eeu", "cn", "sea", "major"]:
-            if tour == "wn":
-                match_file = f"data/dpc/{tour}{season}/{region}/matches.json"
-            else:
-                match_file = (f"data/dpc/{tour}{int(season) + 1}/"
-                              f"{region}/matches.json")
-            if Path(match_file).exists():
-                with open(match_file) as match_f:
-                    matches[tour][region] = json.load(match_f)
+            if Path(f"data/dpc/{tour}/{region}/matches.json").exists():
+                with open(f"data/dpc/{tour}/{region}/matches.json") as match_f:
+                    matches[tour[:2]][region] = json.load(match_f)
 
-    probs = sampler.sample_season(teams, season_format, n_samples, matches)
+    probs = sampler.sample_season(teams, season_format, n_samples,
+                                  matches, dpc_points)
     formatted_probs = []
     for (team, (points, _, qual_prob)) in sorted(probs["final_rank"].items(),
                                                  key=lambda x: -x[1][2]):
@@ -397,16 +412,26 @@ def generate_html_dpc(output_file, tabs, title, wildcard_slots, matches):
         main() or retroactive_predictions() for an example.
     title : str
         Name to put at the top of the report.
-    matches : list
-        List of matches. This is used to determine how many match divs
-        are needed for each week.
+    matches : dict
+        Match dictionary. This is used to determine how many match divs
+        are needed for each week. If an empty dict is provided the
+        default schedule is assumed (5 matches per week until the final
+        week, which has 3 matches).
     """
     with open("data/template_dpc.html") as input_f:
         template_str = input_f.read()
     template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
 
-    match_counts = {"upper": [len(mch_list) for mch_list in matches["upper"]],
-                    "lower": [len(mch_list) for mch_list in matches["lower"]]}
+    if len(matches) > 1:
+        match_counts = {
+            "upper": [len(mch_list) for mch_list in matches["upper"]],
+            "lower": [len(mch_list) for mch_list in matches["lower"]]
+        }
+    else:
+        # if no match dictionary is provided, assume default schedule
+        match_counts = {
+            "upper": [5, 5, 5, 5, 3], "lower": [5, 5, 5, 5, 3]
+        }
 
     output = template.render(tabs=tabs, title=title, match_counts=match_counts,
         wildcard_slots=wildcard_slots)
@@ -682,8 +707,13 @@ def generate_html_global_rankings(output_file, tour, n_samples, k):
                  for team, region, lan_rating, online_rating, last_update in
                  sorted(team_ratings["ratings"], key=lambda x: -x[2])]
 
-    ti_qual_data_elo = predict_results_season(tour[2:], n_samples, "elo", k)
-    ti_qual_data_fixed = predict_results_season(tour[2:], n_samples,"fixed", k)
+    if tour[:2] == "wn":
+        year = tour[2:]
+    else:
+        year = str(int(tour[2:]) - 1)
+
+    ti_qual_data_elo = predict_results_season(year, n_samples, "elo", k)
+    ti_qual_data_fixed = predict_results_season(year, n_samples,"fixed", k)
     for i in range(len(ti_qual_data_elo)):
         ti_qual_data_elo[i].append(region_map[ti_qual_data_elo[i][0]])
         ti_qual_data_fixed[i].append(region_map[ti_qual_data_fixed[i][0]])
