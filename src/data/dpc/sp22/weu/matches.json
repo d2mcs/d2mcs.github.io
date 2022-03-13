@@ -1,1 +1,86 @@
-{}
+{
+  "upper": [
+    [
+      ["Team Liquid", "Team Secret", []],
+      ["OG", "Nigma Galaxy", []],
+      ["Tundra Esports", "Entity", []],
+      ["Brame", "Gladiators", []],
+      ["Team Liquid", "OG", []]
+    ],
+    [
+      ["Team Secret", "Tundra Esports", []],
+      ["Nigma Galaxy", "Gladiators", []],
+      ["Brame", "Entity", []],
+      ["Team Secret", "OG", []],
+      ["Gladiators", "Entity", []]
+    ],
+    [
+      ["Nigma Galaxy", "Tundra Esports", []],
+      ["Team Liquid", "Brame", []],
+      ["Team Secret", "Gladiators", []],
+      ["Nigma Galaxy", "Brame", []],
+      ["OG", "Tundra Esports", []]
+    ],
+    [
+      ["Team Liquid", "Entity", []],
+      ["Team Secret", "Brame", []],
+      ["OG", "Gladiators", []],
+      ["Team Liquid", "Tundra Esports", []],
+      ["Nigma Galaxy", "Entity", []]
+    ],
+    [
+      ["Nigma Galaxy", "Team Secret", []],
+      ["Tundra Esports", "Brame", []],
+      ["Team Liquid", "Nigma Galaxy", []],
+      ["Team Secret", "Entity", []],
+      ["Gladiators", "Tundra Esports", []]
+    ],
+    [
+      ["Gladiators", "Team Liquid", []],
+      ["Entity", "OG", []],
+      ["Brame", "OG", []]
+    ]
+  ],
+  "lower": [
+    [
+      ["IVY", "Chicken Fighters", []],
+      ["Team Bald Reborn", "Winter Bear", []],
+      ["CHILLAX", "goonsquad", []],
+      ["Alliance", "Into The Breach", []],
+      ["Chicken Fighters", "Winter Bear", []]
+    ],
+    [
+      ["IVY", "goonsquad", []],
+      ["CHILLAX", "Into The Breach", []],
+      ["Alliance", "Team Bald Reborn", []],
+      ["Chicken Fighters", "goonsquad", []],
+      ["Team Bald Reborn", "Into The Breach", []]
+    ],
+    [
+      ["Winter Bear", "CHILLAX", []],
+      ["Alliance", "IVY", []],
+      ["Chicken Fighters", "Into The Breach", []],
+      ["Team Bald Reborn", "CHILLAX", []],
+      ["Alliance", "goonsquad", []]
+    ],
+    [
+      ["IVY", "Winter Bear", []],
+      ["Team Bald Reborn", "Chicken Fighters", []],
+      ["Alliance", "CHILLAX", []],
+      ["Winter Bear", "goonsquad", []],
+      ["IVY", "Into The Breach", []]
+    ],
+    [
+      ["Alliance", "Chicken Fighters", []],
+      ["Into The Breach", "goonsquad", []],
+      ["Winter Bear", "Alliance", []],
+      ["IVY", "CHILLAX", []],
+      ["Team Bald Reborn", "goonsquad", []]
+    ],
+    [
+      ["Winter Bear", "Into The Breach", []],
+      ["IVY", "Team Bald Reborn", []],
+      ["CHILLAX", "Chicken Fighters", []]
+    ]
+  ]
+}

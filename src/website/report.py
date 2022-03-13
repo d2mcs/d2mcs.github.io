@@ -430,7 +430,7 @@ def generate_html_dpc(output_file, tabs, title, wildcard_slots, matches):
     else:
         # if no match dictionary is provided, assume default schedule
         match_counts = {
-            "upper": [5, 5, 5, 5, 3], "lower": [5, 5, 5, 5, 3]
+            "upper": [5, 5, 5, 5, 5, 3], "lower": [5, 5, 5, 5, 5, 3]
         }
 
     output = template.render(tabs=tabs, title=title, match_counts=match_counts,

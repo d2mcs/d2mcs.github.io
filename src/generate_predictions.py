@@ -14,6 +14,7 @@ import os
 from website.report import (generate_data_ti, generate_html_ti,
     generate_data_dpc, generate_html_dpc, generate_html_global_rankings,
     generate_team_ratings_elo, generate_global_ratings_elo)
+from website.conf import EventConf
 
 def validate_data_files(folder, groups, match_list_len):
     """Some simple checks for the data files to help users catch
@@ -64,18 +65,17 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
     """Generates a forecast with both Elo ratings and fixed ratings for
     use on the website.
     """
+    config = EventConf(f"data/conf/{event}.json")
+    tabs = config.tabs
+    event_name = config.name
+
     if event == "ti10":
-        tabs = [["Oct. 17 (Current)", ""],["Oct 10 (Group Stage Day 4)", "-4"],
-                ["Oct. 9 (Group Stage Day 3)", "-3"],
-                ["Oct. 8 (Group Stage Day 2)", "-2"],
-                ["Oct. 7 (Group Stage Day 1)", "-1"],
-                ["Oct. 6 (Pre-tournament)", "-pre"]]
         if train_elo:
             generate_team_ratings_elo(3, k, 1.5, "ti/10")
 
         with open("data/ti/10/matches.json") as match_f:
             matches = json.load(match_f)
-        generate_html_ti("ti/10/forecast.html", tabs, "The International 10")
+        generate_html_ti("ti/10/forecast.html", tabs, event_name)
         if not html_only:
             generate_data_ti("data/ti/10/elo_ratings_lan.json", matches,
                 "elo", n_samples, "ti/10", k, timestamp,
@@ -86,22 +86,6 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                 bracket_file="data/ti/10/main_event_matches.json")
     else:
         tour = event.split("-")[-1]
-        if tour == "sp21":
-            tabs = [["May 23 (Current)", ""],
-                    ["May 21 (Week 6)", "-6"], ["May 16 (Week 5)", "-5"],
-                    ["May 9 (Week 4)", "-4"], ["May 2 (Week 3)", "-3"],
-                    ["Apr. 25 (Week 2)", "-2"], ["Apr. 18 (Week 1)", "-1"],
-                    ["Apr. 11 (Pre-tournament)", "-pre"]]
-            tour_name = "Spring"
-            stop_after = datetime.fromisoformat("2021-04-10").timestamp()
-        else:
-            tabs = [["Jan. 23 (Current)", ""],
-                    ["Before Tiebreakers", "-bt"], ["Jan. 16 (Week 5)", "-5"],
-                    ["Jan. 9 (Week 4)", "-4-2"], ["Dec. 31 (Week 4)", "-4-1"],
-                    ["Dec. 19 (Week 3)", "-3"], ["Dec. 12 (Week 2)", "-2"],
-                    ["Dec. 5 (Week 1)", "-1"],
-                    ["Nov. 28 (Pre-tournament)", "-pre"]]
-            tour_name = "Winter"
         full_name = {
             "na": "North America", "sa": "South America",
             "weu": "Western Europe", "eeu": "Eastern Europe",
@@ -115,7 +99,7 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
             with open( f"data/dpc/{tour}/{region}/matches.json") as match_f:
                 matches = json.load(match_f)
             generate_html_dpc(f"dpc/{tour}/{region}/forecast.html", tabs,
-                              f"DPC {tour_name} 2021: {full_name[region]}",
+                              f"{event_name}: {full_name[region]}",
                               wildcard_slots[region], matches)
             if html_only:
                 return

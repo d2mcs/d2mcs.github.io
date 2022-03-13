@@ -1,0 +1,16 @@
+{
+  "name": "DPC Winter 2021",
+  "tabs": [
+    ["Jan. 23 (Current)", ""],
+    ["Before Tiebreakers", "-bt"],
+    ["Jan. 16 (Week 5)", "-5"],
+    ["Jan. 9 (Week 4)", "-4-2"],
+    ["Dec. 31 (Week 4)", "-4-1"],
+    ["Dec. 19 (Week 3)", "-3"],
+    ["Dec. 12 (Week 2)", "-2"],
+    ["Dec. 5 (Week 1)", "-1"],
+    ["Nov. 28 (Pre-tournament)", "-pre"]
+  ],
+  "start_date": "2021-11-28",
+  "end_date": "2022-01-25"
+}
