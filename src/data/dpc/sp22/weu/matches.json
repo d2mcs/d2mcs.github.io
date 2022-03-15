@@ -43,7 +43,7 @@
   ],
   "lower": [
     [
-      ["IVY", "Chicken Fighters", []],
+      ["IVY", "Chicken Fighters", [0, 2]],
       ["Team Bald Reborn", "Winter Bear", []],
       ["CHILLAX", "goonsquad", []],
       ["Alliance", "Into The Breach", []],

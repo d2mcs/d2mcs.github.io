@@ -43,7 +43,7 @@
   ],
   "lower": [
     [
-      ["Black N Yellow", "The Mystery Machine", []],
+      ["Black N Yellow", "The Mystery Machine", [0, 2]],
       ["KBU.US", "Stratyk Gaming", []],
       ["Arkosh Gaming", "5ManMidas", []],
       ["felt", "5RATFORCESTAFF", []],

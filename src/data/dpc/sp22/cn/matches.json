@@ -43,8 +43,8 @@
   ],
   "lower": [
     [
-      ["Invictus Gaming", "ShenZhen", []],
-      ["Phoenix Gaming", "Ybb Gaming", []],
+      ["Invictus Gaming", "ShenZhen", [2, 0]],
+      ["Phoenix Gaming", "Ybb Gaming", [1, 2]],
       ["iG Vitality", "Sparking Arrow Gaming", []],
       ["Aster.Aries", "Dandelion Esport Club", []],
       ["Invictus Gaming", "iG Vitality", []]
