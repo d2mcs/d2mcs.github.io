@@ -1,8 +1,8 @@
 {
   "upper": [
     [
-      ["Team Aster", "LBZS", []],
-      ["PSG.LGD", "Vici Gaming", []],
+      ["Team Aster", "LBZS", [2, 0]],
+      ["PSG.LGD", "Vici Gaming", [2, 1]],
       ["Vici Gaming", "LBZS", []],
       ["LBZS", "Xtreme Gaming", []],
       ["EHOME", "Team MagMa", []]
@@ -45,7 +45,7 @@
     [
       ["Invictus Gaming", "ShenZhen", [2, 0]],
       ["Phoenix Gaming", "Ybb Gaming", [1, 2]],
-      ["iG Vitality", "Sparking Arrow Gaming", []],
+      ["iG Vitality", "Sparking Arrow Gaming", [0, 2]],
       ["Aster.Aries", "Dandelion Esport Club", []],
       ["Invictus Gaming", "iG Vitality", []]
     ],

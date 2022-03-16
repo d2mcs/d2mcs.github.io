@@ -1,7 +1,7 @@
 {
   "upper": [
     [
-      ["Quincy Crew", "Wildcard Gaming", []],
+      ["Quincy Crew", "Wildcard Gaming", [2, 0]],
       ["4 Zoomers", "simply TOOBASED", []],
       ["Evil Geniuses", "The Cut", []],
       ["TSM", "Team DogChamp", []],
@@ -44,7 +44,7 @@
   "lower": [
     [
       ["Black N Yellow", "The Mystery Machine", [0, 2]],
-      ["KBU.US", "Stratyk Gaming", []],
+      ["KBU.US", "Stratyk Gaming", [1, 2]],
       ["Arkosh Gaming", "5ManMidas", []],
       ["felt", "5RATFORCESTAFF", []],
       ["The Mystery Machine", "Stratyk Gaming", []]
