@@ -1,8 +1,8 @@
 {
   "upper": [
     [
-      ["Polaris Esports", "Nigma Galaxy SEA", []],
-      ["Fnatic", "OB Esports x Neon", []],
+      ["Polaris Esports", "Nigma Galaxy SEA", [2, 0]],
+      ["Fnatic", "OB Esports x Neon", [2, 1]],
       ["Team SMG", "Execration", []],
       ["T1", "Polaris Esports", []],
       ["BOOM Esports", "Nigma Galaxy SEA", []]
@@ -44,7 +44,7 @@
   "lower": [
     [
       ["Army Geniuses", "ChubbyBoiz", [0, 2]],
-      ["Motivate.Trust Gaming", "ChubbyBoiz", []],
+      ["Motivate.Trust Gaming", "ChubbyBoiz", [0, 2]],
       ["TNC Predator", "UD Vessuwan", []],
       ["Lilgun", "Talon Esports", []],
       ["Army Geniuses", "The Apes E-Sport", []]
