@@ -1,7 +1,7 @@
 {
   "upper": [
     [
-      ["Balrogs", "beastcoast", []],
+      ["Balrogs", "beastcoast", [1, 2]],
       ["Infamous", "Infinity Esports", []],
       ["Thunder Awaken", "Hokori", []],
       ["Lava", "APU King Of Kings", []],
@@ -44,8 +44,8 @@
   "lower": [
     [
       ["NoPing e-sports", "Dreamers", [2, 0]],
-      ["SG esports", "Ravens", []],
-      ["Gorillaz-Pride", "Interitus", []],
+      ["SG esports", "Ravens", [2, 0]],
+      ["Gorillaz-Pride", "Interitus", [2, 0]],
       ["Wolf Team", "Omega Gaming", []],
       ["NoPing e-sports", "Ravens", []]
     ],
