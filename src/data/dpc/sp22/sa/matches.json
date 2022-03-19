@@ -2,8 +2,8 @@
   "upper": [
     [
       ["Balrogs", "beastcoast", [1, 2]],
-      ["Infamous", "Infinity Esports", []],
-      ["Thunder Awaken", "Hokori", []],
+      ["Infamous", "Infinity Esports", [2, 1]],
+      ["Thunder Awaken", "Hokori", [2, 0]],
       ["Lava", "APU King Of Kings", []],
       ["Infinity Esports", "beastcoast", []]
     ],
