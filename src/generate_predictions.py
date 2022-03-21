@@ -93,7 +93,7 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
         }
         wildcard_slots = {"sea": 1, "eeu": 1, "cn": 2,
                           "weu": 2, "na": 0, "sa": 0}
-        for region in ["na", "sa", "weu", "eeu", "cn", "sea"]:
+        for region in ["na", "sa", "weu", "cn", "sea"]:
             if train_elo:
                 generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/{region}")
             with open( f"data/dpc/{tour}/{region}/matches.json") as match_f:
