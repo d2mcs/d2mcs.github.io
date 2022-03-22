@@ -1,7 +1,8 @@
 {
   "name": "DPC Spring 2022",
   "tabs": [
-    ["Mar. 20 (Current)", ""], ["Mar. 13 (Pre-tournament)", "-pre"]
+    ["Mar. 21 (Current)", ""], ["Mar. 20 (Week 1)", "-1"],
+    ["Mar. 13 (Pre-tournament)", "-pre"]
   ],
   "start_date": "2022-03-13",
   "end_date": "2021-04-25"
