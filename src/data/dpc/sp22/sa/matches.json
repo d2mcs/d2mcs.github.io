@@ -29,16 +29,16 @@
       ["Infamous", "Thunder Awaken", []]
     ],
     [
-      ["Lava", "Hokori", []],
-      ["beastcoast", "Thunder Awaken", []],
-      ["Infamous", "beastcoast", []],
-      ["Lava", "Infinity Esports", []],
-      ["Thunder Awaken", "APU King Of Kings", []]
+      ["Infinity Esports", "Balrogs", []],
+      ["Thunder Awaken", "beastcoast", []],
+      ["APU King Of Kings", "Infamous", []],
+      ["APU King Of Kings", "Thunder Awaken", []],
+      ["Hokori", "Lava", []]
     ],
     [
-      ["Infinity Esports", "Balrogs", []],
-      ["APU King Of Kings", "Infamous", []],
-      ["Balrogs", "Hokori", []]
+      ["Lava", "Infinity Esports", []],
+      ["Hokori", "Balrogs", []],
+      ["Infamous", "beastcoast", []]
     ]
   ],
   "lower": [
@@ -71,16 +71,16 @@
       ["SG esports", "Gorillaz-Pride", []]
     ],
     [
-      ["Interitus", "Wolf Team", []],
-      ["NoPing e-sports", "Gorillaz-Pride", []],
-      ["Dreamers", "Interitus", []],
-      ["Ravens", "Wolf Team", []],
-      ["Dreamers", "Ravens", []]
+      ["Omega Gaming", "SG esports", []],
+      ["Gorillaz-Pride", "NoPing e-sports", []],
+      ["Omega Gaming", "Gorillaz-Pride", []],
+      ["Interitus", "Dreamers", []],
+      ["Wolf Team", "Interitus", []]
     ],
     [
-      ["Omega Gaming", "SG esports", []],
-      ["NoPing e-sports", "SG esports", []],
-      ["Omega Gaming", "Gorillaz-Pride", []]
+      ["Ravens", "Wolf Team", []],
+      ["Ravens", "Dreamers", []],
+      ["SG esports", "NoPing e-sports", []]
     ]
   ]
 }

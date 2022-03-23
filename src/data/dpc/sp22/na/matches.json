@@ -8,7 +8,7 @@
       ["Evil Geniuses", "Wildcard Gaming", [2, 0]]
     ],
     [
-      ["Quincy Crew", "4 Zoomers", []],
+      ["Quincy Crew", "4 Zoomers", [2, 1]],
       ["TSM", "simply TOOBASED", []],
       ["The Cut", "Team DogChamp", []],
       ["Evil Geniuses", "simply TOOBASED", []],
@@ -29,16 +29,16 @@
       ["The Cut", "simply TOOBASED", []]
     ],
     [
-      ["TSM", "Quincy Crew", []],
-      ["Team DogChamp", "4 Zoomers", []],
-      ["simply TOOBASED", "Quincy Crew", []],
+      ["Quincy Crew", "TSM", []],
+      ["The Cut", "Wildcard Gaming", []],
       ["Wildcard Gaming", "simply TOOBASED", []],
-      ["Team DogChamp", "Evil Geniuses", []]
+      ["Team DogChamp", "4 Zoomers", []],
+      ["simply TOOBASED", "Quincy Crew", []]
     ],
     [
-      ["The Cut", "4 Zoomers", []],
-      ["The Cut", "Wildcard Gaming", []],
-      ["Evil Geniuses", "TSM", []]
+      ["Evil Geniuses", "TSM", []],
+      ["Evil Geniuses", "Team DogChamp", []],
+      ["4 Zoomers", "The Cut", []]
     ]
   ],
   "lower": [
@@ -51,7 +51,7 @@
     ],
     [
       ["5ManMidas", "KBU.US", [1, 2]],
-      ["Arkosh Gaming", "5RATFORCESTAFF", []],
+      ["Arkosh Gaming", "5RATFORCESTAFF", [0, 2]],
       ["Black N Yellow", "felt", []],
       ["5ManMidas", "5RATFORCESTAFF", []],
       ["Arkosh Gaming", "The Mystery Machine", []]
@@ -71,15 +71,15 @@
       ["felt", "Stratyk Gaming", []]
     ],
     [
-      ["Stratyk Gaming", "5ManMidas", []],
-      ["Black N Yellow", "Arkosh Gaming", []],
-      ["felt", "Arkosh Gaming", []],
-      ["Stratyk Gaming", "5RATFORCESTAFF", []],
-      ["The Mystery Machine", "5RATFORCESTAFF", []]
+      ["5RATFORCESTAFF", "Stratyk Gaming", []],
+      ["Arkosh Gaming", "Black N Yellow", []],
+      ["5ManMidas", "Stratyk Gaming", []],
+      ["The Mystery Machine", "5RATFORCESTAFF", []],
+      ["5ManMidas", "felt", []]
     ],
     [
-      ["The Mystery Machine", "KBU.US", []],
-      ["5ManMidas", "felt", []],
+      ["Arkosh Gaming", "felt", []],
+      ["KBU.US", "The Mystery Machine", []],
       ["Black N Yellow", "KBU.US", []]
     ]
   ]

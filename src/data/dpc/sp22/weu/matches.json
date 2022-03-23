@@ -8,11 +8,11 @@
       ["Team Liquid", "OG", []]
     ],
     [
-      ["Team Secret", "Tundra Esports", []],
-      ["Nigma Galaxy", "Gladiators", []],
+      ["Team Secret", "Tundra Esports", [0, 2]],
       ["Brame", "Entity", []],
       ["Team Secret", "OG", []],
-      ["Gladiators", "Entity", []]
+      ["Gladiators", "Entity", []],
+      ["Nigma Galaxy", "Gladiators", []]
     ],
     [
       ["Nigma Galaxy", "Tundra Esports", []],
@@ -29,16 +29,16 @@
       ["Nigma Galaxy", "Entity", []]
     ],
     [
-      ["Gladiators", "Team Liquid", []],
-      ["Entity", "OG", []],
-      ["Tundra Esports", "Brame", []],
+      ["Team Liquid", "Nigma Galaxy", []],
+      ["Gladiators", "Tundra Esports", []],
+      ["Team Secret", "Entity", []],
       ["OG", "Brame", []],
-      ["Entity", "Team Secret", []]
+      ["Team Secret", "Nigma Galaxy", []]
     ],
     [
-      ["Nigma Galaxy", "Team Secret", []],
-      ["Tundra Esports", "Gladiators", []],
-      ["Team Liquid", "Nigma Galaxy", []]
+      ["Brame", "Tundra Esports", []],
+      ["Team Liquid", "Gladiators", []],
+      ["OG", "Entity", []]
     ]
   ],
   "lower": [
@@ -51,7 +51,7 @@
     ],
     [
       ["IVY", "goonsquad", [0, 2]],
-      ["CHILLAX", "Into The Breach", []],
+      ["CHILLAX", "Into The Breach", [2, 0]],
       ["Alliance", "Team Bald Reborn", []],
       ["Chicken Fighters", "goonsquad", []],
       ["Team Bald Reborn", "Into The Breach", []]
@@ -71,16 +71,16 @@
       ["IVY", "Into The Breach", []]
     ],
     [
-      ["Winter Bear", "Into The Breach", []],
-      ["IVY", "Team Bald Reborn", []],
-      ["goonsquad", "Team Bald Reborn", []],
       ["Into The Breach", "goonsquad", []],
-      ["IVY", "CHILLAX", []]
+      ["IVY", "CHILLAX", []],
+      ["Chicken Fighters", "Alliance", []],
+      ["goonsquad", "Team Bald Reborn", []],
+      ["Chicken Fighters", "CHILLAX", []]
     ],
     [
-      ["Chicken Fighters", "CHILLAX", []],
       ["Alliance", "Winter Bear", []],
-      ["Alliance", "Chicken Fighters", []]
+      ["Into The Breach", "Winter Bear", []],
+      ["IVY", "Team Bald Reborn", []]
     ]
   ]
 }
