@@ -9,7 +9,7 @@
     [
       ["Team Secret", "Tundra Esports", [0, 2]],
       ["Brame", "Entity", [0, 2]],
-      ["Team Liquid", "OG", []],
+      ["Team Liquid", "OG", [0, 2]],
       ["Team Secret", "OG", []],
       ["Gladiators", "Entity", []],
       ["Nigma Galaxy", "Gladiators", []]
@@ -29,11 +29,11 @@
       ["Nigma Galaxy", "Entity", []]
     ],
     [
-      ["Nigma Galaxy", "Team Secret", []],
       ["Team Liquid", "Gladiators", []],
-      ["OG", "Entity", []],
+      ["Team Secret", "Nigma Galaxy", []],
       ["Team Secret", "Entity", []],
-      ["Gladiators", "Tundra Esports", []]
+      ["Gladiators", "Tundra Esports", []],
+      ["OG", "Entity", []]
     ],
     [
       ["Nigma Galaxy", "Team Liquid", []],
@@ -71,16 +71,16 @@
       ["IVY", "Into The Breach", []]
     ],
     [
-      ["Winter Bear", "Into The Breach", []],
-      ["Alliance", "Chicken Fighters", []],
-      ["IVY", "Team Bald Reborn", []],
       ["CHILLAX", "IVY", []],
-      ["Into The Breach", "goonsquad", []]
+      ["CHILLAX", "Chicken Fighters", []],
+      ["goonsquad", "Team Bald Reborn", []],
+      ["Winter Bear", "Alliance", []],
+      ["Into The Breach", "Winter Bear", []]
     ],
     [
-      ["Alliance", "Winter Bear", []],
-      ["CHILLAX", "Chicken Fighters", []],
-      ["Team Bald Reborn", "goonsquad", []]
+      ["IVY", "Team Bald Reborn", []],
+      ["Into The Breach", "goonsquad", []],
+      ["Chicken Fighters", "Alliance", []]
     ]
   ]
 }
