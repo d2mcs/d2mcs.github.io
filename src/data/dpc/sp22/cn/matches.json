@@ -10,7 +10,7 @@
     [
       ["Vici Gaming", "Royal Never Give Up", [0, 2]],
       ["EHOME", "PSG.LGD", [0, 2]],
-      ["Team MagMa", "Xtreme Gaming", []],
+      ["Team MagMa", "Xtreme Gaming", [1, 2]],
       ["PSG.LGD", "Team MagMa", []],
       ["EHOME", "Royal Never Give Up", []]
     ],
@@ -29,16 +29,16 @@
       ["Team Aster", "Royal Never Give Up", []]
     ],
     [
-      ["Team MagMa", "Royal Never Give Up", []],
-      ["Royal Never Give Up", "Xtreme Gaming", []],
       ["PSG.LGD", "Xtreme Gaming", []],
-      ["Vici Gaming", "EHOME", []],
-      ["Team MagMa", "LBZS", []]
+      ["Royal Never Give Up", "Team MagMa", []],
+      ["Team MagMa", "LBZS", []],
+      ["EHOME", "LBZS", []],
+      ["Xtreme Gaming", "Royal Never Give Up", []]
     ],
     [
-      ["EHOME", "LBZS", []],
-      ["Vici Gaming", "Team Aster", []],
-      ["Team Aster", "PSG.LGD", []]
+      ["EHOME", "Vici Gaming", []],
+      ["Team Aster", "Vici Gaming", []],
+      ["PSG.LGD", "Team Aster", []]
     ]
   ],
   "lower": [
@@ -53,7 +53,7 @@
       ["Phoenix Gaming", "Dandelion Esport Club", [0, 2]],
       ["ShenZhen", "Aster.Aries", [1, 2]],
       ["Sparking Arrow Gaming", "Ybb Gaming", [2, 0]],
-      ["ShenZhen", "Sparking Arrow Gaming", []],
+      ["ShenZhen", "Sparking Arrow Gaming", [2, 1]],
       ["Invictus Gaming", "Dandelion Esport Club", []]
     ],
     [
@@ -71,16 +71,16 @@
       ["Invictus Gaming", "Ybb Gaming", []]
     ],
     [
-      ["Invictus Gaming", "Aster.Aries", []],
       ["Dandelion Esport Club", "Ybb Gaming", []],
-      ["Ybb Gaming", "iG Vitality", []],
-      ["Invictus Gaming", "Sparking Arrow Gaming", []],
-      ["ShenZhen", "Dandelion Esport Club", []]
+      ["Aster.Aries", "Phoenix Gaming", []],
+      ["Sparking Arrow Gaming", "Invictus Gaming", []],
+      ["ShenZhen", "iG Vitality", []],
+      ["Dandelion Esport Club", "ShenZhen", []]
     ],
     [
-      ["ShenZhen", "iG Vitality", []],
-      ["Sparking Arrow Gaming", "Phoenix Gaming", []],
-      ["Phoenix Gaming", "Aster.Aries", []]
+      ["iG Vitality", "Ybb Gaming", []],
+      ["Phoenix Gaming", "Sparking Arrow Gaming", []],
+      ["Invictus Gaming", "Aster.Aries", []]
     ]
   ]
 }
