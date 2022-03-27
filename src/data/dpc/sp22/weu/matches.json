@@ -10,8 +10,8 @@
       ["Team Secret", "Tundra Esports", [0, 2]],
       ["Brame", "Entity", [0, 2]],
       ["Team Liquid", "OG", [0, 2]],
-      ["Team Secret", "OG", []],
-      ["Gladiators", "Entity", []],
+      ["Team Secret", "OG", [2, 1]],
+      ["Gladiators", "Entity", [2, 1]],
       ["Nigma Galaxy", "Gladiators", []]
     ],
     [
@@ -29,16 +29,16 @@
       ["Nigma Galaxy", "Entity", []]
     ],
     [
-      ["Team Liquid", "Nigma Galaxy", []],
-      ["Entity", "Team Secret", []],
-      ["Brame", "OG", []],
+      ["OG", "Brame", []],
+      ["Entity", "OG", []],
+      ["Tundra Esports", "Brame", []],
       ["Team Secret", "Nigma Galaxy", []],
-      ["Entity", "OG", []]
+      ["Tundra Esports", "Gladiators", []]
     ],
     [
-      ["Brame", "Tundra Esports", []],
-      ["Gladiators", "Tundra Esports", []],
-      ["Gladiators", "Team Liquid", []]
+      ["Team Secret", "Entity", []],
+      ["Nigma Galaxy", "Team Liquid", []],
+      ["Team Liquid", "Gladiators", []]
     ]
   ],
   "lower": [
@@ -54,7 +54,7 @@
       ["CHILLAX", "Into The Breach", [2, 0]],
       ["Alliance", "Team Bald Reborn", [2, 1]],
       ["Chicken Fighters", "goonsquad", [0, 2]],
-      ["Team Bald Reborn", "Into The Breach", []]
+      ["Team Bald Reborn", "Into The Breach", [0, 2]]
     ],
     [
       ["Winter Bear", "CHILLAX", []],
@@ -71,16 +71,16 @@
       ["IVY", "Into The Breach", []]
     ],
     [
-      ["Team Bald Reborn", "goonsquad", []],
-      ["Into The Breach", "goonsquad", []],
-      ["Chicken Fighters", "CHILLAX", []],
-      ["IVY", "CHILLAX", []],
-      ["Winter Bear", "Alliance", []]
+      ["CHILLAX", "IVY", []],
+      ["Alliance", "Chicken Fighters", []],
+      ["Winter Bear", "Alliance", []],
+      ["IVY", "Team Bald Reborn", []],
+      ["Chicken Fighters", "CHILLAX", []]
     ],
     [
-      ["Winter Bear", "Into The Breach", []],
-      ["Team Bald Reborn", "IVY", []],
-      ["Alliance", "Chicken Fighters", []]
+      ["Team Bald Reborn", "goonsquad", []],
+      ["Into The Breach", "goonsquad", []],
+      ["Winter Bear", "Into The Breach", []]
     ]
   ]
 }
