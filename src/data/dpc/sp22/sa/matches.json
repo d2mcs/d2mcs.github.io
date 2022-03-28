@@ -11,8 +11,8 @@
       ["Infamous", "Hokori", [0, 2]],
       ["Lava", "Thunder Awaken", [0, 2]],
       ["Balrogs", "APU King Of Kings", [1, 2]],
-      ["Hokori", "beastcoast", []],
-      ["Infamous", "Lava", []]
+      ["Hokori", "beastcoast", [1, 2]],
+      ["Infamous", "Lava", [0, 2]]
     ],
     [
       ["Balrogs", "Thunder Awaken", []],
@@ -29,16 +29,16 @@
       ["Infamous", "Thunder Awaken", []]
     ],
     [
-      ["Lava", "Hokori", []],
+      ["Infinity Esports", "Balrogs", []],
       ["APU King Of Kings", "Infamous", []],
-      ["Balrogs", "Infinity Esports", []],
-      ["beastcoast", "Infamous", []],
-      ["Lava", "Infinity Esports", []]
+      ["beastcoast", "Thunder Awaken", []],
+      ["Hokori", "Lava", []],
+      ["Infinity Esports", "Lava", []]
     ],
     [
-      ["Hokori", "Balrogs", []],
+      ["beastcoast", "Infamous", []],
       ["APU King Of Kings", "Thunder Awaken", []],
-      ["beastcoast", "Thunder Awaken", []]
+      ["Hokori", "Balrogs", []]
     ]
   ],
   "lower": [
@@ -54,7 +54,7 @@
       ["Wolf Team", "Gorillaz-Pride", [2, 0]],
       ["Omega Gaming", "Dreamers", [1, 2]],
       ["NoPing e-sports", "Interitus", [2, 0]],
-      ["Wolf Team", "SG esports", []]
+      ["Wolf Team", "SG esports", [0, 2]]
     ],
     [
       ["Gorillaz-Pride", "Dreamers", []],
@@ -71,16 +71,16 @@
       ["SG esports", "Gorillaz-Pride", []]
     ],
     [
-      ["Gorillaz-Pride", "NoPing e-sports", []],
-      ["Interitus", "Dreamers", []],
-      ["Wolf Team", "Ravens", []],
-      ["Wolf Team", "Interitus", []],
-      ["NoPing e-sports", "SG esports", []]
+      ["Ravens", "Wolf Team", []],
+      ["Ravens", "Dreamers", []],
+      ["NoPing e-sports", "SG esports", []],
+      ["Dreamers", "Interitus", []],
+      ["Gorillaz-Pride", "NoPing e-sports", []]
     ],
     [
-      ["Omega Gaming", "SG esports", []],
-      ["Ravens", "Dreamers", []],
-      ["Gorillaz-Pride", "Omega Gaming", []]
+      ["Omega Gaming", "Gorillaz-Pride", []],
+      ["SG esports", "Omega Gaming", []],
+      ["Interitus", "Wolf Team", []]
     ]
   ]
 }

@@ -11,8 +11,8 @@
       ["Vici Gaming", "Royal Never Give Up", [0, 2]],
       ["EHOME", "PSG.LGD", [0, 2]],
       ["Team MagMa", "Xtreme Gaming", [1, 2]],
-      ["PSG.LGD", "Team MagMa", []],
-      ["EHOME", "Royal Never Give Up", []]
+      ["PSG.LGD", "Team MagMa", [2, 0]],
+      ["EHOME", "Royal Never Give Up", [0, 2]]
     ],
     [
       ["Royal Never Give Up", "LBZS", []],
@@ -29,16 +29,16 @@
       ["Team Aster", "Royal Never Give Up", []]
     ],
     [
-      ["EHOME", "Vici Gaming", []],
+      ["Xtreme Gaming", "Royal Never Give Up", []],
       ["PSG.LGD", "Team Aster", []],
-      ["Team MagMa", "LBZS", []],
-      ["PSG.LGD", "Xtreme Gaming", []],
-      ["LBZS", "EHOME", []]
+      ["Royal Never Give Up", "Team MagMa", []],
+      ["Xtreme Gaming", "PSG.LGD", []],
+      ["Team MagMa", "LBZS", []]
     ],
     [
-      ["Team MagMa", "Royal Never Give Up", []],
-      ["Royal Never Give Up", "Xtreme Gaming", []],
-      ["Team Aster", "Vici Gaming", []]
+      ["EHOME", "Vici Gaming", []],
+      ["Vici Gaming", "Team Aster", []],
+      ["LBZS", "EHOME", []]
     ]
   ],
   "lower": [
@@ -54,7 +54,7 @@
       ["ShenZhen", "Aster.Aries", [1, 2]],
       ["Sparking Arrow Gaming", "Ybb Gaming", [2, 0]],
       ["ShenZhen", "Sparking Arrow Gaming", [2, 1]],
-      ["Invictus Gaming", "Dandelion Esport Club", []]
+      ["Invictus Gaming", "Dandelion Esport Club", [0, 2]]
     ],
     [
       ["iG Vitality", "Phoenix Gaming", []],
@@ -71,16 +71,16 @@
       ["Invictus Gaming", "Ybb Gaming", []]
     ],
     [
+      ["iG Vitality", "Ybb Gaming", []],
+      ["ShenZhen", "Dandelion Esport Club", []],
       ["Sparking Arrow Gaming", "Invictus Gaming", []],
-      ["Invictus Gaming", "Aster.Aries", []],
-      ["Dandelion Esport Club", "ShenZhen", []],
-      ["Phoenix Gaming", "Sparking Arrow Gaming", []],
-      ["ShenZhen", "iG Vitality", []]
+      ["Phoenix Gaming", "Aster.Aries", []],
+      ["Ybb Gaming", "Dandelion Esport Club", []]
     ],
     [
-      ["iG Vitality", "Ybb Gaming", []],
-      ["Aster.Aries", "Phoenix Gaming", []],
-      ["Ybb Gaming", "Dandelion Esport Club", []]
+      ["Sparking Arrow Gaming", "Phoenix Gaming", []],
+      ["Invictus Gaming", "Aster.Aries", []],
+      ["iG Vitality", "ShenZhen", []]
     ]
   ]
 }
