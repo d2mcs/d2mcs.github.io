@@ -29,16 +29,16 @@
       ["BOOM Esports", "Execration", []]
     ],
     [
-      ["BOOM Esports", "T1", []],
+      ["Fnatic", "Team SMG", []],
       ["Fnatic", "T1", []],
-      ["OB Esports x Neon", "Polaris Esports", []],
       ["BOOM Esports", "Fnatic", []],
-      ["BOOM Esports", "Team SMG", []]
+      ["BOOM Esports", "Team SMG", []],
+      ["Nigma Galaxy SEA", "OB Esports x Neon", []]
     ],
     [
-      ["Fnatic", "Team SMG", []],
-      ["Nigma Galaxy SEA", "OB Esports x Neon", []],
-      ["Execration", "Nigma Galaxy SEA", []]
+      ["T1", "BOOM Esports", []],
+      ["Execration", "Nigma Galaxy SEA", []],
+      ["OB Esports x Neon", "Polaris Esports", []]
     ]
   ],
   "lower": [
@@ -57,7 +57,7 @@
       ["Talon Esports", "Army Geniuses", [2, 0]]
     ],
     [
-      ["The Apes E-Sport", "RSG", []],
+      ["The Apes E-Sport", "RSG", [0, 2]],
       ["Motivate.Trust Gaming", "Army Geniuses", []],
       ["Lilgun", "UD Vessuwan", []],
       ["TNC Predator", "Talon Esports", []],
@@ -71,16 +71,16 @@
       ["Talon Esports", "UD Vessuwan", []]
     ],
     [
-      ["RSG", "UD Vessuwan", []],
-      ["Talon Esports", "RSG", []],
-      ["Motivate.Trust Gaming", "Lilgun", []],
-      ["Lilgun", "The Apes E-Sport", []],
-      ["UD Vessuwan", "Army Geniuses", []]
+      ["RSG", "Talon Esports", []],
+      ["UD Vessuwan", "Army Geniuses", []],
+      ["Lilgun", "Motivate.Trust Gaming", []],
+      ["Motivate.Trust Gaming", "TNC Predator", []],
+      ["The Apes E-Sport", "TNC Predator", []]
     ],
     [
       ["Motivate.Trust Gaming", "The Apes E-Sport", []],
-      ["TNC Predator", "Motivate.Trust Gaming", []],
-      ["TNC Predator", "The Apes E-Sport", []]
+      ["Lilgun", "The Apes E-Sport", []],
+      ["RSG", "UD Vessuwan", []]
     ]
   ]
 }
