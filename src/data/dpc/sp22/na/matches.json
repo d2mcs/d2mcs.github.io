@@ -15,7 +15,7 @@
       ["Quincy Crew", "Team DogChamp", [2, 1]]
     ],
     [
-      ["The Cut", "TSM", []],
+      ["The Cut", "TSM", [0, 2]],
       ["4 Zoomers", "Wildcard Gaming", []],
       ["simply TOOBASED", "Team DogChamp", []],
       ["Evil Geniuses", "4 Zoomers", []],
@@ -29,16 +29,16 @@
       ["The Cut", "simply TOOBASED", []]
     ],
     [
-      ["TSM", "Quincy Crew", []],
-      ["Evil Geniuses", "Team DogChamp", []],
-      ["The Cut", "4 Zoomers", []],
-      ["Wildcard Gaming", "simply TOOBASED", []],
-      ["The Cut", "Wildcard Gaming", []]
+      ["simply TOOBASED", "Quincy Crew", []],
+      ["Quincy Crew", "TSM", []],
+      ["Evil Geniuses", "TSM", []],
+      ["The Cut", "Wildcard Gaming", []],
+      ["Wildcard Gaming", "simply TOOBASED", []]
     ],
     [
-      ["Team DogChamp", "4 Zoomers", []],
-      ["Quincy Crew", "simply TOOBASED", []],
-      ["Evil Geniuses", "TSM", []]
+      ["Evil Geniuses", "Team DogChamp", []],
+      ["4 Zoomers", "Team DogChamp", []],
+      ["The Cut", "4 Zoomers", []]
     ]
   ],
   "lower": [
@@ -58,7 +58,7 @@
     ],
     [
       ["felt", "KBU.US", [2, 0]],
-      ["Black N Yellow", "Stratyk Gaming", []],
+      ["Black N Yellow", "Stratyk Gaming", [2, 0]],
       ["Arkosh Gaming", "Stratyk Gaming", []],
       ["felt", "The Mystery Machine", []],
       ["KBU.US", "5RATFORCESTAFF", []]
@@ -71,16 +71,16 @@
       ["felt", "Stratyk Gaming", []]
     ],
     [
+      ["KBU.US", "Black N Yellow", []],
+      ["Arkosh Gaming", "Black N Yellow", []],
       ["felt", "5ManMidas", []],
-      ["Stratyk Gaming", "5ManMidas", []],
-      ["The Mystery Machine", "5RATFORCESTAFF", []],
-      ["5RATFORCESTAFF", "Stratyk Gaming", []],
+      ["5RATFORCESTAFF", "The Mystery Machine", []],
       ["KBU.US", "The Mystery Machine", []]
     ],
     [
       ["Arkosh Gaming", "felt", []],
-      ["KBU.US", "Black N Yellow", []],
-      ["Black N Yellow", "Arkosh Gaming", []]
+      ["5RATFORCESTAFF", "Stratyk Gaming", []],
+      ["5ManMidas", "Stratyk Gaming", []]
     ]
   ]
 }
