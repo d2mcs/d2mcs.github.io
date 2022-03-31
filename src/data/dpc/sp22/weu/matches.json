@@ -16,7 +16,7 @@
     [
       ["Nigma Galaxy", "Tundra Esports", [0, 2]],
       ["Team Liquid", "Brame", [2, 0]],
-      ["Team Secret", "Gladiators", []],
+      ["Team Secret", "Gladiators", [0, 2]],
       ["Nigma Galaxy", "Brame", []],
       ["OG", "Tundra Esports", []],
       ["Nigma Galaxy", "Gladiators", []]
@@ -29,16 +29,16 @@
       ["Nigma Galaxy", "Entity", []]
     ],
     [
-      ["Brame", "Tundra Esports", []],
+      ["Team Secret", "Nigma Galaxy", []],
+      ["Team Secret", "Entity", []],
       ["Gladiators", "Tundra Esports", []],
-      ["Team Liquid", "Nigma Galaxy", []],
-      ["OG", "Brame", []],
-      ["Team Secret", "Nigma Galaxy", []]
+      ["Team Liquid", "Gladiators", []],
+      ["Tundra Esports", "Brame", []]
     ],
     [
       ["OG", "Entity", []],
-      ["Team Liquid", "Gladiators", []],
-      ["Team Secret", "Entity", []]
+      ["Nigma Galaxy", "Team Liquid", []],
+      ["OG", "Brame", []]
     ]
   ],
   "lower": [
@@ -59,8 +59,8 @@
     [
       ["Winter Bear", "CHILLAX", [0, 2]],
       ["Alliance", "IVY", [2, 0]],
-      ["Chicken Fighters", "Into The Breach", []],
-      ["Team Bald Reborn", "CHILLAX", []],
+      ["Chicken Fighters", "Into The Breach", [2, 0]],
+      ["Team Bald Reborn", "CHILLAX", [0, 2]],
       ["Alliance", "goonsquad", []]
     ],
     [
@@ -71,16 +71,16 @@
       ["IVY", "Into The Breach", []]
     ],
     [
-      ["Alliance", "Winter Bear", []],
-      ["Alliance", "Chicken Fighters", []],
-      ["Team Bald Reborn", "goonsquad", []],
-      ["Team Bald Reborn", "IVY", []],
-      ["Into The Breach", "goonsquad", []]
+      ["Chicken Fighters", "CHILLAX", []],
+      ["goonsquad", "Team Bald Reborn", []],
+      ["Into The Breach", "Winter Bear", []],
+      ["Winter Bear", "Alliance", []],
+      ["goonsquad", "Into The Breach", []]
     ],
     [
-      ["CHILLAX", "Chicken Fighters", []],
+      ["Chicken Fighters", "Alliance", []],
       ["IVY", "CHILLAX", []],
-      ["Into The Breach", "Winter Bear", []]
+      ["Team Bald Reborn", "IVY", []]
     ]
   ]
 }
