@@ -29,16 +29,16 @@
       ["PSG.LGD", "LBZS", []]
     ],
     [
-      ["PSG.LGD", "Xtreme Gaming", []],
       ["PSG.LGD", "Team Aster", []],
-      ["Team Aster", "Vici Gaming", []],
-      ["EHOME", "Vici Gaming", []],
-      ["Team MagMa", "Royal Never Give Up", []]
+      ["Royal Never Give Up", "Team MagMa", []],
+      ["LBZS", "EHOME", []],
+      ["Vici Gaming", "Team Aster", []],
+      ["PSG.LGD", "Xtreme Gaming", []]
     ],
     [
-      ["Team MagMa", "LBZS", []],
-      ["EHOME", "LBZS", []],
-      ["Royal Never Give Up", "Xtreme Gaming", []]
+      ["EHOME", "Vici Gaming", []],
+      ["Xtreme Gaming", "Royal Never Give Up", []],
+      ["LBZS", "Team MagMa", []]
     ]
   ],
   "lower": [
@@ -71,16 +71,16 @@
       ["iG Vitality", "Dandelion Esport Club", []]
     ],
     [
-      ["Sparking Arrow Gaming", "Invictus Gaming", []],
+      ["Aster.Aries", "Invictus Gaming", []],
+      ["Phoenix Gaming", "Aster.Aries", []],
       ["ShenZhen", "Dandelion Esport Club", []],
-      ["ShenZhen", "iG Vitality", []],
-      ["Invictus Gaming", "Aster.Aries", []],
-      ["Aster.Aries", "Phoenix Gaming", []]
+      ["Sparking Arrow Gaming", "Phoenix Gaming", []],
+      ["iG Vitality", "ShenZhen", []]
     ],
     [
-      ["Sparking Arrow Gaming", "Phoenix Gaming", []],
-      ["Ybb Gaming", "Dandelion Esport Club", []],
-      ["iG Vitality", "Ybb Gaming", []]
+      ["Dandelion Esport Club", "Ybb Gaming", []],
+      ["Ybb Gaming", "iG Vitality", []],
+      ["Invictus Gaming", "Sparking Arrow Gaming", []]
     ]
   ]
 }

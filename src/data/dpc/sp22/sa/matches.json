@@ -15,7 +15,7 @@
       ["Infamous", "Lava", [0, 2]]
     ],
     [
-      ["Balrogs", "Thunder Awaken", []],
+      ["Balrogs", "Thunder Awaken", [0, 2]],
       ["Infinity Esports", "APU King Of Kings", []],
       ["Lava", "beastcoast", []],
       ["Balrogs", "Infamous", []],
@@ -29,16 +29,16 @@
       ["Infamous", "Thunder Awaken", []]
     ],
     [
-      ["Thunder Awaken", "beastcoast", []],
+      ["Balrogs", "Hokori", []],
+      ["APU King Of Kings", "Thunder Awaken", []],
+      ["Hokori", "Lava", []],
       ["Infamous", "beastcoast", []],
-      ["APU King Of Kings", "Infamous", []],
-      ["Hokori", "Balrogs", []],
       ["Infinity Esports", "Lava", []]
     ],
     [
-      ["Lava", "Hokori", []],
-      ["Thunder Awaken", "APU King Of Kings", []],
-      ["Infinity Esports", "Balrogs", []]
+      ["Infamous", "APU King Of Kings", []],
+      ["beastcoast", "Thunder Awaken", []],
+      ["Balrogs", "Infinity Esports", []]
     ]
   ],
   "lower": [
@@ -58,8 +58,8 @@
     ],
     [
       ["Gorillaz-Pride", "Dreamers", [0, 2]],
-      ["Omega Gaming", "Ravens", []],
-      ["Wolf Team", "NoPing e-sports", []],
+      ["Omega Gaming", "Ravens", [0, 2]],
+      ["Wolf Team", "NoPing e-sports", [2, 0]],
       ["SG esports", "Dreamers", []],
       ["Omega Gaming", "Interitus", []]
     ],
@@ -71,16 +71,16 @@
       ["SG esports", "Gorillaz-Pride", []]
     ],
     [
+      ["Ravens", "Wolf Team", []],
       ["NoPing e-sports", "SG esports", []],
-      ["Dreamers", "Ravens", []],
-      ["SG esports", "Omega Gaming", []],
-      ["Gorillaz-Pride", "Omega Gaming", []],
-      ["Ravens", "Wolf Team", []]
+      ["Interitus", "Wolf Team", []],
+      ["Dreamers", "Interitus", []],
+      ["Gorillaz-Pride", "Omega Gaming", []]
     ],
     [
-      ["Interitus", "Dreamers", []],
-      ["Gorillaz-Pride", "NoPing e-sports", []],
-      ["Wolf Team", "Interitus", []]
+      ["Ravens", "Dreamers", []],
+      ["SG esports", "Omega Gaming", []],
+      ["Gorillaz-Pride", "NoPing e-sports", []]
     ]
   ]
 }
