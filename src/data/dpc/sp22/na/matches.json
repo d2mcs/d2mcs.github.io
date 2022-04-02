@@ -29,16 +29,16 @@
       ["The Cut", "simply TOOBASED", []]
     ],
     [
-      ["TSM", "Quincy Crew", []],
-      ["The Cut", "4 Zoomers", []],
+      ["simply TOOBASED", "Quincy Crew", []],
+      ["Team DogChamp", "4 Zoomers", []],
       ["Wildcard Gaming", "The Cut", []],
-      ["TSM", "Evil Geniuses", []],
-      ["Team DogChamp", "Evil Geniuses", []]
+      ["Evil Geniuses", "Team DogChamp", []],
+      ["Evil Geniuses", "TSM", []]
     ],
     [
-      ["Quincy Crew", "simply TOOBASED", []],
-      ["4 Zoomers", "Team DogChamp", []],
-      ["Wildcard Gaming", "simply TOOBASED", []]
+      ["The Cut", "4 Zoomers", []],
+      ["Wildcard Gaming", "simply TOOBASED", []],
+      ["TSM", "Quincy Crew", []]
     ]
   ],
   "lower": [
@@ -59,7 +59,7 @@
     [
       ["felt", "KBU.US", [2, 0]],
       ["Black N Yellow", "Stratyk Gaming", [2, 0]],
-      ["Arkosh Gaming", "Stratyk Gaming", []],
+      ["Arkosh Gaming", "Stratyk Gaming", [2, 1]],
       ["felt", "The Mystery Machine", []],
       ["KBU.US", "5RATFORCESTAFF", []]
     ],
@@ -71,16 +71,16 @@
       ["felt", "Stratyk Gaming", []]
     ],
     [
-      ["Black N Yellow", "KBU.US", []],
-      ["Stratyk Gaming", "5ManMidas", []],
-      ["5RATFORCESTAFF", "The Mystery Machine", []],
       ["Black N Yellow", "Arkosh Gaming", []],
-      ["felt", "5ManMidas", []]
+      ["5ManMidas", "felt", []],
+      ["KBU.US", "Black N Yellow", []],
+      ["The Mystery Machine", "KBU.US", []],
+      ["Stratyk Gaming", "5RATFORCESTAFF", []]
     ],
     [
-      ["The Mystery Machine", "KBU.US", []],
       ["felt", "Arkosh Gaming", []],
-      ["5RATFORCESTAFF", "Stratyk Gaming", []]
+      ["Stratyk Gaming", "5ManMidas", []],
+      ["The Mystery Machine", "5RATFORCESTAFF", []]
     ]
   ]
 }
