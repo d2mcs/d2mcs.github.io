@@ -18,8 +18,8 @@
       ["Balrogs", "Thunder Awaken", [0, 2]],
       ["Infinity Esports", "APU King Of Kings", [2, 1]],
       ["Lava", "beastcoast", [0, 2]],
-      ["Balrogs", "Infamous", []],
-      ["Hokori", "APU King Of Kings", []]
+      ["Balrogs", "Infamous", [0, 2]],
+      ["Hokori", "APU King Of Kings", [2, 1]]
     ],
     [
       ["Thunder Awaken", "Infinity Esports", []],
@@ -29,16 +29,16 @@
       ["Infamous", "Thunder Awaken", []]
     ],
     [
-      ["beastcoast", "Infamous", []],
-      ["Thunder Awaken", "APU King Of Kings", []],
+      ["Hokori", "Lava", []],
+      ["Infinity Esports", "Balrogs", []],
       ["Infinity Esports", "Lava", []],
-      ["Balrogs", "Infinity Esports", []],
-      ["beastcoast", "Thunder Awaken", []]
+      ["Thunder Awaken", "beastcoast", []],
+      ["beastcoast", "Infamous", []]
     ],
     [
-      ["Hokori", "Balrogs", []],
-      ["APU King Of Kings", "Infamous", []],
-      ["Hokori", "Lava", []]
+      ["Infamous", "APU King Of Kings", []],
+      ["Balrogs", "Hokori", []],
+      ["APU King Of Kings", "Thunder Awaken", []]
     ]
   ],
   "lower": [
@@ -61,7 +61,7 @@
       ["Omega Gaming", "Ravens", [0, 2]],
       ["Wolf Team", "NoPing e-sports", [2, 0]],
       ["SG esports", "Dreamers", [2, 1]],
-      ["Omega Gaming", "Interitus", []]
+      ["Omega Gaming", "Interitus", [2, 0]]
     ],
     [
       ["Gorillaz-Pride", "Ravens", []],
@@ -71,16 +71,16 @@
       ["SG esports", "Gorillaz-Pride", []]
     ],
     [
-      ["Dreamers", "Ravens", []],
-      ["SG esports", "NoPing e-sports", []],
-      ["Gorillaz-Pride", "NoPing e-sports", []],
       ["Wolf Team", "Ravens", []],
-      ["Interitus", "Dreamers", []]
+      ["Wolf Team", "Interitus", []],
+      ["Ravens", "Dreamers", []],
+      ["Omega Gaming", "SG esports", []],
+      ["Omega Gaming", "Gorillaz-Pride", []]
     ],
     [
-      ["SG esports", "Omega Gaming", []],
-      ["Omega Gaming", "Gorillaz-Pride", []],
-      ["Wolf Team", "Interitus", []]
+      ["Dreamers", "Interitus", []],
+      ["SG esports", "NoPing e-sports", []],
+      ["Gorillaz-Pride", "NoPing e-sports", []]
     ]
   ]
 }
