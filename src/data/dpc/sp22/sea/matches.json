@@ -22,23 +22,23 @@
       ["Fnatic", "Nigma Galaxy SEA", [2, 0]]
     ],
     [
-      ["Execration", "Polaris Esports", []],
-      ["Team SMG", "Nigma Galaxy SEA", []],
+      ["Execration", "Polaris Esports", [1, 2]],
+      ["Team SMG", "Nigma Galaxy SEA", [0, 2]],
       ["T1", "OB Esports x Neon", []],
       ["Fnatic", "Polaris Esports", []],
       ["BOOM Esports", "Execration", []]
     ],
     [
       ["Execration", "Nigma Galaxy SEA", []],
-      ["Nigma Galaxy SEA", "OB Esports x Neon", []],
-      ["Fnatic", "T1", []],
       ["Fnatic", "Team SMG", []],
-      ["OB Esports x Neon", "Polaris Esports", []]
+      ["BOOM Esports", "T1", []],
+      ["OB Esports x Neon", "Polaris Esports", []],
+      ["BOOM Esports", "Fnatic", []]
     ],
     [
-      ["BOOM Esports", "Team SMG", []],
-      ["BOOM Esports", "Fnatic", []],
-      ["BOOM Esports", "T1", []]
+      ["OB Esports x Neon", "Nigma Galaxy SEA", []],
+      ["Fnatic", "T1", []],
+      ["BOOM Esports", "Team SMG", []]
     ]
   ],
   "lower": [
@@ -65,22 +65,22 @@
     ],
     [
       ["Motivate.Trust Gaming", "UD Vessuwan", [2, 1]],
-      ["TNC Predator", "RSG", []],
+      ["TNC Predator", "RSG", [0, 2]],
       ["Lilgun", "Army Geniuses", []],
       ["The Apes E-Sport", "Talon Esports", []],
       ["Talon Esports", "UD Vessuwan", []]
     ],
     [
-      ["TNC Predator", "The Apes E-Sport", []],
-      ["UD Vessuwan", "RSG", []],
+      ["TNC Predator", "Motivate.Trust Gaming", []],
+      ["Lilgun", "Motivate.Trust Gaming", []],
+      ["Talon Esports", "RSG", []],
+      ["The Apes E-Sport", "TNC Predator", []],
       ["Motivate.Trust Gaming", "The Apes E-Sport", []],
-      ["RSG", "Talon Esports", []],
-      ["Motivate.Trust Gaming", "TNC Predator", []],
-      ["Lilgun", "Motivate.Trust Gaming", []]
+      ["RSG", "UD Vessuwan", []]
     ],
     [
-      ["UD Vessuwan", "Army Geniuses", []],
-      ["Lilgun", "The Apes E-Sport", []]
+      ["Lilgun", "The Apes E-Sport", []],
+      ["Army Geniuses", "UD Vessuwan", []]
     ]
   ]
 }
