@@ -66,7 +66,7 @@
     [
       ["5ManMidas", "Black N Yellow", [2, 0]],
       ["Arkosh Gaming", "KBU.US", [0, 2]],
-      ["Black N Yellow", "5RATFORCESTAFF", []],
+      ["Black N Yellow", "5RATFORCESTAFF", [0, 2]],
       ["5ManMidas", "The Mystery Machine", []],
       ["felt", "Stratyk Gaming", []]
     ],
