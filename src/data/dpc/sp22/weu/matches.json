@@ -25,8 +25,8 @@
       ["Team Liquid", "Entity", [2, 1]],
       ["Team Secret", "Brame", [1, 2]],
       ["OG", "Gladiators", [2, 0]],
-      ["Team Liquid", "Tundra Esports", []],
-      ["Nigma Galaxy", "Entity", []]
+      ["Team Liquid", "Tundra Esports", [2, 1]],
+      ["Nigma Galaxy", "Entity", [0, 2]]
     ],
     [
       ["Team Liquid", "Nigma Galaxy", []],
@@ -68,7 +68,7 @@
       ["Team Bald Reborn", "Chicken Fighters", [1, 2]],
       ["Alliance", "CHILLAX", [2, 0]],
       ["Winter Bear", "goonsquad", [0, 2]],
-      ["IVY", "Into The Breach", []]
+      ["IVY", "Into The Breach", [0, 2]]
     ],
     [
       ["Chicken Fighters", "CHILLAX", []],
