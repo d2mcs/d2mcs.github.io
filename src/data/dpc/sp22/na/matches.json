@@ -29,7 +29,7 @@
       ["The Cut", "simply TOOBASED", [2, 1]]
     ],
     [
-      ["Team DogChamp", "4 Zoomers", []],
+      ["Team DogChamp", "4 Zoomers", [0, 2]],
       ["The Cut", "Wildcard Gaming", []],
       ["Quincy Crew", "simply TOOBASED", []],
       ["TSM", "Evil Geniuses", []],
@@ -72,7 +72,7 @@
     ],
     [
       ["Black N Yellow", "KBU.US", [2, 1]],
-      ["The Mystery Machine", "5RATFORCESTAFF", []],
+      ["The Mystery Machine", "5RATFORCESTAFF", [0, 2]],
       ["Stratyk Gaming", "5ManMidas", []],
       ["Arkosh Gaming", "felt", []],
       ["KBU.US", "The Mystery Machine", []]
