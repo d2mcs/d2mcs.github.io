@@ -30,8 +30,8 @@
     ],
     [
       ["Team DogChamp", "4 Zoomers", [0, 2]],
-      ["The Cut", "Wildcard Gaming", []],
-      ["Quincy Crew", "simply TOOBASED", []],
+      ["The Cut", "Wildcard Gaming", [0, 2]],
+      ["Quincy Crew", "simply TOOBASED", [2, 0]],
       ["TSM", "Evil Geniuses", []],
       ["4 Zoomers", "The Cut", []]
     ],

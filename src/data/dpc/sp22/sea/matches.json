@@ -29,8 +29,8 @@
       ["BOOM Esports", "Execration", [2, 1]]
     ],
     [
-      ["Execration", "Nigma Galaxy SEA", []],
-      ["Fnatic", "Team SMG", []],
+      ["Execration", "Nigma Galaxy SEA", [2, 1]],
+      ["Fnatic", "Team SMG", [2, 0]],
       ["BOOM Esports", "T1", []],
       ["OB Esports x Neon", "Polaris Esports", []],
       ["BOOM Esports", "Fnatic", []]
@@ -72,7 +72,7 @@
     [
       ["RSG", "UD Vessuwan", [2, 0]],
       ["The Apes E-Sport", "Lilgun", [1, 2]],
-      ["Motivate.Trust Gaming", "Lilgun", []],
+      ["Motivate.Trust Gaming", "Lilgun", [1, 2]],
       ["TNC Predator", "The Apes E-Sport", []],
       ["Talon Esports", "RSG", []],
       ["Motivate.Trust Gaming", "Army Geniuses", []]
