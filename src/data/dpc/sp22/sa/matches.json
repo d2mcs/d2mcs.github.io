@@ -30,8 +30,8 @@
     ],
     [
       ["Lava", "Infinity Esports", [2, 1]],
-      ["Balrogs", "Hokori", []],
-      ["beastcoast", "Infamous", []],
+      ["Balrogs", "Hokori", [0, 2]],
+      ["beastcoast", "Infamous", [0, 2]],
       ["Lava", "Hokori", []],
       ["Thunder Awaken", "APU King Of Kings", []]
     ],
