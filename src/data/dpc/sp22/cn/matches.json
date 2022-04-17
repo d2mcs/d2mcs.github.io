@@ -24,7 +24,7 @@
       ["PSG.LGD", "LBZS", [2, 0]],
       ["EHOME", "Xtreme Gaming", [1, 2]],
       ["Team Aster", "Team MagMa", [2, 0]],
-      ["EHOME", "LBZS", []],
+      ["EHOME", "LBZS", [2, 0]],
       ["Team Aster", "Xtreme Gaming", []],
       ["PSG.LGD", "Royal Never Give Up", []]
     ],
@@ -64,8 +64,8 @@
       ["Ybb Gaming", "Dandelion Esport Club", [1, 2]],
       ["iG Vitality", "ShenZhen", [0, 2]],
       ["Invictus Gaming", "Phoenix Gaming", [2, 1]],
-      ["ShenZhen", "Dandelion Esport Club", []],
-      ["Aster.Aries", "Phoenix Gaming", []],
+      ["ShenZhen", "Dandelion Esport Club", [0, 2]],
+      ["Aster.Aries", "Phoenix Gaming", [2, 0]],
       ["Invictus Gaming", "Aster.Aries", []]
     ],
     [
