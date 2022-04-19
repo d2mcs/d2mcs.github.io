@@ -78,7 +78,7 @@
       ["Alliance", "Chicken Fighters", [2, 0]]
     ],
     [
-      ["Team Bald Reborn", "goonsquad", []],
+      ["Team Bald Reborn", "goonsquad", [0, 2]],
       ["CHILLAX", "IVY", []],
       ["Into The Breach", "Winter Bear", []]
     ]
