@@ -36,8 +36,8 @@
       ["Gladiators", "Tundra Esports", [2, 1]]
     ],
     [
-      ["Tundra Esports", "Brame", []],
-      ["OG", "Entity", []],
+      ["Tundra Esports", "Brame", [2, 0]],
+      ["OG", "Entity", [2, 0]],
       ["Team Liquid", "Gladiators", []]
     ]
   ],
@@ -79,7 +79,7 @@
     ],
     [
       ["Team Bald Reborn", "goonsquad", [0, 2]],
-      ["CHILLAX", "IVY", []],
+      ["CHILLAX", "IVY", [1, 2]],
       ["Into The Breach", "Winter Bear", []]
     ]
   ]

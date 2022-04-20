@@ -36,7 +36,7 @@
       ["4 Zoomers", "The Cut", [2, 0]]
     ],
     [
-      ["Wildcard Gaming", "simply TOOBASED", []],
+      ["Wildcard Gaming", "simply TOOBASED", ["W", "-"]],
       ["Quincy Crew", "TSM", []],
       ["Evil Geniuses", "Team DogChamp", []]
     ]
@@ -79,7 +79,7 @@
     ],
     [
       ["5RATFORCESTAFF", "Stratyk Gaming", [2, 0]],
-      ["Arkosh Gaming", "Black N Yellow", []],
+      ["Arkosh Gaming", "Black N Yellow", [2, 1]],
       ["5ManMidas", "felt", []]
     ]
   ]
