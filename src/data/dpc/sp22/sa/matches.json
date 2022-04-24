@@ -10,7 +10,7 @@
     [
       ["Infamous", "Hokori", [0, 2]],
       ["Lava", "Thunder Awaken", [0, 2]],
-      ["Balrogs", "APU King Of Kings", ["0", "2"]],
+      ["Balrogs", "APU King Of Kings", [0, 2]],
       ["Hokori", "beastcoast", [1, 2]],
       ["Infamous", "Lava", [0, 2]]
     ],
@@ -36,9 +36,9 @@
       ["Thunder Awaken", "APU King Of Kings", [2, 0]]
     ],
     [
-      ["Infamous", "APU King Of Kings", []],
-      ["Balrogs", "Infinity Esports", []],
-      ["Thunder Awaken", "beastcoast", []]
+      ["Infamous", "APU King Of Kings", [2, 0]],
+      ["Balrogs", "Infinity Esports", [1, 2]],
+      ["Thunder Awaken", "beastcoast", [2, 0]]
     ]
   ],
   "lower": [
@@ -79,8 +79,22 @@
     ],
     [
       ["NoPing e-sports", "SG esports", [0, 2]],
-      ["Omega Gaming", "Gorillaz-Pride", []],
-      ["Ravens", "Dreamers", []]
+      ["Omega Gaming", "Gorillaz-Pride", [0, 2]],
+      ["Ravens", "Dreamers", [2, 1]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "1": [
+        ["beastcoast", "Hokori", [2, 1]]
+      ]
+    },
+    "lower": {
+      "5": [
+        ["Omega Gaming", "NoPing e-sports", [0, 1]],
+        ["Omega Gaming", "Dreamers", [0, 1]],
+        ["NoPing e-sports", "Dreamers", [0, 1]]
+      ]
+    }
+  }
 }

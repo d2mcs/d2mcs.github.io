@@ -38,7 +38,7 @@
     [
       ["Tundra Esports", "Brame", [2, 0]],
       ["OG", "Entity", [2, 0]],
-      ["Team Liquid", "Gladiators", []]
+      ["Team Liquid", "Gladiators", [1, 2]]
     ]
   ],
   "lower": [
@@ -80,7 +80,22 @@
     [
       ["Team Bald Reborn", "goonsquad", [0, 2]],
       ["CHILLAX", "IVY", [1, 2]],
-      ["Into The Breach", "Winter Bear", []]
+      ["Into The Breach", "Winter Bear", [2, 0]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "0": [
+        ["OG", "Gladiators", ["W", "-"]]
+      ],
+      "5": [
+        ["Brame", "Entity", [0, 2]]
+      ]
+    },
+    "lower": {
+      "5": [
+        ["IVY", "Team Bald Reborn", [2, 0]]
+      ]
+    }
+  }
 }

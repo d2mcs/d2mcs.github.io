@@ -37,8 +37,8 @@
     ],
     [
       ["Wildcard Gaming", "simply TOOBASED", ["W", "-"]],
-      ["Quincy Crew", "TSM", []],
-      ["Evil Geniuses", "Team DogChamp", []]
+      ["Quincy Crew", "TSM", [2, 1]],
+      ["Evil Geniuses", "Team DogChamp", [2, 0]]
     ]
   ],
   "lower": [
@@ -80,7 +80,26 @@
     [
       ["5RATFORCESTAFF", "Stratyk Gaming", [2, 0]],
       ["Arkosh Gaming", "Black N Yellow", [2, 1]],
-      ["5ManMidas", "felt", []]
+      ["5ManMidas", "felt", [0, 2]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "0": [
+        ["Quincy Crew", "Evil Geniuses", [0, 1]],
+        ["Quincy Crew", "TSM", [0, 1]],
+        ["Evil Geniuses", "TSM", [1, 0]]
+      ]
+    },
+    "lower": {
+      "1": [
+        ["The Mystery Machine", "felt", [1, 2]]
+      ],
+      "5": [
+        ["KBU.US", "Black N Yellow", [1, 0]],
+        ["KBU.US", "5ManMidas", [1, 0]],
+        ["Black N Yellow", "5ManMidas", [1, 0]]
+      ]
+    }
+  }
 }

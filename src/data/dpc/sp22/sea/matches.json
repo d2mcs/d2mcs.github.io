@@ -36,9 +36,9 @@
       ["BOOM Esports", "Fnatic", [2, 1]]
     ],
     [
-      ["OB Esports x Neon", "Nigma Galaxy SEA", []],
-      ["Fnatic", "T1", []],
-      ["BOOM Esports", "Team SMG", []]
+      ["OB Esports x Neon", "Nigma Galaxy SEA", [1, 2]],
+      ["Fnatic", "T1", [2, 1]],
+      ["BOOM Esports", "Team SMG", [2, 0]]
     ]
   ],
   "lower": [
@@ -79,8 +79,18 @@
     ],
     [
       ["Motivate.Trust Gaming", "The Apes E-Sport", [2, 1]],
-      ["Motivate.Trust Gaming", "TNC Predator", []],
-      ["Army Geniuses", "UD Vessuwan", []]
+      ["Motivate.Trust Gaming", "TNC Predator", [0, 2]],
+      ["Army Geniuses", "UD Vessuwan", [2, 1]]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "upper": {
+      "0": [
+        ["Fnatic", "BOOM Esports", [2, 0]]
+      ],
+      "2": [
+        ["Polaris Esports", "T1", [0, 2]]
+      ]
+    }
+  }
 }
