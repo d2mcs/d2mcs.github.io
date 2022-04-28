@@ -82,7 +82,10 @@
   "tiebreak": {
     "upper": {
       "1": [
-        ["Team Aster", "Xtreme Gaming", ["W", "-"]]
+        ["Team Aster", "Xtreme Gaming", [0, 2]]
+      ],
+      "3": [
+        ["Royal Never Give Up", "Vici Gaming", ["W", "-"]]
       ]
     }
   }
