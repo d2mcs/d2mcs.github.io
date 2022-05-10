@@ -153,11 +153,11 @@ def retroactive_major_predictions(timestamp, k, n_samples,
                 "elo" + tab[1], n_samples, "dpc/sp21/major", k, timestamp)
         generate_data_major("data/dpc/sp21/major/fixed_ratings.json", matches,
                 "fixed" + tab[1], n_samples, "dpc/sp21/major", k, timestamp,
-                static_ratings=True)
+                            static_ratings=True)
 
 def main():
     """Command-line interface for retroactive report generation"""
-    # code must be run from the src/ folder
+    # code must be run from the d2mcs/ folder
     os.chdir(str(Path(__file__).parent))
 
     parser = argparse.ArgumentParser()

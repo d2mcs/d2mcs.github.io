@@ -8,8 +8,9 @@ works with a fresh copy. This is not an issue if multiprocessing is
 used because the model has to be copied for each process anyway.
 """
 import random
+from typing import List, Tuple, Dict
 
-from model.tiebreakers import Tiebreaker
+from d2mcs.model.tiebreakers import Tiebreaker
 
 class Simulator:
     """Generic simulator class to be subclassed by more specific
@@ -265,15 +266,16 @@ class TIGroupStage(Simulator):
     Identical to Simulator. See above for details
     """
 
-    def simulate(self, group, matches, tiebreak_matches):
+    def simulate(self, group: List[str], matches: List, tiebreak_matches: List,
+                 tiebreak_boundaries: List[Tuple[int, int]] = [(3,4), (7,8)]):
         """Simulates a single group stage and returns the resulting
         team ranks.
 
         Parameters
         ----------
-        group : list of str
+        group
             list of team names in the group
-        matches : list
+        matches
             List of matches. Each match is a 3-element list containing
             team 1, team 2, and the match result as an int (0 for a
             0-2, 1 for a 1-1, 2 for a 2-0, and -1 if the match hasn't
@@ -288,9 +290,12 @@ class TIGroupStage(Simulator):
 
             In this case the results are A 0-2 B, B 1-1 C, D 2-0 E, and
             E vs D has not yet been played.
-        tiebreak_matches : list
+        tiebreak_matches
             List of tiebreaker matches. An empty list can be provided
             if none were played.
+        tiebreak_boundaries
+            Where to break ties with additional matches. Defaults to TI
+            rules.
 
         Returns
         -------
@@ -336,10 +341,10 @@ class TIGroupStage(Simulator):
 
         if len(tiebreak_matches) > 0:
             team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
-                [(3,4), (7,8)], team_order, point_map, tiebreak_matches)
+                tiebreak_boundaries, team_order, point_map, tiebreak_matches)
         else:
             team_order, tiebreak_sizes = tiebreaker.boundary_tiebreak(
-                [(3,4), (7,8)], team_order, point_map)
+                tiebreak_boundaries, team_order, point_map)
         team_order = tiebreaker.h2h_tiebreak(h2h_results,
                                              team_order, point_map)
         points = [(team, point_map[team]) for team in team_order]
@@ -481,6 +486,44 @@ class DPCMajor(Simulator):
                 h2h_results[match[0]][match[1]] = result[0]
                 h2h_results[match[1]][match[0]] = result[1]
         return records, h2h_results
+
+    @staticmethod
+    def bracket_newformat(seeds: Dict[str, Tuple[str, str]]) -> Dict[str, list]:
+        """Seeds the bracket using an ordered list of teams for each
+        group.
+
+        Parameters
+        ----------
+        seeds : dict
+            Ordered list of of team names for each group. Should be in
+            the following format:
+            {
+                "a" : ["Team A", "Team B"],
+                "b" : ["Team C", "Team D"],
+            }
+        """
+        # top seeds pick their opponents at random
+        picks = random.choices([0,1], k=4)
+        bracket = {
+            "UB-R1": [
+                [seeds["a"][0], seeds["b"][2 + picks[0]], []],
+                [seeds["b"][1], seeds["a"][2 + (1 - picks[1])], []],
+                [seeds["b"][0], seeds["a"][2 + picks[1]], []],
+                [seeds["a"][1], seeds["b"][2 + (1 - picks[0])], []],
+            ],
+            "UB-R2": [[None, None, []], [None, None, []]],
+            "UB-F": [[None, None, []]],
+            "LB-R1": [[None, seeds["a"][4], []],
+                      [None, seeds["b"][5], []],
+                      [None, seeds["a"][5], []],
+                      [None, seeds["b"][4], []]],
+            "LB-R2": [[None, None, []], [None, None, []]],
+            "LB-R3": [[None, None, []], [None, None, []]],
+            "LB-R4": [[None, None, []]],
+            "LB-F": [[None, None, []]],
+            "GF": [[None, None, []]]
+        }
+        return bracket
 
     def sim_wildcard(self, teams, matches, tiebreak_matches):
         """Simulates a wildcard round and returns the resulting ordered

@@ -13,7 +13,8 @@ import os
 
 from website.report import (generate_data_ti, generate_html_ti,
     generate_data_dpc, generate_html_dpc, generate_html_global_rankings,
-    generate_team_ratings_elo, generate_global_ratings_elo)
+    generate_team_ratings_elo, generate_global_ratings_elo,
+    generate_html_dpc_major, generate_data_dpc_major)
 from website.conf import EventConf
 
 def validate_data_files(folder, groups, match_list_len):
@@ -79,12 +80,12 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
         if not html_only:
             generate_data_ti("data/ti/10/elo_ratings_lan.json", matches,
                 "elo", n_samples, "ti/10", k, timestamp,
-                bracket_file="data/ti/10/main_event_matches.json")
+                             bracket_file="data/ti/10/main_event_matches.json")
             generate_data_ti("data/ti/10/fixed_ratings.json", matches,
                 "fixed", n_samples, "ti/10", k, timestamp,
-                static_ratings=True,
-                bracket_file="data/ti/10/main_event_matches.json")
-    else:
+                             static_ratings=True,
+                             bracket_file="data/ti/10/main_event_matches.json")
+    elif event[:3] == "dpc":
         tour = event.split("-")[-1]
         full_name = {
             "na": "North America", "sa": "South America",
@@ -96,7 +97,7 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
         for region in ["na", "sa", "weu", "cn", "sea"]:
             if train_elo:
                 generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/{region}")
-            with open( f"data/dpc/{tour}/{region}/matches.json") as match_f:
+            with open(f"data/dpc/{tour}/{region}/matches.json") as match_f:
                 matches = json.load(match_f)
             generate_html_dpc(f"dpc/{tour}/{region}/forecast.html", tabs,
                               f"{event_name}: {full_name[region]}",
@@ -113,6 +114,23 @@ def generate_report(event, k, n_samples, timestamp, train_elo, html_only):
                               matches, "fixed", n_samples,
                               f"dpc/{tour}/{region}", k,wildcard_slots[region],
                               timestamp=timestamp, static_ratings=True)
+    else:
+        tour = event.split("-")[-1]
+        if train_elo:
+            generate_team_ratings_elo(3, k, 1.5, f"dpc/{tour}/major")
+
+        with open(f"data/dpc/{tour}/major/matches.json") as match_f:
+            matches = json.load(match_f)
+        generate_html_dpc_major(f"dpc/{tour}/major/forecast.html",
+                                tabs, event_name)
+
+        if not html_only:
+            generate_data_dpc_major(f"data/dpc/{tour}/major/elo_ratings_lan.json",
+                matches, "elo", n_samples, f"dpc/{tour}/major", k, timestamp)
+            generate_data_dpc_major(f"data/dpc/{tour}/major/fixed_ratings.json",
+                matches, "fixed", n_samples, f"dpc/{tour}/major", k, timestamp,
+                static_ratings=True)
+
 
 def custom_report(event, region, k, n_samples, timestamp, static_ratings):
     """Generates a custom forecast with user-modified Elo ratings."""
@@ -142,7 +160,7 @@ def custom_report(event, region, k, n_samples, timestamp, static_ratings):
                               static_ratings=static_ratings)
         else:
             return
-    os.chdir("..")
+    os.chdir("../..")
     print(f"Output running at http://localhost:8000/{folder}/forecast.html"
           "?model=custom. Press ctrl+c or close this window to exit.")
     webbrowser.open(
@@ -153,14 +171,14 @@ def custom_report(event, region, k, n_samples, timestamp, static_ratings):
 
 def main():
     """Command-line interface for probability report generation"""
-    # code must be run from the src/ folder
+    # code must be run from the d2mcs/ folder
     os.chdir(str(Path(__file__).parent))
 
     parser = argparse.ArgumentParser(
         description="Generate probability report for TI10 group stage.",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument("event", type=str,
-        choices=["ti10", "dpc-sp21", "dpc-wn21", "dpc-sp22"],
+        choices=["ti10", "dpc-sp21", "dpc-wn21", "dpc-sp22", "maj-sp22"],
         help="Which event to generate predictions for.")
     parser.add_argument("n_samples", default=100000, type=int,
         help="Number of Monte Carlo samples to simulate")

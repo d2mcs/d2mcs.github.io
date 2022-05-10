@@ -120,8 +120,25 @@ function render_team_probs_major(team_data, team_index, group, n_samples) {
   }
 }
 
+function render_team_probs_major_new(team_data, team_index, group, n_samples) {
+  var prob_types = ["upper", "lower", "elim"];
+  for (let type_i = 0; type_i < 3; type_i++) {
+    let prob_type = prob_types[type_i];
+    let prob_html = document.getElementById("gs-" + prob_type + "-prob-" + group + "-" + team_index);
+    let prob = 0;
+    if (prob_type == "upper")
+      prob = team_data["probs"].slice(0, 4).reduce((a, b) => a + b, 0);
+    else if (prob_type == "lower")
+      prob = team_data["probs"].slice(4, 6).reduce((a, b) => a + b, 0);
+    else
+      prob = team_data["probs"][6];
+    prob_html.innerText = format_prob(prob, n_samples);
+    prob_html.style.backgroundColor = color_prob(prob, prob_type);
+  }
+}
+
 function render_group_rank_probs(format, sim_data, wildcard_slots) {
-  if (format === "ti")
+  if (format === "ti" || format === "major_new")
     var groups = ['a', 'b'];
   else if (format === "dpc")
     var groups = ['upper', 'lower'];
@@ -138,7 +155,7 @@ function render_group_rank_probs(format, sim_data, wildcard_slots) {
       document.getElementById("gs-team-" + group + "-" + i).innerText = team;
       document.getElementById("gs-im-" + group + "-" + i).src = "image/"+team+".png";
       document.getElementById("gs-rating-" + group + "-" + i).innerText = sim_data["ratings"][team];
-      if (format === "ti") {
+      if (format === "ti" || format === "major_new") {
         let record = sim_data["records"][team];
         document.getElementById("gs-record-" + group + "-" + i).innerText = (
           record[0] + "-" + record[1] + "-" + record[2]);
@@ -174,6 +191,8 @@ function render_group_rank_probs(format, sim_data, wildcard_slots) {
         render_team_probs_dpc(team_data, i, group, wildcard_slots, sim_data["n_samples"]);
       else if (format === "major")
         render_team_probs_major(team_data, i, group, sim_data["n_samples"]);
+      else if (format == "major_new")
+        render_team_probs_major_new(team_data, i, group, sim_data["n_samples"]);
     }
   }
 }
@@ -187,6 +206,10 @@ function render_tiebreak_probs(format, sim_data, wildcard_slots) {
     var boundaries = [[0, 1, 2, 5], [1, 5]];
     boundaries[0][2] = wildcard_slots + 1;
     var groups = ['upper', 'lower'];
+  }
+  else if (format === "major_new") {
+    var boundaries = [[3, 5], [3, 5]];
+    var groups = ['a', 'b'];
   }
   for (let group_i = 0; group_i < 2; group_i++) {
     let group = groups[group_i]
@@ -207,11 +230,16 @@ function render_tiebreak_probs(format, sim_data, wildcard_slots) {
 }
 
 function render_final_rank_probs(format, sim_data) {
+  var team_count = 18;
   if (format === "ti")
     var rank_groups = 9;
   else if (format === "major")
     var rank_groups = 13;
-  for (let team_i = 0; team_i < 18; team_i++) {
+  else if (format === "major_new") {
+    var rank_groups = 8;
+    team_count = 14;
+  }
+  for (let team_i = 0; team_i < team_count; team_i++) {
     let team = sim_data["probs"]["final_rank"][team_i]["team"];
     document.getElementById("final-rank-team-" + team_i).innerText = team;
     document.getElementById("final-rank-im-" + team_i).src = "image/"+team+".png";
@@ -234,6 +262,11 @@ function render_record_rank_probs(format, sim_data) {
     var groups = ['upper', 'lower'];
     var team_count = 8;
     var possible_records = 8;
+  }
+  if (format === "major_new") {
+    var groups = ['a', 'b'];
+    var team_count = 7;
+    var possible_records = 13;
   }
   for (let group_i = 0; group_i < 2; group_i++) {
     let group = groups[group_i]
@@ -416,6 +449,19 @@ function render_data_major(path) {
     .then(function(sim_data) {
       render_group_rank_probs("major", sim_data);
       render_final_rank_probs("major", sim_data);
+      render_metadata(sim_data);
+    });
+}
+
+function render_data_major_new(path) {
+  fetch(path)
+    .then(function(res) { return res.json(); })
+    .then(function(sim_data) {
+      render_group_rank_probs("major_new", sim_data);
+      render_tiebreak_probs("major_new", sim_data);
+      render_record_rank_probs("major_new", sim_data);
+      render_match_probs("ti", sim_data);
+      render_final_rank_probs("major_new", sim_data);
       render_metadata(sim_data);
     });
 }

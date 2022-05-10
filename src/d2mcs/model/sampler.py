@@ -12,10 +12,10 @@ from math import factorial
 
 from tqdm import tqdm
 
-from model.simulator import (TIEliminationBracket, TIGroupStage,
-                             DPCLeague, DPCMajor)
-from model.forecaster import TeamModel
-from model.forecaster_glicko import Glicko2Model
+from d2mcs.model.simulator import (TIEliminationBracket, TIGroupStage,
+                                   DPCLeague, DPCMajor)
+from d2mcs.model.forecaster import TeamModel
+from d2mcs.model.forecaster_glicko import Glicko2Model
 
 class Sampler:
     """Generic sampler class to be subclassed by samplers for specific
@@ -767,7 +767,7 @@ class DPCMajorSampler(Sampler):
         matches : dict
             List of all matches to be played at the major. The format
             is quite long so instead of documenting it here I refer to
-            the file at src/dpc/spring/major/matches.json as an example.
+            the file at d2mcs/dpc/spring/major/matches.json as an example.
 
             Note that the dicationary contains 4 keys, the last of
             which is optional (wildcard, group stage, playoffs,
@@ -1167,4 +1167,160 @@ class DPCSeasonSampler(Sampler):
             "final_rank": final_rank_probs,
             "rank_point": rank_point_dist,
             "major_contrib": major_contrib_ests
+        }
+
+class DPCMajorSamplerNewFormat(Sampler):
+    """
+
+    Parameters
+    ----------
+    Identical to Sampler. See above for details
+    """
+
+    @staticmethod
+    def get_sample(model, groups, matches, static_ratings):
+        """Gets a single sample of group stage placements and final
+        ranks using the GroupStage and EliminationBracket simulators.
+
+        Parameters
+        ----------
+        model: TeamModel or Glicko2Model
+            Copy of self.model. The sampler is a static function for
+            multiprocessing efficiency reasons, so this needs to be
+            passed explicitly.
+        groups : dict
+            (See: sample_group_stage documentation below)
+        matches : dict
+            (See: sample_group_stage documentation below)
+        static_ratings : bool
+            Copy of self.static_ratings.
+
+        Returns
+        -------
+            dict
+                Ordered (team, points) tuple for each group.
+            dict
+                Size of tiebreak required along each boundary. 0 if no
+                tiebreaker matches were necessary.
+            dict
+                Mapping from ranks to the teams placed at that rank.
+        """
+        gs_sim = TIGroupStage(model, static_ratings)
+
+        points_a, tiebreak_sizes_a = gs_sim.simulate(groups["a"], matches["a"],
+            matches.get("tiebreak", {}).get("a", {}), [(3,4), (5,6)])
+        points_b, tiebreak_sizes_b = gs_sim.simulate(groups["b"], matches["b"],
+            matches.get("tiebreak", {}).get("b", {}), [(3,4), (5,6)])
+
+        bracket_sim = DPCMajor(gs_sim.model, static_ratings)
+        bracket = bracket_sim.bracket_newformat(
+            {"a": [p[0] for p in points_a], "b": [p[0] for p in points_b]})
+        ranks = bracket_sim.sim_playoffs(bracket)
+
+        return ({"a": points_a, "b": points_b},
+                {"a": tiebreak_sizes_a, "b": tiebreak_sizes_b},
+                ranks)
+
+    def sample_major(self, groups, matches, n_trials):
+        """Wrapper for running get_sample many many times. Uses
+        multiprocessing to speed up results, which it combines
+        afterwards to construct the output distribution.
+
+        Parameters
+        ----------
+        groups : dict
+            Mapping between groups (assumed to be 'a' and 'b') and the
+            teams in those groups. Example:
+
+                {"a": ["Team A", "Team B"], "b": ["Team C", "Team D"]}
+
+        matches : dict
+            List of matches for each group. Each match is a 3-element
+            list containing team 1, team 2, and the match result as an
+            int (0 for a 0-2, 1 for a 1-1, 2 for a 2-0, and -1 if the
+            match hasn't happened yet). Example:
+            {
+                "a": [["Team A", "Team B", 0], ["Team B", "Team C", 1]],
+                "b": [["Team D", "Team E", 2], ["Team E", "Team D", -1]]
+            }
+            In this case the results are A 0-2 B, B 1-1 C, D 2-0 E, and
+            E vs D has not yet been played.
+        n_trials : int
+            Number of simulations to run.
+
+        Returns
+        -------
+        dict
+            List of probabilities for each rank for each team in each
+            group
+        """
+        group_rank_probs = {
+            "a": {team: [0 for _ in range(len(groups["a"]))]
+                  for team in groups["a"]},
+            "b": {team: [0 for _ in range(len(groups["b"]))]
+                  for team in groups["b"]}}
+        tiebreak_probs = {
+            "a": {boundary: [0 for _ in range(len(groups["a"]) - 1)]
+                  for boundary in [3,5]},
+            "b": {boundary: [0 for _ in range(len(groups["b"]) - 1)]
+                  for boundary in [3,5]}}
+        final_rank_probs = {team: {
+            "13-14": 0, "9-12": 0, "7-8": 0, "5-6": 0,
+            "4": 0, "3": 0, "2": 0, "1": 0}
+            for team in self.model.ratings.keys()
+        }
+        point_rank_probs = {
+            group: {
+                team: {
+                    points: {
+                        rank: 0 for rank in range(len(groups[group]))
+                    } for points in range(len(groups[group])*2 - 1)
+                } for team in groups[group]
+            } for group in ["a", "b"] }
+        record_probs = {group: {team: [0 for _ in range(len(groups["a"])*2-1)]
+                        for team in groups[group]} for group in ["a", "b"]}
+
+        # all results are stored in memory until the pool completes,
+        # so pool size is limited to 1,000 to reduce memory usage
+        remaining_trials = n_trials
+        with tqdm(total=n_trials) as pbar:
+            while remaining_trials > 0:
+                pool_size = min(1000, remaining_trials)
+                remaining_trials -= pool_size
+
+                pool = Pool()
+                sim_results = [pool.apply_async(self.get_sample, (
+                        self.model, groups, matches, self.static_ratings))
+                    for _ in range(pool_size)]
+                for sim_result in sim_results:
+                    points, tiebreak_sizes, ranks = sim_result.get()
+                    for group in ["a", "b"]:
+                        for i, (team, record) in enumerate(points[group]):
+                            group_rank_probs[group][team][i] += 1/n_trials
+                            if i == 6:
+                                final_rank_probs[team]["13-14"] += 1/n_trials
+                            point_rank_probs[group][team][record][i] += 1
+                            record_probs[group][team][record] += 1/n_trials
+                        for boundary, size in tiebreak_sizes[group].items():
+                            if size != 0:
+                                tiebreak_probs[group][boundary][
+                                    size - 2] += 1/n_trials
+                    for rank, teams in ranks.items():
+                        for team in teams:
+                            final_rank_probs[team][rank] += 1/n_trials
+                pbar.update(pool_size)
+
+        for group in ["a", "b"]:
+            for team, record_map in point_rank_probs[group].items():
+                for record, point_counts in record_map.items():
+                    points_sum = sum(point_counts.values())
+                    for points, amount in point_counts.items():
+                        if amount > 0:
+                            point_counts[points] = amount / points_sum
+        return {
+            "group_rank": group_rank_probs,
+            "tiebreak": tiebreak_probs,
+            "final_rank": final_rank_probs,
+            "record": record_probs,
+            "point_rank": point_rank_probs
         }

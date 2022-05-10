@@ -8,11 +8,12 @@ from datetime import date, datetime
 
 from jinja2 import Template
 
-from model.sampler import (TISampler, DPCLeagueSampler,
-                           DPCMajorSampler, DPCSeasonSampler)
-from model.forecaster import PlayerModel, TeamModel
-from model.forecaster_glicko import Glicko2Model
-from model.match_data import MatchDatabase
+from d2mcs.model.sampler import (TISampler, DPCLeagueSampler,
+                                 DPCMajorSampler, DPCSeasonSampler,
+                                 DPCMajorSamplerNewFormat)
+from d2mcs.model.forecaster import PlayerModel, TeamModel
+from d2mcs.model.forecaster_glicko import Glicko2Model
+from d2mcs.model.match_data import MatchDatabase
 
 def format_prob(prob, n_samples):
     """Translates a probability into a neat string"""
@@ -656,8 +657,117 @@ def generate_data_ti(ratings_file, matches, output_file, n_samples, folder, k,
         "n_samples": n_samples,
         "model_version": "0.4.1"
     }
-    Path(f"../{folder}/data").mkdir(exist_ok=True)
-    with open(f"../{folder}/data/{output_file}.json", "w") as json_f:
+    Path(f"../../{folder}/data").mkdir(exist_ok=True)
+    with open(f"../../{folder}/data/{output_file}.json", "w") as json_f:
+        json.dump(output_json, json_f)
+
+def generate_html_dpc_major(output_file, tabs, title):
+    """Generates the output forecast report with the provided tabs and
+    title. generate_data is used for generating the JSON data files
+    used by this report.
+
+    Parameters
+    ----------
+    output_file : str
+        Name of output html file
+    tabs : dict
+        Dictionary containing the name and suffix of each tab. See
+        main() or retroactive_predictions() for an example.
+    title : str
+        Name to put at the top of the report.
+    """
+    with open("data/template_major_new.html") as input_f:
+        template_str = input_f.read()
+    template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
+
+    output = template.render(tabs=tabs, title=title,
+        match_counts={"a": [6, 6, 6, 3], "b": [6, 6, 6, 3]},
+        group_size=7)
+    with open(f"../../{output_file}", "w") as output_f:
+        output_f.write(output)
+
+def generate_data_dpc_major(ratings_file, matches, output_file, n_samples, folder, k,
+                     timestamp="", static_ratings=False, bracket_file=None):
+    """Generates an output JSON file containing the probabilities for
+    a given set of matches and input ratings.
+
+    Parameters
+    ----------
+    ratings_file : str
+        Path to JSON file mapping team names to ratings. The file
+        should look something like this:
+        {
+          "Team A": 1500,
+          "Team B": 1600
+        }
+    matches : dict
+        List of matches for each group. Each match is a 3-element
+        list containing team 1, team 2, and the match result as an
+        int (0 for a 0-2, 1 for a 1-1, 2 for a 2-0, and -1 if the
+        match hasn't happened yet). Example:
+        {
+            "a": [["Team A", "Team B", 0], ["Team B", "Team C", 1]],
+            "b": [["Team D", "Team E", 2], ["Team E", "Team D", -1]]
+        }
+        In this case the results are A 0-2 B, B 1-1 C, D 2-0 E, and
+        E vs D has not yet been played.
+    output_file : str
+        Name of output file to save.
+    n_samples : int
+        Number of Monte Carlo samples to simulate.
+    folder : str
+        Folder name to save output to / look for data from.
+    k : int
+        K parameter for Elo model.
+    timestamp : str, default=""
+        Timestamp to put at the top of the report. This is a parameter
+        instead of being determined from the current time because I
+        generate multiple reports and want them to have the same
+        timestamp
+    static_ratings : bool, default=False
+        If true, ratings will not be updated over the course of a
+        simulation. This is used for the fixed-ratings output.
+    bracket_file : str, default=None
+        Used for simulating just the elimination bracket. Group stage
+        matches must be complete for group stage data to be correct. If
+        provided, should be a path to a JSON file containing bracket
+        results.
+    """
+    if output_file == "glicko":
+        # static ratings are always used for the Glicko simulator
+        # because Glicko explicitly accounts for uncertainty using
+        # ratinng deviation.
+        sampler = DPCMajorSamplerNewFormat.from_ratings_file_glicko2(
+            ratings_file, 0.5, static_ratings=True)
+    else:
+        sampler = DPCMajorSamplerNewFormat.from_ratings_file(ratings_file, k,
+            static_ratings=static_ratings)
+
+    with open(f"data/{folder}/teams.json") as group_f:
+        groups = json.load(group_f)
+
+    probs = sampler.sample_major(groups, matches, n_samples)
+
+    records,match_preds,_ = predict_matches_ti(sampler,matches,static_ratings)
+    ratings = {team: f"{sampler.model.get_team_rating(team):.0f}"
+              for team in sampler.model.ratings.keys()}
+    output_json = {
+        "probs": {
+            "group_rank": get_gs_ranks(probs["group_rank"], ["a", "b"]),
+            "final_rank": get_final_ranks(probs["final_rank"]),
+            "record": get_records(probs["record"], probs["point_rank"],
+                                  ["a", "b"]),
+            "tiebreak": probs["tiebreak"],
+            "matches": match_preds
+        },
+        "records": records,
+        "ratings": ratings,
+        "timestamp": timestamp,
+        "n_samples": n_samples,
+        "model_version": "0.4.1"
+    }
+    Path(f"../../{folder}/data").mkdir(exist_ok=True)
+    with open(f"../../{folder}/data/{output_file}.json", "w") as json_f:
         json.dump(output_json, json_f)
 
 def generate_html_global_rankings(output_file, tour, n_samples, k):
@@ -724,7 +834,7 @@ def generate_html_global_rankings(output_file, tour, n_samples, k):
                              full_name=full_name,
                              ti_qual_data={"elo": ti_qual_data_elo,
                                            "fixed": ti_qual_data_fixed})
-    with open(f"../{output_file}", "w") as output_f:
+    with open(f"../../{output_file}", "w") as output_f:
         output_f.write(output)
 
 def generate_data_major(ratings_file, matches, output_file, n_samples, folder,
@@ -744,7 +854,7 @@ def generate_data_major(ratings_file, matches, output_file, n_samples, folder,
     matches : dict
         List of all matches to be played at the major. The format is
         quite long so instead of documenting it here I refer to the
-        file at src/dpc/spring/major/matches.json as an example.
+        file at d2mcs/dpc/spring/major/matches.json as an example.
 
         Note that the dicationary contains 4 keys, the last of which is
         optional (wildcard, group stage, playoffs, tiebreak). Match

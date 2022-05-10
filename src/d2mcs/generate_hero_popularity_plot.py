@@ -131,7 +131,7 @@ def make_hero_popularity_page():
         template_str = input_f.read()
     template = Template(template_str, trim_blocks=True, lstrip_blocks=True)
     output = template.render(plot_divs=plot_divs, timestamp=timestamp)
-    with open("../misc/hero_popularity.html", "w") as output_f:
+    with open("../../misc/hero_popularity.html", "w") as output_f:
         output_f.write(output)
 
 def main():

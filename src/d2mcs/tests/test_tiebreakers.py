@@ -2,9 +2,9 @@ import pytest
 import json
 from pathlib import Path
 
-from model.forecaster import TeamModel
-from model.simulator import Simulator
-from model.tiebreakers import Tiebreaker
+from d2mcs.model.forecaster import TeamModel
+from d2mcs.model.simulator import Simulator
+from d2mcs.model.tiebreakers import Tiebreaker
 
 @pytest.fixture(scope='session')
 def tiebreaker():

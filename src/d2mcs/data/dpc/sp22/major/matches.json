@@ -1,0 +1,64 @@
+{
+  "a": [
+    [
+      ["Evil Geniuses", "Tundra Esports", -1],
+      ["OG", "beastcoast", -1],
+      ["BOOM Esports", "BetBoom Team", -1],
+      ["Evil Geniuses", "T1", -1],
+      ["OG", "BOOM Esports", -1],
+      ["beastcoast", "BetBoom Team", -1]
+    ],
+    [
+      ["OG", "T1", -1],
+      ["BOOM Esports", "beastcoast", -1],
+      ["Tundra Esports", "BetBoom Team", -1],
+      ["Evil Geniuses", "BOOM Esports", -1],
+      ["OG", "Tundra Esports", -1],
+      ["T1", "beastcoast", -1]
+    ],
+    [
+      ["Evil Geniuses", "BetBoom Team", -1],
+      ["BOOM Esports", "T1", -1],
+      ["beastcoast", "Tundra Esports", -1],
+      ["Evil Geniuses", "OG", -1],
+      ["BOOM Esports", "Tundra Esports", -1],
+      ["T1", "BetBoom Team", -1]
+    ],
+    [
+      ["Evil Geniuses", "beastcoast", -1],
+      ["OG", "BetBoom Team", -1],
+      ["T1", "Tundra Esports", -1]
+    ]
+  ],
+  "b": [
+    [
+      ["Team Liquid", "Thunder Awaken", -1],
+      ["Fnatic", "Team Spirit", -1],
+      ["TSM", "Gladiators", -1],
+      ["Fnatic", "TSM", -1],
+      ["Team Spirit", "Gladiators", -1],
+      ["Thunder Awaken", "Mind Games", -1]
+    ],
+    [
+      ["Team Liquid", "Fnatic", -1],
+      ["Team Spirit", "TSM", -1],
+      ["Mind Games", "Gladiators", -1],
+      ["Team Liquid", "Gladiators", -1],
+      ["Team Spirit", "Thunder Awaken", -1],
+      ["Mind Games", "TSM", -1]
+    ],
+    [
+      ["Team Liquid", "TSM", -1],
+      ["Fnatic", "Thunder Awaken", -1],
+      ["Team Spirit", "Mind Games", -1],
+      ["Team Liquid", "Team Spirit", -1],
+      ["Fnatic", "Mind Games", -1],
+      ["Thunder Awaken", "Gladiators", -1]
+    ],
+    [
+      ["Team Liquid", "Mind Games", -1],
+      ["Fnatic", "Gladiators", -1],
+      ["Thunder Awaken", "TSM", -1]
+    ]
+  ]
+}
