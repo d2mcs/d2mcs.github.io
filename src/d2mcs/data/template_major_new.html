@@ -284,7 +284,7 @@ function get_model_type() {
 function date_update(date) {
   var button_title = document.getElementById("date-select"+date).innerText;
   document.getElementById("date-dropdown").innerText = button_title;
-  render_data_ti("data/"+model_type+date+".json");
+  render_data_major_new("data/"+model_type+date+".json");
 }
 const model_type = get_model_type();
 render_data_major_new("data/"+model_type+".json");

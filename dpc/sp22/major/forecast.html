@@ -37,10 +37,12 @@
   <div class="dropdown text-center">
     Forecast date:
     <button class="btn btn-secondary btn-sm dropdown-toggle ms-1" type="button" id="date-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-      May 9 (Current)
+      May 12 (Current)
     </button>
     <ul class="dropdown-menu" aria-labelledby="date-dropdown">
-      <li><button id="date-select" class="dropdown-item" onclick="date_update('')">May 9 (Current)</button></li>
+      <li><button id="date-select" class="dropdown-item" onclick="date_update('')">May 12 (Current)</button></li>
+      <li><button id="date-select-1" class="dropdown-item" onclick="date_update('-1')">May 12 (Day 1)</button></li>
+      <li><button id="date-select-pre" class="dropdown-item" onclick="date_update('-pre')">May 9 (Pre-tournament)</button></li>
     </ul>
   </div>
   <hr>
@@ -3623,7 +3625,7 @@ function get_model_type() {
 function date_update(date) {
   var button_title = document.getElementById("date-select"+date).innerText;
   document.getElementById("date-dropdown").innerText = button_title;
-  render_data_ti("data/"+model_type+date+".json");
+  render_data_major_new("data/"+model_type+date+".json");
 }
 const model_type = get_model_type();
 render_data_major_new("data/"+model_type+".json");

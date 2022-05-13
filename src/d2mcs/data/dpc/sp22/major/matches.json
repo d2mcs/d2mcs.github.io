@@ -1,12 +1,12 @@
 {
   "a": [
     [
-      ["Evil Geniuses", "Tundra Esports", -1],
-      ["OG", "beastcoast", -1],
-      ["BOOM Esports", "BetBoom Team", -1],
-      ["Evil Geniuses", "T1", -1],
-      ["OG", "BOOM Esports", -1],
-      ["beastcoast", "BetBoom Team", -1]
+      ["Evil Geniuses", "Tundra Esports", 0],
+      ["OG", "beastcoast", 2],
+      ["BOOM Esports", "BetBoom Team", 1],
+      ["Evil Geniuses", "T1", 0],
+      ["OG", "BOOM Esports", 1],
+      ["beastcoast", "BetBoom Team", 1]
     ],
     [
       ["OG", "T1", -1],
@@ -32,12 +32,12 @@
   ],
   "b": [
     [
-      ["Team Liquid", "Thunder Awaken", -1],
-      ["Fnatic", "Team Spirit", -1],
-      ["TSM", "Gladiators", -1],
-      ["Fnatic", "TSM", -1],
-      ["Team Spirit", "Gladiators", -1],
-      ["Thunder Awaken", "Mind Games", -1]
+      ["Team Liquid", "Thunder Awaken", 0],
+      ["Fnatic", "Team Spirit", 0],
+      ["TSM", "Gladiators", 1],
+      ["Fnatic", "TSM", 2],
+      ["Team Spirit", "Gladiators", 0],
+      ["Thunder Awaken", "Mind Games", 2]
     ],
     [
       ["Team Liquid", "Fnatic", -1],
