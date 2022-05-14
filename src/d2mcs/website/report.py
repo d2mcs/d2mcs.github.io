@@ -206,19 +206,29 @@ def predict_matches_ti(sampler, matches, static_ratings):
             for match in match_list:
                 match_probs = sampler.get_bo2_probs(match[0], match[1],
                     draw_adjustment=0.05 if not static_ratings else 0.0)
+                result = []
                 if match[2] != -1:
                     # match has already been played, so update team
                     # ratings and current records
                     team1 = match[0]
                     team2 = match[1]
-                    if not static_ratings:
+                    if isinstance(match[2], str):
+                        if match[2] == "W":
+                            records[match[0]][0] += 1
+                            records[match[1]][2] += 1
+                        else:
+                            records[match[0]][2] += 1
+                            records[match[1]][0] += 1
+                    else:
                         result = (match[2], 2 - match[2])
-                        sq_errs.append((1 - match_probs[result[1]])**2)
-                        ref_errs.append((1/2)**2 if result[0]==1 else (3/4)**2)
-                        sampler.model.update_ratings(team1, team2, result)
+                        records[match[0]][2 - match[2]] += 1
+                        records[match[1]][match[2]] += 1
 
-                    records[match[0]][2 - match[2]] += 1
-                    records[match[1]][match[2]] += 1
+                        if not static_ratings:
+                            sq_errs.append((1 - match_probs[result[1]])**2)
+                            ref_errs.append((1/2)**2
+                                            if result[0] == 1 else (3/4)**2)
+                            sampler.model.update_ratings(team1, team2, result)
 
                 match_predictions[group][-1].append({
                     "teams": (match[0], match[1]), "result": match[2],

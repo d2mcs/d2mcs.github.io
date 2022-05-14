@@ -320,6 +320,11 @@ class TIGroupStage(Simulator):
                         result = self.sim_bo2(match[0], match[1])
                     else:
                         result = self.sim_bo2(match[0], match[1],momentum=0.05)
+                elif isinstance(match[2], str):
+                    if match[2] == "W":
+                        result = (2, 0)
+                    else:
+                        result = (0, 2)
                 else:
                     result = (match[2], 2 - match[2])
                     if not self.static_ratings and self.update_on_existing:

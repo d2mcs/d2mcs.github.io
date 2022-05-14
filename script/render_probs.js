@@ -321,8 +321,16 @@ function render_ti_match(group, day, match_index, match, n_samples) {
     team1_html.innerHTML += " <b>(0)</b>";
     team2_html.innerHTML += " <b>(2)</b>";
   }
+  if (match["result"] == "W") {
+    team1_html.innerHTML += " <b>(W)</b>";
+    team2_html.innerHTML += " <b>(-)</b>";
+  }
+  if (match["result"] == "-") {
+    team1_html.innerHTML += " <b>(-)</b>";
+    team2_html.innerHTML += " <b>(W)</b>";
+  }
 
-  if (match["result"] == 2) {
+  if (match["result"] == 2 || match["result"] === "W") {
     document.getElementById("match-" + group + "-" + day + "-" + match_index + "-1").style.backgroundColor = "#ccffcc";
     document.getElementById("match-" + group + "-" + day + "-" + match_index + "-2").style.backgroundColor = "#ffcccc";
   }
@@ -330,7 +338,7 @@ function render_ti_match(group, day, match_index, match, n_samples) {
     document.getElementById("match-" + group + "-" + day + "-" + match_index + "-1").style.backgroundColor = "#fafacc";
     document.getElementById("match-" + group + "-" + day + "-" + match_index + "-2").style.backgroundColor = "#fafacc";
   }
-  else if (match["result"] == 0) {
+  else if (match["result"] == 0 || match["result"] === "-") {
     document.getElementById("match-" + group + "-" + day + "-" + match_index + "-1").style.backgroundColor = "#ffcccc";
     document.getElementById("match-" + group + "-" + day + "-" + match_index + "-2").style.backgroundColor = "#ccffcc";
   }
