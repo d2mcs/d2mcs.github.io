@@ -37,10 +37,12 @@
   <div class="dropdown text-center">
     Forecast date:
     <button class="btn btn-secondary btn-sm dropdown-toggle ms-1" type="button" id="date-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-      May 14 (Current)
+      May 15 (Current)
     </button>
     <ul class="dropdown-menu" aria-labelledby="date-dropdown">
-      <li><button id="date-select" class="dropdown-item" onclick="date_update('')">May 14 (Current)</button></li>
+      <li><button id="date-select" class="dropdown-item" onclick="date_update('')">May 15 (Current)</button></li>
+      <li><button id="date-select-4" class="dropdown-item" onclick="date_update('-4')">May 15 (Before tiebreakers)</button></li>
+      <li><button id="date-select-3" class="dropdown-item" onclick="date_update('-3')">May 14 (Day 3)</button></li>
       <li><button id="date-select-2" class="dropdown-item" onclick="date_update('-2')">May 13 (Day 2)</button></li>
       <li><button id="date-select-1" class="dropdown-item" onclick="date_update('-1')">May 12 (Day 1)</button></li>
       <li><button id="date-select-pre" class="dropdown-item" onclick="date_update('-pre')">May 9 (Pre-tournament)</button></li>

@@ -25,9 +25,9 @@
       ["T1", "BetBoom Team", 0]
     ],
     [
-      ["Evil Geniuses", "beastcoast", -1],
-      ["OG", "BetBoom Team", -1],
-      ["T1", "Tundra Esports", -1]
+      ["Evil Geniuses", "beastcoast", 1],
+      ["OG", "BetBoom Team", 2],
+      ["T1", "Tundra Esports", 0]
     ]
   ],
   "b": [
@@ -57,8 +57,20 @@
     ],
     [
       ["Team Liquid", "Mind Games", "W"],
-      ["Fnatic", "Gladiators", -1],
-      ["Thunder Awaken", "TSM", -1]
+      ["Fnatic", "Gladiators", 0],
+      ["Thunder Awaken", "TSM", 1]
     ]
-  ]
+  ],
+  "tiebreak": {
+    "b": {
+      "3": [
+        ["Team Spirit", "Team Liquid", [1, 0]],
+        ["TSM", "Thunder Awaken", [0, 1]],
+        ["Team Liquid", "Thunder Awaken", [0, 1]],
+        ["Team Spirit", "TSM", [0, 1]],
+        ["Team Liquid", "TSM", [0, 1]],
+        ["Team Spirit", "Thunder Awaken", [0, 1]]
+      ]
+    }
+  }
 }

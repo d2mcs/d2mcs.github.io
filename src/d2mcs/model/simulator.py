@@ -507,21 +507,19 @@ class DPCMajor(Simulator):
                 "b" : ["Team C", "Team D"],
             }
         """
-        # top seeds pick their opponents at random
-        picks = random.choices([0,1], k=4)
         bracket = {
             "UB-R1": [
-                [seeds["a"][0], seeds["b"][2 + picks[0]], []],
-                [seeds["b"][1], seeds["a"][2 + (1 - picks[1])], []],
-                [seeds["b"][0], seeds["a"][2 + picks[1]], []],
-                [seeds["a"][1], seeds["b"][2 + (1 - picks[0])], []],
+                [seeds["a"][0], seeds["b"][3], []],
+                [seeds["b"][1], seeds["a"][2], []],
+                [seeds["a"][1], seeds["b"][2], []],
+                [seeds["b"][0], seeds["a"][3], []],
             ],
             "UB-R2": [[None, None, []], [None, None, []]],
             "UB-F": [[None, None, []]],
-            "LB-R1": [[None, seeds["a"][4], []],
-                      [None, seeds["b"][5], []],
-                      [None, seeds["a"][5], []],
-                      [None, seeds["b"][4], []]],
+            "LB-R1": [[None, seeds["a"][5], []],
+                      [None, seeds["b"][4], []],
+                      [None, seeds["a"][4], []],
+                      [None, seeds["b"][5], []]],
             "LB-R2": [[None, None, []], [None, None, []]],
             "LB-R3": [[None, None, []], [None, None, []]],
             "LB-R4": [[None, None, []]],

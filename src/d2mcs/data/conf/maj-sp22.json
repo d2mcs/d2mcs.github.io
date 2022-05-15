@@ -1,7 +1,9 @@
 {
   "name": "ESL One Stockholm 2022",
   "tabs": [
-    ["May 14 (Current)", ""],
+    ["May 15 (Current)", ""],
+    ["May 15 (Before tiebreakers)", "-4"],
+    ["May 14 (Day 3)", "-3"],
     ["May 13 (Day 2)", "-2"],
     ["May 12 (Day 1)", "-1"],
     ["May 9 (Pre-tournament)", "-pre"]
