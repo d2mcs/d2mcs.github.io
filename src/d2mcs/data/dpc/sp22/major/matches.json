@@ -17,12 +17,12 @@
       ["T1", "beastcoast", 1]
     ],
     [
-      ["Evil Geniuses", "BetBoom Team", -1],
-      ["BOOM Esports", "T1", -1],
-      ["beastcoast", "Tundra Esports", -1],
-      ["Evil Geniuses", "OG", -1],
-      ["BOOM Esports", "Tundra Esports", -1],
-      ["T1", "BetBoom Team", -1]
+      ["Evil Geniuses", "BetBoom Team", 0],
+      ["BOOM Esports", "T1", 1],
+      ["beastcoast", "Tundra Esports", 0],
+      ["Evil Geniuses", "OG", 0],
+      ["BOOM Esports", "Tundra Esports", 0],
+      ["T1", "BetBoom Team", 0]
     ],
     [
       ["Evil Geniuses", "beastcoast", -1],
@@ -48,12 +48,12 @@
       ["Mind Games", "TSM", "-"]
     ],
     [
-      ["Team Liquid", "TSM", -1],
-      ["Fnatic", "Thunder Awaken", -1],
+      ["Team Liquid", "TSM", 0],
+      ["Fnatic", "Thunder Awaken", 1],
       ["Team Spirit", "Mind Games", "W"],
-      ["Team Liquid", "Team Spirit", -1],
+      ["Team Liquid", "Team Spirit", 2],
       ["Fnatic", "Mind Games", "W"],
-      ["Thunder Awaken", "Gladiators", -1]
+      ["Thunder Awaken", "Gladiators", 1]
     ],
     [
       ["Team Liquid", "Mind Games", "W"],
